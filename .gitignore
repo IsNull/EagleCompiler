@@ -1,0 +1,15 @@
+
+.DS_Store
+Thumbs.db
+
+*.class
+# Package Files #
+*.war
+*.ear
+.apt_*
+/bin/
+/cache/
+/target/
+*/target/*
+*/data/
+*.log
