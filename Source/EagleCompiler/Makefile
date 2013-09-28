@@ -27,7 +27,7 @@ LIB_RELEASE = $(LIB)
 LDFLAGS_RELEASE = $(LDFLAGS) -s
 OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
-OUT_RELEASE = bin/Release/HelloWorld
+OUT_RELEASE = bin/Release/EagleCompiler
 
 OBJ_RELEASE = $(OBJDIR_RELEASE)/main.o
 
