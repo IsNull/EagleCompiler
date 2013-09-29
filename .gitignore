@@ -7,8 +7,8 @@ Thumbs.db
 *.war
 *.ear
 .apt_*
-*/bin/*
-*/obj/*
+bin
+obj
 /cache/
 /target/
 */target/*
