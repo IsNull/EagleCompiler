@@ -16,8 +16,10 @@ int main()
     string operators = "*+-=+==*";
     
     string brackets = "()";
+    
+    string numIdent = "12&abc";
 
-    string testStatement = basicStatement;
+    string testStatement = numIdent;
     
     
     // ----
