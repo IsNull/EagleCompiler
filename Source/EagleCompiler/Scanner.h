@@ -15,29 +15,35 @@
 
 using namespace std;
 
+/**
+ * Represents a basic state of the scanner
+ * for diffrent grammar contexts
+ */
 enum class ScannerState {
-    Default,
-    LineComment,        // the scanner is in a line comment //
-    MultiLineComment,   // the scanner is in a multiline comment /* */
-    LiteralString // the scanner is in literal string
+    Default,            // default context
+    LineComment,        // the scanner is in a line comment context
+    MultiLineComment,   // the scanner is in a multiline comment context
+    LiteralString       // the scanner is in literal string context
 };
 
 
 class Scanner {
 private:
-    ScannerState _state;
-    TokenList* _tokens;
+    ScannerState _state;    // The scanner context state
+    TokenType _currentType; // the current contexts state, representet as token type
     
-    char* _sourceData;
-    int _sourceSize;
-    
-    TokenType _currentType; // holds the current token type
+    TokenList* _tokens;     // Holds all tokens we gathered so far
+    char* _sourceData;      // char buffer for fast accessing the source
+    int _sourceSize;        // size of the source char buffer
     
     
     void endToken(TokenType type, int start, int end);
     
     bool isNumber(int start, int end);
+    
     bool isIdentifier(int start, int end);
+    
+    bool isWhiteSpace(int start, int end);
     
     /**
      * Determines whats the token type of the current range is.
@@ -51,10 +57,11 @@ public:
     
     Scanner();
     
+    /**
+     * Scan the given source and return a TokenList
+     *
+     */
     const TokenList* scan(string source);
-    
-    
-    
 };
 
 

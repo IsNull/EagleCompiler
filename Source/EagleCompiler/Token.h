@@ -23,6 +23,7 @@ using namespace std;
 enum TokenType {
     
     None,                   // unspecified Token
+    WhiteSpace,             // Spaces | Tabs | Newlines
     
     Identifier,             // abc | abc12
     

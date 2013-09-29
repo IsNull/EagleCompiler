@@ -36,7 +36,6 @@ const TokenList* Scanner::scan(string source){
     
     _currentType = TokenType::None;
     
-    
     while (true) {
         
         TokenType rollingToken;
@@ -45,11 +44,7 @@ const TokenList* Scanner::scan(string source){
             case ScannerState::Default:
                 
                 rollingToken = isToken(tokenStart, tokenEnd);
-                
-                // DEBUG ONLY - print rolling token stream
-                cout <<  "(" << tokenStart << "," << tokenEnd << ") rolling token: " + TokenNames.find(rollingToken)->second + "\n";
-                
-                
+
                 break;
                 
             case ScannerState::MultiLineComment:
@@ -67,6 +62,11 @@ const TokenList* Scanner::scan(string source){
                 rollingToken = TokenType::None;
                 break;
         }
+        
+        // DEBUG ONLY - print rolling token stream
+        cout <<  "(" << tokenStart << "," << tokenEnd << ") rolling token: "
+        + TokenNames.find(rollingToken)->second + "\n";
+        
         
         bool eof = tokenEnd == _sourceSize-1;
         if(eof) cout << "EOF!\n"; // DEBUG ONLY
@@ -140,7 +140,7 @@ TokenType Scanner::isToken(int start, int end){
     TokenType rangeTokenType = TokenType::None;
     
     
-    string possibleToken = subStrFromArr(_sourceData, start, end);
+    string possibleToken = Util::subStrFromArr(_sourceData, start, end);
     
     // Depending on the current state we have diffrnet grammars
     // i.e. Default, LiteralString or Comment grammar...
@@ -169,6 +169,8 @@ TokenType Scanner::isToken(int start, int end){
             rangeTokenType = TokenType::LiteralNumber;
         }else if(isIdentifier(start, end)){
             rangeTokenType = TokenType::Identifier;
+        }else if(isWhiteSpace(start, end)){
+            rangeTokenType = TokenType::WhiteSpace;
         }
     }
     
@@ -219,8 +221,24 @@ bool Scanner::isIdentifier(int start, int end){
     return true;
 }
 
+bool Scanner::isWhiteSpace(int start, int end){
+    
+
+    
+    char* cp = _sourceData + (sizeof(char) * start);
+    int len = end-start+1;
+
+    for (int i=0; i<len; i++) {
+        if(!Util::isWhiteSpace(*cp))
+            return false;
+        cp++;
+    }
+    
+    return true;
+}
+
 void Scanner::endToken(TokenType type, int start, int end){
-    string tokenValue = subStrFromArr(_sourceData, start, end);
+    string tokenValue = Util::subStrFromArr(_sourceData, start, end);
     
     // check for keyword and inject if appropriate
     if(type == TokenType::Identifier)
