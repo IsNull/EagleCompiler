@@ -9,11 +9,23 @@
 #include "Util.h"
 #include <string>
 
-std::string subStrFromArr(char* buff, int start, int end){
+std::string Util::subStrFromArr(char* buff, int start, int end){
     end++;
     int len = end-start;
     char subbuff[len+1];
     memcpy( subbuff, &buff[start], len );
     subbuff[len] = '\0';
     return subbuff;
+}
+
+
+bool Util::isWhiteSpace(char c){
+    static char whitespaceChars[] = {' ', '\t', '\n', '\r'};
+    static int whitespaceCharsCnt = sizeof(whitespaceChars);
+    
+    for(int j=0; j<whitespaceCharsCnt; j++){
+        if(c == whitespaceChars[j])
+            return true;
+    }
+    return false;
 }

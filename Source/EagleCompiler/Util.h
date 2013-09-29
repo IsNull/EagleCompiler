@@ -12,7 +12,12 @@
 #include <iostream>
 #include <string>
 
+class Util
+{
+public:
+    static std::string subStrFromArr(char* buff, int start, int end);
 
-std::string subStrFromArr(char* buff, int start, int end);
+    static bool isWhiteSpace(char c);
+};
 
 #endif /* defined(__EagleCompiler__Util__) */
