@@ -137,7 +137,7 @@ public:
     string getValue() const { return _value; }
     
     string toString() const {
-        return TokenNames.find(_type)->second;
+        return "[" + TokenNames.find(_type)->second + "," + _value + "]";
     }
     
 };

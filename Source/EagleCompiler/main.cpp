@@ -10,7 +10,13 @@ int main()
     cout << "Hello world! Woot " << TokenType::Identifier << endl;
     
     Scanner* scanner = new Scanner();
-    const TokenList* list = scanner->scan("var bool = (x == 12);");
+    
+    
+    string basicStatement = "var bool = (x == 12);";
+    string number = "123 456 789";
+    string ident = "abc";
+    
+    const TokenList* list = scanner->scan(number);
     
     cout << "Tokens: " << list->toString();
     

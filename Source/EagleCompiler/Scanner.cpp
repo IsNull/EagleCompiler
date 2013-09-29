@@ -18,6 +18,10 @@ using namespace std;
 Scanner::Scanner(){
     _state = ScannerState::Default;
     _tokens = new TokenList();
+    
+    
+    
+    
 }
 
 
@@ -37,7 +41,7 @@ const TokenList* Scanner::scan(string source){
     _currentType = TokenType::None;
     
     
-    for (int i=0; i<_sourceSize; i++) {
+    while (true) {
         
         TokenType rollingToken;
         
@@ -45,6 +49,8 @@ const TokenList* Scanner::scan(string source){
             case ScannerState::Default:
                 
                 rollingToken = isToken(tokenStart, tokenEnd);
+                cout <<  "(" << tokenStart << "," << tokenEnd << ") rolling token: " + TokenNames.find(rollingToken)->second + "\n";
+                
                 
                 break;
                 
@@ -64,18 +70,28 @@ const TokenList* Scanner::scan(string source){
                 break;
         }
         
+        bool eof = tokenEnd == _sourceSize-1;
         
-        if(rollingToken == TokenType::None){
+        if(rollingToken == TokenType::None || eof){
             // the current range is no valid token
             if(_currentType != TokenType::None)
             {
-                endToken(_currentType, tokenStart, tokenEnd-1);
-                tokenStart = tokenEnd-1;
+                endToken(_currentType, tokenStart, tokenEnd + (eof ? 1 : 0));
+                tokenStart = tokenEnd;
+                _currentType = TokenType::None;
+            }else{
+                // ignore tokes, i.e. whitespaces
+                // advance scan range +1
+                tokenStart++;
+                tokenEnd++;
             }
         }else{
             _currentType = rollingToken;
+            tokenEnd++;
         }
-        tokenEnd++;
+        
+        if(eof) break;
+        
     }
     
     
