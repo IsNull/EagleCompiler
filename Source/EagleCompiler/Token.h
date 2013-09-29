@@ -31,17 +31,26 @@ enum TokenType {
     
     StatementEnd,           // ;
     
+    // Brackets
+    Bracked_Round_Open,     // (
+    Bracked_Round_Close,    // )
+    Bracked_Curly_Open,     // {
+    Bracked_Curly_Close,    // }
+    Bracked_Square_Open,    // [
+    Bracked_Square_Close,   // ]
+    
+    // Operator
     Operator_Not,           // !
     Operator_Assignment,    // =
     Operator_Plus,          // +
     Operator_Minus,         // -
-    
+    Operator_Div,           // /
+    Operator_Multiply,      // *
     Operator_Equals,        // ==
     Operator_GreaterThan,   // >
     Operator_SmallerThan,   // <
     
-    
-    
+
     // ...
     
 };
