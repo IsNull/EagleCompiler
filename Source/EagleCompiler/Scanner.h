@@ -36,7 +36,13 @@ private:
     char* _sourceData;      // char buffer for fast accessing the source
     int _sourceSize;        // size of the source char buffer
     
+    bool _omitWhiteSpaces = true;
     
+    
+    void init(string source);
+    
+    void handleEOF(TokenType rollingToken, int tokenStart, int tokenEnd);
+
     void endToken(TokenType type, int start, int end);
     
     bool isNumber(int start, int end);

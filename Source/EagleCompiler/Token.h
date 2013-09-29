@@ -68,6 +68,7 @@ const map<TokenType, string> TokenNames {
     {None, "None"},
     
     {TokenType::Identifier, "Identifier"},
+    {TokenType::WhiteSpace, "Whitespace"},
     
     {TokenType::LiteralNumber, "LiteralNumber"},
     {TokenType::LiteralString, "LiteralString"},

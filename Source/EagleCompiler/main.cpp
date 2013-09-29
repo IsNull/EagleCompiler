@@ -11,7 +11,7 @@ int main()
     
     // ---- Simple Test cases
     
-    string basicStatement = "var bool = (x == 12);";
+    string basicStatement = "var bool = (x| == 12);";
     string number = "var 456 789";
     string operators = "*+-=+==*";
     
@@ -19,7 +19,7 @@ int main()
     
     string numIdent = "12&abc";
 
-    string testStatement = numIdent;
+    string testStatement = basicStatement;
     
     
     // ----
