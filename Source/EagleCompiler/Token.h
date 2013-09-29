@@ -93,12 +93,23 @@ const TokenMap TokenMap_Default =
         {";", TokenType::StatementEnd},
     
     // Operators
-        {"==", TokenType::Operator_Assignment},
+        {"==", TokenType::Operator_Equals},
         {"+", TokenType::Operator_Plus},
         {"-", TokenType::Operator_Minus},
-        {"=", TokenType::Operator_Equals},
+        {"=", TokenType::Operator_Assignment},
         {">", TokenType::Operator_GreaterThan},
-        {"<", TokenType::Operator_SmallerThan}
+        {"<", TokenType::Operator_SmallerThan},
+        {"*", TokenType::Operator_Multiply},
+        {"/", TokenType::Operator_Div},
+        {"!", TokenType::Operator_Not},
+        
+    // Brackets
+        {"(", TokenType::Bracked_Round_Open},
+        {")", TokenType::Bracked_Round_Close},
+        {"{", TokenType::Bracked_Curly_Open},
+        {"}", TokenType::Bracked_Curly_Close},
+        {"[", TokenType::Bracked_Square_Open},
+        {"]", TokenType::Bracked_Square_Close}
         
     };
 

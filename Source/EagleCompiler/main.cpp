@@ -7,18 +7,26 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello world! Woot " << TokenType::Identifier << endl;
-    
     Scanner* scanner = new Scanner();
     
+    // ---- Simple Test cases
     
     string basicStatement = "var bool = (x == 12);";
-    string number = "123 456 789";
-    string ident = "abc";
+    string number = "var 456 789";
+    string operators = "*+-=+==*";
     
-    const TokenList* list = scanner->scan(number);
+    string brackets = "()";
+
+    string testStatement = basicStatement;
     
-    cout << "Tokens: " << list->toString();
+    
+    // ----
+    
+    
+    // tokenize it:
+    cout << testStatement + "\n\n";
+    const TokenList* list = scanner->scan(testStatement);
+    cout << "\n\nTokens: " << list->toString();
     
     
     return 0;

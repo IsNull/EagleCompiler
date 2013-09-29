@@ -10,6 +10,7 @@
 #include <string>
 
 std::string subStrFromArr(char* buff, int start, int end){
+    end++;
     int len = end-start;
     char subbuff[len+1];
     memcpy( subbuff, &buff[start], len );

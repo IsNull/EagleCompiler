@@ -20,8 +20,6 @@ Scanner::Scanner(){
     _tokens = new TokenList();
     
     
-    
-    
 }
 
 
@@ -49,6 +47,8 @@ const TokenList* Scanner::scan(string source){
             case ScannerState::Default:
                 
                 rollingToken = isToken(tokenStart, tokenEnd);
+                
+                // DEBUG ONLY - print rolling token stream
                 cout <<  "(" << tokenStart << "," << tokenEnd << ") rolling token: " + TokenNames.find(rollingToken)->second + "\n";
                 
                 
@@ -71,26 +71,56 @@ const TokenList* Scanner::scan(string source){
         }
         
         bool eof = tokenEnd == _sourceSize-1;
+        if(eof) cout << "EOF!\n"; // DEBUG ONLY
         
-        if(rollingToken == TokenType::None || eof){
-            // the current range is no valid token
-            if(_currentType != TokenType::None)
-            {
-                endToken(_currentType, tokenStart, tokenEnd + (eof ? 1 : 0));
-                tokenStart = tokenEnd;
-                _currentType = TokenType::None;
+        if(!eof){
+            if(rollingToken == TokenType::None){
+                // the current range is no valid token
+                if(_currentType != TokenType::None)
+                {
+                    endToken(_currentType, tokenStart, tokenEnd-1);
+                    tokenStart = tokenEnd;
+                    _currentType = TokenType::None;
+                }else{
+                    // ignore tokes, i.e. whitespaces
+                    // advance scan range +1
+                    tokenStart++;
+                    tokenEnd++;
+                }
             }else{
-                // ignore tokes, i.e. whitespaces
-                // advance scan range +1
-                tokenStart++;
+                _currentType = rollingToken;
                 tokenEnd++;
             }
         }else{
-            _currentType = rollingToken;
-            tokenEnd++;
+            // EOF
+            if(rollingToken == TokenType::None){
+                
+                // EOF case 1
+                
+                // the current token range is NOT valid
+                // that means the last char is not part of the previous token
+                
+                if(_currentType != TokenType::None){
+                    // the previous token was valid, end it
+                    endToken(_currentType, tokenStart, tokenEnd-1);
+                    tokenStart = tokenEnd;
+                }
+                
+                // check last sign if appropriate token
+                _currentType = isToken(tokenStart, tokenEnd);
+                if(_currentType != TokenType::None){
+                    endToken(_currentType, tokenStart, tokenEnd);
+                }
+            }else{
+                // EOF case 2
+                
+                // the current token range is valid
+                endToken(rollingToken, tokenStart, tokenEnd);
+            }
+            
+
+            break;
         }
-        
-        if(eof) break;
         
     }
     
@@ -111,6 +141,7 @@ TokenType Scanner::isToken(int start, int end){
     
     TokenType rangeTokenType = TokenType::None;
     
+    
     string possibleToken = subStrFromArr(_sourceData, start, end);
     
     // Depending on the current state we have diffrnet grammars
@@ -125,6 +156,7 @@ TokenType Scanner::isToken(int start, int end){
     // then check if range is identifier/literal number
     
     TokenMap::const_iterator it = TokenMap_Default.find(possibleToken);
+    
     if(it != TokenMap_Default.end()){
         // found matching token
         rangeTokenType = it->second;
