@@ -32,13 +32,7 @@ public:
     }
     
     // return the next Token or NULL
-    const Token* next() {
-        if(_iterator != _tokens->end()){
-            _iterator++;
-            return _iterator; // ToDo
-        }
-        return NULL;
-    }
+    const Token* next();
     
     string toString();
 };

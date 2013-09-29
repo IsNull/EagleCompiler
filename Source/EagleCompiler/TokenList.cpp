@@ -7,3 +7,12 @@
 //
 
 #include "TokenList.h"
+
+
+const Token* TokenList::next(){
+    if(_iterator != _tokens->end()){
+        _iterator++;
+        return &*_iterator;
+    }
+    return NULL;
+}
