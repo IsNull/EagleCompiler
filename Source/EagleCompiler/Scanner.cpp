@@ -9,6 +9,7 @@
 #include "Scanner.h"
 #include "Token.h"
 #include "TokenList.h"
+#include "Util.h"
 
 using namespace std;
 
@@ -20,31 +21,27 @@ Scanner::Scanner(){
 
 
 
-
-
 const TokenList* Scanner::scan(string source){
     
     // convert string to char array
-    unsigned long len = source.size();
-    char *a=new char[len+1];
-    a[len]=0;
-    memcpy(a,source.c_str(),len);
+    _sourceSize = (int)source.size();
+    _sourceData = new char[_sourceSize+1];
+    _sourceData[_sourceSize]=0;
+    memcpy(_sourceData,source.c_str(),_sourceSize);
     
-    int tokenStart = 0;
-    int tokenEnd = 0;
+    int tokenStart = 0; // points to the start of the current Token
+    int tokenEnd = 0;   // points to the end of the current Token
    
-    TokenType currentType = TokenType::None;
+    
+    _currentType = TokenType::None;
     
     
-    for (int i=0; i<len; i++) {
+    for (int i=0; i<_sourceSize; i++) {
         
         switch (_state) {
             case ScannerState::Default:
                 
-                
-                
-                
- 
+
                 // TODO
                 break;
                 
@@ -65,6 +62,43 @@ const TokenList* Scanner::scan(string source){
     
     return _tokens;
 }
+
+
+
+TokenType Scanner::isToken(int start, int end){
+    
+    // depending on the current state we have diffrnet grammars
+    // i.e. Default, LiteralString or Comment grammar...
+    
+    // for now, we handle only the default grammar:
+    
+    
+    // DEFAULT GRAMMAR
+    
+    // check if current range is terminal/operator token
+    // then check if range is identifier/literal number
+    
+    //TokenMap_Default.
+    
+    
+    string possibleToken = subStrFromArr(_sourceData, start, end);
+    
+    TokenMap::const_iterator it = TokenMap_Default.find(possibleToken);
+    if(it != TokenMap_Default.end()){
+        // found matching token
+        
+        
+        
+    }else{
+        // no token found
+        
+        
+    }
+
+    
+    return TokenType::None;
+}
+
 
 
 

@@ -48,17 +48,19 @@ enum TokenType {
 
 typedef map<string, TokenType> TokenMap;
 
-const TokenMap::value_type x[] = {
-    make_pair(";", TokenType::StatementEnd),
+const TokenMap TokenMap_Default =
+    {
+        {";", TokenType::StatementEnd},
     
     // Operators
-    make_pair("==", TokenType::Operator_Assignment),
-    make_pair("+", TokenType::Operator_Plus),
-    make_pair("-", TokenType::Operator_Minus),
-    make_pair("=", TokenType::Operator_Equals),
-    make_pair(">", TokenType::Operator_GreaterThan),
-    make_pair("<", TokenType::Operator_SmallerThan),
-};
+        {"==", TokenType::Operator_Assignment},
+        {"+", TokenType::Operator_Plus},
+        {"-", TokenType::Operator_Minus},
+        {"=", TokenType::Operator_Equals},
+        {">", TokenType::Operator_GreaterThan},
+        {"<", TokenType::Operator_SmallerThan}
+        
+    };
 
 /**
  * Represents a Token

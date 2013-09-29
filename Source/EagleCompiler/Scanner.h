@@ -10,6 +10,7 @@
 #define __EagleCompiler__Scanner__
 
 #include <iostream>
+#include "Token.h"
 #include "TokenList.h"
 
 using namespace std;
@@ -27,7 +28,21 @@ private:
     ScannerState _state;
     TokenList* _tokens;
     
+    char* _sourceData;
+    int _sourceSize;
+    
+    TokenType _currentType; // holds the current token type
+    
+    
     void endToken(TokenType type);
+    
+    /**
+     * Determines whats the token type of the current range is.
+     * If the current range is no longer a known token, we have found a token t(start,end-1);
+     * since one char before we had a token.
+     */
+    TokenType isToken(int start, int end);
+    
     
 public:
     
