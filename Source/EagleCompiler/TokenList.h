@@ -34,7 +34,7 @@ public:
     // return the next Token or NULL
     const Token* next();
     
-    string toString();
+    string toString() const;
 };
 
 #endif /* defined(__EagleCompiler__TokenList__) */

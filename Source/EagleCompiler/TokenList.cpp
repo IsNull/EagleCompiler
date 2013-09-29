@@ -16,3 +16,7 @@ const Token* TokenList::next(){
     }
     return NULL;
 }
+
+string TokenList::toString() const {
+    return "toString not implemented!";
+}

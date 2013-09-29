@@ -8,12 +8,3 @@
 
 #include "Token.h"
 
-
-class Scanner {
-    
-    
-    // ITokenList scan();
-    
-    
-    
-};
