@@ -10,6 +10,7 @@
 #include "Token.h"
 #include "TokenList.h"
 #include "Util.h"
+#include <cctype>
 
 using namespace std;
 
@@ -64,43 +65,94 @@ const TokenList* Scanner::scan(string source){
 }
 
 
-
+/**
+ * Determines the token type of the given range (in the given context)*
+ *  
+ * Returns a token type if the whole range has been identified as a token
+ * or TokenType::None if the range is not a valid token
+ *
+ * TODO(*)
+ */
 TokenType Scanner::isToken(int start, int end){
     
-    // depending on the current state we have diffrnet grammars
+    TokenType rangeTokenType = TokenType::None;
+    
+    string possibleToken = subStrFromArr(_sourceData, start, end);
+    
+    // Depending on the current state we have diffrnet grammars
     // i.e. Default, LiteralString or Comment grammar...
     
     // for now, we handle only the default grammar:
     
     
-    // DEFAULT GRAMMAR
+    // ---- STATE: DEFAULT GRAMMAR ---- (TODO: Refactor into state pattern)
     
-    // check if current range is terminal/operator token
+    // Check if current range is terminal/operator token
     // then check if range is identifier/literal number
-    
-    //TokenMap_Default.
-    
-    
-    string possibleToken = subStrFromArr(_sourceData, start, end);
     
     TokenMap::const_iterator it = TokenMap_Default.find(possibleToken);
     if(it != TokenMap_Default.end()){
         // found matching token
-        
-        
-        
-    }else{
-        // no token found
-        
-        
+        rangeTokenType = it->second;
     }
-
+        
+    if(rangeTokenType == TokenType::None){
+        // we could not find a matching token in our context map
+        // we have to check for identifiers and literals by ourselfes:
+        
+        if(isNumber(start, end))
+        {
+            rangeTokenType = TokenType::LiteralNumber;
+        }else if(isIdentifier(start, end)){
+            rangeTokenType = TokenType::Identifier;
+        }
+    }
     
-    return TokenType::None;
+    // ---- END STATE: DEFAULT GRAMMAR ----
+    
+    return rangeTokenType;
 }
 
 
+bool Scanner::isNumber(int start, int end){
+    
+    char* cp = _sourceData + (sizeof(char) * start);
+    int len = end-start+1;
+    
+    for (int i=0; i<len; i++) {
+        if(!isdigit(*cp))
+            return false;
+        cp++;
+    }
+    
+    return true;
+}
 
+/**
+ * Checks if the given char range is an valid Identifier
+ * 
+ * Valid identiviers must start with an alpha and then continue with alpha-num.
+ *
+ * abc
+ * ab1
+ *
+ */
+bool Scanner::isIdentifier(int start, int end){
+    
+    char* cp = _sourceData + (sizeof(char) * start);
+    int len = end-start+1;
+    
+    for (int i=0; i<len; i++) {
+        
+        if(i==0 && !isalpha(*cp))
+            return false;
+        else if( i != 0 && !isalnum(*cp))
+            return false;
+        cp++;
+    }
+    
+    return true;
+}
 
 void Scanner::endToken(TokenType type){
     Token* t = new Token(type);

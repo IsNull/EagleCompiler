@@ -36,6 +36,9 @@ private:
     
     void endToken(TokenType type);
     
+    bool isNumber(int start, int end);
+    bool isIdentifier(int start, int end);
+    
     /**
      * Determines whats the token type of the current range is.
      * If the current range is no longer a known token, we have found a token t(start,end-1);
