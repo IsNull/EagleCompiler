@@ -50,7 +50,8 @@ enum TokenType {
     Operator_Equals,        // ==
     Operator_GreaterThan,   // >
     Operator_SmallerThan,   // <
-    
+    Operator_GreaterThanOrEqual,   // >=
+    Operator_SmallerThanOrEqual,   // <=
 
     // Keywords
     
@@ -93,6 +94,8 @@ const map<TokenType, string> TokenNames {
     {TokenType::Operator_Equals,"Operator_Equals"},
     {TokenType::Operator_GreaterThan, "Operator_GreaterThan"},
     {TokenType::Operator_SmallerThan,"Operator_SmallerThan"},
+    {TokenType::Operator_GreaterThanOrEqual, "Operator_GreaterThanOrEqual"},
+    {TokenType::Operator_SmallerThanOrEqual,"Operator_SmallerThanOrEqual"},
     
     // Keywords
     {TokenType::Keyword_Var, "Keyword_Var"},
@@ -118,6 +121,8 @@ const TokenMap TokenMap_Default =
         {"=", TokenType::Operator_Assignment},
         {">", TokenType::Operator_GreaterThan},
         {"<", TokenType::Operator_SmallerThan},
+        {">=", TokenType::Operator_GreaterThanOrEqual},
+        {"<=", TokenType::Operator_SmallerThanOrEqual},
         {"*", TokenType::Operator_Multiply},
         {"/", TokenType::Operator_Div},
         {"!", TokenType::Operator_Not},
