@@ -12,27 +12,52 @@
 #include <iostream>
 #include <string.h>
 #include <list>
+#include <map>
 
 using namespace std;
+
 
 /**
  * Represents a type of a token
  */
 enum TokenType {
     
-    Identifier,
+    None,                   // unspecified Token
     
-    LiteralNumber,
-    LiteralString,
+    Identifier,             // abc | abc12
     
-    StatementEnd,
+    LiteralNumber,          // 123 | 0xFF
+    LiteralString,          // "blub"
     
-    Operator_Assignment,
-    Operator_Add,
-    Operator_Sub,
+    StatementEnd,           // ;
+    
+    Operator_Not,           // !
+    Operator_Assignment,    // =
+    Operator_Plus,          // +
+    Operator_Minus,         // -
+    
+    Operator_Equals,        // ==
+    Operator_GreaterThan,   // >
+    Operator_SmallerThan,   // <
+    
+    
     
     // ...
     
+};
+
+typedef map<string, TokenType> TokenMap;
+
+const TokenMap::value_type x[] = {
+    make_pair(";", TokenType::StatementEnd),
+    
+    // Operators
+    make_pair("==", TokenType::Operator_Assignment),
+    make_pair("+", TokenType::Operator_Plus),
+    make_pair("-", TokenType::Operator_Minus),
+    make_pair("=", TokenType::Operator_Equals),
+    make_pair(">", TokenType::Operator_GreaterThan),
+    make_pair("<", TokenType::Operator_SmallerThan),
 };
 
 /**
