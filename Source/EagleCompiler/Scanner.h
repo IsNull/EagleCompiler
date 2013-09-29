@@ -34,7 +34,7 @@ private:
     TokenType _currentType; // holds the current token type
     
     
-    void endToken(TokenType type);
+    void endToken(TokenType type, int start, int end);
     
     bool isNumber(int start, int end);
     bool isIdentifier(int start, int end);

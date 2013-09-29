@@ -24,73 +24,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EagleCompiler/TokenList.h"
-            timestampString = "402140266.002571"
+            timestampString = "402155129.705194"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "class TokenList"
             landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EagleCompiler/Token.h"
-            timestampString = "402153092.290735"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EagleCompiler/Scanner.cpp"
-            timestampString = "402153092.290735"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
-            landmarkName = "Scanner::isToken(int start, int end)"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Scanner::isToken(int, int)"
-                  moduleName = "EagleCompiler"
-                  urlString = "file://localhost/Users/IsNull/Documents/Projects/EagleCompiler/Source/EagleCompiler/Scanner.cpp"
-                  timestampString = "402153092.298723"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "94"
-                  endingLineNumber = "94"
-                  offsetFromSymbolStart = "500">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Scanner::isToken(int, int)"
-                  moduleName = "EagleCompiler"
-                  urlString = "file://localhost/Users/IsNull/Documents/Projects/EagleCompiler/Source/EagleCompiler/Scanner.cpp"
-                  timestampString = "402153092.298914"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "94"
-                  endingLineNumber = "94"
-                  offsetFromSymbolStart = "576">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -100,12 +40,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EagleCompiler/Scanner.cpp"
-            timestampString = "402153092.290735"
+            timestampString = "402155129.705194"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "Scanner::isNumber(int start, int end)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EagleCompiler/Scanner.cpp"
+            timestampString = "402155129.705194"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "Scanner::scan(string source)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

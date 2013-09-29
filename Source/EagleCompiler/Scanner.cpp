@@ -39,25 +39,43 @@ const TokenList* Scanner::scan(string source){
     
     for (int i=0; i<_sourceSize; i++) {
         
+        TokenType rollingToken;
+        
         switch (_state) {
             case ScannerState::Default:
                 
-
-                // TODO
+                rollingToken = isToken(tokenStart, tokenEnd);
+                
                 break;
                 
             case ScannerState::MultiLineComment:
                 //TODO
+                rollingToken = TokenType::None;
                 break;
                 
             case ScannerState::LiteralString:
                 // TODO
+                rollingToken = TokenType::None;
                 break;
                 
             default:
                 // exception No state handling
+                rollingToken = TokenType::None;
                 break;
         }
+        
+        
+        if(rollingToken == TokenType::None){
+            // the current range is no valid token
+            if(_currentType != TokenType::None)
+            {
+                endToken(_currentType, tokenStart, tokenEnd-1);
+                tokenStart = tokenEnd-1;
+            }
+        }else{
+            _currentType = rollingToken;
+        }
+        tokenEnd++;
     }
     
     
@@ -133,8 +151,9 @@ bool Scanner::isNumber(int start, int end){
  * 
  * Valid identiviers must start with an alpha and then continue with alpha-num.
  *
+ * a
  * abc
- * ab1
+ * a1
  *
  */
 bool Scanner::isIdentifier(int start, int end){
@@ -154,8 +173,9 @@ bool Scanner::isIdentifier(int start, int end){
     return true;
 }
 
-void Scanner::endToken(TokenType type){
-    Token* t = new Token(type);
+void Scanner::endToken(TokenType type, int start, int end){
+    string tokenValue = subStrFromArr(_sourceData, start, end);
+    Token* t = new Token(type, tokenValue);
     _tokens->add(*t);
 }
 

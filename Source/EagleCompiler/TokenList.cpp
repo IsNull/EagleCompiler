@@ -11,12 +11,22 @@
 
 const Token* TokenList::next(){
     if(_iterator != _tokens->end()){
+        const Token* t = &*_iterator;
         _iterator++;
-        return &*_iterator;
+        return t;
     }
     return NULL;
 }
 
 string TokenList::toString() const {
-    return "toString not implemented!";
+    
+    list<Token>::const_iterator it = _tokens->begin();
+    string tokenListStr = "";
+    
+    while (it != _tokens->end()) {
+        tokenListStr += it->toString() + ",";
+        it++;
+    }
+    
+    return "{" + tokenListStr + "}";
 }

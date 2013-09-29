@@ -10,6 +10,7 @@
 #define __EagleCompiler__TokenList__
 
 #include <iostream>
+#include <list>
 #include "Token.h"
 
 using namespace std;

@@ -55,6 +55,37 @@ enum TokenType {
     
 };
 
+const map<TokenType, string> TokenNames {
+    {None, "None"},
+    
+    {Identifier, "Identifier"},
+    
+    {LiteralNumber, "LiteralNumber"},
+    {LiteralString, "LiteralString"},
+    
+    {StatementEnd, "StatementEnd"},
+    
+    // Brackets
+    {Bracked_Round_Open,"Bracked_Round_Open"},
+    {Bracked_Round_Close, "Bracked_Round_Close"},
+    {Bracked_Curly_Open, "Bracked_Curly_Open"},
+    {Bracked_Curly_Close,"Bracked_Curly_Close"},
+    {Bracked_Square_Open,"Bracked_Square_Open"},
+    {Bracked_Square_Close,"Bracked_Square_Close"},
+    
+    // Operator
+    {Operator_Not, "Operator_Not"},
+    {Operator_Assignment,"Operator_Assignment"},
+    {Operator_Plus,"Operator_Plus"},
+    {Operator_Minus,"Operator_Minus"},
+    {Operator_Div, "Operator_Div"},
+    {Operator_Multiply,"Operator_Multiply"},
+    {Operator_Equals,"Operator_Equals"},
+    {Operator_GreaterThan, "Operator_GreaterThan"},
+    {Operator_SmallerThan,"Operator_SmallerThan"}
+};
+
+
 typedef map<string, TokenType> TokenMap;
 
 const TokenMap TokenMap_Default =
@@ -98,12 +129,16 @@ public:
     /**
      * Gets the Type of this token
      */
-    TokenType getType(){ return _type; };
+    TokenType getType() const { return _type; };
     
     /**
      * Gets the Value(Literal) of this token
      */
-    string getValue(){ return _value; }
+    string getValue() const { return _value; }
+    
+    string toString() const {
+        return TokenNames.find(_type)->second;
+    }
     
 };
 
