@@ -51,6 +51,14 @@ enum TokenType {
     Operator_SmallerThan,   // <
     
 
+    // Keywords
+    
+    Keyword_Var,            // var
+    Keyword_Condition,      // if
+    Keyword_Do,             // do
+    Keyword_Break,          // break
+    Keyword_Continue,       // continue
+    
     // ...
     
 };
@@ -58,36 +66,45 @@ enum TokenType {
 const map<TokenType, string> TokenNames {
     {None, "None"},
     
-    {Identifier, "Identifier"},
+    {TokenType::Identifier, "Identifier"},
     
-    {LiteralNumber, "LiteralNumber"},
-    {LiteralString, "LiteralString"},
+    {TokenType::LiteralNumber, "LiteralNumber"},
+    {TokenType::LiteralString, "LiteralString"},
     
-    {StatementEnd, "StatementEnd"},
+    {TokenType::StatementEnd, "StatementEnd"},
     
     // Brackets
-    {Bracked_Round_Open,"Bracked_Round_Open"},
-    {Bracked_Round_Close, "Bracked_Round_Close"},
-    {Bracked_Curly_Open, "Bracked_Curly_Open"},
-    {Bracked_Curly_Close,"Bracked_Curly_Close"},
-    {Bracked_Square_Open,"Bracked_Square_Open"},
-    {Bracked_Square_Close,"Bracked_Square_Close"},
+    {TokenType::Bracked_Round_Open,"Bracked_Round_Open"},
+    {TokenType::Bracked_Round_Close, "Bracked_Round_Close"},
+    {TokenType::Bracked_Curly_Open, "Bracked_Curly_Open"},
+    {TokenType::Bracked_Curly_Close,"Bracked_Curly_Close"},
+    {TokenType::Bracked_Square_Open,"Bracked_Square_Open"},
+    {TokenType::Bracked_Square_Close,"Bracked_Square_Close"},
     
-    // Operator
-    {Operator_Not, "Operator_Not"},
-    {Operator_Assignment,"Operator_Assignment"},
-    {Operator_Plus,"Operator_Plus"},
-    {Operator_Minus,"Operator_Minus"},
-    {Operator_Div, "Operator_Div"},
-    {Operator_Multiply,"Operator_Multiply"},
-    {Operator_Equals,"Operator_Equals"},
-    {Operator_GreaterThan, "Operator_GreaterThan"},
-    {Operator_SmallerThan,"Operator_SmallerThan"}
+    // Operators
+    {TokenType::Operator_Not, "Operator_Not"},
+    {TokenType::Operator_Assignment,"Operator_Assignment"},
+    {TokenType::Operator_Plus,"Operator_Plus"},
+    {TokenType::Operator_Minus,"Operator_Minus"},
+    {TokenType::Operator_Div, "Operator_Div"},
+    {TokenType::Operator_Multiply,"Operator_Multiply"},
+    {TokenType::Operator_Equals,"Operator_Equals"},
+    {TokenType::Operator_GreaterThan, "Operator_GreaterThan"},
+    {TokenType::Operator_SmallerThan,"Operator_SmallerThan"},
+    
+    // Keywords
+    {TokenType::Keyword_Var, "Keyword_Var"},
+    {TokenType::Keyword_Condition,"Keyword_Condition"},
+    {TokenType::Keyword_Do,"Keyword_Do"},
+    {TokenType::Keyword_Break, "Keyword_Break"},
+    {TokenType::Keyword_Continue,"Keyword_Continue"}
 };
 
-
+// Represents a mapping of string to a token type
 typedef map<string, TokenType> TokenMap;
 
+// Tokenmap for the default context
+// (for comments or literal strings, there are diffrent contexts)
 const TokenMap TokenMap_Default =
     {
         {";", TokenType::StatementEnd},
@@ -112,6 +129,21 @@ const TokenMap TokenMap_Default =
         {"]", TokenType::Bracked_Square_Close}
         
     };
+/*
+Keyword_Var,            // var
+Keyword_Condition,      // if
+Keyword_Do,             // do
+Keyword_Break,          // break
+Keyword_Continue,       // continue
+*/
+const TokenMap KeywordTokens =
+{
+    {"var", TokenType::Keyword_Var},
+    {"if", TokenType::Keyword_Condition},
+    {"do", TokenType::Keyword_Do},
+    {"break", TokenType::Keyword_Break},
+    {"continue", TokenType::Keyword_Continue}
+};
 
 /**
  * Represents a Token
@@ -149,6 +181,16 @@ public:
     
     string toString() const {
         return "[" + TokenNames.find(_type)->second + "," + _value + "]";
+    }
+    
+    /**
+     * Find the keyword for the given keyword
+     * If the given string is not a keyword TokenType::None is returned.
+     *
+     */
+    static TokenType findKeyword(string possibleKeyword){
+        TokenMap::const_iterator it = KeywordTokens.find(possibleKeyword);
+        return (it == KeywordTokens.end()) ? TokenType::None : it->second;
     }
     
 };

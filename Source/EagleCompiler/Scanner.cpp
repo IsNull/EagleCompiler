@@ -18,8 +18,6 @@ using namespace std;
 Scanner::Scanner(){
     _state = ScannerState::Default;
     _tokens = new TokenList();
-    
-    
 }
 
 
@@ -223,6 +221,15 @@ bool Scanner::isIdentifier(int start, int end){
 
 void Scanner::endToken(TokenType type, int start, int end){
     string tokenValue = subStrFromArr(_sourceData, start, end);
+    
+    // check for keyword and inject if appropriate
+    if(type == TokenType::Identifier)
+    {
+        TokenType keyword = Token::findKeyword(tokenValue);
+        if(keyword != TokenType::None)
+            type = keyword;
+    }
+    
     Token* t = new Token(type, tokenValue);
     _tokens->add(*t);
 }

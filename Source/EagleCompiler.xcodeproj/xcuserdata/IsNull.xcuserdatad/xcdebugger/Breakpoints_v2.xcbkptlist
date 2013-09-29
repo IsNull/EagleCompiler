@@ -40,11 +40,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EagleCompiler/Scanner.cpp"
-            timestampString = "402158885.145691"
+            timestampString = "402160378.078635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "Scanner::isNumber(int start, int end)"
             landmarkType = "5">
          </BreakpointContent>
@@ -56,11 +56,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EagleCompiler/Scanner.cpp"
-            timestampString = "402155796.875197"
+            timestampString = "402160378.078635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "Scanner::scan(string source)"
             landmarkType = "5">
          </BreakpointContent>
