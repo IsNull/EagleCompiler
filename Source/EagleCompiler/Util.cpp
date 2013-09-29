@@ -8,6 +8,7 @@
 
 #include "Util.h"
 #include <string>
+#include <string.h>
 
 std::string Util::subStrFromArr(char* buff, int start, int end){
     end++;
