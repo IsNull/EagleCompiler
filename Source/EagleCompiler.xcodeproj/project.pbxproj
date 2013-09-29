@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D221B47517F745D900E76550 /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B47317F745D900E76550 /* Token.cpp */; };
+		D221B47C17F8252C00E76550 /* TokenList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B47A17F8252C00E76550 /* TokenList.cpp */; };
 		D2BED5DC17F744AB005EAFEA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2BED5DB17F744AB005EAFEA /* main.cpp */; };
 		D2BED5DE17F744AB005EAFEA /* EagleCompiler.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,8 @@
 /* Begin PBXFileReference section */
 		D221B47317F745D900E76550 /* Token.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Token.cpp; sourceTree = "<group>"; };
 		D221B47417F745D900E76550 /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
+		D221B47A17F8252C00E76550 /* TokenList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TokenList.cpp; sourceTree = "<group>"; };
+		D221B47B17F8252C00E76550 /* TokenList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenList.h; sourceTree = "<group>"; };
 		D2BED5D817F744AB005EAFEA /* EagleCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EagleCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2BED5DB17F744AB005EAFEA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = EagleCompiler.1; sourceTree = "<group>"; };
@@ -67,6 +70,8 @@
 				D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */,
 				D221B47317F745D900E76550 /* Token.cpp */,
 				D221B47417F745D900E76550 /* Token.h */,
+				D221B47A17F8252C00E76550 /* TokenList.cpp */,
+				D221B47B17F8252C00E76550 /* TokenList.h */,
 			);
 			path = EagleCompiler;
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 			files = (
 				D2BED5DC17F744AB005EAFEA /* main.cpp in Sources */,
 				D221B47517F745D900E76550 /* Token.cpp in Sources */,
+				D221B47C17F8252C00E76550 /* TokenList.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

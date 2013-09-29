@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <string.h>
+#include <list>
 
 using namespace std;
 
@@ -69,20 +70,6 @@ public:
     string getValue(){ return _value; }
     
 };
-
-
-class TokenList
-{
-private:
-    
-public:
-    void add(Token& t);
-    
-    Token* next();
-    
-    string toString();
-};
-
 
 
 #endif /* defined(__EagleCompiler__Token__) */
