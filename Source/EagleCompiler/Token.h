@@ -186,8 +186,11 @@ public:
      */
     string getValue() const { return _value; }
     
-    string toString() const {
-        return "[" + TokenNames.find(_type)->second + "," + _value + "]";
+    
+    
+    friend std::ostream& operator<< (std::ostream& stream, const Token& token) {
+        stream << "[" + TokenNames.find(token._type)->second + "," + token._value + "]";
+        return stream;
     }
     
     /**

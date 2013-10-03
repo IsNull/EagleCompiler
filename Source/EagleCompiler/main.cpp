@@ -28,7 +28,7 @@ int main()
     // tokenize it:
     cout << testStatement + "\n\n";
     const TokenList* list = scanner->scan(testStatement);
-    cout << "\n\nTokens: " << list->toString();
+    cout << "\n\nTokens: " << *list;
     
     
     return 0;

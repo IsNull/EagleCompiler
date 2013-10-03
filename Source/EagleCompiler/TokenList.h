@@ -35,7 +35,20 @@ public:
     // return the next Token or NULL
     const Token* next();
     
-    string toString() const;
+    friend std::ostream& operator<< (std::ostream& stream, const TokenList& tokenList) {
+    
+        stream << "{";
+        
+        list<Token>::const_iterator it = tokenList._tokens->begin();
+
+        while (it != tokenList._tokens->end()) {
+            stream << *it << ",";
+            it++;
+        }
+        stream << "}";
+        
+        return stream;
+    }
 };
 
 #endif /* defined(__EagleCompiler__TokenList__) */

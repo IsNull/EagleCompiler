@@ -17,16 +17,3 @@ const Token* TokenList::next(){
     }
     return NULL;
 }
-
-string TokenList::toString() const {
-    
-    list<Token>::const_iterator it = _tokens->begin();
-    string tokenListStr = "";
-    
-    while (it != _tokens->end()) {
-        tokenListStr += it->toString() + ",";
-        it++;
-    }
-    
-    return "{" + tokenListStr + "}";
-}
