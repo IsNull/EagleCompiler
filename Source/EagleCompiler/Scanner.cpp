@@ -212,7 +212,7 @@ bool Scanner::isNumber(int start, int end){
 }
 
 /**
- * Checks if the given char range is an valid Identifier
+ * Checks if the given char range is a valid Identifier
  * 
  * Valid identiviers must start with an alpha and then continue with alpha-num.
  *
@@ -239,7 +239,7 @@ bool Scanner::isIdentifier(int start, int end){
 }
 
 /**
- * Checks if the given char range is an whitespace
+ * Checks if the given char range is a whitespace
  * I.e. the range must only contain whitespace chars (space, tabs, newline etc.)
  *
  */
