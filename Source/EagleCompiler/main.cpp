@@ -1,14 +1,16 @@
 #include <iostream>
 #include "Token.h"
-#include "Scanner.h"
 #include "TokenList.h"
-#include "parser/Parser.h"
+#include "scanner/Scanner.h"
+//#include "scanner/Scanner.cpp"
+//#include "parser/Parser.h"
+//#include "parser/Parser.cpp"
 
 using namespace std;
 
 int main()
 {
-    Scanner* scanner = new Scanner();
+    
     
     // ---- Simple Test cases
     
@@ -22,7 +24,7 @@ int main()
 
     string testStatement = basicStatement;
     
-    Parser p;
+    //Parser p;
     
     
     // ----
@@ -30,9 +32,10 @@ int main()
     
     // tokenize it:
     cout << testStatement + "\n\n";
-    const TokenList* list = scanner->scan(testStatement);
+    Scanner scanner;
+    const TokenList* list = scanner.scan(testStatement);
     cout << "\n\nTokens: " << *list;
-    
-    
+
+
     return 0;
 }

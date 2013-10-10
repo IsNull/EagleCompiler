@@ -10,10 +10,15 @@
 #define __EagleCompiler__Scanner__
 
 #include <iostream>
+#include <string>
 #include "Token.h"
 #include "TokenList.h"
 
 using namespace std;
+
+
+int scanTest(int i);
+
 
 /**
  * Represents a basic state of the scanner

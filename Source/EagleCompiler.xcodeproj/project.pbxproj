@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		D221B47517F745D900E76550 /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B47317F745D900E76550 /* Token.cpp */; };
 		D221B47C17F8252C00E76550 /* TokenList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B47A17F8252C00E76550 /* TokenList.cpp */; };
-		D221B48217F82D9600E76550 /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B48017F82D9600E76550 /* Scanner.cpp */; };
 		D221B48517F8451900E76550 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B48317F8451900E76550 /* Util.cpp */; };
 		D2BED5DC17F744AB005EAFEA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2BED5DB17F744AB005EAFEA /* main.cpp */; };
 		D2BED5DE17F744AB005EAFEA /* EagleCompiler.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */; };
+		D2D92BA21806D41B0099CBDB /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2D92BA01806D41B0099CBDB /* Scanner.cpp */; };
+		D2D92BA31806D41B0099CBDB /* Scanner.h in Sources */ = {isa = PBXBuildFile; fileRef = D2D92BA11806D41B0099CBDB /* Scanner.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,14 +34,16 @@
 		D221B47417F745D900E76550 /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
 		D221B47A17F8252C00E76550 /* TokenList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TokenList.cpp; sourceTree = "<group>"; };
 		D221B47B17F8252C00E76550 /* TokenList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenList.h; sourceTree = "<group>"; };
-		D221B48017F82D9600E76550 /* Scanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scanner.cpp; sourceTree = "<group>"; };
-		D221B48117F82D9600E76550 /* Scanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scanner.h; sourceTree = "<group>"; };
 		D221B48317F8451900E76550 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
 		D221B48417F8451900E76550 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		D221B48617FDB1AF00E76550 /* parser */ = {isa = PBXFileReference; lastKnownFileType = folder; path = parser; sourceTree = "<group>"; };
+		D290B70A1806D1130030DC82 /* Testchen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Testchen.h; path = EagleCompiler/scanner/Testchen.h; sourceTree = "<group>"; };
+		D290B70B1806D28C0030DC82 /* scanner */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scanner; sourceTree = "<group>"; };
 		D2BED5D817F744AB005EAFEA /* EagleCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EagleCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2BED5DB17F744AB005EAFEA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = EagleCompiler.1; sourceTree = "<group>"; };
+		D2D92BA01806D41B0099CBDB /* Scanner.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Scanner.cpp; path = EagleCompiler/scanner/Scanner.cpp; sourceTree = "<group>"; };
+		D2D92BA11806D41B0099CBDB /* Scanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Scanner.h; path = EagleCompiler/scanner/Scanner.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +60,11 @@
 		D2BED5CF17F744AB005EAFEA = {
 			isa = PBXGroup;
 			children = (
-				D2BED5DA17F744AB005EAFEA /* EagleCompiler */,
 				D2BED5D917F744AB005EAFEA /* Products */,
+				D2BED5DA17F744AB005EAFEA /* EagleCompiler */,
+				D2D92BA01806D41B0099CBDB /* Scanner.cpp */,
+				D2D92BA11806D41B0099CBDB /* Scanner.h */,
+				D290B70A1806D1130030DC82 /* Testchen.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,13 +81,12 @@
 			children = (
 				D2BED5DB17F744AB005EAFEA /* main.cpp */,
 				D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */,
+				D290B70B1806D28C0030DC82 /* scanner */,
 				D221B48617FDB1AF00E76550 /* parser */,
 				D221B47317F745D900E76550 /* Token.cpp */,
 				D221B47417F745D900E76550 /* Token.h */,
 				D221B47A17F8252C00E76550 /* TokenList.cpp */,
 				D221B47B17F8252C00E76550 /* TokenList.h */,
-				D221B48017F82D9600E76550 /* Scanner.cpp */,
-				D221B48117F82D9600E76550 /* Scanner.h */,
 				D221B48317F8451900E76550 /* Util.cpp */,
 				D221B48417F8451900E76550 /* Util.h */,
 			);
@@ -157,9 +162,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2D92BA21806D41B0099CBDB /* Scanner.cpp in Sources */,
+				D2D92BA31806D41B0099CBDB /* Scanner.h in Sources */,
 				D2BED5DC17F744AB005EAFEA /* main.cpp in Sources */,
 				D221B47517F745D900E76550 /* Token.cpp in Sources */,
-				D221B48217F82D9600E76550 /* Scanner.cpp in Sources */,
 				D221B47C17F8252C00E76550 /* TokenList.cpp in Sources */,
 				D221B48517F8451900E76550 /* Util.cpp in Sources */,
 			);
@@ -285,6 +291,7 @@
 				D221B47917F7468B00E76550 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D2BED5D317F744AB005EAFEA /* Build configuration list for PBXProject "EagleCompiler" */ = {
 			isa = XCConfigurationList;

@@ -6,13 +6,20 @@
 //  Copyright (c) 2013 Pascal Büttiker. All rights reserved.
 //
 
+#include <cctype>
+
 #include "Scanner.h"
 #include "Token.h"
 #include "TokenList.h"
 #include "Util.h"
-#include <cctype>
 
 using namespace std;
+
+
+
+int scanTest(int i){
+    return i * 2;
+}
 
 
 Scanner::Scanner(){
