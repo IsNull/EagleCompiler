@@ -65,6 +65,46 @@ enum TokenType {
     
 };
 
+const map<TokenType, string> TokenNames {
+        {None, "None"},
+    
+        {TokenType::Identifier, "Identifier"},
+        {TokenType::WhiteSpace, "Whitespace"},
+    
+        {TokenType::LiteralNumber, "LiteralNumber"},
+        {TokenType::LiteralString, "LiteralString"},
+    
+        {TokenType::StatementEnd, "StatementEnd"},
+    
+        // Brackets
+        {TokenType::Bracked_Round_Open,"Bracked_Round_Open"},
+        {TokenType::Bracked_Round_Close, "Bracked_Round_Close"},
+        {TokenType::Bracked_Curly_Open, "Bracked_Curly_Open"},
+        {TokenType::Bracked_Curly_Close,"Bracked_Curly_Close"},
+        {TokenType::Bracked_Square_Open,"Bracked_Square_Open"},
+        {TokenType::Bracked_Square_Close,"Bracked_Square_Close"},
+    
+        // Operators
+        {TokenType::Operator_Not, "Operator_Not"},
+        {TokenType::Operator_Assignment,"Operator_Assignment"},
+        {TokenType::Operator_Plus,"Operator_Plus"},
+        {TokenType::Operator_Minus,"Operator_Minus"},
+        {TokenType::Operator_Div, "Operator_Div"},
+        {TokenType::Operator_Multiply,"Operator_Multiply"},
+        {TokenType::Operator_Equals,"Operator_Equals"},
+        {TokenType::Operator_GreaterThan, "Operator_GreaterThan"},
+        {TokenType::Operator_SmallerThan,"Operator_SmallerThan"},
+        {TokenType::Operator_GreaterThanOrEqual, "Operator_GreaterThanOrEqual"},
+        {TokenType::Operator_SmallerThanOrEqual,"Operator_SmallerThanOrEqual"},
+    
+        // Keywords
+        {TokenType::Keyword_Var, "Keyword_Var"},
+        {TokenType::Keyword_Condition,"Keyword_Condition"},
+        {TokenType::Keyword_Do,"Keyword_Do"},
+        {TokenType::Keyword_Break, "Keyword_Break"},
+        {TokenType::Keyword_Continue,"Keyword_Continue"}
+    };
+
 ostream& operator<<(ostream& o, TokenType t);
 
 // Represents a mapping of string to a token type
