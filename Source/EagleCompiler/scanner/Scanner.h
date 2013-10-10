@@ -11,32 +11,29 @@
 
 #include <iostream>
 #include <string>
+#include "ScannerEnums.h"
 #include "Token.h"
 #include "TokenList.h"
+#include "ScannerContext.h"
 
 using namespace std;
 
 
-/**
- * Represents a basic state of the scanner
- * for diffrent grammar contexts
- */
-enum class ScannerState {
-    Default,            // default context
-    LineComment,        // the scanner is in a line comment context
-    MultiLineComment,   // the scanner is in a multiline comment context
-    LiteralString       // the scanner is in literal string context
-};
+
+class IScannerContext; // forward declaration
+
 
 
 class Scanner {
 private:
-    ScannerState _state;    // The scanner context state
-    TokenType _currentType; // the current contexts state, representet as token type
+    ScannerState _state;            // The scanner context state
+    IScannerContext* _contextState;  // The current scanner context state
     
-    TokenList* _tokens;     // Holds all tokens we gathered so far
-    char* _sourceData;      // char buffer for fast accessing the source
-    int _sourceSize;        // size of the source char buffer
+    TokenType _currentType;         // the current contexts state, representet as token type
+    
+    TokenList* _tokens;             // Holds all tokens we gathered so far
+    char* _sourceData;              // char buffer for fast accessing the source
+    int _sourceSize;                // size of the source char buffer
     
     bool _omitWhiteSpaces = true;
     
@@ -46,12 +43,6 @@ private:
     void handleEOF(TokenType rollingToken, int tokenStart, int tokenEnd);
 
     void endToken(TokenType type, int start, int end);
-    
-    bool isNumber(int start, int end);
-    
-    bool isIdentifier(int start, int end);
-    
-    bool isWhiteSpace(int start, int end);
     
     /**
      * Determines whats the token type of the current range is.
@@ -75,6 +66,12 @@ public:
      * Get the source string of the given range
      */
     string range(int start, int end);
+    
+    bool isNumber(int start, int end);
+    
+    bool isIdentifier(int start, int end);
+    
+    bool isWhiteSpace(int start, int end);
 };
 
 

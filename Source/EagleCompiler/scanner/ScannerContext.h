@@ -16,6 +16,9 @@
 
 using namespace std;
 
+
+class Scanner; // forward decl
+
 /**
  * Represents a scanner context interface
  */
@@ -64,7 +67,10 @@ public:
 
 
 class ScannerContextDefault  : public ScannerContextBase {
-
+    
+    // IScannerContext implementation
+    TokenType stepRange(int start, int end);
+    ScannerState nextState();
 };
 
 

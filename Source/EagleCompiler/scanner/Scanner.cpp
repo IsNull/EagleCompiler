@@ -155,6 +155,9 @@ void Scanner::handleEOF(TokenType rollingToken, int tokenStart, int tokenEnd){
  */
 TokenType Scanner::isToken(int start, int end){
     
+    
+    
+    
     TokenType rangeTokenType = TokenType::None;
     
     
