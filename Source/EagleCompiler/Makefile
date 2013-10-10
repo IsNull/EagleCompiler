@@ -24,3 +24,6 @@ $(OBJDIR)/tokenlist.o: TokenList.cpp
 
 $(OBJDIR)/util.o: Util.cpp
 	$(CC) $(CFLAGS) -c Util.cpp -o $(OBJDIR)/util.o
+
+clean:
+	rm $(OBJDIR)/*

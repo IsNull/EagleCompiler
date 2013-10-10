@@ -68,9 +68,10 @@ const TokenList* Scanner::scan(string source){
         }
         
         // DEBUG ONLY - print rolling token stream
+/*        cout <<  "(" << tokenStart << "," << tokenEnd << ") rolling token: "
+        + TokenNames.find(rollingToken)->second + "\n"*/;
         cout <<  "(" << tokenStart << "," << tokenEnd << ") rolling token: "
-        + TokenNames.find(rollingToken)->second + "\n";
-        
+        << rollingToken << "\n";
         
         bool eof = tokenEnd == _sourceSize-1;
         
