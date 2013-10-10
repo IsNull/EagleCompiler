@@ -2,6 +2,7 @@
 #include "Token.h"
 #include "Scanner.h"
 #include "TokenList.h"
+#include "parser/Parser.h"
 
 using namespace std;
 
@@ -20,6 +21,8 @@ int main()
     string numIdent = "12&abc";
 
     string testStatement = basicStatement;
+    
+    Parser p;
     
     
     // ----
