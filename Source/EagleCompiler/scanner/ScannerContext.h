@@ -13,6 +13,7 @@
 #include <string>
 #include "Token.h"
 #include "Scanner.h"
+#include "Singleton.h"
 
 using namespace std;
 
@@ -66,11 +67,20 @@ public:
 };
 
 
-class ScannerContextDefault  : public ScannerContextBase {
+class ScannerContextDefault  : public ScannerContextBase, public Singleton <ScannerContextDefault>{
+    
+    friend class Singleton <ScannerContextDefault>;
+    
+public:
+    ~ScannerContextDefault () { };
     
     // IScannerContext implementation
     TokenType stepRange(int start, int end);
     ScannerState nextState();
+    
+protected:
+    ScannerContextDefault(){ };
+    
 };
 
 

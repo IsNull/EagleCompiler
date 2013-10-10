@@ -18,10 +18,15 @@ using namespace std;
 
 
 Scanner::Scanner(){
-    _state = ScannerState::Default;
     _tokens = new TokenList();
+    setContext(ScannerContextDefault::instance());
 }
 
+void Scanner::setContext(IScannerContext *context){
+    _contextState = context;
+    _state = ScannerState::Default;
+    _contextState->startContext(this, _state); // TODO: FIX THIS!
+}
 
 void Scanner::init(string source){
     // Init our char buffer from the string
@@ -29,7 +34,7 @@ void Scanner::init(string source){
     _sourceSize = (int)source.size();
     _sourceData = new char[_sourceSize+1];
     _sourceData[_sourceSize]=0;
-    memcpy(_sourceData,source.c_str(),_sourceSize);
+    memcpy(_sourceData, source.c_str(), _sourceSize);
 }
 
 const TokenList* Scanner::scan(string source){
@@ -154,50 +159,7 @@ void Scanner::handleEOF(TokenType rollingToken, int tokenStart, int tokenEnd){
  * TODO(*)
  */
 TokenType Scanner::isToken(int start, int end){
-    
-    
-    
-    
-    TokenType rangeTokenType = TokenType::None;
-    
-    
-    string possibleToken = range(start, end);
-    
-    // Depending on the current state we have diffrnet grammars
-    // i.e. Default, LiteralString or Comment grammar...
-    
-    // for now, we handle only the default grammar:
-    
-    
-    // ---- STATE: DEFAULT GRAMMAR ---- (TODO: Refactor into state pattern)
-    
-    // Check if current range is terminal/operator token
-    // then check if range is identifier/literal number
-    
-    TokenMap::const_iterator it = TokenMap_Default.find(possibleToken);
-    
-    if(it != TokenMap_Default.end()){
-        // found matching token
-        rangeTokenType = it->second;
-    }
-        
-    if(rangeTokenType == TokenType::None){
-        // we could not find a matching token in our context map
-        // we have to check for identifiers and literals by ourselfes:
-        
-        if(isNumber(start, end))
-        {
-            rangeTokenType = TokenType::LiteralNumber;
-        }else if(isIdentifier(start, end)){
-            rangeTokenType = TokenType::Identifier;
-        }else if(isWhiteSpace(start, end)){
-            rangeTokenType = TokenType::WhiteSpace;
-        }
-    }
-    
-    // ---- END STATE: DEFAULT GRAMMAR ----
-    
-    return rangeTokenType;
+    return _contextState->stepRange(start, end);
 }
 
 string Scanner::range(int start, int end){

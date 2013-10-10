@@ -44,6 +44,8 @@ private:
 
     void endToken(TokenType type, int start, int end);
     
+    void setContext(IScannerContext* context);
+    
     /**
      * Determines whats the token type of the current range is.
      * If the current range is no longer a known token, we have found a token t(start,end-1);
