@@ -50,6 +50,6 @@ TokenType ScannerContextDefault::stepRange(int start, int end){
     return rangeTokenType;
 };
 
-ScannerState ScannerContextDefault::nextState(){
-    return ScannerState::Default;
+KnownScannerState ScannerContextDefault::nextState(){
+    return KnownScannerState::Default;
 };

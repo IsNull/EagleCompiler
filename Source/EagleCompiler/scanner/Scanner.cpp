@@ -23,9 +23,16 @@ Scanner::Scanner(){
 }
 
 void Scanner::setContext(IScannerContext *context){
+    
+    // get current active state and remember it
+    KnownScannerState prevState = KnownScannerState::Default;
+    if(_contextState){
+        prevState = _contextState->getState();
+    }
+    
+    // set the new state as active
     _contextState = context;
-    _state = ScannerState::Default;
-    _contextState->startContext(this, _state); // TODO: FIX THIS!
+    _contextState->startContext(this, prevState);
 }
 
 void Scanner::init(string source){
@@ -51,28 +58,8 @@ const TokenList* Scanner::scan(string source){
         
         TokenType rollingToken;
         
-        switch (_state) {
-            case ScannerState::Default:
-                
-                rollingToken = isToken(tokenStart, tokenEnd);
+        rollingToken = isToken(tokenStart, tokenEnd);
 
-                break;
-                
-            case ScannerState::MultiLineComment:
-                //TODO
-                rollingToken = TokenType::None;
-                break;
-                
-            case ScannerState::LiteralString:
-                // TODO
-                rollingToken = TokenType::None;
-                break;
-                
-            default:
-                // exception No state handling
-                rollingToken = TokenType::None;
-                break;
-        }
         
         // DEBUG ONLY - print rolling token stream
         cout <<  "(" << tokenStart << "," << tokenEnd << ") rolling token: " << rollingToken << "\n";

@@ -26,7 +26,6 @@ class IScannerContext; // forward declaration
 
 class Scanner {
 private:
-    ScannerState _state;            // The scanner context state
     IScannerContext* _contextState;  // The current scanner context state
     
     TokenType _currentType;         // the current contexts state, representet as token type
@@ -44,12 +43,21 @@ private:
 
     void endToken(TokenType type, int start, int end);
     
+    
+    /**
+     * Set the ScannerContext of this scanner
+     */
     void setContext(IScannerContext* context);
     
     /**
      * Determines whats the token type of the current range is.
      * If the current range is no longer a known token, we have found a token t(start,end-1);
      * since one char before we had a token.
+     *
+     * IMPLEMENTATION NOTE:
+     *
+     * In the current implementation this call is delegated to the current ScannerContext
+     *
      */
     TokenType isToken(int start, int end);
     

@@ -14,7 +14,7 @@
  * Represents a basic state of the scanner
  * for diffrent grammar contexts
  */
-enum class ScannerState {
+enum class KnownScannerState {
     Default,            // default context
     LineComment,        // the scanner is in a line comment context
     MultiLineComment,   // the scanner is in a multiline comment context
