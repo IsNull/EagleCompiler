@@ -17,11 +17,6 @@ using namespace std;
 
 
 
-int scanTest(int i){
-    return i * 2;
-}
-
-
 Scanner::Scanner(){
     _state = ScannerState::Default;
     _tokens = new TokenList();
@@ -75,10 +70,8 @@ const TokenList* Scanner::scan(string source){
         }
         
         // DEBUG ONLY - print rolling token stream
-/*        cout <<  "(" << tokenStart << "," << tokenEnd << ") rolling token: "
-        + TokenNames.find(rollingToken)->second + "\n"*/;
-        cout <<  "(" << tokenStart << "," << tokenEnd << ") rolling token: "
-        << rollingToken << "\n";
+        cout <<  "(" << tokenStart << "," << tokenEnd << ") rolling token: " << rollingToken << "\n";
+        
         
         bool eof = tokenEnd == _sourceSize-1;
         
@@ -92,7 +85,7 @@ const TokenList* Scanner::scan(string source){
                     _currentType = TokenType::None;
                 }else{
 
-                    cout << "ERROR UNEXPECTED SIGN: '" + Util::subStrFromArr(_sourceData, tokenStart, tokenEnd) + "' (no Token matches)\n";
+                    cout << "ERROR UNEXPECTED SIGN: '" + range(tokenStart, tokenEnd) + "' (no Token matches)\n";
                     
                     // ignore unknown tokes (alternatively, just throw an exception here... but thats lazy u know :) )
                     // just advance scan range +1
@@ -165,7 +158,7 @@ TokenType Scanner::isToken(int start, int end){
     TokenType rangeTokenType = TokenType::None;
     
     
-    string possibleToken = Util::subStrFromArr(_sourceData, start, end);
+    string possibleToken = range(start, end);
     
     // Depending on the current state we have diffrnet grammars
     // i.e. Default, LiteralString or Comment grammar...
@@ -202,6 +195,10 @@ TokenType Scanner::isToken(int start, int end){
     // ---- END STATE: DEFAULT GRAMMAR ----
     
     return rangeTokenType;
+}
+
+string Scanner::range(int start, int end){
+    return Util::subStrFromArr(_sourceData, start, end);
 }
 
 
@@ -272,7 +269,7 @@ void Scanner::endToken(TokenType type, int start, int end){
         return;
     
     // Extract the token string from the source data
-    string tokenValue = Util::subStrFromArr(_sourceData, start, end);
+    string tokenValue = range(start, end);
     
     // check if token is keyword, and if so, inject specific keyword token
     if(type == TokenType::Identifier)

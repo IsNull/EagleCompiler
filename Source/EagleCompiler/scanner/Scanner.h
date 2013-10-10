@@ -17,9 +17,6 @@
 using namespace std;
 
 
-int scanTest(int i);
-
-
 /**
  * Represents a basic state of the scanner
  * for diffrent grammar contexts
@@ -73,6 +70,11 @@ public:
      *
      */
     const TokenList* scan(string source);
+    
+    /**
+     * Get the source string of the given range
+     */
+    string range(int start, int end);
 };
 
 

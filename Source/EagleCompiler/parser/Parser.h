@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Pascal Büttiker. All rights reserved.
 //
 
-#ifndef __EagleCompiler__Util__
-#define __EagleCompiler__Util__
+#ifndef __EagleCompiler__Parser__
+#define __EagleCompiler__Parser__
 
 #include <iostream>
 #include <string>
@@ -18,4 +18,4 @@ public:
     
 };
 
-#endif /* defined(__EagleCompiler__Util__) */
+#endif /* defined(__EagleCompiler__Parser__) */
