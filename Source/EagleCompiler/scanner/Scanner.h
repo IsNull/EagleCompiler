@@ -47,7 +47,7 @@ private:
     /**
      * Set the ScannerContext of this scanner
      */
-    void setContext(IScannerContext* context);
+    void setContext(KnownScannerState stateType);
     
     /**
      * Determines whats the token type of the current range is.

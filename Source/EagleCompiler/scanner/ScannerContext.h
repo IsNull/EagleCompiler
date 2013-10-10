@@ -65,7 +65,12 @@ class ScannerContextBase  : public IScannerContext {
 protected:
     Scanner* _scanner;
     KnownScannerState _previousContext;
-
+    KnownScannerState _nextState;
+    
+    // To be implemented by concrete sub classes
+    virtual TokenType stepRangeInternal(int start, int end)=0;
+    virtual KnownScannerState mapNextState(TokenType token)=0;
+    
 public:
     /**
      * Set the external info for this state.
@@ -74,6 +79,14 @@ public:
         _scanner = scanner;
         _previousContext = previousContext;
     }
+    
+    TokenType stepRange(int start, int end){
+        TokenType token = stepRangeInternal(start, end);
+        _nextState = mapNextState(token);
+        return token;
+    };
+    
+    KnownScannerState nextState(){ return _nextState; };
 };
 
 /**
@@ -90,12 +103,36 @@ public:
     // IScannerContext implementation
     //
     
-    TokenType stepRange(int start, int end);
-    KnownScannerState nextState();
+    TokenType stepRangeInternal(int start, int end);
+    KnownScannerState mapNextState(TokenType token);
     KnownScannerState getState() { return KnownScannerState::Default; }
     
 protected:
     ScannerContextDefault(){ };
+    
+};
+
+
+/**
+ * Represents the default scanner context. (Basic statements, code structure)
+ */
+class ScannerContextLineComment  : public ScannerContextBase, public Singleton <ScannerContextDefault>{
+    
+    friend class Singleton <ScannerContextDefault>;
+    
+public:
+    ~ScannerContextLineComment () { };
+    
+    //
+    // IScannerContext implementation
+    //
+    
+    TokenType stepRange(int start, int end);                    // TO IMPLEMENT!
+    KnownScannerState mapNextState(TokenType token);            // TO IMPLEMENT!
+    KnownScannerState getState() { return KnownScannerState::LineComment; }
+    
+protected:
+    ScannerContextLineComment(){ };
     
 };
 

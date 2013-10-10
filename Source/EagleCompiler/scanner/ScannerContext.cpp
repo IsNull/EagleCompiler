@@ -12,11 +12,53 @@
 
 using namespace std;
 
+//
+// ============================= ScannerContextDefault =============================
+//
+
+/*
+ * Tokenmap for the default context.
+ * Contains all tokens which have to be detected in this context
+ * (for comments or literal strings, there are diffrent contexts)
+ */
+const TokenMap TokenMap_Default =
+{
+    {";", TokenType::StatementEnd},
+    
+    // Comments
+    {"/*", TokenType::Comment_ML_Start},
+    // Note that Comment_ML_End is not detected in this context
+    {"//", TokenType::Comment_Line},
+    
+    // Operators
+    {"==", TokenType::Operator_Equals},
+    {"+", TokenType::Operator_Plus},
+    {"-", TokenType::Operator_Minus},
+    {"=", TokenType::Operator_Assignment},
+    {">", TokenType::Operator_GreaterThan},
+    {"<", TokenType::Operator_SmallerThan},
+    {">=", TokenType::Operator_GreaterThanOrEqual},
+    {"<=", TokenType::Operator_SmallerThanOrEqual},
+    {"*", TokenType::Operator_Multiply},
+    {"/", TokenType::Operator_Div},
+    {"!", TokenType::Operator_Not},
+    
+    // Brackets
+    {"(", TokenType::Bracked_Round_Open},
+    {")", TokenType::Bracked_Round_Close},
+    {"{", TokenType::Bracked_Curly_Open},
+    {"}", TokenType::Bracked_Curly_Close},
+    {"[", TokenType::Bracked_Square_Open},
+    {"]", TokenType::Bracked_Square_Close}
+    
+};
+
+
 /**
  * Grammar Default grammar implementation
  *
  */
-TokenType ScannerContextDefault::stepRange(int start, int end){
+TokenType ScannerContextDefault::stepRangeInternal(int start, int end){
 
     TokenType rangeTokenType = TokenType::None;
     
@@ -50,6 +92,40 @@ TokenType ScannerContextDefault::stepRange(int start, int end){
     return rangeTokenType;
 };
 
-KnownScannerState ScannerContextDefault::nextState(){
-    return KnownScannerState::Default;
+KnownScannerState ScannerContextDefault::mapNextState(TokenType token){
+    switch (token) {
+        case TokenType::Comment_Line:
+            return KnownScannerState::LineComment;
+            break;
+            
+        case TokenType::Comment_ML_Start:
+            return KnownScannerState::MultiLineComment;
+            break;
+            
+        case TokenType::LiteralString:
+            return KnownScannerState::LiteralString;
+            break;
+            
+        default:
+            // Every other token won't change the current state
+            // thus we keep the default state
+            return KnownScannerState::Default;
+            break;
+    }
 };
+
+
+//
+// ============================= ScannerContextLineComment =============================
+//
+
+// TODO
+
+
+
+//
+// ============================= ScannerContextMultiLineComment =============================
+//
+
+// TODO
+

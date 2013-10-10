@@ -32,6 +32,12 @@ enum TokenType {
     
     StatementEnd,           // ;
     
+    // Comments
+    
+    Comment_ML_Start,       // /*
+    Comment_ML_End,         // */
+    Comment_Line,           // //
+    
     // Brackets
     Bracked_Round_Open,     // (
     Bracked_Round_Close,    // )
@@ -76,6 +82,11 @@ const map<TokenType, string> TokenNames {
     
         {TokenType::StatementEnd, "StatementEnd"},
     
+        // Comments
+        {TokenType::Comment_ML_Start,"Comment_ML_Start"},
+        {TokenType::Comment_ML_End, "Comment_ML_End"},
+        {TokenType::Comment_Line, "Comment_Line"},
+    
         // Brackets
         {TokenType::Bracked_Round_Open,"Bracked_Round_Open"},
         {TokenType::Bracked_Round_Close, "Bracked_Round_Close"},
@@ -110,34 +121,7 @@ ostream& operator<<(ostream& o, TokenType t);
 // Represents a mapping of string to a token type
 typedef map<string, TokenType> TokenMap;
 
-// Tokenmap for the default context
-// (for comments or literal strings, there are diffrent contexts)
-const TokenMap TokenMap_Default =
-    {
-        {";", TokenType::StatementEnd},
-    
-    // Operators
-        {"==", TokenType::Operator_Equals},
-        {"+", TokenType::Operator_Plus},
-        {"-", TokenType::Operator_Minus},
-        {"=", TokenType::Operator_Assignment},
-        {">", TokenType::Operator_GreaterThan},
-        {"<", TokenType::Operator_SmallerThan},
-        {">=", TokenType::Operator_GreaterThanOrEqual},
-        {"<=", TokenType::Operator_SmallerThanOrEqual},
-        {"*", TokenType::Operator_Multiply},
-        {"/", TokenType::Operator_Div},
-        {"!", TokenType::Operator_Not},
-        
-    // Brackets
-        {"(", TokenType::Bracked_Round_Open},
-        {")", TokenType::Bracked_Round_Close},
-        {"{", TokenType::Bracked_Curly_Open},
-        {"}", TokenType::Bracked_Curly_Close},
-        {"[", TokenType::Bracked_Square_Open},
-        {"]", TokenType::Bracked_Square_Close}
-        
-    };
+
 /*
 Keyword_Var,            // var
 Keyword_Condition,      // if

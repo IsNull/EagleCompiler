@@ -19,16 +19,46 @@ using namespace std;
 
 Scanner::Scanner(){
     _tokens = new TokenList();
-    setContext(ScannerContextDefault::instance());
+    setContext(KnownScannerState::Default);
 }
 
-void Scanner::setContext(IScannerContext *context){
+void Scanner::setContext(KnownScannerState stateType){
     
     // get current active state and remember it
     KnownScannerState prevState = KnownScannerState::Default;
     if(_contextState){
         prevState = _contextState->getState();
     }
+    
+    // TODO refactor this
+    // find the impl. for the KnownScannerState
+    IScannerContext *context;
+    
+    switch (stateType) {
+        case KnownScannerState::Default:
+            context = ScannerContextDefault::instance();
+            break;
+            
+        case KnownScannerState::LineComment:
+            context = ScannerContextLineComment::instance();
+            break;
+            
+        case KnownScannerState::MultiLineComment:
+            cout << "MultiLineComment: NOT IMPLEMENTED";
+            return; // TODO!
+            break;
+            
+        case KnownScannerState::LiteralString:
+            cout << "LiteralString: NOT IMPLEMENTED";
+            return; // TODO!
+            break;
+            
+        default:
+            // Default case always fall back to default state
+            context = ScannerContextDefault::instance();
+            break;
+    }
+    
     
     // set the new state as active
     _contextState = context;
