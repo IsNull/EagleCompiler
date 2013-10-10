@@ -23,7 +23,6 @@ using namespace std;
 class IScannerContext; // forward declaration
 
 
-
 class Scanner {
 private:
     IScannerContext* _contextState;  // The current scanner context state
@@ -82,7 +81,11 @@ public:
     bool isIdentifier(int start, int end);
     
     bool isWhiteSpace(int start, int end);
+    
+    bool isNewLine(int start, int end);
 };
+
+
 
 
 #endif /* defined(__EagleCompiler__Scanner__) */

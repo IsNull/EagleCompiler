@@ -21,7 +21,18 @@ std::string Util::subStrFromArr(char* buff, int start, int end){
 
 
 bool Util::isWhiteSpace(char c){
-    static char whitespaceChars[] = {' ', '\t', '\n', '\r'};
+    static char whitespaceChars[] = {' ', '\t'};
+    static int whitespaceCharsCnt = sizeof(whitespaceChars);
+    
+    for(int j=0; j<whitespaceCharsCnt; j++){
+        if(c == whitespaceChars[j])
+            return true;
+    }
+    return false;
+}
+
+bool Util::isNewLine(char c){
+    static char whitespaceChars[] = {'\n', '\r'};
     static int whitespaceCharsCnt = sizeof(whitespaceChars);
     
     for(int j=0; j<whitespaceCharsCnt; j++){

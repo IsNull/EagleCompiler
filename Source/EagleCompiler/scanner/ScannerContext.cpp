@@ -86,6 +86,8 @@ TokenType ScannerContextDefault::stepRangeInternal(int start, int end){
             rangeTokenType = TokenType::Identifier;
         }else if(_scanner->isWhiteSpace(start, end)){
             rangeTokenType = TokenType::WhiteSpace;
+        }else if(_scanner->isNewLine(start, end)){
+            rangeTokenType = TokenType::NewLine;
         }
     }
     
@@ -119,7 +121,35 @@ KnownScannerState ScannerContextDefault::mapNextState(TokenType token){
 // ============================= ScannerContextLineComment =============================
 //
 
-// TODO
+TokenType ScannerContextLineComment::stepRangeInternal(int start, int end){
+    
+    TokenType rangeTokenType = TokenType::None;
+    
+    if(_scanner->isNewLine(start, end)){
+        rangeTokenType = TokenType::NewLine;
+    }else if(!_scanner->isNewLine(end, end)){ // check if last char is NOT NewLine
+        rangeTokenType = TokenType::Comment_Line;
+    }
+    
+    return rangeTokenType;
+};
+
+
+KnownScannerState ScannerContextLineComment::mapNextState(TokenType token){
+    switch (token) {
+        case TokenType::NewLine:
+            return _previousContext;
+            break;
+            
+        default:
+            // Every other token won't change the current state
+            // thus we keep the default state
+            return KnownScannerState::LineComment;
+            break;
+    }
+};
+
+
 
 
 

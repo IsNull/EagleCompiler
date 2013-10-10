@@ -23,7 +23,8 @@ using namespace std;
 enum TokenType {
     
     None,                   // unspecified Token
-    WhiteSpace,             // Spaces | Tabs | Newlines
+    WhiteSpace,             // Spaces | Tabs
+    NewLine,                // Newlines
     
     Identifier,             // abc | abc12
     
@@ -76,6 +77,7 @@ const map<TokenType, string> TokenNames {
     
         {TokenType::Identifier, "Identifier"},
         {TokenType::WhiteSpace, "Whitespace"},
+        {TokenType::NewLine, "NewLine"},
     
         {TokenType::LiteralNumber, "LiteralNumber"},
         {TokenType::LiteralString, "LiteralString"},

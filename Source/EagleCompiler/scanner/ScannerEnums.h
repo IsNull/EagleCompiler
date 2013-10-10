@@ -9,6 +9,7 @@
 #ifndef __EagleCompiler__ScannerEnums__
 #define __EagleCompiler__ScannerEnums__
 
+#include <iostream>
 
 /**
  * Represents a basic state of the scanner
@@ -21,7 +22,6 @@ enum class KnownScannerState {
     LiteralString       // the scanner is in literal string context
 };
 
-
-
+std::ostream& operator<<(std::ostream& o, KnownScannerState t);
 
 #endif /* defined(__EagleCompiler__ScannerEnums__) */

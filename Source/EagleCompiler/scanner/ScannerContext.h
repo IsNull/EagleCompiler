@@ -116,9 +116,9 @@ protected:
 /**
  * Represents the default scanner context. (Basic statements, code structure)
  */
-class ScannerContextLineComment  : public ScannerContextBase, public Singleton <ScannerContextDefault>{
+class ScannerContextLineComment  : public ScannerContextBase, public Singleton <ScannerContextLineComment>{
     
-    friend class Singleton <ScannerContextDefault>;
+    friend class Singleton <ScannerContextLineComment>;
     
 public:
     ~ScannerContextLineComment () { };
@@ -127,8 +127,8 @@ public:
     // IScannerContext implementation
     //
     
-    TokenType stepRange(int start, int end);                    // TO IMPLEMENT!
-    KnownScannerState mapNextState(TokenType token);            // TO IMPLEMENT!
+    TokenType stepRangeInternal(int start, int end);                    // TO IMPLEMENT!
+    KnownScannerState mapNextState(TokenType token);                    // TO IMPLEMENT!
     KnownScannerState getState() { return KnownScannerState::LineComment; }
     
 protected:

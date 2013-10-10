@@ -56,6 +56,7 @@ void Scanner::setContext(KnownScannerState stateType){
         default:
             // Default case always fall back to default state
             context = ScannerContextDefault::instance();
+            cout << "ERROR: setContext -> unhandled context, switching back to Default.";
             break;
     }
     
@@ -74,6 +75,7 @@ void Scanner::init(string source){
     memcpy(_sourceData, source.c_str(), _sourceSize);
 }
 
+
 const TokenList* Scanner::scan(string source){
     
     init(source);
@@ -86,10 +88,16 @@ const TokenList* Scanner::scan(string source){
     
     while (true) {
         
-        TokenType rollingToken;
-        
-        rollingToken = isToken(tokenStart, tokenEnd);
+        if(_contextState->nextState() != _contextState->getState()){
+            cout << "\t>>>\t\tSwitching state to: " << _contextState->nextState() << " <<<\n";
+            setContext(_contextState->nextState());
+            cout << "\t>>>\t\tContext is now " << _contextState->getState() << " <<<\n";
 
+        }
+        
+        
+        TokenType rollingToken = isToken(tokenStart, tokenEnd);
+        
         
         // DEBUG ONLY - print rolling token stream
         cout <<  "(" << tokenStart << "," << tokenEnd << ") rolling token: " << rollingToken << "\n";
@@ -227,7 +235,7 @@ bool Scanner::isIdentifier(int start, int end){
 
 /**
  * Checks if the given char range is a whitespace
- * I.e. the range must only contain whitespace chars (space, tabs, newline etc.)
+ * I.e. the range must only contain whitespace chars (space, tabs etc.)
  *
  */
 bool Scanner::isWhiteSpace(int start, int end){
@@ -243,6 +251,27 @@ bool Scanner::isWhiteSpace(int start, int end){
     
     return true;
 }
+
+
+/**
+ * Checks if the given char range is a newline
+ * I.e. the range must only contain newline chars
+ *
+ */
+bool Scanner::isNewLine(int start, int end){
+    
+    char* cp = _sourceData + (sizeof(char) * start);
+    int len = end-start+1;
+    
+    for (int i=0; i<len; i++) {
+        if(!Util::isNewLine(*cp))
+            return false;
+        cp++;
+    }
+    
+    return true;
+}
+
 
 void Scanner::endToken(TokenType type, int start, int end){
     

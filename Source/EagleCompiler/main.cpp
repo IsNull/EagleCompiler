@@ -3,10 +3,6 @@
 #include "TokenList.h"
 #include "scanner/Scanner.h"
 
-//#include "scanner/Scanner.cpp"
-//#include "parser/Parser.h"
-//#include "parser/Parser.cpp"
-
 using namespace std;
 
 int main()
@@ -15,7 +11,8 @@ int main()
     
     // ---- Simple Test cases
     
-    string basicStatement = "var bool = (x| == 12);";
+    string basicComment = "// Comment haha";
+    string basicStatement = "var bool = (x| == 12); //Comment haha\ntest();";
     string number = "var 456 789";
     string operators = "*+-=+==*";
     

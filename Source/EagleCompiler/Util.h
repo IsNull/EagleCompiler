@@ -18,6 +18,9 @@ public:
     static std::string subStrFromArr(char* buff, int start, int end);
 
     static bool isWhiteSpace(char c);
+    
+    static bool isNewLine(char c);
+    
 };
 
 #endif /* defined(__EagleCompiler__Util__) */
