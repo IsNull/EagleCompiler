@@ -114,7 +114,7 @@ protected:
 
 
 /**
- * Represents the default scanner context. (Basic statements, code structure)
+ * Represents the LineComment scanner context.
  */
 class ScannerContextLineComment  : public ScannerContextBase, public Singleton <ScannerContextLineComment>{
     
@@ -127,8 +127,8 @@ public:
     // IScannerContext implementation
     //
     
-    TokenType stepRangeInternal(int start, int end);                    // TO IMPLEMENT!
-    KnownScannerState mapNextState(TokenType token);                    // TO IMPLEMENT!
+    TokenType stepRangeInternal(int start, int end);
+    KnownScannerState mapNextState(TokenType token);
     KnownScannerState getState() { return KnownScannerState::LineComment; }
     
 protected:
@@ -137,6 +137,7 @@ protected:
 };
 
 
+// TODO other contexts
 
 
 
