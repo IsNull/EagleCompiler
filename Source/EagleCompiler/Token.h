@@ -23,6 +23,7 @@ using namespace std;
 enum TokenType {
     
     None,                   // unspecified Token
+    Sentinel,               // Marks end of Token stream
     WhiteSpace,             // Spaces | Tabs
     NewLine,                // Newlines
     
@@ -74,6 +75,7 @@ enum TokenType {
 
 const map<TokenType, string> TokenNames {
         {None, "None"},
+        {TokenType::Sentinel, "Sentinel"},
     
         {TokenType::Identifier, "Identifier"},
         {TokenType::WhiteSpace, "Whitespace"},
