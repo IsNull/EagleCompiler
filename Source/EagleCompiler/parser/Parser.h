@@ -11,10 +11,20 @@
 
 #include <iostream>
 #include <string>
+#include "../TokenList.h"
+#include "Token.h"
 
 class Parser
 {
+private:
+    TokenList tokenlist;
+    void consume(TokenType expectedToken);
+    
+    
 public:
+    Parser(TokenList tokenlist);
+    
+
     
 };
 
