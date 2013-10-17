@@ -12,9 +12,11 @@
 #include <iostream>
 #include <string>
 #include "ScannerEnums.h"
-#include "Token.h"
-#include "TokenList.h"
+#include "../Token.h"
+#include "../TokenList.h"
 #include "ScannerContext.h"
+#include "../Util.h"
+
 
 using namespace std;
 

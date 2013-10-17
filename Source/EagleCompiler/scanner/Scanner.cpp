@@ -9,9 +9,6 @@
 #include <cctype>
 
 #include "Scanner.h"
-#include "Token.h"
-#include "TokenList.h"
-#include "Util.h"
 
 using namespace std;
 

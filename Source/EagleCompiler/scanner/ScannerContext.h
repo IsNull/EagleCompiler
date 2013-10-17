@@ -11,9 +11,9 @@
 
 #include <iostream>
 #include <string>
-#include "Token.h"
+#include "../Token.h"
 #include "Scanner.h"
-#include "Singleton.h"
+#include "../Singleton.h"
 #include "ScannerEnums.h"
 
 using namespace std;
