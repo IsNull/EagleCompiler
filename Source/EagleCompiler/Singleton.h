@@ -9,6 +9,11 @@
 #ifndef EagleCompiler_Singleton_h
 #define EagleCompiler_Singleton_h
 
+/**
+ * A singleton ensures that there is only one instance of a given Class Type.
+ * This instance is managed by the singleton and accessible though the static instance() method.
+ *
+ */
 template <typename C>
 class Singleton
 {
