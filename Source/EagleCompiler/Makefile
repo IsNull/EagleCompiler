@@ -2,35 +2,79 @@ CC = g++
 CFLAGS = -Wall -std=c++11
 
 
-OBJDIR = obj
-OUT_RELEASE = bin/EagleCompiler
+OBJ_DIR = obj
+BIN_DIR = bin
+SCANNER_DIR = scanner
+ASSEMBLIZER_DIR = assemblizer
+
+EXECUTABLE = EagleCompiler
+OUT_RELEASE = $(BIN_DIR)/$(EXECUTABLE)
+
+MAIN = main
+TARGET_MAIN = $(OBJ_DIR)/$(MAIN).o
+
+SCANNER = $(SCANNER_DIR)/Scanner
+TARGET_SCANNER = $(OBJ_DIR)/${SCANNER}.o
+
+SCANNERCONTEXT = $(SCANNER_DIR)/ScannerContext
+TARGET_SCANNERCONTEXT = $(OBJ_DIR)/$(SCANNERCONTEXT).o
+
+SCANNERENUMS = $(SCANNER_DIR)/ScannerEnums
+TARGET_SCANNERENUMS = $(OBJ_DIR)/$(SCANNERENUMS).o
+
+TOKEN = Token
+TARGET_TOKEN= $(OBJ_DIR)/$(TOKEN).o
+
+TOKENLIST = TokenList
+TARGET_TOKENLIST = $(OBJ_DIR)/$(TOKENLIST).o
+
+UTIL = Util
+TARGET_UTIL = $(OBJ_DIR)/$(UTIL).o
+
+ASSEMBLIZER = $(ASSEMBLIZER_DIR)/Assemblizer
+TARGET_ASSEMBLIZER = $(OBJ_DIR)/$(ASSEMBLIZER).o
+
+ASSEMBLERINSTRUCTION = $(ASSEMBLIZER_DIR)/AssemblerInstruction
+TARGET_ASSEMBLIZER_DIR = $(OBJ_DIR)/$(ASSEMBLIZER_DIR)
+
 
 all: $(OUT_RELEASE)
 
-$(OUT_RELEASE): $(OBJDIR)/main.o $(OBJDIR)/scanner.o $(OBJDIR)/token.o $(OBJDIR)/tokenlist.o $(OBJDIR)/util.o $(OBJDIR)/scannercontext.o $(OBJDIR)/scannerenums.o
-	$(CC) $(CFLAGS) $(OBJDIR)/main.o $(OBJDIR)/scanner.o $(OBJDIR)/token.o $(OBJDIR)/tokenlist.o $(OBJDIR)/util.o $(OBJDIR)/scannercontext.o $(OBJDIR)/scannerenums.o -o $(OUT_RELEASE)
+pre-build:
+	test -d $(OBJ_DIR)/$(SCANNER_DIR) || mkdir -p $(OBJ_DIR)/$(SCANNER_DIR)
+	test -d $(OBJ_DIR)/$(ASSEMBLIZER_DIR) || mkdir -p $(OBJ_DIR)/$(ASSEMBLIZER_DIR)
+	test -d $(BIN_DIR) || mkdir -p $(BIN_DIR)
 
-$(OBJDIR)/main.o: main.cpp
-	$(CC) $(CFLAGS) -c main.cpp -o $(OBJDIR)/main.o
+$(OUT_RELEASE): pre-build $(TARGET_MAIN) $(TARGET_SCANNER) $(TARGET_TOKEN) $(TARGET_TOKENLIST) $(TARGET_UTIL) $(TARGET_SCANNERCONTEXT) $(TARGET_SCANNERENUMS) $(TARGET_ASSEMBLIZER)
+	$(CC) $(CFLAGS) $(TARGET_MAIN) $(TARGET_SCANNER) $(TARGET_TOKEN) $(TARGET_TOKENLIST) $(TARGET_UTIL) $(TARGET_SCANNERCONTEXT) $(TARGET_SCANNERENUMS) $(TARGET_ASSEMBLIZER) -o $(OUT_RELEASE)
 
-$(OBJDIR)/scanner.o: scanner/Scanner.cpp $(OBJDIR)/util.o
-	$(CC) $(CFLAGS) -c scanner/Scanner.cpp -o $(OBJDIR)/scanner.o
+$(TARGET_MAIN): $(MAIN).cpp
+	$(CC) $(CFLAGS) -c $(MAIN).cpp -o $(TARGET_MAIN)
+
+$(TARGET_SCANNER): $(SCANNER).cpp $(TARGET_UTIL)
+	$(CC) $(CFLAGS) -c $(SCANNER).cpp -o $(TARGET_SCANNER)
 	
-$(OBJDIR)/token.o: Token.cpp
-	$(CC) $(CFLAGS) -c Token.cpp -o $(OBJDIR)/token.o
-
-$(OBJDIR)/tokenlist.o: TokenList.cpp
-	$(CC) $(CFLAGS) -c TokenList.cpp -o $(OBJDIR)/tokenlist.o
-
-$(OBJDIR)/util.o: Util.cpp
-	$(CC) $(CFLAGS) -c Util.cpp -o $(OBJDIR)/util.o
+$(TARGET_SCANNERCONTEXT): $(SCANNERCONTEXT).cpp
+	$(CC) $(CFLAGS) -c $(SCANNERCONTEXT).cpp -o $(TARGET_SCANNERCONTEXT)
 	
-$(OBJDIR)/scannercontext.o: scanner/ScannerContext.cpp
-	$(CC) $(CFLAGS) -c scanner/ScannerContext.cpp -o $(OBJDIR)/scannercontext.o
+$(TARGET_SCANNERENUMS): $(SCANNERENUMS).cpp
+	$(CC) $(CFLAGS) -c $(SCANNERENUMS).cpp -o $(TARGET_SCANNERENUMS)
 	
-$(OBJDIR)/scannerenums.o: scanner/ScannerEnums.cpp
-	$(CC) $(CFLAGS) -c scanner/ScannerEnums.cpp -o $(OBJDIR)/scannerenums.o
+$(TARGET_TOKEN): $(TOKEN).cpp
+	$(CC) $(CFLAGS) -c $(TOKEN).cpp -o $(TARGET_TOKEN)
 
+$(TARGET_TOKENLIST): $(TOKENLIST).cpp
+	$(CC) $(CFLAGS) -c $(TOKENLIST).cpp -o $(TARGET_TOKENLIST)
+
+$(TARGET_UTIL): $(UTIL).cpp
+	$(CC) $(CFLAGS) -c $(UTIL).cpp -o $(TARGET_UTIL)
+	
+$(TARGET_ASSEMBLIZER): $(ASSEMBLIZER).cpp $(TARGET_ASSEMBLERINSTRUCTION)
+	$(CC) $(CFLAGS) -c $(ASSEMBLIZER).cpp -o $(TARGET_ASSEMBLIZER)
+	
+$(TARGET_ASSEMBLERINSTRUCTION): $(ASSEMBLERINSTRUCTION).cpp
+	$(CC) $(CFLAGS) -c $(ASSEMBLERINSTRUCTION).cpp -o $(TARGET_ASSEMBLERINSTRUCTION)
 
 clean:
-	rm $(OBJDIR)/*
+	rm -rf $(OBJ_DIR)
+	rm -rf $(BIN_DIR)

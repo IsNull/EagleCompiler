@@ -16,7 +16,7 @@ using namespace std;
 
 Scanner::Scanner(){
     _tokens = new TokenList();
-    setContext(KnownScannerState::Default);
+     setContext(KnownScannerState::Default);
 }
 
 void Scanner::setContext(KnownScannerState stateType){
