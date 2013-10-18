@@ -1,4 +1,3 @@
-
 .DS_Store
 Thumbs.db
 
@@ -14,3 +13,4 @@ obj
 */target/*
 */data/
 *.log
+*.local
