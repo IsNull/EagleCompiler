@@ -17,6 +17,7 @@
 		D29DBE2218071E4A00C9A5FE /* ScannerEnums.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2118071E4A00C9A5FE /* ScannerEnums.cpp */; };
 		D29DBE2518102B1300C9A5FE /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2318102B1300C9A5FE /* Parser.cpp */; };
 		D29DBE2618102B1300C9A5FE /* Parser.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2418102B1300C9A5FE /* Parser.h */; };
+		D29DBE2918103C2100C9A5FE /* ParserModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2718103C2100C9A5FE /* ParserModel.cpp */; };
 		D2BED5DC17F744AB005EAFEA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2BED5DB17F744AB005EAFEA /* main.cpp */; };
 		D2BED5DE17F744AB005EAFEA /* EagleCompiler.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */; };
 		D2D92BA21806D41B0099CBDB /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2D92BA01806D41B0099CBDB /* Scanner.cpp */; };
@@ -52,6 +53,8 @@
 		D29DBE2118071E4A00C9A5FE /* ScannerEnums.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScannerEnums.cpp; path = EagleCompiler/scanner/ScannerEnums.cpp; sourceTree = "<group>"; };
 		D29DBE2318102B1300C9A5FE /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = EagleCompiler/parser/Parser.cpp; sourceTree = "<group>"; };
 		D29DBE2418102B1300C9A5FE /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = EagleCompiler/parser/Parser.h; sourceTree = "<group>"; };
+		D29DBE2718103C2100C9A5FE /* ParserModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParserModel.cpp; sourceTree = "<group>"; };
+		D29DBE2818103C2100C9A5FE /* ParserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParserModel.h; sourceTree = "<group>"; };
 		D2BED5D817F744AB005EAFEA /* EagleCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EagleCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2BED5DB17F744AB005EAFEA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = EagleCompiler.1; sourceTree = "<group>"; };
@@ -108,6 +111,8 @@
 				D221B48317F8451900E76550 /* Util.cpp */,
 				D221B48417F8451900E76550 /* Util.h */,
 				D29DBE1F1806F8B700C9A5FE /* Singleton.h */,
+				D29DBE2718103C2100C9A5FE /* ParserModel.cpp */,
+				D29DBE2818103C2100C9A5FE /* ParserModel.h */,
 			);
 			path = EagleCompiler;
 			sourceTree = "<group>";
@@ -183,6 +188,7 @@
 			files = (
 				D29DBE2518102B1300C9A5FE /* Parser.cpp in Sources */,
 				D29DBE2618102B1300C9A5FE /* Parser.h in Sources */,
+				D29DBE2918103C2100C9A5FE /* ParserModel.cpp in Sources */,
 				D29DBE2218071E4A00C9A5FE /* ScannerEnums.cpp in Sources */,
 				D29DBE201806F92500C9A5FE /* Singleton.h in Sources */,
 				D29DBE1E1806F4D500C9A5FE /* ScannerEnums.h in Sources */,
