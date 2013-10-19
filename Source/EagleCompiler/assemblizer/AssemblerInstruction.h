@@ -19,13 +19,21 @@ public:
 	virtual string getAssemblerCode() = 0; // Returns the string, which will finaly be written to the output
 };
 
-//This will add the value of the two operands and safe the new value in eax
-class Addition : AssemblerInstruction {
+//This will add the value of the two variables and safe the new value in eax
+class AdditionInstruction : public AssemblerInstruction {
 private:
-	int _op1;
-	int _op2;
+	string _op1;
+	string _op2;
 public:
-	Addition(int op1, int op2);
+	AdditionInstruction(string op1, string op2);
+	string getAssemblerCode();
+};
+
+class WriteToStandardOutputInstruction : public AssemblerInstruction {
+private:
+	string _op1;
+public:
+	WriteToStandardOutputInstruction(string op1);
 	string getAssemblerCode();
 };
 

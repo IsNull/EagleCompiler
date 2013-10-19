@@ -18,42 +18,29 @@ class Variable{
 private:
 	string _name;
 public:
-	Variable(string name) {
-		_name = name;
-	}
-	string getName() {
-		return _name;
-	}
-	virtual string getAssemblerTypeString();
-	virtual string getInitialValue();
+	Variable(string name);
+	string getName();
+	
+	virtual string getAssemblerTypeString() = 0;
+	virtual string getInitialValue() = 0;
 };
-class NumericVariable : Variable{
+
+class NumericVariable : public Variable{
 private:
 	int32_t _init;
 public:
-	NumericVariable(string name, int32_t init) : Variable(name) {
-		_init = init;
-	}
-	string getAssemblerTypeString() {
-		return ".word";
-	}
-	string getInitialValue() {
-		return std::to_string(_init);
-	}
+	NumericVariable(string name, int32_t init);
+	string getAssemblerTypeString();
+	string getInitialValue();
 };
-class StringVariable: Variable{
+
+class StringVariable: public Variable{
 private:
 	string _init;
 public:
-	StringVariable(string name, string init) : Variable(name) {
-		_init = init;
-	}
-	string getAssemblerTypeString() {
-		return ".ascii";
-	}
-	string getInitialValue() {
-		return _init;
-	}
+	StringVariable(string name, string init);
+	string getAssemblerTypeString();
+	string getInitialValue();
 };
 
 class Assemblizer {

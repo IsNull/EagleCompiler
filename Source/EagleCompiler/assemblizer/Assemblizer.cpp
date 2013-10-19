@@ -8,6 +8,33 @@
 
 #include "Assemblizer.h"
 
+Variable::Variable(string name) {
+	_name = name;
+}
+string Variable::getName() {
+	return _name;
+}
+
+NumericVariable::NumericVariable(string name, int32_t init) : Variable(name) {
+	_init = init;
+}
+string NumericVariable::getAssemblerTypeString() {
+	return ".word";
+}
+string NumericVariable::getInitialValue() {
+	return std::to_string(_init);
+}
+
+StringVariable::StringVariable(string name, string init) : Variable(name) {
+	_init = init;
+}
+string StringVariable::getAssemblerTypeString() {
+	return ".ascii";
+}
+string StringVariable::getInitialValue() {
+	return "\"" + _init + "\"";
+}
+
 Assemblizer::Assemblizer() {
 	
 }
@@ -22,12 +49,7 @@ void Assemblizer::addVariableDeclaration(Variable *v) {
 string Assemblizer::createAssemblerHead(){
 	string ret;
 	ret += ".global _start\n";
-	
-	ret += ".data\n";
-	
-	for(Variable *v : _variables) {
-		ret += v->getName() + ": " + v->getAssemblerTypeString() + " " + v->getInitialValue() + "\n";
-	}
+
 	ret += "\n";
 	
 	ret += ".text\n";
@@ -39,9 +61,16 @@ string Assemblizer::createAssemblerHead(){
 string Assemblizer::createAssemblerTail(){
 	string ret;
 	
+	ret += "\n//systemcall exit(0)\n";
 	ret += "movl $0, %eax\n";
 	ret += "movl $1,%eax\n";
 	ret += "int $0x80\n";
+	
+	ret +="\n";
+	ret += ".data\n";
+	for(Variable *v : _variables) {
+		ret += v->getName() + ": " + v->getAssemblerTypeString() + " " + v->getInitialValue() + "\n";
+	}
 	
 	return ret;
 }
