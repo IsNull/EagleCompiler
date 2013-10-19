@@ -57,7 +57,7 @@ private:
      *
      * IMPLEMENTATION NOTE:
      *
-     * In the current implementation this call is delegated to the current ScannerContext
+     * In the current implementation, this call is delegated to the current ScannerContext
      *
      */
     TokenType isToken(int start, int end);

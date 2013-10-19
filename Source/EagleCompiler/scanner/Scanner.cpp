@@ -96,9 +96,11 @@ const TokenList* Scanner::scan(string source){
         TokenType rollingToken = isToken(tokenStart, tokenEnd);
         
         
+        
+#ifdef IS_DEBUG
         // DEBUG ONLY - print rolling token stream
         cout <<  "(" << tokenStart << "," << tokenEnd << ") rolling token: " << rollingToken << "\n";
-        
+#endif
         
         bool eof = tokenEnd == _sourceSize-1;
         
@@ -132,6 +134,8 @@ const TokenList* Scanner::scan(string source){
         
     }
     
+    Token* t = new Token(TokenType::Sentinel);
+    _tokens->add(*t);
     
     return _tokens;
 }

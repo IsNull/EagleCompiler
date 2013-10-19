@@ -1,3 +1,6 @@
+
+#define IS_DEBUG
+
 #include <iostream>
 #include "Token.h"
 #include "TokenList.h"
