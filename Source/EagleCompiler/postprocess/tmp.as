@@ -1,11 +1,18 @@
+global _start
 
-
-.global _start
-.data
-
-.text
+section .text
 _start:
-movl $0, %eax
-movl $1,%eax
-int $0x80
+mov edx,6
+mov ecx,myText
+mov ebx,1
+mov eax,4
+int 0x80
+
+;systemcall exit(0)
+push dword 0
+mov eax,1
+int 0x80
+
+section .data
+myText: db "foo", 0xa
 
