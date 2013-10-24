@@ -163,7 +163,7 @@ private:
 public:
     
     // Constructors
-    Token(TokenType type) { Init(type, NULL); };
+    Token(TokenType type) { Init(type, ""); };
     Token(TokenType type, string value) { Init(type, value); };
     
     /**
@@ -179,7 +179,10 @@ public:
     
     
     friend std::ostream& operator<< (std::ostream& stream, const Token& token) {
-        stream << "[" << token._type << "," << token._value << "]";
+        if(token._value.size() == 0)
+            stream << "[" << token._type << "]";
+        else
+            stream << "[" << token._type << "," << token._value << "]";
         return stream;
     }
     

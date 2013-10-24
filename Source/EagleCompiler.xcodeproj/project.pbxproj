@@ -18,6 +18,10 @@
 		D29DBE2518102B1300C9A5FE /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2318102B1300C9A5FE /* Parser.cpp */; };
 		D29DBE2618102B1300C9A5FE /* Parser.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2418102B1300C9A5FE /* Parser.h */; };
 		D29DBE2918103C2100C9A5FE /* ParserModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2718103C2100C9A5FE /* ParserModel.cpp */; };
+		D29DBE2F1812BD9E00C9A5FE /* AssemblerInstruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2B1812BD9E00C9A5FE /* AssemblerInstruction.cpp */; };
+		D29DBE301812BD9E00C9A5FE /* AssemblerInstruction.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2C1812BD9E00C9A5FE /* AssemblerInstruction.h */; };
+		D29DBE311812BD9E00C9A5FE /* Assemblizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2D1812BD9E00C9A5FE /* Assemblizer.cpp */; };
+		D29DBE321812BD9E00C9A5FE /* Assemblizer.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2E1812BD9E00C9A5FE /* Assemblizer.h */; };
 		D2BED5DC17F744AB005EAFEA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2BED5DB17F744AB005EAFEA /* main.cpp */; };
 		D2BED5DE17F744AB005EAFEA /* EagleCompiler.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */; };
 		D2D92BA21806D41B0099CBDB /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2D92BA01806D41B0099CBDB /* Scanner.cpp */; };
@@ -55,6 +59,11 @@
 		D29DBE2418102B1300C9A5FE /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = EagleCompiler/parser/Parser.h; sourceTree = "<group>"; };
 		D29DBE2718103C2100C9A5FE /* ParserModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParserModel.cpp; sourceTree = "<group>"; };
 		D29DBE2818103C2100C9A5FE /* ParserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParserModel.h; sourceTree = "<group>"; };
+		D29DBE2A1812BBCA00C9A5FE /* assemblizer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assemblizer; sourceTree = "<group>"; };
+		D29DBE2B1812BD9E00C9A5FE /* AssemblerInstruction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AssemblerInstruction.cpp; path = EagleCompiler/assemblizer/AssemblerInstruction.cpp; sourceTree = "<group>"; };
+		D29DBE2C1812BD9E00C9A5FE /* AssemblerInstruction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AssemblerInstruction.h; path = EagleCompiler/assemblizer/AssemblerInstruction.h; sourceTree = "<group>"; };
+		D29DBE2D1812BD9E00C9A5FE /* Assemblizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Assemblizer.cpp; path = EagleCompiler/assemblizer/Assemblizer.cpp; sourceTree = "<group>"; };
+		D29DBE2E1812BD9E00C9A5FE /* Assemblizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Assemblizer.h; path = EagleCompiler/assemblizer/Assemblizer.h; sourceTree = "<group>"; };
 		D2BED5D817F744AB005EAFEA /* EagleCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EagleCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2BED5DB17F744AB005EAFEA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = EagleCompiler.1; sourceTree = "<group>"; };
@@ -86,6 +95,10 @@
 				D29DBE2118071E4A00C9A5FE /* ScannerEnums.cpp */,
 				D29DBE2318102B1300C9A5FE /* Parser.cpp */,
 				D29DBE2418102B1300C9A5FE /* Parser.h */,
+				D29DBE2B1812BD9E00C9A5FE /* AssemblerInstruction.cpp */,
+				D29DBE2C1812BD9E00C9A5FE /* AssemblerInstruction.h */,
+				D29DBE2D1812BD9E00C9A5FE /* Assemblizer.cpp */,
+				D29DBE2E1812BD9E00C9A5FE /* Assemblizer.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,6 +118,7 @@
 				D290B70B1806D28C0030DC82 /* scanner */,
 				D221B48617FDB1AF00E76550 /* parser */,
 				D221B47317F745D900E76550 /* Token.cpp */,
+				D29DBE2A1812BBCA00C9A5FE /* assemblizer */,
 				D221B47417F745D900E76550 /* Token.h */,
 				D221B47A17F8252C00E76550 /* TokenList.cpp */,
 				D221B47B17F8252C00E76550 /* TokenList.h */,
@@ -186,6 +200,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D29DBE2F1812BD9E00C9A5FE /* AssemblerInstruction.cpp in Sources */,
+				D29DBE301812BD9E00C9A5FE /* AssemblerInstruction.h in Sources */,
+				D29DBE311812BD9E00C9A5FE /* Assemblizer.cpp in Sources */,
+				D29DBE321812BD9E00C9A5FE /* Assemblizer.h in Sources */,
 				D29DBE2518102B1300C9A5FE /* Parser.cpp in Sources */,
 				D29DBE2618102B1300C9A5FE /* Parser.h in Sources */,
 				D29DBE2918103C2100C9A5FE /* ParserModel.cpp in Sources */,
