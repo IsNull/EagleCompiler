@@ -1,13 +1,13 @@
-global start
+global _start
 
 section .text
-start:
+_start:
 push dword 4
 push myText
 push 1
 mov eax, 0x4
 sub esp, 4  
-int 0x80
+sysenter
 
 ;systemcall exit(0)
 push dword 0
@@ -19,4 +19,3 @@ ret
 
 section .data
 myText: db "foo", 0xa
-
