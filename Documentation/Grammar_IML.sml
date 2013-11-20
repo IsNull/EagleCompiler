@@ -32,7 +32,7 @@ datatype term
   | SKIP
   | WHILE
   | IDENT
-  | STRCONCAT
+  | STRCONCATOPR
 
 val string_of_term =
   fn LPAREN  => "LPAREN"
@@ -68,7 +68,7 @@ val string_of_term =
    | SKIP => "SKIP"
    | WHILE => "WHILE"
    | IDENT => "IDENT"
-   | STRCONCAT => "STRCONCAT"
+   | STRCONCATOPR => "STRCONCATOPR"
 
 datatype nonterm
   = program
@@ -96,11 +96,13 @@ datatype nonterm
   | optGlobInitList
   | repCmd
   | expr
+  | strTerm
   | exprList
   | globInitList
   | repIdent
   | term1
   | repBoolOprTerm1
+  | repConcOprExpr
   | term2
   | optRelOprTerm2
   | term3
@@ -139,11 +141,13 @@ val string_of_nonterm =
    | optGlobInitList => "optGlobInitList"
    | repCmd => "repCmd"
    | expr => "expr"
+   | strTerm => "strTerm"
    | exprList => "exprList"
    | globInitList => "globInitList"
    | repIdent => "repIdent"
    | term1 => "term1"
    | repBoolOprTerm1 => "repBoolOprTerm1"
+   | repConcOprExpr => "repConcOprExpr"
    | term2 => "term2"
    | optRelOprTerm2 => "optRelOprTerm2"
    | term3 => "term3"
@@ -239,7 +243,13 @@ val productions =
     [[T COMMA, T IDENT, N repIdent],
     []]),
 (expr,
-    [[N term1, N repBoolOprTerm1]]),
+    [[N strTerm, N repConcOprExpr]]),
+(repConcOprExpr,
+    [[T STRCONCATOPR, N strTerm, N repConcOprExpr],
+    []]),
+(strTerm,
+    [[N term1, N repBoolOprTerm1]
+    ]),
 (repBoolOprTerm1,
     [[T BOOLOPR, N term1, N repBoolOprTerm1],
     []]),

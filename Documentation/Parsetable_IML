@@ -172,6 +172,30 @@
     
 <expr>
   terminal LPAREN
+    <strTerm> <repConcOprExpr>
+  terminal ADDOPR
+    <strTerm> <repConcOprExpr>
+  terminal NOT
+    <strTerm> <repConcOprExpr>
+  terminal IDENT
+    <strTerm> <repConcOprExpr>
+  terminal LITERAL
+    <strTerm> <repConcOprExpr>
+<repConcOprExpr>
+  terminal STRCONCATOPR
+    STRCONCATOPR <strTerm> <repConcOprExpr>
+  terminal COMMA
+    
+  terminal RPAREN
+    
+  terminal RBRACE
+    
+  terminal SEMICOLON
+    
+  terminal BECOMES
+    
+<strTerm>
+  terminal LPAREN
     <term1> <repBoolOprTerm1>
   terminal ADDOPR
     <term1> <repBoolOprTerm1>
@@ -193,6 +217,8 @@
   terminal SEMICOLON
     
   terminal BECOMES
+    
+  terminal STRCONCATOPR
     
 <term1>
   terminal LPAREN
@@ -217,6 +243,8 @@
   terminal SEMICOLON
     
   terminal BECOMES
+    
+  terminal STRCONCATOPR
     
   terminal BOOLOPR
     
@@ -243,6 +271,8 @@
   terminal SEMICOLON
     
   terminal BECOMES
+    
+  terminal STRCONCATOPR
     
   terminal BOOLOPR
     
@@ -271,6 +301,8 @@
   terminal SEMICOLON
     
   terminal BECOMES
+    
+  terminal STRCONCATOPR
     
   terminal BOOLOPR
     
