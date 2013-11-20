@@ -32,6 +32,7 @@ datatype term
   | SKIP
   | WHILE
   | IDENT
+  | STRCONCAT
 
 val string_of_term =
   fn LPAREN  => "LPAREN"
@@ -67,6 +68,7 @@ val string_of_term =
    | SKIP => "SKIP"
    | WHILE => "WHILE"
    | IDENT => "IDENT"
+   | STRCONCAT => "STRCONCAT"
 
 datatype nonterm
   = program
