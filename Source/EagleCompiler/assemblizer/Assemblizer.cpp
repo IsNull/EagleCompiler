@@ -7,36 +7,7 @@
 //
 
 #include "Assemblizer.h"
-
-Variable::Variable(string name) {
-	_name = name;
-}
-string Variable::getName() {
-	return _name;
-}
-
-NumericVariable::NumericVariable(string name, int32_t init) : Variable(name) {
-	_init = init;
-}
-string NumericVariable::getAssemblerTypeString() {
-	return ".word";
-}
-string NumericVariable::getInitialValue() {
-	return std::to_string(_init);
-}
-
-StringVariable::StringVariable(string name, string init) : Variable(name) {
-	_init = init;
-}
-string StringVariable::getAssemblerTypeString() {
-	return ".ascii";
-}
-string StringVariable::getInitialValue() {
-	return "\"" + _init + "\"";
-}
-
 Assemblizer::Assemblizer() {
-	
 }
 
 void Assemblizer::addInstruction(AssemblerInstruction *instruction){

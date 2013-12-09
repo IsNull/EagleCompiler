@@ -12,56 +12,28 @@
 #include "AssemblerInstruction.h"
 
 using namespace std;
+namespace Assemblizer {
 
-//Variable Classes, just for assemblizer
-class Variable{
-private:
-	string _name;
-public:
-	Variable(string name);
-	string getName();
-	
-	virtual string getAssemblerTypeString() = 0;
-	virtual string getInitialValue() = 0;
-};
+	class Assemblizer {
+	private:
 
-class NumericVariable : public Variable{
-private:
-	int32_t _init;
-public:
-	NumericVariable(string name, int32_t init);
-	string getAssemblerTypeString();
-	string getInitialValue();
-};
+		list<AssemblerInstruction *> _instructions; // List of all instructions
+		list<Variable *> _variables; // List of al variables
+		
+		string createAssemblerHead();
+		string createAssemblerTail();
 
-class StringVariable: public Variable{
-private:
-	string _init;
-public:
-	StringVariable(string name, string init);
-	string getAssemblerTypeString();
-	string getInitialValue();
-};
+	public:
+		Assemblizer();
+		
+		void addInstruction(AssemblerInstruction *instruction);
+		
+		void addVariableDeclaration(Variable *v);
+		
+		string getFinalAssemblerCode();
+	};
 
-class Assemblizer {
-private:
-
-	list<AssemblerInstruction *> _instructions; // List of all instructions
-    list<Variable *> _variables; // List of al variables
-    
-    string createAssemblerHead();
-	string createAssemblerTail();
-
-public:
-	Assemblizer();
-	
-	void addInstruction(AssemblerInstruction *instruction);
-	
-	void addVariableDeclaration(Variable *v);
-
-	
-	string getFinalAssemblerCode();
-};
+}
 
 
 
