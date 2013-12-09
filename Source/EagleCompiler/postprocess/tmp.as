@@ -1,21 +1,22 @@
-global _start
+.global _start
 
-section .text
+.text
 _start:
-push dword 4
-push myText
-push 1
-mov eax, 0x4
-sub esp, 4  
-sysenter
+movl foobar,%eax
+addl answer,%eax
+movl $6,%edx
+movl $myText,%ecx
+movl $1,%ebx
+movl $4,%eax
+int $0x80
 
-;systemcall exit(0)
-push dword 0
-mov eax, 0x1
-sub esp, 4  
-int 0x80
-ret
+//systemcall exit(0)
+movl $0, %eax
+movl $1,%eax
+int $0x80
 
+.data
+answer: .word 42
+foobar: .word 0
+myText: .ascii "foo\n"
 
-section .data
-myText: db "foo", 0xa
