@@ -16,10 +16,11 @@
  * for diffrent grammar contexts
  */
 enum class KnownScannerState {
-    Default,            // default context
-    LineComment,        // the scanner is in a line comment context
-    MultiLineComment,   // the scanner is in a multiline comment context
-    LiteralString       // the scanner is in literal string context
+    Default,                    // default context
+    LineComment,                // the scanner is in a line comment context
+    MultiLineComment,           // the scanner is in a multiline comment context
+    LiteralString,              // the scanner is in literal string context
+    LiteralStringExpression     // the scanner is in literal string expresion
 };
 
 std::ostream& operator<<(std::ostream& o, KnownScannerState t);

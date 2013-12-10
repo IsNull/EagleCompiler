@@ -177,8 +177,55 @@ protected:
 };
 
 
-// TODO other contexts
+/**
+ * Represents the LiteralString scanner context.
+ */
+class ScannerContextLiteralString  : public ScannerContextBase, public Singleton <ScannerContextLiteralString>{
+    
+    friend class Singleton <ScannerContextLiteralString>;
+    
+public:
+    ~ScannerContextLiteralString () { };
+    
+    //
+    // IScannerContext implementation
+    //
+    
+    TokenType stepRangeInternal(int start, int end);
+    KnownScannerState mapNextState(TokenType token);
+    KnownScannerState getState() { return KnownScannerState::LineComment; }
+    
+protected:
+    ScannerContextLiteralString(){ };
+    
+};
 
+//
+
+
+/**
+ *ScannerContextLiteralStringExpression
+ * Represents the LiteralStringExpression scanner context.
+ */
+class ScannerContextLiteralStringExpression  : public ScannerContextBase, public Singleton <ScannerContextLiteralStringExpression>{
+    
+    friend class Singleton <ScannerContextLiteralStringExpression>;
+    
+public:
+    ~ScannerContextLiteralStringExpression() { };
+    
+    //
+    // IScannerContext implementation
+    //
+    
+    TokenType stepRangeInternal(int start, int end);
+    KnownScannerState mapNextState(TokenType token);
+    KnownScannerState getState() { return KnownScannerState::LineComment; }
+    
+protected:
+    ScannerContextLiteralStringExpression(){ };
+    
+};
 
 
 #endif /* defined(__EagleCompiler__ScannerContext__) */

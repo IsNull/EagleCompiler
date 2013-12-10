@@ -44,6 +44,10 @@ const TokenMap TokenMap_Default =
     {"!", TokenType::Operator_Not},
     {"&", TokenType::Operator_StringConcat},
     
+    {"%", TokenType::StringInlineExprToggle},
+    {"""", TokenType::LiteralStringToggle},
+    
+    
     // Brackets
     {"(", TokenType::Bracked_Round_Open},
     {")", TokenType::Bracked_Round_Close},
@@ -61,6 +65,18 @@ const TokenMap TokenMap_MlComment =
 {
     {"*/", TokenType::Comment_ML_End}
 };
+
+
+const TokenMap TokenMap_LiteralString =
+{
+    {"%", TokenType::StringInlineExprToggle},
+    {"""", TokenType::LiteralStringToggle}
+};
+
+
+//
+// ============================= ScannerContext: Default =============================
+//
 
 
 /**
@@ -119,7 +135,7 @@ KnownScannerState ScannerContextDefault::mapNextState(TokenType token){
 
 
 //
-// ============================= ScannerContextLineComment =============================
+// ============================= ScannerContext: LineComment =============================
 //
 
 TokenType ScannerContextLineComment::stepRangeInternal(int start, int end){
@@ -152,10 +168,8 @@ KnownScannerState ScannerContextLineComment::mapNextState(TokenType token){
 
 
 
-
-
 //
-// ============================= ScannerContextMultiLineComment =============================
+// ============================= ScannerContext: MultiLineComment =============================
 //
 
 TokenType ScannerContextMultiLineComment::stepRangeInternal(int start, int end){
@@ -179,4 +193,85 @@ KnownScannerState ScannerContextMultiLineComment::mapNextState(TokenType token){
             break;
     }
 };
+
+
+//
+// ============================= ScannerContext: LiteralString =============================
+//
+
+TokenType ScannerContextLiteralString::stepRangeInternal(int start, int end){
+    
+    TokenType rangeTokenType = lookupToken(start, end, TokenMap_LiteralString);
+    
+    // TODO handle two %% escape sequence and overwrite token with NONE
+    
+    return rangeTokenType;
+};
+
+
+KnownScannerState ScannerContextLiteralString::mapNextState(TokenType token){
+    switch (token) {
+        case TokenType::LiteralStringToggle: // Literal string is finished
+            return _previousContext;
+            break;
+            
+        case TokenType::StringInlineExprToggle: // Literal string inline expression starts
+            return KnownScannerState::LiteralStringExpression;
+            break;
+            
+        default:
+            // Every other token won't change the current state
+            return KnownScannerState::LiteralString;
+            break;
+    }
+};
+
+
+//
+// ============================= ScannerContext: LiteralStringExpression =============================
+//
+
+TokenType ScannerContextLiteralStringExpression::stepRangeInternal(int start, int end){
+    
+    TokenType rangeTokenType = lookupToken(start, end, TokenMap_Default);
+    
+    // no simple token found. Check if its a Number or Identifier
+    
+    
+    if(rangeTokenType == TokenType::None){
+        // we could not find a matching token in our context map
+        // we have to check for identifiers and literals by ourselfes:
+        
+        if(_scanner->isNumber(start, end))
+        {
+            rangeTokenType = TokenType::LiteralNumber;
+        }else if(_scanner->isIdentifier(start, end)){
+            rangeTokenType = TokenType::Identifier;
+        }else if(_scanner->isWhiteSpace(start, end)){
+            rangeTokenType = TokenType::WhiteSpace;
+        }else if(_scanner->isNewLine(start, end)){
+            rangeTokenType = TokenType::NewLine;
+        }
+    }
+    
+    return rangeTokenType;
+};
+
+
+KnownScannerState ScannerContextLiteralStringExpression::mapNextState(TokenType token){
+    switch (token) {
+            
+        case TokenType::StringInlineExprToggle: // Literal string inline expression ends here
+            return KnownScannerState::LiteralString;
+            break;
+            
+        default:
+            // Every other token won't change the current state
+            return KnownScannerState::LiteralStringExpression;
+            break;
+    }
+};
+
+
+
 

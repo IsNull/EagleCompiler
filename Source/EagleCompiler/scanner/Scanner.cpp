@@ -45,8 +45,11 @@ void Scanner::setContext(KnownScannerState stateType){
             break;
             
         case KnownScannerState::LiteralString:
-            cout << "LiteralString: NOT IMPLEMENTED";
-            return; // TODO!
+            context = ScannerContextLiteralString::instance();
+            break;
+            
+        case KnownScannerState::LiteralStringExpression:
+            context = ScannerContextLiteralStringExpression::instance();
             break;
             
         default:

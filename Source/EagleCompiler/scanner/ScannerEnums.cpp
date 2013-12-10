@@ -28,6 +28,10 @@ ostream& operator<<(ostream& o, KnownScannerState t){
             o << "LiteralString";
             break;
             
+        case KnownScannerState::LiteralStringExpression:
+            o << "LiteralString";
+            break;
+            
         default:
             o << "<unknown KnownScannerState>";
             break;

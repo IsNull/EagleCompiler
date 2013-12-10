@@ -30,7 +30,9 @@ enum TokenType {
     Identifier,             // abc | abc12
     
     LiteralNumber,          // 123 | 0xFF
-    LiteralString,          // "blub"
+    LiteralString,          // normal text
+    LiteralStringToggle,    // "
+    StringInlineExprToggle, // %
     
     StatementEnd,           // ;
     
