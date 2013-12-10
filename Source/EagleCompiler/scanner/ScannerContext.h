@@ -80,6 +80,23 @@ public:
         _previousContext = previousContext;
     }
     
+    TokenType lookupToken(int start, int end, TokenMap map){
+        
+        TokenType rangeTokenType = TokenType::None;
+
+        string possibleToken = _scanner->range(start, end);
+        
+        
+        TokenMap::const_iterator it = map.find(possibleToken);
+        
+        if(it != map.end()){
+            // found matching token
+            rangeTokenType = it->second;
+        }
+        
+        return rangeTokenType;
+    };
+    
     TokenType stepRange(int start, int end){
         TokenType token = stepRangeInternal(start, end);
         _nextState = mapNextState(token);
@@ -136,9 +153,79 @@ protected:
     
 };
 
+/**
+ * Represents the MultiLineComment scanner context.
+ */
+class ScannerContextMultiLineComment  : public ScannerContextBase, public Singleton <ScannerContextMultiLineComment>{
+    
+    friend class Singleton <ScannerContextMultiLineComment>;
+    
+public:
+    ~ScannerContextMultiLineComment () { };
+    
+    //
+    // IScannerContext implementation
+    //
+    
+    TokenType stepRangeInternal(int start, int end);
+    KnownScannerState mapNextState(TokenType token);
+    KnownScannerState getState() { return KnownScannerState::LineComment; }
+    
+protected:
+    ScannerContextMultiLineComment(){ };
+    
+};
 
-// TODO other contexts
 
+/**
+ * Represents the LiteralString scanner context.
+ */
+class ScannerContextLiteralString  : public ScannerContextBase, public Singleton <ScannerContextLiteralString>{
+    
+    friend class Singleton <ScannerContextLiteralString>;
+    
+public:
+    ~ScannerContextLiteralString () { };
+    
+    //
+    // IScannerContext implementation
+    //
+    
+    TokenType stepRangeInternal(int start, int end);
+    KnownScannerState mapNextState(TokenType token);
+    KnownScannerState getState() { return KnownScannerState::LineComment; }
+    
+protected:
+    ScannerContextLiteralString(){ };
+    
+};
+
+//
+
+
+/**
+ *ScannerContextLiteralStringExpression
+ * Represents the LiteralStringExpression scanner context.
+ */
+class ScannerContextLiteralStringExpression  : public ScannerContextBase, public Singleton <ScannerContextLiteralStringExpression>{
+    
+    friend class Singleton <ScannerContextLiteralStringExpression>;
+    
+public:
+    ~ScannerContextLiteralStringExpression() { };
+    
+    //
+    // IScannerContext implementation
+    //
+    
+    TokenType stepRangeInternal(int start, int end);
+    KnownScannerState mapNextState(TokenType token);
+    KnownScannerState getState() { return KnownScannerState::LineComment; }
+    
+protected:
+    ScannerContextLiteralStringExpression(){ };
+    
+};
 
 
 #endif /* defined(__EagleCompiler__ScannerContext__) */

@@ -30,7 +30,9 @@ enum TokenType {
     Identifier,             // abc | abc12
     
     LiteralNumber,          // 123 | 0xFF
-    LiteralString,          // "blub"
+    LiteralString,          // normal text
+    LiteralStringToggle,    // "
+    StringInlineExprToggle, // %
     
     StatementEnd,           // ;
     
@@ -50,16 +52,17 @@ enum TokenType {
     
     // Operator
     Operator_Not,           // !
-    Operator_Assignment,    // =
+    Operator_Assignment,    // :=
     Operator_Plus,          // +
     Operator_Minus,         // -
     Operator_Div,           // /
     Operator_Multiply,      // *
-    Operator_Equals,        // ==
+    Operator_Equals,        // =
     Operator_GreaterThan,   // >
     Operator_SmallerThan,   // <
     Operator_GreaterThanOrEqual,   // >=
     Operator_SmallerThanOrEqual,   // <=
+    Operator_StringConcat,  // &
 
     // Keywords
     
