@@ -12,7 +12,7 @@
 #include <iostream>
 #include <string>
 #include "../TokenList.h"
-#include "Token.h"
+#include "../Token.h"
 
 class Parser
 {

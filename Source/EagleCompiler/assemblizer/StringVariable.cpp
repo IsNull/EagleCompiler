@@ -11,9 +11,9 @@
 Assemblizer::StringVariable::StringVariable(string name, string init) : Variable(name) {
 	_init = init;
 }
-Assemblizer::string StringVariable::getAssemblerTypeString() {
-	return ".ascii";
+string Assemblizer::StringVariable::getAssemblerTypeString() {
+	return "db";
 }
-Assemblizer::string StringVariable::getInitialValue() {
-	return "\"" + _init + "\"";
+string Assemblizer::StringVariable::getInitialValue() {
+	return "\`" + _init + "\`";
 }

@@ -9,6 +9,10 @@
 #ifndef __EagleCompiler__Variable__
 #define __EagleCompiler__Variable__
 
+#include <string>
+
+using namespace std;
+
 namespace Assemblizer {
 	
 	class Variable{

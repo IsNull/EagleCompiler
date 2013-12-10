@@ -11,9 +11,9 @@
 Assemblizer::NumericVariable::NumericVariable(string name, int32_t init) : Variable(name) {
 	_init = init;
 }
-Assemblizer::string NumericVariable::getAssemblerTypeString() {
-	return ".word";
+string Assemblizer::NumericVariable::getAssemblerTypeString() {
+	return "dw";
 }
-Assemblizer::string NumericVariable::getInitialValue() {
+string Assemblizer::NumericVariable::getInitialValue() {
 	return std::to_string(_init);
 }

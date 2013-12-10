@@ -10,6 +10,7 @@
 
 #include <list>
 #include "AssemblerInstruction.h"
+#include "Variable.h"
 
 using namespace std;
 namespace Assemblizer {
@@ -27,7 +28,6 @@ namespace Assemblizer {
 		Assemblizer();
 		
 		void addInstruction(AssemblerInstruction *instruction);
-		
 		void addVariableDeclaration(Variable *v);
 		
 		string getFinalAssemblerCode();

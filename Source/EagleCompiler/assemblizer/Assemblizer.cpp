@@ -7,46 +7,45 @@
 //
 
 #include "Assemblizer.h"
-Assemblizer::Assemblizer() {
+
+Assemblizer::Assemblizer::Assemblizer() {
+	
 }
 
-void Assemblizer::addInstruction(AssemblerInstruction *instruction){
+void Assemblizer::Assemblizer::addInstruction(AssemblerInstruction *instruction){
 	_instructions.push_back(instruction);
 }
 
-void Assemblizer::addVariableDeclaration(Variable *v) {
+void Assemblizer::Assemblizer::addVariableDeclaration(Variable *v) {
 	_variables.push_back(v);
 }
-string Assemblizer::createAssemblerHead(){
+string Assemblizer::Assemblizer::createAssemblerHead(){
 	string ret;
-	ret += ".global _start\n";
-
+	ret += "section .text\n";
+	ret += "global _start\n";
 	ret += "\n";
 	
-	ret += ".text\n";
 	ret += "_start:\n";
 	
 	return ret;
 }
 
-string Assemblizer::createAssemblerTail(){
+string Assemblizer::Assemblizer::createAssemblerTail(){
 	string ret;
 	
-	ret += "\n//systemcall exit(0)\n";
-	ret += "movl $0, %eax\n";
-	ret += "movl $1,%eax\n";
-	ret += "int $0x80\n";
+	ret += "mov eax,1\n";
+	ret += "int 0x80\n";
 	
 	ret +="\n";
-	ret += ".data\n";
+	ret += "section .data\n";
 	for(Variable *v : _variables) {
-		ret += v->getName() + ": " + v->getAssemblerTypeString() + " " + v->getInitialValue() + "\n";
+		ret += v->getName() + " " + v->getAssemblerTypeString() + " " + v->getInitialValue() + "\n";
 	}
 	
 	return ret;
 }
 
-string Assemblizer::getFinalAssemblerCode(){
+string Assemblizer::Assemblizer::getFinalAssemblerCode(){
 	string ret = createAssemblerHead();
 	
 	for(AssemblerInstruction *s : _instructions) {

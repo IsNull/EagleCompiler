@@ -12,6 +12,6 @@ Assemblizer::Variable::Variable(string name) {
 	_name = name;
 }
 
-Assemblizer::string Variable::getName() {
+string Assemblizer::Variable::getName() {
 	return _name;
 }

@@ -9,6 +9,11 @@
 #ifndef __EagleCompiler__NumericVariable__
 #define __EagleCompiler__NumericVariable__
 
+#include <string>
+#include "Variable.h"
+
+using namespace std;
+
 namespace Assemblizer {
 
 	class NumericVariable : public Variable{
@@ -19,7 +24,6 @@ namespace Assemblizer {
 		string getAssemblerTypeString();
 		string getInitialValue();
 	};
-
 }
 
 #endif

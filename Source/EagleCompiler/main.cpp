@@ -6,6 +6,9 @@
 #include "TokenList.h"
 #include "scanner/Scanner.h"
 #include "assemblizer/Assemblizer.h"
+#include "assemblizer/NumericVariable.h"
+#include "assemblizer/AssemblerInstruction.h"
+#include "assemblizer/StringVariable.h"
 
 #include "user.local"
 
@@ -39,13 +42,9 @@ void testPascal() {
 }
 
 void testSam() {
-	Assemblizer a;
-	a.addVariableDeclaration(new NumericVariable("answer", 42));
-	a.addVariableDeclaration(new NumericVariable("foobar", 0));
-	a.addInstruction(new AdditionInstruction("answer", "foobar"));
-	
+	Assemblizer::Assemblizer a;
 	//Print text "foo" on standard output, use \\n for newline, to avoid escape string
-	a.addVariableDeclaration(new StringVariable("myText", "foo\\n"));
+	a.addVariableDeclaration(new Assemblizer::StringVariable("myText", "foo\\n"));
 	a.addInstruction(new WriteToStandardOutputInstruction("myText"));
 	
 	cout << a.getFinalAssemblerCode() << endl;

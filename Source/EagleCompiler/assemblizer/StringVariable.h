@@ -9,6 +9,11 @@
 #ifndef __EagleCompiler__StringVariable__
 #define __EagleCompiler__StringVariable__
 
+#include <string>
+#include "Variable.h"
+
+using namespace std;
+
 namespace Assemblizer {
 
 	class StringVariable: public Variable{
