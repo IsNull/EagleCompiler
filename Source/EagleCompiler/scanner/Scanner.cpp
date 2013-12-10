@@ -41,8 +41,7 @@ void Scanner::setContext(KnownScannerState stateType){
             break;
             
         case KnownScannerState::MultiLineComment:
-            cout << "MultiLineComment: NOT IMPLEMENTED";
-            return; // TODO!
+            context = ScannerContextMultiLineComment::instance();
             break;
             
         case KnownScannerState::LiteralString:
