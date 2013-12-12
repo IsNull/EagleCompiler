@@ -26,6 +26,12 @@
 		D2BED5DE17F744AB005EAFEA /* EagleCompiler.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */; };
 		D2D92BA21806D41B0099CBDB /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2D92BA01806D41B0099CBDB /* Scanner.cpp */; };
 		D2D92BA31806D41B0099CBDB /* Scanner.h in Sources */ = {isa = PBXBuildFile; fileRef = D2D92BA11806D41B0099CBDB /* Scanner.h */; };
+		D2F6CD7C185999C400CDA4DB /* NumericVariable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2F6CD76185999C400CDA4DB /* NumericVariable.cpp */; };
+		D2F6CD7D185999C400CDA4DB /* NumericVariable.h in Sources */ = {isa = PBXBuildFile; fileRef = D2F6CD77185999C400CDA4DB /* NumericVariable.h */; };
+		D2F6CD7E185999C400CDA4DB /* StringVariable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2F6CD78185999C400CDA4DB /* StringVariable.cpp */; };
+		D2F6CD7F185999C400CDA4DB /* StringVariable.h in Sources */ = {isa = PBXBuildFile; fileRef = D2F6CD79185999C400CDA4DB /* StringVariable.h */; };
+		D2F6CD80185999C400CDA4DB /* Variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2F6CD7A185999C400CDA4DB /* Variable.cpp */; };
+		D2F6CD81185999C400CDA4DB /* Variable.h in Sources */ = {isa = PBXBuildFile; fileRef = D2F6CD7B185999C400CDA4DB /* Variable.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -69,6 +75,12 @@
 		D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = EagleCompiler.1; sourceTree = "<group>"; };
 		D2D92BA01806D41B0099CBDB /* Scanner.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Scanner.cpp; path = EagleCompiler/scanner/Scanner.cpp; sourceTree = "<group>"; };
 		D2D92BA11806D41B0099CBDB /* Scanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Scanner.h; path = EagleCompiler/scanner/Scanner.h; sourceTree = "<group>"; };
+		D2F6CD76185999C400CDA4DB /* NumericVariable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NumericVariable.cpp; path = EagleCompiler/assemblizer/NumericVariable.cpp; sourceTree = "<group>"; };
+		D2F6CD77185999C400CDA4DB /* NumericVariable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NumericVariable.h; path = EagleCompiler/assemblizer/NumericVariable.h; sourceTree = "<group>"; };
+		D2F6CD78185999C400CDA4DB /* StringVariable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StringVariable.cpp; path = EagleCompiler/assemblizer/StringVariable.cpp; sourceTree = "<group>"; };
+		D2F6CD79185999C400CDA4DB /* StringVariable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StringVariable.h; path = EagleCompiler/assemblizer/StringVariable.h; sourceTree = "<group>"; };
+		D2F6CD7A185999C400CDA4DB /* Variable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Variable.cpp; path = EagleCompiler/assemblizer/Variable.cpp; sourceTree = "<group>"; };
+		D2F6CD7B185999C400CDA4DB /* Variable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Variable.h; path = EagleCompiler/assemblizer/Variable.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +97,12 @@
 		D2BED5CF17F744AB005EAFEA = {
 			isa = PBXGroup;
 			children = (
+				D2F6CD76185999C400CDA4DB /* NumericVariable.cpp */,
+				D2F6CD77185999C400CDA4DB /* NumericVariable.h */,
+				D2F6CD78185999C400CDA4DB /* StringVariable.cpp */,
+				D2F6CD79185999C400CDA4DB /* StringVariable.h */,
+				D2F6CD7A185999C400CDA4DB /* Variable.cpp */,
+				D2F6CD7B185999C400CDA4DB /* Variable.h */,
 				D2BED5D917F744AB005EAFEA /* Products */,
 				D2BED5DA17F744AB005EAFEA /* EagleCompiler */,
 				D2D92BA01806D41B0099CBDB /* Scanner.cpp */,
@@ -200,6 +218,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2F6CD7C185999C400CDA4DB /* NumericVariable.cpp in Sources */,
+				D2F6CD7D185999C400CDA4DB /* NumericVariable.h in Sources */,
+				D2F6CD7E185999C400CDA4DB /* StringVariable.cpp in Sources */,
+				D2F6CD7F185999C400CDA4DB /* StringVariable.h in Sources */,
+				D2F6CD80185999C400CDA4DB /* Variable.cpp in Sources */,
+				D2F6CD81185999C400CDA4DB /* Variable.h in Sources */,
 				D29DBE2F1812BD9E00C9A5FE /* AssemblerInstruction.cpp in Sources */,
 				D29DBE301812BD9E00C9A5FE /* AssemblerInstruction.h in Sources */,
 				D29DBE311812BD9E00C9A5FE /* Assemblizer.cpp in Sources */,

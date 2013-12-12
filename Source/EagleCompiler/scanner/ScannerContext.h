@@ -71,6 +71,8 @@ protected:
     virtual TokenType stepRangeInternal(int start, int end)=0;
     virtual KnownScannerState mapNextState(TokenType token)=0;
     
+    TokenType lookupToken(int start, int end, TokenMap map);
+    
 public:
     /**
      * Set the external info for this state.
@@ -78,23 +80,6 @@ public:
     void startContext(Scanner* scanner, KnownScannerState previousContext){
         _scanner = scanner;
         _previousContext = previousContext;
-    }
-    
-    TokenType lookupToken(int start, int end, TokenMap map){
-        
-        TokenType rangeTokenType = TokenType::None;
-
-        string possibleToken = _scanner->range(start, end);
-        
-        
-        TokenMap::const_iterator it = map.find(possibleToken);
-        
-        if(it != map.end()){
-            // found matching token
-            rangeTokenType = it->second;
-        }
-        
-        return rangeTokenType;
     };
     
     TokenType stepRange(int start, int end){
@@ -220,7 +205,7 @@ public:
     
     TokenType stepRangeInternal(int start, int end);
     KnownScannerState mapNextState(TokenType token);
-    KnownScannerState getState() { return KnownScannerState::LineComment; }
+    KnownScannerState getState() { return KnownScannerState::LineComment; };
     
 protected:
     ScannerContextLiteralStringExpression(){ };
