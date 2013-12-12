@@ -110,7 +110,9 @@ public:
     KnownScannerState getState() { return KnownScannerState::Default; }
     
 protected:
-    ScannerContextDefault(){ };
+    ScannerContextDefault(){
+        _nextState = getState();
+    };
     
 };
 
@@ -134,7 +136,9 @@ public:
     KnownScannerState getState() { return KnownScannerState::LineComment; }
     
 protected:
-    ScannerContextLineComment(){ };
+    ScannerContextLineComment(){
+        _nextState = getState();
+    };
     
 };
 
@@ -154,10 +158,12 @@ public:
     
     TokenType stepRangeInternal(int start, int end);
     KnownScannerState mapNextState(TokenType token);
-    KnownScannerState getState() { return KnownScannerState::LineComment; }
+    KnownScannerState getState() { return KnownScannerState::MultiLineComment; }
     
 protected:
-    ScannerContextMultiLineComment(){ };
+    ScannerContextMultiLineComment(){
+        _nextState = getState();
+    };
     
 };
 
@@ -178,10 +184,12 @@ public:
     
     TokenType stepRangeInternal(int start, int end);
     KnownScannerState mapNextState(TokenType token);
-    KnownScannerState getState() { return KnownScannerState::LineComment; }
+    KnownScannerState getState() { return KnownScannerState::LiteralString; }
     
 protected:
-    ScannerContextLiteralString(){ };
+    ScannerContextLiteralString(){
+        _nextState = getState();
+    };
     
 };
 
@@ -205,10 +213,12 @@ public:
     
     TokenType stepRangeInternal(int start, int end);
     KnownScannerState mapNextState(TokenType token);
-    KnownScannerState getState() { return KnownScannerState::LineComment; };
+    KnownScannerState getState() { return KnownScannerState::LiteralStringExpression; };
     
 protected:
-    ScannerContextLiteralStringExpression(){ };
+    ScannerContextLiteralStringExpression(){
+        _nextState = getState();
+    };
     
 };
 

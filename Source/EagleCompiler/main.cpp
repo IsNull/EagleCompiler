@@ -19,30 +19,11 @@ using namespace std;
 string sourceCode;
 
 
-void testPascal() {
-    // ---- Simple Test cases
-    
-    /*
-    string basicComment = "// Comment haha";
-    string basicStatement = "var bool = (x| == 12); //Comment haha\ntest();";
-    string number = "var 456 789";
-    string operators = "*+-=+==*";
-    
-    string brackets = "()";
-    
-    string numIdent = "12&abc";
+void scan() {
 
-    sourceCode = basicStatement;
-     */
-    
-    //Parser p;
-    
-    
-    // ----
-    
-    
     // tokenize it:
-    cout << sourceCode << "\n";
+    cout << "\nListing Source code:\n\n"<< sourceCode << "\n\n";
+    
     Scanner scanner;
     const TokenList* list = scanner.scan(sourceCode);
     cout << "\n\nTokens: " << *list;
@@ -111,7 +92,7 @@ int main(int argc, char* argv[])
     
     
 #ifdef PASCAL
-	testPascal();
+	scan();
 #endif
 #ifdef SAM
 	testSam();

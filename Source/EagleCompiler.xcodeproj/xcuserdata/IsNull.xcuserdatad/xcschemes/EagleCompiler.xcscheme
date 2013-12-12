@@ -63,7 +63,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-s &quot;/Users/IsNull/Documents/Projects/EagleCompiler/Source/IML Source/Example.iml&quot;"
+            argument = "-s &quot;/Users/IsNull/Documents/Projects/EagleCompiler/Source/IML Source/TestCase1.iml&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

@@ -47,6 +47,8 @@ const TokenMap TokenMap_Default =
     {"%", TokenType::StringInlineExprToggle},
     {"""", TokenType::LiteralStringToggle},
     
+    {":", TokenType::Colon},
+    {",", TokenType::Comma},
     
     // Brackets
     {"(", TokenType::Bracked_Round_Open},
