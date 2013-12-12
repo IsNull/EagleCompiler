@@ -55,7 +55,7 @@ void Scanner::setContext(KnownScannerState stateType){
         default:
             // Default case always fall back to default state
             context = ScannerContextDefault::instance();
-            cout << "ERROR: setContext -> unhandled context, switching back to Default.";
+            cout << "ERROR: setContext -> unhandled context => switching back to Default.";
             break;
     }
     

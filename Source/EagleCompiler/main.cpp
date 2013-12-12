@@ -2,6 +2,8 @@
 #define IS_DEBUG
 
 #include <iostream>
+#include <algorithm>
+#include <fstream>
 #include "Token.h"
 #include "TokenList.h"
 #include "scanner/Scanner.h"
@@ -14,30 +16,16 @@
 
 using namespace std;
 
-void testPascal() {
-    // ---- Simple Test cases
-    
-    string basicComment = "// Comment haha";
-    string basicStatement = "var bool = (x| == 12); //Comment haha\ntest();";
-    string number = "var 456 789";
-    string operators = "*+-=+==*";
-    
-    string brackets = "()";
-    
-    string numIdent = "12&abc";
+string sourceCode;
 
-    string testStatement = basicStatement;
-    
-    //Parser p;
-    
-    
-    // ----
-    
-    
+
+void scan() {
+
     // tokenize it:
-    cout << testStatement + "\n\n";
+    cout << "\nListing Source code:\n\n"<< sourceCode << "\n\n";
+    
     Scanner scanner;
-    const TokenList* list = scanner.scan(testStatement);
+    const TokenList* list = scanner.scan(sourceCode);
     cout << "\n\nTokens: " << *list;
 }
 
@@ -50,10 +38,61 @@ void testSam() {
 	cout << a.getFinalAssemblerCode() << endl;
 }
 
-int main()
+
+
+
+char* getCmdOption(char ** begin, char ** end, const std::string & option)
 {
+    char ** itr = std::find(begin, end, option);
+    if (itr != end && ++itr != end)
+    {
+        return *itr;
+    }
+    return 0;
+}
+
+bool cmdOptionExists(char** begin, char** end, const std::string& option)
+{
+    return std::find(begin, end, option) != end;
+}
+
+
+int main(int argc, char* argv[])
+{
+    
+    if(cmdOptionExists(argv, argv+argc, "-h"))
+    {
+        cout << "EagleCompiler Help;"<< "\n";
+        cout << "Available Options:"<< "\n";
+        
+        cout << "-s <path to source>"<< "\n";
+        cout << "-t <path to parsetable>"<< "\n";
+    }
+    
+    char * sourceFile = getCmdOption(argv, argv + argc, "-s");
+    
+    if (sourceFile)
+    {
+        cout << "Reading source from " << sourceFile << "\n";
+        // read source from given file
+        ifstream ifs(sourceFile);
+        if(ifs){
+            sourceCode.assign( (std::istreambuf_iterator<char>(ifs) ),
+                        (std::istreambuf_iterator<char>())
+                       );
+        }else{
+            cout << "File does not exist!" << "\n";
+            return -1;
+        }
+    }else{
+        cout << "Missing mandatory param -s <Path to IML source>" << "\n";
+        return -1;
+    }
+    
+    
+    
 #ifdef PASCAL
-	testPascal();
+	scan();
 #endif
 #ifdef SAM
 	testSam();

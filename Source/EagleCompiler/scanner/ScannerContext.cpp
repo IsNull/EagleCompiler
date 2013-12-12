@@ -47,6 +47,8 @@ const TokenMap TokenMap_Default =
     {"%", TokenType::StringInlineExprToggle},
     {"""", TokenType::LiteralStringToggle},
     
+    {":", TokenType::Colon},
+    {",", TokenType::Comma},
     
     // Brackets
     {"(", TokenType::Bracked_Round_Open},
@@ -72,6 +74,26 @@ const TokenMap TokenMap_LiteralString =
     {"%", TokenType::StringInlineExprToggle},
     {"""", TokenType::LiteralStringToggle}
 };
+
+
+
+TokenType ScannerContextBase::lookupToken(int start, int end, TokenMap map){
+    
+    TokenType rangeTokenType = TokenType::None;
+    
+    string possibleToken = _scanner->range(start, end);
+    
+    
+    TokenMap::const_iterator it = map.find(possibleToken);
+    
+    if(it != map.end()){
+        // found matching token
+        rangeTokenType = it->second;
+    }
+    
+    return rangeTokenType;
+};
+
 
 
 //

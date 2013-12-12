@@ -63,16 +63,45 @@ enum TokenType {
     Operator_GreaterThanOrEqual,   // >=
     Operator_SmallerThanOrEqual,   // <=
     Operator_StringConcat,  // &
+    
 
+    Colon, // :
+    Comma, // ,
+    
     // Keywords
+    
+    Keyword_Init,           // init
+    Keyword_Program,        // program
+    Keyword_ProgramEnd,     // endprogram
+
+    Keyword_While,          // while
+    Keyword_WhileEnd,       // endwhile
+    
+    Keyword_Call,
+    Keyword_Const,
+    Keyword_Global,
+    Keyword_Local,
+    Keyword_Copy,
+    Keyword_Ref,
+    Keyword_In,
+    Keyword_Out,
+    Keyword_InOut,
     
     Keyword_Var,            // var
     Keyword_Condition,      // if
+    Keyword_Then,           // then
+    Keyword_ConditionEnd,   // endif
     Keyword_Do,             // do
     Keyword_Break,          // break
     Keyword_Continue,       // continue
-    
+    Keyword_Return,       // continue
     // ...
+    Keyword_True,
+    Keyword_False,
+    
+    Type_Int,
+    Type_Bool,
+    Type_String
     
 };
 
@@ -116,11 +145,34 @@ const map<TokenType, string> TokenNames {
         {TokenType::Operator_SmallerThanOrEqual,"Operator_SmallerThanOrEqual"},
     
         // Keywords
+        {TokenType::Colon, "Colon"},
+        {TokenType::Comma, "Comma"},
+    
+        // modifiers
+        {TokenType::Keyword_Init, "Keyword_Init"},
+        {TokenType::Keyword_Call, "Keyword_Call"},
+        {TokenType::Keyword_Global,"Keyword_Global"},
+        {TokenType::Keyword_Local,"Keyword_Local"},
+        {TokenType::Keyword_Const,"Keyword_Const"},
+        {TokenType::Keyword_Copy, "Keyword_Copy"},
+        {TokenType::Keyword_Ref,"Keyword_Ref"},
+        {TokenType::Keyword_In,"Keyword_In"},
+        {TokenType::Keyword_Out, "Keyword_Out"},
+        {TokenType::Keyword_InOut,"Keyword_InOut"},
+    
+        // flow
+        {TokenType::Keyword_Program, "Keyword_Program"},
+        {TokenType::Keyword_ProgramEnd, "Keyword_ProgramEnd"},
         {TokenType::Keyword_Var, "Keyword_Var"},
-        {TokenType::Keyword_Condition,"Keyword_Condition"},
+        {TokenType::Keyword_Condition,"Keyword_Condition"}, // if
+        {TokenType::Keyword_Then,"Keyword_Then"}, // then
+        {TokenType::Keyword_ConditionEnd,"Keyword_ConditionEnd"}, // endif
         {TokenType::Keyword_Do,"Keyword_Do"},
         {TokenType::Keyword_Break, "Keyword_Break"},
-        {TokenType::Keyword_Continue,"Keyword_Continue"}
+        {TokenType::Keyword_Continue,"Keyword_Continue"},
+    
+        {TokenType::Keyword_True, "Keyword_True"},
+        {TokenType::Keyword_False,"Keyword_False"}
     };
 
 ostream& operator<<(ostream& o, TokenType t);
@@ -130,19 +182,41 @@ typedef map<string, TokenType> TokenMap;
 
 
 /*
-Keyword_Var,            // var
-Keyword_Condition,      // if
-Keyword_Do,             // do
-Keyword_Break,          // break
-Keyword_Continue,       // continue
+
 */
 const TokenMap KeywordTokens =
 {
+    {"not", TokenType::Operator_Not},
+    
+    
     {"var", TokenType::Keyword_Var},
+
+    
+    // modifiers
+    {"init",TokenType::Keyword_Init},
+    {"call",TokenType::Keyword_Call},
+    {"global",TokenType::Keyword_Global},
+    {"local",TokenType::Keyword_Local},
+    {"const",TokenType::Keyword_Const},
+    {"copy",TokenType::Keyword_Copy},
+    {"ref",TokenType::Keyword_Ref},
+    {"in",TokenType::Keyword_In},
+    {"out",TokenType::Keyword_Out},
+    {"inout",TokenType::Keyword_InOut},
+    
+    // flow
+    {"program", TokenType::Keyword_Program},
+    {"endprogram", TokenType::Keyword_ProgramEnd},
     {"if", TokenType::Keyword_Condition},
+    {"endif", TokenType::Keyword_ConditionEnd},
+    {"while", TokenType::Keyword_While},
+    {"endwhile", TokenType::Keyword_WhileEnd},
     {"do", TokenType::Keyword_Do},
     {"break", TokenType::Keyword_Break},
-    {"continue", TokenType::Keyword_Continue}
+    {"skip", TokenType::Keyword_Continue},
+    
+    {"true", TokenType::Keyword_True},
+    {"false", TokenType::Keyword_False}
 };
 
 /**
