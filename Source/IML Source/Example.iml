@@ -1,0 +1,2 @@
+var bool := (x = 12); //Comment haha
+test();
