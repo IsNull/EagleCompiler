@@ -64,7 +64,6 @@ int main(int argc, char* argv[])
     {
         cout << "EagleCompiler Help;"<< "\n";
         cout << "Available Options:"<< "\n";
-        
         cout << "-s <path to source>"<< "\n";
         cout << "-t <path to parsetable>"<< "\n";
     }
