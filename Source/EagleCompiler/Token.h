@@ -55,8 +55,9 @@ enum TokenType {
     Operator_Assignment,    // :=
     Operator_Plus,          // +
     Operator_Minus,         // -
-    Operator_Div,           // /
+    Operator_Div,           // div
     Operator_Multiply,      // *
+    Operator_Modulo,        // mod
     Operator_Equals,        // =
     Operator_GreaterThan,   // >
     Operator_SmallerThan,   // <
@@ -64,18 +65,20 @@ enum TokenType {
     Operator_SmallerThanOrEqual,   // <=
     Operator_StringConcat,  // &
     
-
-    Colon, // :
-    Comma, // ,
+    Operator_BOOL_AND,      // &&
+    Operator_BOOL_OR,       // ||
+    Operator_BOOL_CAND,     // |&
+    Operator_BOOL_COR,      // |?
+    
+    Semicolon,  // ;
+    Colon,      // :
+    Comma,      // ,
     
     // Keywords
     
     Keyword_Init,           // init
     Keyword_Program,        // program
     Keyword_ProgramEnd,     // endprogram
-
-    Keyword_While,          // while
-    Keyword_WhileEnd,       // endwhile
     
     Keyword_Call,
     Keyword_Const,
@@ -88,13 +91,20 @@ enum TokenType {
     Keyword_InOut,
     
     Keyword_Var,            // var
+    
+    Keyword_Proc,           // proc
+    Keyword_ProcEnd,        // endproc
+    
+    Keyword_While,          // while
+    Keyword_WhileEnd,       // endwhile
     Keyword_Condition,      // if
     Keyword_Then,           // then
     Keyword_ConditionEnd,   // endif
     Keyword_Do,             // do
     Keyword_Break,          // break
     Keyword_Continue,       // continue
-    Keyword_Return,       // continue
+    Keyword_Return,         // returns
+    
     // ...
     Keyword_True,
     Keyword_False,
@@ -124,55 +134,77 @@ const map<TokenType, string> TokenNames {
         {TokenType::Comment_Line, "Comment_Line"},
     
         // Brackets
-        {TokenType::Bracked_Round_Open,"Bracked_Round_Open"},
-        {TokenType::Bracked_Round_Close, "Bracked_Round_Close"},
+        {TokenType::Bracked_Round_Open,"LPAREN"},
+        {TokenType::Bracked_Round_Close, "RPAREN"},
         {TokenType::Bracked_Curly_Open, "Bracked_Curly_Open"},
         {TokenType::Bracked_Curly_Close,"Bracked_Curly_Close"},
         {TokenType::Bracked_Square_Open,"Bracked_Square_Open"},
         {TokenType::Bracked_Square_Close,"Bracked_Square_Close"},
     
         // Operators
-        {TokenType::Operator_Not, "Operator_Not"},
-        {TokenType::Operator_Assignment,"Operator_Assignment"},
-        {TokenType::Operator_Plus,"Operator_Plus"},
-        {TokenType::Operator_Minus,"Operator_Minus"},
-        {TokenType::Operator_Div, "Operator_Div"},
-        {TokenType::Operator_Multiply,"Operator_Multiply"},
-        {TokenType::Operator_Equals,"Operator_Equals"},
-        {TokenType::Operator_GreaterThan, "Operator_GreaterThan"},
-        {TokenType::Operator_SmallerThan,"Operator_SmallerThan"},
-        {TokenType::Operator_GreaterThanOrEqual, "Operator_GreaterThanOrEqual"},
-        {TokenType::Operator_SmallerThanOrEqual,"Operator_SmallerThanOrEqual"},
+        {TokenType::Operator_Not, "NOT"},
+        {TokenType::Operator_Assignment,"BECOMES"},
+        {TokenType::Operator_Plus,"ADDOPR_PLUS"},
+        {TokenType::Operator_Minus,"ADDOPR_MINUS"},
+        {TokenType::Operator_Div, "MULTOPR_DIV"},
+        {TokenType::Operator_Multiply,"MULTOPR_TIMES"},
+        {TokenType::Operator_Modulo,"MULTOPR_MOD"},
+        {TokenType::Operator_Equals,"RELOPR_EQ"},
+        {TokenType::Operator_GreaterThan, "RELOPR_GT"},
+        {TokenType::Operator_SmallerThan,"RELOPR_ST"},
+        {TokenType::Operator_GreaterThanOrEqual, "RELOPR_GE"},
+        {TokenType::Operator_SmallerThanOrEqual,"RELOPR_SE"},
+    
+        {TokenType::Operator_BOOL_AND, "BOOLOPR_AND"},
+        {TokenType::Operator_BOOL_OR,"BOOLOPR_OR"},
+        {TokenType::Operator_BOOL_CAND, "BOOLOPR_CAND"},
+        {TokenType::Operator_BOOL_COR,"BOOLOPR_COR"},
+    
     
         // Keywords
-        {TokenType::Colon, "Colon"},
+        {TokenType::Colon, "COLON"},
+        {TokenType::Semicolon, "SEMICOLON"},
         {TokenType::Comma, "Comma"},
     
         // modifiers
-        {TokenType::Keyword_Init, "Keyword_Init"},
-        {TokenType::Keyword_Call, "Keyword_Call"},
-        {TokenType::Keyword_Global,"Keyword_Global"},
-        {TokenType::Keyword_Local,"Keyword_Local"},
-        {TokenType::Keyword_Const,"Keyword_Const"},
-        {TokenType::Keyword_Copy, "Keyword_Copy"},
-        {TokenType::Keyword_Ref,"Keyword_Ref"},
-        {TokenType::Keyword_In,"Keyword_In"},
-        {TokenType::Keyword_Out, "Keyword_Out"},
-        {TokenType::Keyword_InOut,"Keyword_InOut"},
+        {TokenType::Keyword_Init, "INIT"},
+        {TokenType::Keyword_Call, "CALL"},
+        {TokenType::Keyword_Global,"GLOBAL"},
+        {TokenType::Keyword_Local,"LOCAL"},
+    
+        {TokenType::Keyword_Var, "CHANGEMODE_VAR"},
+        {TokenType::Keyword_Const,"CHANGEMODE_CONST"},
+    
+        {TokenType::Keyword_Copy, "MECHMODE_COPY"},
+        {TokenType::Keyword_Ref,"MECHMODE_REF"},
+    
+        {TokenType::Keyword_In,"FLOWMODE_IN"},
+        {TokenType::Keyword_Out, "FLOWMODE_OUT"},
+        {TokenType::Keyword_InOut,"FLOWMODE_INOUT"},
     
         // flow
-        {TokenType::Keyword_Program, "Keyword_Program"},
-        {TokenType::Keyword_ProgramEnd, "Keyword_ProgramEnd"},
-        {TokenType::Keyword_Var, "Keyword_Var"},
-        {TokenType::Keyword_Condition,"Keyword_Condition"}, // if
-        {TokenType::Keyword_Then,"Keyword_Then"}, // then
-        {TokenType::Keyword_ConditionEnd,"Keyword_ConditionEnd"}, // endif
-        {TokenType::Keyword_Do,"Keyword_Do"},
-        {TokenType::Keyword_Break, "Keyword_Break"},
-        {TokenType::Keyword_Continue,"Keyword_Continue"},
+        {TokenType::Keyword_Proc, "PROC"},
+        {TokenType::Keyword_ProcEnd, "ENDPROC"},
+        {TokenType::Keyword_While, "WHILE"},
+        {TokenType::Keyword_WhileEnd, "ENDWHILE"},
+        {TokenType::Keyword_Program, "PROGRAM"},
+        {TokenType::Keyword_ProgramEnd, "ENDPROGRAM"},
     
-        {TokenType::Keyword_True, "Keyword_True"},
-        {TokenType::Keyword_False,"Keyword_False"}
+        {TokenType::Keyword_Condition,"IF"}, // if
+        {TokenType::Keyword_Then,"THEN"}, // then
+        {TokenType::Keyword_ConditionEnd,"ENDIF"}, // endif
+        {TokenType::Keyword_Do,"DO"},
+        {TokenType::Keyword_Break, "BREAK"},
+        {TokenType::Keyword_Continue,"SKIP"},
+        {TokenType::Keyword_Return,"RETURNS"},
+    
+        {TokenType::Type_Int, "TYPE_Int32"},
+        {TokenType::Type_Bool,"TYPE_BOOL"},
+        {TokenType::Type_String,"TYPE_STRING"},
+    
+    
+        {TokenType::Keyword_True, "LITERAL_TRUE"},
+        {TokenType::Keyword_False,"LITERAL_FALSE"}
     };
 
 ostream& operator<<(ostream& o, TokenType t);
@@ -182,12 +214,13 @@ typedef map<string, TokenType> TokenMap;
 
 
 /*
-
+*
 */
 const TokenMap KeywordTokens =
 {
     {"not", TokenType::Operator_Not},
-    
+    {"div", TokenType::Operator_Div},
+    {"mod", TokenType::Operator_Modulo},
     
     {"var", TokenType::Keyword_Var},
 
@@ -205,6 +238,8 @@ const TokenMap KeywordTokens =
     {"inout",TokenType::Keyword_InOut},
     
     // flow
+    {"proc", TokenType::Keyword_Proc},
+    {"endproc", TokenType::Keyword_ProcEnd},
     {"program", TokenType::Keyword_Program},
     {"endprogram", TokenType::Keyword_ProgramEnd},
     {"if", TokenType::Keyword_Condition},
@@ -214,6 +249,8 @@ const TokenMap KeywordTokens =
     {"do", TokenType::Keyword_Do},
     {"break", TokenType::Keyword_Break},
     {"skip", TokenType::Keyword_Continue},
+    {"returns", TokenType::Keyword_Return},
+    
     
     {"true", TokenType::Keyword_True},
     {"false", TokenType::Keyword_False}

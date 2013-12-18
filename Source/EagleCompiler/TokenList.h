@@ -18,37 +18,36 @@ using namespace std;
 class TokenList
 {
 private:
-    list<Token>* _tokens;
-    list<Token>::const_iterator _iterator;
+    list<const Token*> _tokens;
+    list<const Token*>::const_iterator _iterator;
     
 public:
     
-    TokenList(){ _tokens = new list<Token>(); }
+    TokenList(){ }
     
-    void add(Token& t) { _tokens->push_back(t); }
+    void add(const Token* t) { _tokens.push_back(t); }
     
     // reset the iterator
     void reset() {
-        _iterator = _tokens->begin();
+        _iterator = _tokens.begin();
     }
     
     // return the next Token or NULL
-    const Token* next();
+    const Token* stepNext();
     
     friend std::ostream& operator<< (std::ostream& stream, const TokenList& tokenList) {
-    
+        
         stream << "{";
         
-        list<Token>::const_iterator it = tokenList._tokens->begin();
-
-        while (it != tokenList._tokens->end()) {
+        list<const Token*>::const_iterator it = tokenList._tokens.begin();
+        
+        while (it != tokenList._tokens.end()) {
             stream << *it << ",";
             it++;
         }
         stream << "}";
         
         return stream;
-    }
-};
+    }};
 
 #endif /* defined(__EagleCompiler__TokenList__) */

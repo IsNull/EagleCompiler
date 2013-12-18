@@ -10,31 +10,63 @@
 #define __EagleCompiler__Parser__
 
 #include <iostream>
+#include <sstream>
 #include <string>
 #include "../TokenList.h"
 #include "../Token.h"
 
 // forward decls
 class ProductionRule;
+class Terminal;
 class NonTerminal;
 
 
+/**
+ * Represents the parse context
+ */
 class IParseContext
 {
 public:
     virtual void consume(TokenType expectedToken)=0;
-    virtual TokenType current()=0;
-    virtual ProductionRule getRule(NonTerminal nt)=0;
+    virtual const Token* current() const =0;
+    virtual ProductionRule* getRule(const NonTerminal* nt)=0;
+    
+    virtual const Terminal* getTerminal(TokenType expectedToken)=0;
+};
+
+class GrammarException: public exception
+{
+private:
+    string _message;
+    
+public:
+    
+    GrammarException(string message){
+        this->_message = message;
+    }
+    
+    virtual const char* what() const throw()
+    {
+        return _message.c_str();
+    }
 };
 
 
 /**
- * Represents a Grammar Symbol such as {Terminal, NonTerminal}
+ * Represents a Grammar-Symbol such as a {Terminal, NonTerminal}
  */
 class IGrammarSymbol
 {
+protected:
+    string name;
+    
 public:
-    virtual bool isTerminal()=0;
+    virtual bool isTerminal() const =0;
+    
+    friend std::ostream& operator<< (std::ostream& stream, const IGrammarSymbol& symbol) {
+        stream << symbol.name;
+        return stream;
+    }
 };
 
 /**
@@ -44,15 +76,16 @@ public:
 class Terminal  : public IGrammarSymbol
 {
 private:
-    Token* token;
-    
+    TokenType tokenType;
 public:
-    Terminal(Token* token){
-        this->token = token;
+    Terminal(string name, TokenType type){
+        this->name = name;
+        this->tokenType = type;
     }
-    bool isTerminal(){ return true; }
     
-    TokenType getTokenType() { return token->getType(); }
+    bool isTerminal() const { return true; }
+    
+    TokenType getTokenType() const { return tokenType; }
 };
 
 /**
@@ -61,11 +94,10 @@ public:
 class NonTerminal  : public IGrammarSymbol
 {
 public:
-    // TODO: Save name? String or Enum?
-    NonTerminal(){
-        
+    NonTerminal(string name){
+        this->name = name;
     }
-    bool isTerminal(){ return false; }
+    bool isTerminal() const { return false; }
 };
 
 
@@ -79,25 +111,26 @@ public:
 class SyntaxTree
 {
 private:
-    IGrammarSymbol* symbol;
-    list<SyntaxTree> children;
+    const IGrammarSymbol* _grammarSymbol;
+    list<SyntaxTree> _children;
     
     
 public:
-    SyntaxTree(IGrammarSymbol& symbol){
-        this->symbol = &symbol;
+    SyntaxTree(const IGrammarSymbol* symbol)
+        :_grammarSymbol(symbol)
+    {
     }
     
-    list<SyntaxTree> getChildren();
-    bool hasChildren() { return children.size() != 0; }
-    void add(SyntaxTree node){ children.push_back(node); }
+    list<SyntaxTree> getChildren() { return _children; }
+    bool hasChildren() const { return _children.size() != 0; }
+    void add(const SyntaxTree& node){ _children.push_back(node); }
     
-    bool isTerminal(){
-       return symbol->isTerminal();
+    bool isTerminal() const {
+        return _grammarSymbol->isTerminal();
     }
     
-    NonTerminal* getNonTerminal(){ return (NonTerminal*)symbol; }
-    Terminal* getTerminal(){ return (Terminal*)symbol; }
+    NonTerminal* getNonTerminal() const { return (NonTerminal*)_grammarSymbol; }
+    Terminal* getTerminal() const { return (Terminal*)_grammarSymbol; }
 };
 
 
@@ -107,7 +140,7 @@ public:
 
 /* Represents a production rule map */
 typedef list<IGrammarSymbol*> Production;
-typedef map<Terminal, Production> ProductionMap;
+typedef map<const Terminal*, Production> ProductionMap;
 
 class IProductionRule {
     virtual SyntaxTree produce(IParseContext ctx)=0;
@@ -119,22 +152,25 @@ class IProductionRule {
  */
 class ProductionRule : public IProductionRule {
 private:
-    NonTerminal nonterminal;
+    const NonTerminal* nonterminal;
     ProductionMap productionTable;
     
 public:
-    ProductionRule(NonTerminal nonterm, ProductionMap production){
-        nonterminal = nonterm;
-        productionTable = production;
+    ProductionRule(const NonTerminal *nonterm)
+        : nonterminal(nonterm){
     }
+    
+    void addProduction(Terminal* terminal, Production production){
+        productionTable.insert(make_pair(terminal, production));
+    };
     
     SyntaxTree produce(IParseContext ctx){
         SyntaxTree node(nonterminal);
         
-        Token token = ctx.current();
-        Terminal term; // TODO from current token?
+        const Token* currentToken = ctx.current();
+        const Terminal* currentTerminal = ctx.getTerminal(currentToken->getType()); // TODO Get Terminal from current token?
         
-        ProductionMap::const_iterator productionit = productionTable.find(term);
+        ProductionMap::const_iterator productionit = productionTable.find(currentTerminal);
         if(productionit != productionTable.end()){
             // found matching production
             Production production = productionit->second;
@@ -143,51 +179,84 @@ public:
                 IGrammarSymbol* s = *it;
                 
                 if(s->isTerminal()){
-                    Terminal t = *((Terminal*)s);
-                    ctx.consume(t.getTokenType());
-                    node.add(SyntaxTree(t));
+                    Terminal *t = (Terminal*)s;
+                    ctx.consume(t->getTokenType());
+                    
+                    node.add(SyntaxTree(t)); // TODO add Token to SyntaxTree for later analysis
                 }else{
-                    NonTerminal nt = *((NonTerminal*)s);
+                    NonTerminal *nt = (NonTerminal*)s;
                     // look-up  ProductionRule for this nt
-                    ProductionRule rule = ctx.getRule(nt);
-                    SyntaxTree subtree = rule.produce(ctx);
-                    node.add(subtree);
+                    ProductionRule* rule = ctx.getRule(nt);
+                    if(rule != NULL){
+                        SyntaxTree subtree = rule->produce(ctx);
+                        node.add(subtree);
+                    }
                 }
-                
                 
             }
             
         }else{
             cout << "Current Token has no rule in this Production Rule!";
         }
-
-        
         
         return node;
     };
 };
 
+typedef map<const NonTerminal*, ProductionRule*> ParseRuleTable;
 
 class Parser : public IParseContext
 {
 private:
-    TokenList tokenlist;
-    map<NonTerminal, ProductionRule> ruleMap;
+    TokenList _tokenlist;
+    const ParseRuleTable _ruleMap;
+    const Token* _current;
     
 public:
     
-    Parser(TokenList tokenlist);
+    Parser(TokenList& tokenlist, ParseRuleTable& parseTable)
+    : _tokenlist(tokenlist) , _ruleMap(parseTable){
+        _current = _tokenlist.stepNext();
+    }
     
-    void consume(TokenType expectedToken);
-    
-    TokenType current();
-    
-    ProductionRule getRule(NonTerminal nt){
-        map<NonTerminal, ProductionRule>::const_iterator it = ruleMap.find(nt);
-        if(it == ruleMap.end()){
-            return it->second;
+    void consume(TokenType expectedToken){
+        
+        if(_current == NULL)
+        {
+            ostringstream errStr;
+            errStr << "ERROR: Unexpected EOF in Token List. Expected Token: "  << expectedToken;
+            throw new GrammarException(errStr.str());
         }
-        // TODO Handle error
+        
+        if(_current->getType() == expectedToken){
+            // the expected token is present
+           _current = _tokenlist.stepNext();
+        }else{
+            ostringstream errStr;
+            errStr << "ERROR: Unexpected Token: '" << _current << "' expected: "  << expectedToken;
+            throw new GrammarException(errStr.str());
+        }
+    }
+    
+    const Token* current() const { return _current; }
+    
+    ProductionRule* getRule(const NonTerminal* nt){
+        ProductionRule* rule = NULL;
+        
+        ParseRuleTable::const_iterator it = _ruleMap.find(nt);
+        if(it == _ruleMap.end()){
+            rule = it->second;
+        }else{
+            cout << "No Rule found for NT: " << nt;
+            // TODO Handle error / implement rule
+        }
+        return rule;
+    }
+    
+    const Terminal* getTerminal(TokenType expectedToken){
+        // TODO Implement mapping!!
+        cout << "Parser::getTerminal: TODO Implement mapping!! ";
+        return NULL;
     }
     
 };

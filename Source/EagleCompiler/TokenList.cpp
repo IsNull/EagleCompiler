@@ -9,11 +9,12 @@
 #include "TokenList.h"
 
 
-const Token* TokenList::next(){
-    if(_iterator != _tokens->end()){
-        const Token* t = &*_iterator;
+const Token* TokenList::stepNext() {
+    if(_iterator != _tokens.end()){
+        const Token* t = *_iterator;
         _iterator++;
         return t;
     }
     return NULL;
 }
+
