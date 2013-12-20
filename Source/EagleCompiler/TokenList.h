@@ -42,7 +42,7 @@ public:
         list<const Token*>::const_iterator it = tokenList._tokens.begin();
         
         while (it != tokenList._tokens.end()) {
-            stream << *it << ",";
+            stream << **it << ",";
             it++;
         }
         stream << "}";
