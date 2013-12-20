@@ -27,7 +27,7 @@ class NonTerminal;
 class IParseContext
 {
 public:
-    virtual void consume(TokenType expectedToken)=0;
+    virtual void consume(const Terminal* terminal)=0;
     virtual const Token* current() const =0;
     virtual ProductionRule* getRule(const NonTerminal* nt)=0;
     
@@ -63,8 +63,10 @@ protected:
 public:
     virtual bool isTerminal() const =0;
     
+    string getName() const { return name; }
+    
     friend std::ostream& operator<< (std::ostream& stream, const IGrammarSymbol& symbol) {
-        stream << symbol.name;
+        stream << symbol.getName();
         return stream;
     }
 };
@@ -76,16 +78,16 @@ public:
 class Terminal  : public IGrammarSymbol
 {
 private:
-    TokenType tokenType;
+   // TokenType tokenType;
 public:
-    Terminal(string name, TokenType type){
+    Terminal(string name){
         this->name = name;
-        this->tokenType = type;
+    //    this->tokenType = type;
     }
     
     bool isTerminal() const { return true; }
     
-    TokenType getTokenType() const { return tokenType; }
+    //TokenType getTokenType() const { return tokenType; }
 };
 
 /**
@@ -164,100 +166,80 @@ public:
         productionTable.insert(make_pair(terminal, production));
     };
     
-    SyntaxTree produce(IParseContext ctx){
-        SyntaxTree node(nonterminal);
-        
-        const Token* currentToken = ctx.current();
-        const Terminal* currentTerminal = ctx.getTerminal(currentToken->getType()); // TODO Get Terminal from current token?
-        
-        ProductionMap::const_iterator productionit = productionTable.find(currentTerminal);
-        if(productionit != productionTable.end()){
-            // found matching production
-            Production production = productionit->second;
-            
-            for (Production::const_iterator it = production.begin(), end = production.end(); it != end; ++it) {
-                IGrammarSymbol* s = *it;
-                
-                if(s->isTerminal()){
-                    Terminal *t = (Terminal*)s;
-                    ctx.consume(t->getTokenType());
-                    
-                    node.add(SyntaxTree(t)); // TODO add Token to SyntaxTree for later analysis
-                }else{
-                    NonTerminal *nt = (NonTerminal*)s;
-                    // look-up  ProductionRule for this nt
-                    ProductionRule* rule = ctx.getRule(nt);
-                    if(rule != NULL){
-                        SyntaxTree subtree = rule->produce(ctx);
-                        node.add(subtree);
-                    }
-                }
-                
-            }
-            
-        }else{
-            cout << "Current Token has no rule in this Production Rule!";
-        }
-        
-        return node;
-    };
+    SyntaxTree produce(IParseContext ctx);
+    
 };
 
 typedef map<const NonTerminal*, ProductionRule*> ParseRuleTable;
 
+
+class IGrammarRepository
+{
+public:
+    /**
+     * Returns the NonTerminal with the given Name or NULL if not available
+     */
+    virtual const NonTerminal* getNonTerminal(string name) const = 0;
+    
+    /**
+     * Returns the Terminal with the given Name or NULL if not available
+     */
+    virtual const Terminal* getTerminal(string name) const = 0;
+};
+
+
+/**
+ *
+ */
 class Parser : public IParseContext
 {
 private:
     TokenList _tokenlist;
+    map<const string, TokenType> terminalMap;
     const ParseRuleTable _ruleMap;
     const Token* _current;
+    const IGrammarRepository* _grammarRepository;
+    
+    bool isMatchingToken(const Terminal* terminal, const Token* token);
     
 public:
     
-    Parser(TokenList& tokenlist, ParseRuleTable& parseTable)
-    : _tokenlist(tokenlist) , _ruleMap(parseTable){
+    Parser(TokenList& tokenlist, ParseRuleTable& parseTable, const IGrammarRepository* grammarRepository)
+    :
+    _tokenlist(tokenlist),
+    _ruleMap(parseTable),
+    _grammarRepository(grammarRepository)
+    {
         _current = _tokenlist.stepNext();
+        buildTerminalMap();
     }
     
-    void consume(TokenType expectedToken){
-        
-        if(_current == NULL)
-        {
-            ostringstream errStr;
-            errStr << "ERROR: Unexpected EOF in Token List. Expected Token: "  << expectedToken;
-            throw new GrammarException(errStr.str());
-        }
-        
-        if(_current->getType() == expectedToken){
-            // the expected token is present
-           _current = _tokenlist.stepNext();
-        }else{
-            ostringstream errStr;
-            errStr << "ERROR: Unexpected Token: '" << _current << "' expected: "  << expectedToken;
-            throw new GrammarException(errStr.str());
+    void buildTerminalMap(){
+        for (map<TokenType, const string>::const_iterator it = TokenNames.begin(), end = TokenNames.end(); it != end; ++it) {
+            terminalMap.insert(make_pair(it->second, it->first));
         }
     }
     
+    /**
+     * Consumes the current (expected) terminal
+     */
+    void consume(const Terminal* terminal);
+    
+    /**
+     * Returns the current Token
+     */
     const Token* current() const { return _current; }
     
-    ProductionRule* getRule(const NonTerminal* nt){
-        ProductionRule* rule = NULL;
-        
-        ParseRuleTable::const_iterator it = _ruleMap.find(nt);
-        if(it == _ruleMap.end()){
-            rule = it->second;
-        }else{
-            cout << "No Rule found for NT: " << nt;
-            // TODO Handle error / implement rule
-        }
-        return rule;
-    }
+    ProductionRule* getRule(const NonTerminal* nt);
     
-    const Terminal* getTerminal(TokenType expectedToken){
-        // TODO Implement mapping!!
-        cout << "Parser::getTerminal: TODO Implement mapping!! ";
-        return NULL;
-    }
+    /**
+     * Maps a given TokenType to a Terminal
+     * Note that there are multiple TokenTypes which yield the same Terminal
+     *
+     * I.e. Terminal RELOPR which has several comparision operators
+     * RELOPER_EQ, RELOPR_NE etc.
+     */
+    const Terminal* getTerminal(TokenType expectedToken);
     
 };
 

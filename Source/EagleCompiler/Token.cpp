@@ -13,7 +13,7 @@ using namespace std;
 
 ostream& operator<<(ostream& o, TokenType t) {
 	
-    map<TokenType, string>::const_iterator it = TokenNames.find(t);
+    map<TokenType, const string>::const_iterator it = TokenNames.find(t);
     
     if(TokenNames.end() != it){
         // found it

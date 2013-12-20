@@ -111,11 +111,53 @@ enum TokenType {
     
     Type_Int,
     Type_Bool,
-    Type_String
+    Type_String,
     
+    // Metadata Groups
+    
+    Group_Literal,
+    Group_Type,
+    Group_Flowmode,
+    Group_Mechmode,
+    Group_Changemode,
+    Group_AddOpr,
+    Group_MultOpr,
+    Group_RelOpr,
+    Group_BoolOpr
 };
 
-const map<TokenType, string> TokenNames {
+typedef map<TokenType, list<TokenType>> TokenGroupMap;
+
+/**
+ * Since the parse table handles certain token as a group,
+ * we define them here as well to handle them adequatly
+ *
+ */
+const TokenGroupMap TokenGroups {
+    
+    {TokenType::Group_Literal,
+        { TokenType::Keyword_True, TokenType::Keyword_False } },
+    {TokenType::Group_Type,
+        { TokenType::Type_Int, TokenType::Type_Bool, TokenType::Type_String } },
+    {TokenType::Group_Flowmode,
+        { TokenType::Keyword_In, TokenType::Keyword_Out, TokenType::Keyword_InOut} },
+    {TokenType::Group_Mechmode,
+        { TokenType::Keyword_Copy, TokenType::Keyword_Ref } },
+    {TokenType::Group_Changemode,
+        { TokenType::Keyword_Var, TokenType::Keyword_Const } },
+    {TokenType::Group_AddOpr,
+        { TokenType::Operator_Plus, TokenType::Operator_Minus } },
+    {TokenType::Group_MultOpr,
+        { TokenType::Operator_Multiply, TokenType::Operator_Div } },
+    {TokenType::Group_RelOpr,
+        {TokenType::Operator_Equals, TokenType::Operator_GreaterThan,TokenType::Operator_SmallerThan,TokenType::Operator_GreaterThanOrEqual,TokenType::Operator_SmallerThanOrEqual} },
+    {TokenType::Group_BoolOpr,
+        { TokenType::Operator_BOOL_AND, TokenType::Operator_BOOL_OR, TokenType::Operator_BOOL_CAND, TokenType::Operator_BOOL_COR } }
+};
+
+
+
+const map<TokenType, const string> TokenNames {
         {None, "None"},
         {TokenType::Sentinel, "Sentinel"},
     
@@ -144,17 +186,25 @@ const map<TokenType, string> TokenNames {
         // Operators
         {TokenType::Operator_Not, "NOT"},
         {TokenType::Operator_Assignment,"BECOMES"},
+    
+        {TokenType::Group_AddOpr,"ADDOPR"},
         {TokenType::Operator_Plus,"ADDOPR_PLUS"},
         {TokenType::Operator_Minus,"ADDOPR_MINUS"},
+    
+    
+        {TokenType::Group_MultOpr, "MULTOPR"},
         {TokenType::Operator_Div, "MULTOPR_DIV"},
         {TokenType::Operator_Multiply,"MULTOPR_TIMES"},
         {TokenType::Operator_Modulo,"MULTOPR_MOD"},
+    
+        {TokenType::Group_RelOpr,"RELOPR"},
         {TokenType::Operator_Equals,"RELOPR_EQ"},
         {TokenType::Operator_GreaterThan, "RELOPR_GT"},
         {TokenType::Operator_SmallerThan,"RELOPR_ST"},
         {TokenType::Operator_GreaterThanOrEqual, "RELOPR_GE"},
         {TokenType::Operator_SmallerThanOrEqual,"RELOPR_SE"},
     
+        {TokenType::Group_BoolOpr, "BOOLOPR"},
         {TokenType::Operator_BOOL_AND, "BOOLOPR_AND"},
         {TokenType::Operator_BOOL_OR,"BOOLOPR_OR"},
         {TokenType::Operator_BOOL_CAND, "BOOLOPR_CAND"},
@@ -172,12 +222,15 @@ const map<TokenType, string> TokenNames {
         {TokenType::Keyword_Global,"GLOBAL"},
         {TokenType::Keyword_Local,"LOCAL"},
     
+        {TokenType::Group_Changemode, "CHANGEMODE"},
         {TokenType::Keyword_Var, "CHANGEMODE_VAR"},
         {TokenType::Keyword_Const,"CHANGEMODE_CONST"},
     
+        {TokenType::Group_Mechmode, "MECHMODE"},
         {TokenType::Keyword_Copy, "MECHMODE_COPY"},
         {TokenType::Keyword_Ref,"MECHMODE_REF"},
     
+        {TokenType::Group_Flowmode,"FLOWMODE"},
         {TokenType::Keyword_In,"FLOWMODE_IN"},
         {TokenType::Keyword_Out, "FLOWMODE_OUT"},
         {TokenType::Keyword_InOut,"FLOWMODE_INOUT"},
@@ -198,14 +251,17 @@ const map<TokenType, string> TokenNames {
         {TokenType::Keyword_Continue,"SKIP"},
         {TokenType::Keyword_Return,"RETURNS"},
     
+        {TokenType::Group_Type, "TYPE"},
         {TokenType::Type_Int, "TYPE_Int32"},
         {TokenType::Type_Bool,"TYPE_BOOL"},
         {TokenType::Type_String,"TYPE_STRING"},
     
     
+        {TokenType::Group_Literal, "LITERAL"},
         {TokenType::Keyword_True, "LITERAL_TRUE"},
         {TokenType::Keyword_False,"LITERAL_FALSE"}
     };
+
 
 ostream& operator<<(ostream& o, TokenType t);
 

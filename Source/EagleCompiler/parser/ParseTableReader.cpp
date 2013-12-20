@@ -7,6 +7,7 @@
 //
 
 #include "ParseTableReader.h"
+#include "Util.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -15,46 +16,40 @@
 
 const string ParseTableReader::KEYWORD_TERMINAL = "terminal";
 
-vector<string> split(const string& s, const string& delim, const bool keep_empty = true);
 
-
-const NonTerminal* ParseTableReader::getNonTerminal(string name){
-    NonTerminal* foundNonTerminal;
-    map<string, NonTerminal*>::const_iterator it = nonterminals.find(name);
+const NonTerminal* ParseTableReader::getNonTerminalOrCreate(string name){
+    const NonTerminal* foundNonTerminal = getNonTerminal(name);
     
-    if(nonterminals.end() == it){
+    if(foundNonTerminal == NULL){
         foundNonTerminal = new NonTerminal(name);
         nonterminals.insert(make_pair(name, foundNonTerminal));
-    }else{
-        foundNonTerminal = it->second;
     }
     
     return foundNonTerminal;
 }
 
-
-TokenType ParseTableReader::findTokenByParserName(string parserName){
-    // TODO Implement!
-    cout << "TODO: Implement ParseTableReader::findTokenByParserName!";
-    return TokenType::None;
+const NonTerminal* ParseTableReader::getNonTerminal(string name) const{
+    map<string, const NonTerminal*>::const_iterator it = nonterminals.find(name);
+    return (it != nonterminals.end()) ? it->second : NULL;
 }
 
-const Terminal* ParseTableReader::getTerminal(string name){
-    Terminal* foundTerminal;
-    map<string, Terminal*>::const_iterator it = terminals.find(name);
+const Terminal* ParseTableReader::getTerminal(string name) const{
+    map<string, const Terminal*>::const_iterator it = terminals.find(name);
+    return (it != terminals.end()) ? it->second : NULL;
+}
+
+
+const Terminal* ParseTableReader::getTerminalOrCreate(string name){
+    const Terminal* foundTerminal = getTerminal(name);
     
-    if(terminals.end() == it){
+    if(foundTerminal == NULL){
         // create a new Terminal
-        TokenType type = findTokenByParserName(name);
-        foundTerminal = new Terminal(name, type);
+        foundTerminal = new Terminal(name);
         terminals.insert(make_pair(name, foundTerminal));
-    }else{
-        foundTerminal = it->second;
     }
     
     return foundTerminal;
 }
-
 
 
 Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTable){
@@ -73,7 +68,7 @@ Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTabl
     
     
     int lineNum = 1;
-    vector<string> lines = split(serializedTable,"\n");
+    vector<string> lines = Util::split(serializedTable,"\n");
     
     for (std::vector<string>::iterator it = lines.begin() ; it != lines.end(); ++it){
         
@@ -88,7 +83,7 @@ Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTabl
             
             if(start != string::npos && end != string::npos)
             {
-                currentNT = getNonTerminal(line.substr(start+1,end-1));
+                currentNT = getNonTerminalOrCreate(line.substr(start+1,end-1));
                 currentRule = new ProductionRule(currentNT);
             }else
                 cout << "Unexpected sign while parsing Parse-Table. Line: " << lineNum;
@@ -101,7 +96,7 @@ Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTabl
         
         if(terminalStart){
             // we found a terminal decl
-            vector<string> words = split(line," ", false);
+            vector<string> words = Util::split(line," ", false);
             
             cout << "terminal decl: " << line << "\n";
             for (std::vector<string>::iterator wordIt = words.begin() ; wordIt != words.end(); ++wordIt){
@@ -109,7 +104,7 @@ Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTabl
             }
             
             string terminalName = words[1];
-            currentTerminal = getTerminal(terminalName);
+            currentTerminal = getTerminalOrCreate(terminalName);
             
             state = TableParserState::EXPECT_RULELIST;
             continue; // Next-Line
@@ -118,31 +113,8 @@ Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTabl
         lineNum++;
     }
     
-    Parser parser = Parser(tokenlist, parseRuleTable);
+    Parser parser = Parser(tokenlist, parseRuleTable, this);
     return parser;
 }
 
 
-/**
- * Split the given string by the given delemiter into a string-vector
- */
-vector<string> split(const string& s, const string& delim, const bool keep_empty) {
-    vector<string> result;
-    if (delim.empty()) {
-        result.push_back(s);
-        return result;
-    }
-    string::const_iterator substart = s.begin(), subend;
-    while (true) {
-        subend = search(substart, s.end(), delim.begin(), delim.end());
-        string temp(substart, subend);
-        if (keep_empty || !temp.empty()) {
-            result.push_back(temp);
-        }
-        if (subend == s.end()) {
-            break;
-        }
-        substart = subend + delim.size();
-    }
-    return result;
-}

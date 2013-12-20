@@ -23,25 +23,37 @@ enum class TableParserState {
 
 
 
-class ParseTableReader
+class ParseTableReader : public IGrammarRepository
 {
     
 private:
     static const string KEYWORD_TERMINAL;
 
-    map<string, NonTerminal*> nonterminals;
-    map<string, Terminal*> terminals;
+    map<string, const NonTerminal*> nonterminals;
+    map<string, const Terminal*> terminals;
     
-    const NonTerminal* getNonTerminal(string name);
-    const Terminal* getTerminal(string name);
-    
-    TokenType findTokenByParserName(string parserName);
+    const NonTerminal* getNonTerminalOrCreate(string name);
+    const Terminal* getTerminalOrCreate(string name);
     
 public:
     /**
      * Creates a syntax parser from the given parse table
      */
     Parser createParser(TokenList tokenlist, string serializedTable);
+    
+    //
+    // IGrammarRepository Implementation:
+    //
+    
+    /**
+     * Returns the NonTerminal with the given Name or NULL if not available
+     */
+    virtual const NonTerminal* getNonTerminal(string name) const;
+    
+    /**
+     * Returns the Terminal with the given Name or NULL if not available
+     */
+    virtual const Terminal* getTerminal(string name) const;
 };
 
 
