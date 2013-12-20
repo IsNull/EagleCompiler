@@ -145,7 +145,7 @@ typedef list<IGrammarSymbol*> Production;
 typedef map<const Terminal*, Production> ProductionMap;
 
 class IProductionRule {
-    virtual SyntaxTree produce(IParseContext ctx)=0;
+    virtual SyntaxTree produce(IParseContext* ctx)=0;
 };
 
 /**
@@ -166,7 +166,7 @@ public:
         productionTable.insert(make_pair(terminal, production));
     };
     
-    SyntaxTree produce(IParseContext ctx);
+    SyntaxTree produce(IParseContext* ctx);
     
 };
 

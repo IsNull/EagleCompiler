@@ -19,11 +19,11 @@
 //
 
 
-SyntaxTree ProductionRule::produce(IParseContext ctx){
+SyntaxTree ProductionRule::produce(IParseContext* ctx){
     SyntaxTree node(nonterminal);
     
-    const Token* currentToken = ctx.current();
-    const Terminal* currentTerminal = ctx.getTerminal(currentToken->getType()); // TODO Get Terminal from current token?
+    const Token* currentToken = ctx->current();
+    const Terminal* currentTerminal = ctx->getTerminal(currentToken->getType());
     
     ProductionMap::const_iterator productionit = productionTable.find(currentTerminal);
     if(productionit != productionTable.end()){
@@ -35,13 +35,13 @@ SyntaxTree ProductionRule::produce(IParseContext ctx){
             
             if(s->isTerminal()){
                 Terminal *t = (Terminal*)s;
-                ctx.consume(t); // will throw a GrammarExceptin if current terminal was not expected
+                ctx->consume(t); // will throw a GrammarExceptin if current terminal was not expected
                 node.add(SyntaxTree(t)); // TODO add Token to SyntaxTree for later analysis
                 
             }else{
                 NonTerminal *nt = (NonTerminal*)s;
                 // look-up  ProductionRule for this nt
-                ProductionRule* rule = ctx.getRule(nt);
+                ProductionRule* rule = ctx->getRule(nt);
                 if(rule != NULL){
                     SyntaxTree subtree = rule->produce(ctx);
                     node.add(subtree);
