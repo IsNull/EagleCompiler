@@ -18,13 +18,16 @@ const string ParseTableReader::KEYWORD_TERMINAL = "terminal";
 
 
 const NonTerminal* ParseTableReader::getNonTerminalOrCreate(string name){
-    const NonTerminal* foundNonTerminal = getNonTerminal(name);
+    const NonTerminal* foundNonTerminal = NULL;
     
-    if(foundNonTerminal == NULL){
-        foundNonTerminal = new NonTerminal(name);
-        nonterminals.insert(make_pair(name, foundNonTerminal));
+    if(name.size() > 0){
+        foundNonTerminal = getNonTerminal(name);
+
+        if(foundNonTerminal == NULL){
+            foundNonTerminal = new NonTerminal(name);
+            nonterminals.insert(make_pair(name, foundNonTerminal));
+        }
     }
-    
     return foundNonTerminal;
 }
 
@@ -40,16 +43,36 @@ const Terminal* ParseTableReader::getTerminal(string name) const{
 
 
 const Terminal* ParseTableReader::getTerminalOrCreate(string name){
-    const Terminal* foundTerminal = getTerminal(name);
+    const Terminal* foundTerminal = NULL;
     
-    if(foundTerminal == NULL){
-        // create a new Terminal
-        foundTerminal = new Terminal(name);
-        terminals.insert(make_pair(name, foundTerminal));
+    if(name.size() > 0){
+        foundTerminal = getTerminal(name);
+    
+        if(foundTerminal == NULL){
+            foundTerminal = new Terminal(name);
+            terminals.insert(make_pair(name, foundTerminal));
+        }
     }
-    
     return foundTerminal;
 }
+
+/**
+ * parse <nonterminal>
+ */
+const NonTerminal* ParseTableReader::parseNonterminal(string ntString){
+    const NonTerminal* nt = NULL;
+    unsigned long start = ntString.find("<");
+    if(start == 0){
+        unsigned long end = ntString.find(">");
+        
+        if(start != string::npos && end != string::npos)
+        {
+            nt = getNonTerminalOrCreate(ntString.substr(start+1,end-1));
+        }
+    }
+    
+    return nt;
+};
 
 
 Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTable){
@@ -64,14 +87,13 @@ Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTabl
     ProductionRule* currentRule;
     
     const Terminal* currentTerminal;
-    Production* currentProduction;
     
     
-    int lineNum = 1;
+    int lineNum = 0;
     vector<string> lines = Util::split(serializedTable,"\n");
     
     for (std::vector<string>::iterator it = lines.begin() ; it != lines.end(); ++it){
-        
+        lineNum++;
         string line = *it;
         
         unsigned long start = line.find("<");
@@ -92,16 +114,18 @@ Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTabl
             continue; // Next-Line
         }
         
+        // Parse terminal decl
         unsigned long terminalStart = line.find(KEYWORD_TERMINAL);
-        
         if(terminalStart){
             // we found a terminal decl
             vector<string> words = Util::split(line," ", false);
             
+            // --- DEBUG
             cout << "terminal decl: " << line << "\n";
             for (std::vector<string>::iterator wordIt = words.begin() ; wordIt != words.end(); ++wordIt){
                 cout << "word: " << &wordIt << "\n";
             }
+            /// ---- DEBUG END
             
             string terminalName = words[1];
             currentTerminal = getTerminalOrCreate(terminalName);
@@ -110,7 +134,30 @@ Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTabl
             continue; // Next-Line
         }
         
-        lineNum++;
+        if(state == TableParserState::EXPECT_RULELIST){
+            
+            Production* prod = NULL;
+            // expect rule list
+            vector<string> ruleSymbols = Util::split(line," ", false);
+            
+            if(ruleSymbols.size() > 0){
+                prod = new Production();
+
+                for (std::vector<string>::iterator wordIt = ruleSymbols.begin() ; wordIt != ruleSymbols.end(); ++wordIt){
+                    if(wordIt->size() > 0){
+                        const IGrammarSymbol* symbol;
+                        symbol = parseNonterminal(*wordIt);
+                        if(symbol == NULL){
+                            symbol = getTerminalOrCreate(*wordIt);
+                        }
+                        // add to our current rule
+                        prod->push_back(symbol);
+                    }
+                }
+            }
+            currentRule->addProduction(currentTerminal, prod);
+            state = TableParserState::EXPECT_TERMINAL;
+        }
     }
     
     Parser parser = Parser(tokenlist, parseRuleTable, this);

@@ -141,8 +141,8 @@ public:
 
 
 /* Represents a production rule map */
-typedef list<IGrammarSymbol*> Production;
-typedef map<const Terminal*, Production> ProductionMap;
+typedef list<const IGrammarSymbol*> Production;
+typedef map<const Terminal*, Production*> ProductionMap;
 
 class IProductionRule {
     virtual SyntaxTree produce(IParseContext* ctx)=0;
@@ -162,11 +162,17 @@ public:
         : nonterminal(nonterm){
     }
     
-    void addProduction(Terminal* terminal, Production production){
+    void addProduction(const Terminal* terminal, Production* production){
         productionTable.insert(make_pair(terminal, production));
     };
     
     SyntaxTree produce(IParseContext* ctx);
+    
+    
+    friend std::ostream& operator<< (std::ostream& stream, const ProductionRule& rule) {
+        stream << "ProductionRule[" << rule.nonterminal << ": ProductionMap Size:" << rule.productionTable.size() << "]";
+        return stream;
+    }
     
 };
 

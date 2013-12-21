@@ -34,6 +34,7 @@ private:
     
     const NonTerminal* getNonTerminalOrCreate(string name);
     const Terminal* getTerminalOrCreate(string name);
+    const NonTerminal* parseNonterminal(string ntString);
     
 public:
     /**

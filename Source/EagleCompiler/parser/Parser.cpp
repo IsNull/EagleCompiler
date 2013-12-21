@@ -28,30 +28,34 @@ SyntaxTree ProductionRule::produce(IParseContext* ctx){
     ProductionMap::const_iterator productionit = productionTable.find(currentTerminal);
     if(productionit != productionTable.end()){
         // found matching production
-        Production production = productionit->second;
+        Production* production = productionit->second;
         
-        for (Production::const_iterator it = production.begin(), end = production.end(); it != end; ++it) {
-            IGrammarSymbol* s = *it;
-            
-            if(s->isTerminal()){
-                Terminal *t = (Terminal*)s;
-                ctx->consume(t); // will throw a GrammarExceptin if current terminal was not expected
-                node.add(SyntaxTree(t)); // TODO add Token to SyntaxTree for later analysis
+        if(production != NULL){
+            for (Production::const_iterator it = production->begin(), end = production->end(); it != end; ++it) {
+                const IGrammarSymbol* s = *it;
                 
-            }else{
-                NonTerminal *nt = (NonTerminal*)s;
-                // look-up  ProductionRule for this nt
-                ProductionRule* rule = ctx->getRule(nt);
-                if(rule != NULL){
-                    SyntaxTree subtree = rule->produce(ctx);
-                    node.add(subtree);
+                if(s->isTerminal()){
+                    Terminal *t = (Terminal*)s;
+                    ctx->consume(t); // will throw a GrammarExceptin if current terminal was not expected
+                    node.add(SyntaxTree(t)); // TODO add Token to SyntaxTree for later analysis
+                    
+                }else{
+                    NonTerminal *nt = (NonTerminal*)s;
+                    // look-up  ProductionRule for this nt
+                    ProductionRule* rule = ctx->getRule(nt);
+                    if(rule != NULL){
+                        SyntaxTree subtree = rule->produce(ctx);
+                        node.add(subtree);
+                    }
                 }
             }
-            
+        }else{
+            cout << "No production for " << currentTerminal;
         }
-        
     }else{
-        cout << "Current Token has no rule in this Production Rule!";
+        ostringstream errStr;
+        errStr << "Current ProductionRule '" << this << "' has no production for terminal " << currentTerminal;
+        throw new GrammarException(errStr.str());
     }
     
     return node;
