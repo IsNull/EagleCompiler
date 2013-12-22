@@ -11,6 +11,11 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+
+using namespace std;
 
 class Util
 {
@@ -21,6 +26,7 @@ public:
     
     static bool isNewLine(char c);
     
+    static vector<string> split(const string& s, const string& delim, const bool keep_empty = true);
 };
 
 #endif /* defined(__EagleCompiler__Util__) */

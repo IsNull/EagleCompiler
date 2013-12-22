@@ -15,5 +15,5 @@ string Assemblizer::StringVariable::getAssemblerTypeString() {
 	return "db";
 }
 string Assemblizer::StringVariable::getInitialValue() {
-	return "\`" + _init + "\`";
+	return "`" + _init + "`";
 }

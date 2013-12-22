@@ -10,6 +10,7 @@
 		D221B47517F745D900E76550 /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B47317F745D900E76550 /* Token.cpp */; };
 		D221B47C17F8252C00E76550 /* TokenList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B47A17F8252C00E76550 /* TokenList.cpp */; };
 		D221B48517F8451900E76550 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B48317F8451900E76550 /* Util.cpp */; };
+		D28CFAE2185C5F4C00E62626 /* ParseTableReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D28CFAE0185C5F4C00E62626 /* ParseTableReader.cpp */; };
 		D29DBE1B1806D9FA00C9A5FE /* ScannerContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE191806D9FA00C9A5FE /* ScannerContext.cpp */; };
 		D29DBE1C1806D9FA00C9A5FE /* ScannerContext.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE1A1806D9FA00C9A5FE /* ScannerContext.h */; };
 		D29DBE1E1806F4D500C9A5FE /* ScannerEnums.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE1D1806F4BF00C9A5FE /* ScannerEnums.h */; };
@@ -17,7 +18,6 @@
 		D29DBE2218071E4A00C9A5FE /* ScannerEnums.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2118071E4A00C9A5FE /* ScannerEnums.cpp */; };
 		D29DBE2518102B1300C9A5FE /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2318102B1300C9A5FE /* Parser.cpp */; };
 		D29DBE2618102B1300C9A5FE /* Parser.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2418102B1300C9A5FE /* Parser.h */; };
-		D29DBE2918103C2100C9A5FE /* ParserModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2718103C2100C9A5FE /* ParserModel.cpp */; };
 		D29DBE2F1812BD9E00C9A5FE /* AssemblerInstruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2B1812BD9E00C9A5FE /* AssemblerInstruction.cpp */; };
 		D29DBE301812BD9E00C9A5FE /* AssemblerInstruction.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2C1812BD9E00C9A5FE /* AssemblerInstruction.h */; };
 		D29DBE311812BD9E00C9A5FE /* Assemblizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE2D1812BD9E00C9A5FE /* Assemblizer.cpp */; };
@@ -55,6 +55,8 @@
 		D221B48317F8451900E76550 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
 		D221B48417F8451900E76550 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		D221B48617FDB1AF00E76550 /* parser */ = {isa = PBXFileReference; lastKnownFileType = folder; path = parser; sourceTree = "<group>"; };
+		D28CFAE0185C5F4C00E62626 /* ParseTableReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParseTableReader.cpp; path = EagleCompiler/parser/ParseTableReader.cpp; sourceTree = "<group>"; };
+		D28CFAE1185C5F4C00E62626 /* ParseTableReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParseTableReader.h; path = EagleCompiler/parser/ParseTableReader.h; sourceTree = "<group>"; };
 		D290B70B1806D28C0030DC82 /* scanner */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scanner; sourceTree = "<group>"; };
 		D29DBE191806D9FA00C9A5FE /* ScannerContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScannerContext.cpp; path = EagleCompiler/scanner/ScannerContext.cpp; sourceTree = "<group>"; };
 		D29DBE1A1806D9FA00C9A5FE /* ScannerContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScannerContext.h; path = EagleCompiler/scanner/ScannerContext.h; sourceTree = "<group>"; };
@@ -63,8 +65,6 @@
 		D29DBE2118071E4A00C9A5FE /* ScannerEnums.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScannerEnums.cpp; path = EagleCompiler/scanner/ScannerEnums.cpp; sourceTree = "<group>"; };
 		D29DBE2318102B1300C9A5FE /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = EagleCompiler/parser/Parser.cpp; sourceTree = "<group>"; };
 		D29DBE2418102B1300C9A5FE /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = EagleCompiler/parser/Parser.h; sourceTree = "<group>"; };
-		D29DBE2718103C2100C9A5FE /* ParserModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParserModel.cpp; sourceTree = "<group>"; };
-		D29DBE2818103C2100C9A5FE /* ParserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParserModel.h; sourceTree = "<group>"; };
 		D29DBE2A1812BBCA00C9A5FE /* assemblizer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assemblizer; sourceTree = "<group>"; };
 		D29DBE2B1812BD9E00C9A5FE /* AssemblerInstruction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AssemblerInstruction.cpp; path = EagleCompiler/assemblizer/AssemblerInstruction.cpp; sourceTree = "<group>"; };
 		D29DBE2C1812BD9E00C9A5FE /* AssemblerInstruction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AssemblerInstruction.h; path = EagleCompiler/assemblizer/AssemblerInstruction.h; sourceTree = "<group>"; };
@@ -97,6 +97,8 @@
 		D2BED5CF17F744AB005EAFEA = {
 			isa = PBXGroup;
 			children = (
+				D28CFAE0185C5F4C00E62626 /* ParseTableReader.cpp */,
+				D28CFAE1185C5F4C00E62626 /* ParseTableReader.h */,
 				D2F6CD76185999C400CDA4DB /* NumericVariable.cpp */,
 				D2F6CD77185999C400CDA4DB /* NumericVariable.h */,
 				D2F6CD78185999C400CDA4DB /* StringVariable.cpp */,
@@ -143,8 +145,6 @@
 				D221B48317F8451900E76550 /* Util.cpp */,
 				D221B48417F8451900E76550 /* Util.h */,
 				D29DBE1F1806F8B700C9A5FE /* Singleton.h */,
-				D29DBE2718103C2100C9A5FE /* ParserModel.cpp */,
-				D29DBE2818103C2100C9A5FE /* ParserModel.h */,
 			);
 			path = EagleCompiler;
 			sourceTree = "<group>";
@@ -228,9 +228,9 @@
 				D29DBE301812BD9E00C9A5FE /* AssemblerInstruction.h in Sources */,
 				D29DBE311812BD9E00C9A5FE /* Assemblizer.cpp in Sources */,
 				D29DBE321812BD9E00C9A5FE /* Assemblizer.h in Sources */,
+				D28CFAE2185C5F4C00E62626 /* ParseTableReader.cpp in Sources */,
 				D29DBE2518102B1300C9A5FE /* Parser.cpp in Sources */,
 				D29DBE2618102B1300C9A5FE /* Parser.h in Sources */,
-				D29DBE2918103C2100C9A5FE /* ParserModel.cpp in Sources */,
 				D29DBE2218071E4A00C9A5FE /* ScannerEnums.cpp in Sources */,
 				D29DBE201806F92500C9A5FE /* Singleton.h in Sources */,
 				D29DBE1E1806F4D500C9A5FE /* ScannerEnums.h in Sources */,

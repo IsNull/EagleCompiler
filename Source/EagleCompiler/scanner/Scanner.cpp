@@ -137,7 +137,7 @@ const TokenList* Scanner::scan(string source){
     }
     
     Token* t = new Token(TokenType::Sentinel);
-    _tokens->add(*t);
+    _tokens->add(t);
     
     return _tokens;
 }
@@ -294,6 +294,6 @@ void Scanner::endToken(TokenType type, int start, int end){
     }
     
     Token* t = new Token(type, tokenValue);
-    _tokens->add(*t);
+    _tokens->add(t);
 }
 
