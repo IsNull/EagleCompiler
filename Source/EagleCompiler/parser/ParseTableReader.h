@@ -40,7 +40,7 @@ public:
     /**
      * Creates a syntax parser from the given parse table
      */
-    Parser createParser(TokenList tokenlist, string serializedTable);
+    Parser* createParser(TokenList* tokenlist, string serializedTable);
     
     //
     // IGrammarRepository Implementation:

@@ -114,7 +114,7 @@ class SyntaxTree
 {
 private:
     const IGrammarSymbol* _grammarSymbol;
-    list<SyntaxTree> _children;
+    list<SyntaxTree*> _children;
     
     
 public:
@@ -123,9 +123,9 @@ public:
     {
     }
     
-    list<SyntaxTree> getChildren() { return _children; }
+    list<SyntaxTree*> getChildren() { return _children; }
     bool hasChildren() const { return _children.size() != 0; }
-    void add(const SyntaxTree& node){ _children.push_back(node); }
+    void add(SyntaxTree* node){ _children.push_back(node); }
     
     bool isTerminal() const {
         return _grammarSymbol->isTerminal();
@@ -145,7 +145,7 @@ typedef list<const IGrammarSymbol*> Production;
 typedef map<const Terminal*, Production*> ProductionMap;
 
 class IProductionRule {
-    virtual SyntaxTree produce(IParseContext* ctx)=0;
+    virtual SyntaxTree* produce(IParseContext* ctx)=0;
 };
 
 /**
@@ -166,7 +166,7 @@ public:
         productionTable.insert(make_pair(terminal, production));
     };
     
-    SyntaxTree produce(IParseContext* ctx);
+    SyntaxTree* produce(IParseContext* ctx);
     
     
     friend std::ostream& operator<< (std::ostream& stream, const ProductionRule& rule) {
@@ -208,6 +208,12 @@ private:
     
     bool isMatchingToken(const Terminal* terminal, const Token* token);
     
+    void buildTerminalMap(){
+        for (map<TokenType, const string>::const_iterator it = TokenNames.begin(), end = TokenNames.end(); it != end; ++it) {
+            terminalMap.insert(make_pair(it->second, it->first));
+        }
+    }
+    
 public:
     
     Parser(TokenList& tokenlist, ParseRuleTable& parseTable, const IGrammarRepository* grammarRepository)
@@ -220,11 +226,10 @@ public:
         buildTerminalMap();
     }
     
-    void buildTerminalMap(){
-        for (map<TokenType, const string>::const_iterator it = TokenNames.begin(), end = TokenNames.end(); it != end; ++it) {
-            terminalMap.insert(make_pair(it->second, it->first));
-        }
-    }
+    /**
+     * Parse the Tokenlist into a SyntaxTree
+     */
+    SyntaxTree* parse();
     
     /**
      * Consumes the current (expected) terminal

@@ -75,7 +75,7 @@ void Scanner::init(string source){
 }
 
 
-const TokenList* Scanner::scan(string source){
+TokenList* Scanner::scan(string source){
     
     init(source);
     

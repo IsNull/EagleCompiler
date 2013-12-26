@@ -15,12 +15,12 @@
 
 
 //
-//  ProductionRule
+// ============= ProductionRule =============
 //
 
 
-SyntaxTree ProductionRule::produce(IParseContext* ctx){
-    SyntaxTree node(nonterminal);
+SyntaxTree* ProductionRule::produce(IParseContext* ctx){
+    SyntaxTree* node = new SyntaxTree(nonterminal);
     
     const Token* currentToken = ctx->current();
     const Terminal* currentTerminal = ctx->getTerminal(currentToken->getType());
@@ -37,15 +37,15 @@ SyntaxTree ProductionRule::produce(IParseContext* ctx){
                 if(s->isTerminal()){
                     Terminal *t = (Terminal*)s;
                     ctx->consume(t); // will throw a GrammarExceptin if current terminal was not expected
-                    node.add(SyntaxTree(t)); // TODO add Token to SyntaxTree for later analysis
+                    node->add(new SyntaxTree(t)); // TODO add Token to SyntaxTree for later analysis
                     
                 }else{
                     NonTerminal *nt = (NonTerminal*)s;
                     // look-up  ProductionRule for this nt
                     ProductionRule* rule = ctx->getRule(nt);
                     if(rule != NULL){
-                        SyntaxTree subtree = rule->produce(ctx);
-                        node.add(subtree);
+                        SyntaxTree* subtree = rule->produce(ctx);
+                        node->add(subtree);
                     }
                 }
             }
@@ -61,6 +61,25 @@ SyntaxTree ProductionRule::produce(IParseContext* ctx){
     return node;
 };
 
+
+ProductionRule* Parser::getRule(const NonTerminal* nt){
+    ProductionRule* rule = NULL;
+    
+    ParseRuleTable::const_iterator it = _ruleMap.find(nt);
+    if(it == _ruleMap.end()){
+        rule = it->second;
+    }else{
+        cout << "No Rule found for NT: " << nt;
+        // TODO Handle error / implement rule
+    }
+    return rule;
+};
+
+
+
+//
+// ============= Parser =============
+//
 
 
 bool Parser::isMatchingToken(const Terminal* terminal, const Token* token){
@@ -127,20 +146,6 @@ void Parser::consume(const Terminal* expectedTerminal){
 
 
 
-ProductionRule* Parser::getRule(const NonTerminal* nt){
-    ProductionRule* rule = NULL;
-    
-    ParseRuleTable::const_iterator it = _ruleMap.find(nt);
-    if(it == _ruleMap.end()){
-        rule = it->second;
-    }else{
-        cout << "No Rule found for NT: " << nt;
-        // TODO Handle error / implement rule
-    }
-    return rule;
-};
-
-
 const Terminal* Parser::getTerminal(TokenType expectedToken){
     
     ostringstream tokenNamestream;
@@ -160,6 +165,19 @@ const Terminal* Parser::getTerminal(TokenType expectedToken){
     if(t == NULL) cout << "ERROR: No Terminal found for token name: '" << tokenName << "'\n";
     
     return t;
+};
+
+
+SyntaxTree* Parser::parse(){
+    // TODO!!!
+    
+    const NonTerminal* program = _grammarRepository->getNonTerminal("PROGRAM");
+    
+    
+    ProductionRule* programRule = getRule(program);
+    SyntaxTree* tree = programRule->produce(this);
+    
+    return tree;
 };
 
 

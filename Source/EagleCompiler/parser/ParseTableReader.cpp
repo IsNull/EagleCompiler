@@ -75,8 +75,11 @@ const NonTerminal* ParseTableReader::parseNonterminal(string ntString){
 };
 
 
-Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTable){
+Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTable){
    
+    
+    cout << "\n\nParsing Fix & Foxi Parse-Table:\n\n";
+    
     
     ParseRuleTable parseRuleTable;
     
@@ -92,13 +95,16 @@ Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTabl
     int lineNum = 0;
     vector<string> lines = Util::split(serializedTable,"\n");
     
+    cout << "found " << lines.size() << " lines in serialized table. \n\n";
+    
+    
     for (std::vector<string>::iterator it = lines.begin() ; it != lines.end(); ++it){
         lineNum++;
         string line = *it;
         
         unsigned long start = line.find("<");
         
-        if(start == 0){
+        if(start != string::npos){
             state = TableParserState::EXPECT_NONTERM_DEF;
             cout << "Parsing NT Definition: " << line << "\n";
             unsigned long end = line.find(">");
@@ -116,16 +122,11 @@ Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTabl
         
         // Parse terminal decl
         unsigned long terminalStart = line.find(KEYWORD_TERMINAL);
-        if(terminalStart){
+        if(terminalStart != string::npos){
             // we found a terminal decl
             vector<string> words = Util::split(line," ", false);
             
-            // --- DEBUG
             cout << "terminal decl: " << line << "\n";
-            for (std::vector<string>::iterator wordIt = words.begin() ; wordIt != words.end(); ++wordIt){
-                cout << "word: " << &wordIt << "\n";
-            }
-            /// ---- DEBUG END
             
             string terminalName = words[1];
             currentTerminal = getTerminalOrCreate(terminalName);
@@ -159,9 +160,7 @@ Parser ParseTableReader::createParser(TokenList tokenlist, string serializedTabl
             state = TableParserState::EXPECT_TERMINAL;
         }
     }
-    
-    Parser parser = Parser(tokenlist, parseRuleTable, this);
-    return parser;
+    return new Parser(*tokenlist, parseRuleTable, this);
 }
 
 

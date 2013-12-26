@@ -71,7 +71,7 @@ public:
      * Scan the given source and return a TokenList
      *
      */
-    const TokenList* scan(string source);
+    TokenList* scan(string source);
     
     /**
      * Get the source string of the given range

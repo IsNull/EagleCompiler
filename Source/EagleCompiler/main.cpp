@@ -11,13 +11,15 @@
 #include "assemblizer/NumericVariable.h"
 #include "assemblizer/AssemblerInstruction.h"
 #include "assemblizer/StringVariable.h"
+#include "parser/Parser.h"
+#include "parser/ParseTableReader.h"
 
 #include "user.local"
 
 using namespace std;
 
 string sourceCode;
-
+string serializedParseTable;
 
 void scan() {
 
@@ -25,8 +27,19 @@ void scan() {
     cout << "\nListing Source code:\n\n"<< sourceCode << "\n\n";
     
     Scanner scanner;
-    const TokenList* list = scanner.scan(sourceCode);
+    TokenList* list = scanner.scan(sourceCode);
     cout << "\n\nTokens: " << *list;
+    
+    
+    // now parse the tokenlist into a syntax tree
+    ParseTableReader parserTableReader;
+    Parser* p = parserTableReader.createParser(list, serializedParseTable);
+    
+    cout << "\n Parsing tokenlist now:";
+    
+    SyntaxTree* syntaxtree = p->parse();
+    
+    
 }
 
 void testSam() {
@@ -63,10 +76,10 @@ int main(int argc, char* argv[])
     
     if(cmdOptionExists(argv, argv+argc, "-h"))
     {
-        cout << "EagleCompiler Help;"<< "\n";
+        cout << "Welcome to EagleCompiler Help:"<< "\n";
         cout << "Available Options:"<< "\n";
-        cout << "-s <path to source>"<< "\n";
-        cout << "-t <path to parsetable>"<< "\n";
+        cout << "-s <path to source> (Required)"<< "\n";
+        cout << "-t <path to parsetable> (Required)"<< "\n";
     }
     
     char * sourceFile = getCmdOption(argv, argv + argc, "-s");
@@ -89,6 +102,28 @@ int main(int argc, char* argv[])
         return -1;
     }
     
+    char * parseTableFile = getCmdOption(argv, argv + argc, "-t");
+    
+    if (parseTableFile)
+    {
+        cout << "Reading source from " << parseTableFile << "\n";
+        // read source from given file
+        ifstream ifs(parseTableFile);
+        if(ifs){
+            serializedParseTable.assign( (std::istreambuf_iterator<char>(ifs) ),
+                              (std::istreambuf_iterator<char>())
+                              );
+        }else{
+            cout << "File does not exist!" << "\n";
+            return -1;
+        }
+    }else{
+        cout << "Missing mandatory param -t <Path to 'Fix & Foxi' Parse-Table>" << "\n";
+        return -1;
+    }
+    
+    
+
     
     
 	scan();
