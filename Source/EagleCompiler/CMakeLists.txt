@@ -4,8 +4,7 @@ add_subdirectory(assemblizer)
 
 set(token_src Token.cpp TokenList.cpp)
 set(util_src Util.cpp)
-set(parsermodel_src ParserModel.cpp)
 
-add_executable(EagleCompiler main.cpp ${token_src} ${util_src} ${parsermodel_src} ${headers})
+add_executable(EagleCompiler main.cpp ${token_src} ${util_src} ${headers})
 
 target_link_libraries(EagleCompiler scanner parser assemblizer)

@@ -33,7 +33,7 @@ void testSam() {
 	Assemblizer::Assemblizer a;
 	//Print text "foo" on standard output, use \\n for newline, to avoid escape string
 	a.addVariableDeclaration(new Assemblizer::StringVariable("myText", "foo\\n"));
-	a.addInstruction(new WriteToStandardOutputInstruction("myText"));
+	a.addInstruction(new Assemblizer::WriteToStandardOutputInstruction("myText"));
 	
 	cout << a.getFinalAssemblerCode() << endl;
 }
@@ -59,6 +59,7 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option)
 
 int main(int argc, char* argv[])
 {
+#ifdef PASCAL
     
     if(cmdOptionExists(argv, argv+argc, "-h"))
     {
@@ -90,7 +91,6 @@ int main(int argc, char* argv[])
     
     
     
-#ifdef PASCAL
 	scan();
 #endif
 #ifdef SAM

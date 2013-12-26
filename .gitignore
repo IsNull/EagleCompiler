@@ -16,3 +16,4 @@ obj
 *.local
 a.out
 CMakeFiles
+cmake

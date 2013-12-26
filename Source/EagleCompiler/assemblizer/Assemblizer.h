@@ -14,7 +14,7 @@
 
 using namespace std;
 namespace Assemblizer {
-
+	
 	class Assemblizer {
 	private:
 
