@@ -74,6 +74,9 @@ enum TokenType {
     Colon,      // :
     Comma,      // ,
     
+    Command_DebugIn,
+    Command_DebugOut,
+    
     // Keywords
     
     Keyword_Init,           // init
@@ -210,6 +213,8 @@ const map<TokenType, const string> TokenNames {
         {TokenType::Operator_BOOL_CAND, "BOOLOPR_CAND"},
         {TokenType::Operator_BOOL_COR,"BOOLOPR_COR"},
     
+        {TokenType::Command_DebugIn, "DEBUGIN"},
+        {TokenType::Command_DebugOut,"DEBUGOUT"},
     
         // Keywords
         {TokenType::Colon, "COLON"},
@@ -279,7 +284,9 @@ const TokenMap KeywordTokens =
     {"mod", TokenType::Operator_Modulo},
     
     {"var", TokenType::Keyword_Var},
-
+    
+    {"debugin",TokenType::Command_DebugIn},
+    {"debugout", TokenType::Command_DebugOut},
     
     // modifiers
     {"init",TokenType::Keyword_Init},
