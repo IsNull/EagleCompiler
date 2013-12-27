@@ -23,7 +23,7 @@ void Scanner::setContext(KnownScannerState stateType){
     
     // get current active state and remember it
     KnownScannerState prevState = KnownScannerState::Default;
-    if(_contextState){
+    if(_contextState != NULL){
         prevState = _contextState->getState();
     }
     

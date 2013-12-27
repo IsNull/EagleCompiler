@@ -27,7 +27,7 @@ class IScannerContext; // forward declaration
 
 class Scanner {
 private:
-    IScannerContext* _contextState;  // The current scanner context state
+    IScannerContext* _contextState = NULL;  // The current scanner context state
     
     TokenType _currentType;         // the current contexts state, representet as token type
     
