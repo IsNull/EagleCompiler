@@ -170,7 +170,13 @@ public:
     
     
     friend std::ostream& operator<< (std::ostream& stream, const ProductionRule& rule) {
-        stream << "ProductionRule[" << rule.nonterminal << ": ProductionMap Size:" << rule.productionTable.size() << "]";
+        stream << "ProductionRule[" << *(rule.nonterminal) << ": { ";
+        
+        for (ProductionMap::const_iterator it = rule.productionTable.begin(), end = rule.productionTable.end(); it != end; ++it) {
+            stream << *(it->first) << " ";
+        }
+        stream << "}";
+        // ProductionMap Size:" << rule.productionTable.size() << "]";
         return stream;
     }
     

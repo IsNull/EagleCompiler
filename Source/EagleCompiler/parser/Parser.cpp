@@ -54,7 +54,7 @@ SyntaxTree* ProductionRule::produce(IParseContext* ctx){
         }
     }else{
         ostringstream errStr;
-        errStr << "Current ProductionRule '" << this << "' has no production for terminal " << *currentTerminal << "\n";
+        errStr << "Current ProductionRule '" << *this << "' has no production for terminal " << *currentTerminal << "\n";
         throw new GrammarException(errStr.str());
     }
     
@@ -138,7 +138,7 @@ void Parser::consume(const Terminal* expectedTerminal){
     }else{
         // Grammar Error!
         ostringstream errStr;
-        errStr << "ERROR: Unexpected Token: '" << _current << "' Expected Terminal: "  << *expectedTerminal << "\n";
+        errStr << "ERROR: Unexpected Token: '" << *_current << "' Expected Terminal: "  << *expectedTerminal << "\n";
         throw new GrammarException(errStr.str());
     }
 };

@@ -36,6 +36,7 @@ private:
     int _sourceSize;                // size of the source char buffer
     
     bool _omitWhiteSpaces = true;
+    bool _omitNewlines = true;
     
     
     void init(string source);

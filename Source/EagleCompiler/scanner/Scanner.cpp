@@ -282,6 +282,10 @@ void Scanner::endToken(TokenType type, int start, int end){
     if(_omitWhiteSpaces && type == TokenType::WhiteSpace)
         return;
     
+    // Filter newlines if desired
+    if(_omitNewlines && type == TokenType::NewLine)
+        return;
+    
     // Extract the token string from the source data
     string tokenValue = range(start, end);
     

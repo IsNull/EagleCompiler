@@ -164,7 +164,7 @@ const map<TokenType, const string> TokenNames {
         {None, "None"},
         {TokenType::Sentinel, "Sentinel"},
     
-        {TokenType::Identifier, "Identifier"},
+        {TokenType::Identifier, "IDENT"},
         {TokenType::WhiteSpace, "Whitespace"},
         {TokenType::NewLine, "NewLine"},
     
@@ -314,7 +314,13 @@ const TokenMap KeywordTokens =
     {"skip", TokenType::Keyword_Continue},
     {"returns", TokenType::Keyword_Return},
     
+    // Types
     
+    {"int32", TokenType::Type_Int},
+    {"bool", TokenType::Type_Bool},
+    {"string",TokenType::Type_String},
+    
+    // Literals
     {"true", TokenType::Keyword_True},
     {"false", TokenType::Keyword_False}
 };

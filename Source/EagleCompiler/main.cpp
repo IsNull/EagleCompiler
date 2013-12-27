@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
     
     if (parseTableFile)
     {
-        cout << "Reading source from " << parseTableFile << "\n";
+        cout << "Reading parse table from " << parseTableFile << "\n";
         // read source from given file
         ifstream ifs(parseTableFile);
         if(ifs){
