@@ -134,6 +134,7 @@ void Parser::consume(const Terminal* expectedTerminal){
     
     if(isMatchingToken(expectedTerminal, _current)){
         // the expected token is present thus we can consume it
+        cout << "consumed " << *_current << "\n";
         _current = _tokenlist->stepNext();
     }else{
         // Grammar Error!
