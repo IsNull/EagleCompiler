@@ -28,16 +28,20 @@ void scan() {
     
     Scanner scanner;
     TokenList* list = scanner.scan(sourceCode);
-    cout << "\n\nTokens: " << *list;
+    cout << "\n\nTokens:\n" << *list;
     
     
     // now parse the tokenlist into a syntax tree
     ParseTableReader parserTableReader;
     Parser* p = parserTableReader.createParser(list, serializedParseTable);
     
-    cout << "\n Parsing tokenlist now:";
+    cout << "\nParsing tokenlist now:\n";
     
-    SyntaxTree* syntaxtree = p->parse();
+    try{
+        SyntaxTree* syntaxtree = p->parse();
+    }catch(GrammarException* ex){
+        cout << "GrammarException: " << ex->what() << "\n";
+    }
     
     
 }

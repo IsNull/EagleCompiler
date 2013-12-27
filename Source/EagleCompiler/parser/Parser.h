@@ -200,9 +200,9 @@ public:
 class Parser : public IParseContext
 {
 private:
-    TokenList _tokenlist;
+    TokenList* _tokenlist;
     map<const string, TokenType> terminalMap;
-    const ParseRuleTable _ruleMap;
+    const ParseRuleTable* _ruleMap;
     const Token* _current;
     const IGrammarRepository* _grammarRepository;
     
@@ -216,13 +216,13 @@ private:
     
 public:
     
-    Parser(TokenList& tokenlist, ParseRuleTable& parseTable, const IGrammarRepository* grammarRepository)
+    Parser(TokenList* tokenlist, ParseRuleTable* parseTable, const IGrammarRepository* grammarRepository)
     :
     _tokenlist(tokenlist),
     _ruleMap(parseTable),
     _grammarRepository(grammarRepository)
     {
-        _current = _tokenlist.stepNext();
+        _current = _tokenlist->stepNext();
         buildTerminalMap();
     }
     

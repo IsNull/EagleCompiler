@@ -10,7 +10,7 @@
 #define __EagleCompiler__TokenList__
 
 #include <iostream>
-#include <list>
+#include <vector>
 #include "Token.h"
 
 using namespace std;
@@ -18,8 +18,8 @@ using namespace std;
 class TokenList
 {
 private:
-    list<const Token*> _tokens;
-    list<const Token*>::const_iterator _iterator;
+    vector<const Token*> _tokens;
+    int _pos = 0;
     
 public:
     
@@ -29,7 +29,7 @@ public:
     
     // reset the iterator
     void reset() {
-        _iterator = _tokens.begin();
+        _pos = 0;
     }
     
     // return the next Token or NULL
@@ -39,7 +39,7 @@ public:
         
         stream << "{";
         
-        list<const Token*>::const_iterator it = tokenList._tokens.begin();
+        vector<const Token*>::const_iterator it = tokenList._tokens.begin();
         
         while (it != tokenList._tokens.end()) {
             stream << **it << ",";

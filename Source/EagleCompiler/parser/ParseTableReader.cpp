@@ -20,6 +20,9 @@ const string ParseTableReader::KEYWORD_TERMINAL = "terminal";
 const NonTerminal* ParseTableReader::getNonTerminalOrCreate(string name){
     const NonTerminal* foundNonTerminal = NULL;
     
+    // ToLowerCase
+    std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+    
     if(name.size() > 0){
         foundNonTerminal = getNonTerminal(name);
 
@@ -32,11 +35,19 @@ const NonTerminal* ParseTableReader::getNonTerminalOrCreate(string name){
 }
 
 const NonTerminal* ParseTableReader::getNonTerminal(string name) const{
+    
+    // ToLowerCase
+    std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+    
     map<string, const NonTerminal*>::const_iterator it = nonterminals.find(name);
     return (it != nonterminals.end()) ? it->second : NULL;
 }
 
 const Terminal* ParseTableReader::getTerminal(string name) const{
+    
+    // ToLowerCase
+    std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+    
     map<string, const Terminal*>::const_iterator it = terminals.find(name);
     return (it != terminals.end()) ? it->second : NULL;
 }
@@ -44,6 +55,9 @@ const Terminal* ParseTableReader::getTerminal(string name) const{
 
 const Terminal* ParseTableReader::getTerminalOrCreate(string name){
     const Terminal* foundTerminal = NULL;
+    
+    // ToLowerCase
+    std::transform(name.begin(), name.end(), name.begin(), ::toupper);
     
     if(name.size() > 0){
         foundTerminal = getTerminal(name);
@@ -74,6 +88,12 @@ const NonTerminal* ParseTableReader::parseNonterminal(string ntString){
     return nt;
 };
 
+void printRules(ParseRuleTable* table){
+    cout << "ParseRuleTable:\n\n";
+    for (ParseRuleTable::const_iterator it = table->begin(), end = table->end(); it != end; ++it) {
+        cout << *(it->first) << "\n";
+    }
+}
 
 Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTable){
    
@@ -81,7 +101,7 @@ Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTa
     cout << "\n\nParsing Fix & Foxi Parse-Table:\n\n";
     
     
-    ParseRuleTable parseRuleTable;
+    ParseRuleTable* parseRuleTable = new ParseRuleTable();
     
     // Table-Parser States
     TableParserState state = TableParserState::EXPECT_NONTERM_DEF;
@@ -102,17 +122,18 @@ Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTa
         lineNum++;
         string line = *it;
         
-        unsigned long start = line.find("<");
         
-        if(start != string::npos){
+        if(line[0] == '<'){
+            // First char must be < in order to identify as a NT-Def
+            
             state = TableParserState::EXPECT_NONTERM_DEF;
             cout << "Parsing NT Definition: " << line << "\n";
             unsigned long end = line.find(">");
-            
-            if(start != string::npos && end != string::npos)
+            if(end != string::npos)
             {
-                currentNT = getNonTerminalOrCreate(line.substr(start+1,end-1));
+                currentNT = getNonTerminalOrCreate(line.substr(1,end-1));
                 currentRule = new ProductionRule(currentNT);
+                parseRuleTable->insert(make_pair(currentNT, currentRule));
             }else
                 cout << "Unexpected sign while parsing Parse-Table. Line: " << lineNum;
             
@@ -122,6 +143,7 @@ Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTa
         
         // Parse terminal decl
         unsigned long terminalStart = line.find(KEYWORD_TERMINAL);
+        
         if(terminalStart != string::npos){
             // we found a terminal decl
             vector<string> words = Util::split(line," ", false);
@@ -136,6 +158,8 @@ Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTa
         }
         
         if(state == TableParserState::EXPECT_RULELIST){
+            
+            cout << "rule list: " << line << "\n";
             
             Production* prod = NULL;
             // expect rule list
@@ -158,9 +182,14 @@ Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTa
             }
             currentRule->addProduction(currentTerminal, prod);
             state = TableParserState::EXPECT_TERMINAL;
+            continue;
         }
+        
+        cout << "ERROR: Unhandled Line: " << line << "\n";
     }
-    return new Parser(*tokenlist, parseRuleTable, this);
+    printRules(parseRuleTable);
+    
+    return new Parser(tokenlist, parseRuleTable, this);
 }
 
 
