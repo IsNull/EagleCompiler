@@ -4,15 +4,19 @@ datatype term
   | COMMA
   | SEMICOLON
   | COLON
-  | QUESTMARK
-  | EXCLAMARK
+  | DEBUGIN
+  | DEBUGOUT
   | BECOMES
-  | LBRACE
-  | RBRACE
+  | DO
+  | ENDPROGRAM
+  | ENDFUN
+  | ENDPROC
+  | ENDIF
+  | ENDWHILE
   | MULTOPR
   | ADDOPR
   | RELOPR
-  | TYPE
+  | ATOMTYPE
   | CALL
   | BOOLOPR
   | CHANGEMODE
@@ -40,15 +44,19 @@ val string_of_term =
    | COMMA  => "COMMA"
    | SEMICOLON => "SEMICOLON"
    | COLON  => "COLON"
-   | QUESTMARK => "QUESTMARK"
-   | EXCLAMARK => "EXCLAMARK"
+   | DEBUGIN => "DEBUGIN"
+   | DEBUGOUT => "DEBUGOUT"
    | BECOMES => "BECOMES"
-   | LBRACE => "LBRACE"
-   | RBRACE => "RBRACE"
+   | DO => "DO"
+   | ENDPROGRAM => "ENDPROGRAM"
+   | ENDFUN => "ENDFUN"
+   | ENDPROC => "ENDPROC"
+   | ENDIF => "ENDIF"
+   | ENDWHILE => "ENDWHILE"
    | MULTOPR => "MULTOPR"
    | ADDOPR => "ADDOPR"
    | RELOPR => "RELOPR"
-   | TYPE => "TYPE"
+   | ATOMTYPE => "ATOMTYPE"
    | CALL => "CALL"
    | BOOLOPR => "BOOLOPR"
    | CHANGEMODE => "CHANGEMODE"
@@ -73,14 +81,22 @@ val string_of_term =
 datatype nonterm
   = program
   | optGlobalCpsDecl
+  | progParamList
+  | optProgParamCps
+  | progParamCps
+  | repProgParam
+  | progParam
+  | typedIdent
   | cpsDecl
   | repDecl
-  | blockCmd
+  | cpsCmd
   | decl
-  | storeDecl
+  | stoDecl
+  | cpsStoDecl
+  | repStoDecl
   | funDecl
   | optGlobImpList
-  | optLocalCpsDecl
+  | optCpsStoDecl
   | procDecl
   | paramList
   | optParam
@@ -118,14 +134,22 @@ datatype nonterm
 val string_of_nonterm =
   fn program => "program"
    | optGlobalCpsDecl => "optGlobalCpsDecl"
+   | progParamList => "progParamList"
+   | optProgParamCps => "optProgParamCps"
+   | progParamCps => "progParamCps"
+   | repProgParam => "repProgParam"
+   | progParam => "progParam"
+   | typedIdent => "typedIdent"
    | cpsDecl => "cpsDecl"
    | repDecl => "repDecl"
-   | blockCmd => "blockCmd"
+   | cpsCmd => "cpsCmd"
    | decl => "decl"
-   | storeDecl => "storeDecl"
+   | stoDecl => "stoDecl"
+   | cpsStoDecl => "cpsStoDecl"
+   | repStoDecl => "repStoDecl"
    | funDecl => "funDecl"
    | optGlobImpList => "optGlobImpList"
-   | optLocalCpsDecl => "optLocalCpsDecl"
+   | optCpsStoDecl => "optCpsStoDecl"
    | procDecl => "procDecl"
    | paramList => "paramList"
    | optParam => "optParam"
@@ -169,31 +193,49 @@ in
 val productions =
 [
 (program,
-    [[T PROGRAM, T IDENT, N optGlobalCpsDecl, N blockCmd]]),
+    [[T PROGRAM, T IDENT, N progParamList, N optGlobalCpsDecl,T DO, N cpsCmd, T ENDPROGRAM]]),
 (optGlobalCpsDecl,
     [[T GLOBAL, N cpsDecl],
     []]),
+(progParamList,
+	[[T LPAREN, N optProgParamCps, T RPAREN]]),
+(optProgParamCps,
+	[[N progParamCps],
+	[]]),
+(progParamCps,
+	[[N progParam, N repProgParam]]),
+(repProgParam,
+	[[T COMMA, N progParam],
+	[]]),
+(progParam,
+	[[N optFlowMode, N optChangeMode, N typedIdent]]),
+(typedIdent,
+	[[T IDENT, T COLON, T ATOMTYPE]]),
 (decl,
-    [[N storeDecl],
+    [[N stoDecl],
     [N funDecl],
     [N procDecl]]),
-(storeDecl,
-    [[T CHANGEMODE, T IDENT, T COLON, T TYPE],
-    [T IDENT, T COLON, T TYPE]]),
+(stoDecl,
+    [[N optChangeMode, N typedIdent]]),
 (funDecl,
-    [[T FUN, T IDENT, N paramList, T RETURNS, N storeDecl, N optGlobImpList, N optLocalCpsDecl, N blockCmd]]),
+    [[T FUN, T IDENT, N paramList, T RETURNS, N stoDecl, N optGlobImpList, N optCpsStoDecl, N cpsCmd, T ENDFUN]]),
 (optGlobImpList,
     [[T GLOBAL, N globImplList],
     []]),
-(optLocalCpsDecl,
-    [[T LOCAL, N cpsDecl],
+(optCpsStoDecl,
+    [[T LOCAL, N cpsStoDecl],
     []]),
 (procDecl,
-    [[T PROC, T IDENT, N paramList,N optGlobImpList, N optLocalCpsDecl, N blockCmd]]),
+    [[T PROC, T IDENT, N paramList, N optGlobImpList, N optCpsStoDecl, N cpsCmd, T ENDPROC]]),
 (cpsDecl,
     [[N decl, N repDecl]]),
 (repDecl,
     [[T SEMICOLON, N decl, N repDecl],
+    []]),
+(cpsStoDecl,
+    [[N stoDecl, N repStoDecl]]),
+(repStoDecl,
+    [[T SEMICOLON, N stoDecl, N repStoDecl],
     []]),
 (paramList,
     [[T LPAREN, N optParam, T RPAREN]]),
@@ -204,7 +246,7 @@ val productions =
     [[T COMMA, N repParam],
     []]),
 (param,
-    [[N optFlowMode, N optMechMode, N storeDecl]]),
+    [[N optFlowMode, N optMechMode, N optChangeMode, N typedIdent]]),
 (optFlowMode,
     [[T FLOWMODE],
     []]),
@@ -224,16 +266,16 @@ val productions =
 (cmd,
     [[T SKIP],
     [N expr, T BECOMES, N expr],
-    [T IF, T LPAREN, N expr, T RPAREN, N blockCmd, T ELSE, N blockCmd],
-    [T WHILE, T LPAREN, N expr, T RPAREN, N blockCmd],
+    [T IF, T LPAREN, N expr, T RPAREN, N cpsCmd, T ELSE, N cpsCmd, T ENDIF],
+    [T WHILE, T LPAREN, N expr, T RPAREN, T DO , N cpsCmd, T ENDWHILE],
     [T CALL, T IDENT, N exprList, N optGlobInitList],
-    [T QUESTMARK, N expr],
-    [T EXCLAMARK, N expr]]),
+    [T DEBUGIN, N expr],
+    [T DEBUGOUT, N expr]]),
 (optGlobInitList,
     [[T INIT, N globInitList],
     []]),
-(blockCmd,
-    [[T LBRACE, N cmd, N repCmd, T RBRACE]]),
+(cpsCmd,
+    [[N cmd, N repCmd]]),
 (repCmd,
     [[T SEMICOLON, N cmd, N repCmd],
     []]),
