@@ -170,7 +170,13 @@ public:
     
     
     friend std::ostream& operator<< (std::ostream& stream, const ProductionRule& rule) {
-        stream << "ProductionRule[" << rule.nonterminal << ": ProductionMap Size:" << rule.productionTable.size() << "]";
+        stream << "ProductionRule[" << *(rule.nonterminal) << ": { ";
+        
+        for (ProductionMap::const_iterator it = rule.productionTable.begin(), end = rule.productionTable.end(); it != end; ++it) {
+            stream << *(it->first) << " ";
+        }
+        stream << "}";
+        // ProductionMap Size:" << rule.productionTable.size() << "]";
         return stream;
     }
     
@@ -200,9 +206,9 @@ public:
 class Parser : public IParseContext
 {
 private:
-    TokenList _tokenlist;
+    TokenList* _tokenlist;
     map<const string, TokenType> terminalMap;
-    const ParseRuleTable _ruleMap;
+    const ParseRuleTable* _ruleMap;
     const Token* _current;
     const IGrammarRepository* _grammarRepository;
     
@@ -216,13 +222,13 @@ private:
     
 public:
     
-    Parser(TokenList& tokenlist, ParseRuleTable& parseTable, const IGrammarRepository* grammarRepository)
+    Parser(TokenList* tokenlist, ParseRuleTable* parseTable, const IGrammarRepository* grammarRepository)
     :
     _tokenlist(tokenlist),
     _ruleMap(parseTable),
     _grammarRepository(grammarRepository)
     {
-        _current = _tokenlist.stepNext();
+        _current = _tokenlist->stepNext();
         buildTerminalMap();
     }
     

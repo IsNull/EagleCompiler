@@ -23,7 +23,7 @@ void Scanner::setContext(KnownScannerState stateType){
     
     // get current active state and remember it
     KnownScannerState prevState = KnownScannerState::Default;
-    if(_contextState){
+    if(_contextState != NULL){
         prevState = _contextState->getState();
     }
     
@@ -280,6 +280,10 @@ void Scanner::endToken(TokenType type, int start, int end){
     
     // Filter whitespaces if desired
     if(_omitWhiteSpaces && type == TokenType::WhiteSpace)
+        return;
+    
+    // Filter newlines if desired
+    if(_omitNewlines && type == TokenType::NewLine)
         return;
     
     // Extract the token string from the source data

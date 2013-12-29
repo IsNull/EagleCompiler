@@ -10,11 +10,13 @@
 
 
 const Token* TokenList::stepNext() {
-    if(_iterator != _tokens.end()){
-        const Token* t = *_iterator;
-        _iterator++;
-        return t;
+    
+    const Token* current = NULL;
+    
+    if(_tokens.size() > _pos){
+        current = _tokens[_pos];
+        _pos++;
     }
-    return NULL;
+    return current;
 }
 

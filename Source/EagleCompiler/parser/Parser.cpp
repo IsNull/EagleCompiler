@@ -50,11 +50,11 @@ SyntaxTree* ProductionRule::produce(IParseContext* ctx){
                 }
             }
         }else{
-            cout << "No production for " << currentTerminal;
+            cout << "No production for " << *currentTerminal << "\n";
         }
     }else{
         ostringstream errStr;
-        errStr << "Current ProductionRule '" << this << "' has no production for terminal " << currentTerminal;
+        errStr << "Current ProductionRule '" << *this << "' has no production for terminal " << *currentTerminal << "\n";
         throw new GrammarException(errStr.str());
     }
     
@@ -65,12 +65,11 @@ SyntaxTree* ProductionRule::produce(IParseContext* ctx){
 ProductionRule* Parser::getRule(const NonTerminal* nt){
     ProductionRule* rule = NULL;
     
-    ParseRuleTable::const_iterator it = _ruleMap.find(nt);
-    if(it == _ruleMap.end()){
+    ParseRuleTable::const_iterator it = _ruleMap->find(nt);
+    if(it != _ruleMap->end()){
         rule = it->second;
     }else{
-        cout << "No Rule found for NT: " << nt;
-        // TODO Handle error / implement rule
+        cout << "No Rule found for NT: '" << *nt << "'. Rule count: " << _ruleMap->size() << "\n";
     }
     return rule;
 };
@@ -96,7 +95,7 @@ bool Parser::isMatchingToken(const Terminal* terminal, const Token* token){
     
     if(terminalType == TokenType::None){
         ostringstream errStr;
-        errStr << "Unknown Terminal "  << terminal << ", can not map to TokenType.";
+        errStr << "Unknown Terminal "  << *terminal << ", can not map to TokenType.\n";
         throw new GrammarException(errStr.str());
     }
     
@@ -111,7 +110,7 @@ bool Parser::isMatchingToken(const Terminal* terminal, const Token* token){
         }
         
         ostringstream errStr;
-        errStr << "Can not find a mapping for specail group-token: "  << terminalType << ": No group definition for this token.";
+        errStr << "Can not find a mapping for specail group-token: "  << terminalType << ": No group definition for this token.\n";
         throw new GrammarException(errStr.str());
         
     }
@@ -129,17 +128,18 @@ void Parser::consume(const Terminal* expectedTerminal){
     if(_current == NULL)
     {
         ostringstream errStr;
-        errStr << "ERROR: Unexpected EOF in Token List. Expected Terminal: "  << expectedTerminal;
+        errStr << "ERROR: Unexpected EOF in Token List. Expected Terminal: "  << *expectedTerminal << "\n";
         throw new GrammarException(errStr.str());
     }
     
     if(isMatchingToken(expectedTerminal, _current)){
         // the expected token is present thus we can consume it
-        _current = _tokenlist.stepNext();
+        cout << "consumed " << *_current << "\n";
+        _current = _tokenlist->stepNext();
     }else{
         // Grammar Error!
         ostringstream errStr;
-        errStr << "ERROR: Unexpected Token: '" << _current << "' Expected Terminal: "  << expectedTerminal;
+        errStr << "ERROR: Unexpected Token: '" << *_current << "' Expected Terminal: "  << *expectedTerminal << "\n";
         throw new GrammarException(errStr.str());
     }
 };
@@ -171,11 +171,21 @@ const Terminal* Parser::getTerminal(TokenType expectedToken){
 SyntaxTree* Parser::parse(){
     // TODO!!!
     
-    const NonTerminal* program = _grammarRepository->getNonTerminal("PROGRAM");
+    SyntaxTree* tree = NULL;
     
+    string startSymbol = "PROGRAM";
     
-    ProductionRule* programRule = getRule(program);
-    SyntaxTree* tree = programRule->produce(this);
+    const NonTerminal* program = _grammarRepository->getNonTerminal(startSymbol);
+    if(program != NULL){
+        ProductionRule* programRule = getRule(program);
+        if(programRule != NULL){
+            tree = programRule->produce(this);
+        }else{
+            cout << "Can not find rule for " << *program << "\n";
+        }
+    }else{
+        cout << "Can not find the start symbol " << startSymbol << "\n";
+    }
     
     return tree;
 };

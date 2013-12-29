@@ -164,7 +164,7 @@ const map<TokenType, const string> TokenNames {
         {None, "None"},
         {TokenType::Sentinel, "Sentinel"},
     
-        {TokenType::Identifier, "Identifier"},
+        {TokenType::Identifier, "IDENT"},
         {TokenType::WhiteSpace, "Whitespace"},
         {TokenType::NewLine, "NewLine"},
     
@@ -179,10 +179,10 @@ const map<TokenType, const string> TokenNames {
         {TokenType::Comment_Line, "Comment_Line"},
     
         // Brackets
-        {TokenType::Bracked_Round_Open,"LPAREN"},
-        {TokenType::Bracked_Round_Close, "RPAREN"},
-        {TokenType::Bracked_Curly_Open, "Bracked_Curly_Open"},
-        {TokenType::Bracked_Curly_Close,"Bracked_Curly_Close"},
+        {TokenType::Bracked_Round_Open,"LPAREN"},       // (
+        {TokenType::Bracked_Round_Close, "RPAREN"},     // )
+        {TokenType::Bracked_Curly_Open, "LBRACE"},      // {
+        {TokenType::Bracked_Curly_Close,"RBRACE"},      // }
         {TokenType::Bracked_Square_Open,"Bracked_Square_Open"},
         {TokenType::Bracked_Square_Close,"Bracked_Square_Close"},
     
@@ -314,7 +314,13 @@ const TokenMap KeywordTokens =
     {"skip", TokenType::Keyword_Continue},
     {"returns", TokenType::Keyword_Return},
     
+    // Types
     
+    {"int32", TokenType::Type_Int},
+    {"bool", TokenType::Type_Bool},
+    {"string",TokenType::Type_String},
+    
+    // Literals
     {"true", TokenType::Keyword_True},
     {"false", TokenType::Keyword_False}
 };
