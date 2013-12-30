@@ -8,4 +8,4 @@ set(util_src Util.cpp)
 
 add_executable(EagleCompiler main.cpp ${token_src} ${util_src} ${headers})
 
-target_link_libraries(EagleCompiler scanner parser assemblizer CodeObject)
+target_link_libraries(EagleCompiler scanner parser assemblizer ast)

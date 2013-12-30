@@ -1,8 +1,8 @@
-set (CodeObject_src
+set (ast_src
 CodeObject.cpp
 CodeProgram.cpp
 CodeGlobalInit.cpp
 CodeGlobalImport.cpp
 CodeParameter.cpp
 )
-add_library(CodeObject ${CodeObject_src})
+add_library(ast ${ast_src})

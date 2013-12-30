@@ -2,7 +2,7 @@
 //  CodeExpressionFactorInititialize.cpp
 //  EagleCompiler
 //
-//  Created by Samuel Stachelski on 2013-12-29.
+//  Created by Samuel Stachelski on 2013-12-30.
 //  Copyright (c) 2013 Samuel Stachelski. All rights reserved.
 //
 
@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeExpressionFactorInititialize::code() {
-	return ;
+	return "";
 }
 
