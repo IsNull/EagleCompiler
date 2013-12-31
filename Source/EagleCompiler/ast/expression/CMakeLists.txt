@@ -1,0 +1,13 @@
+set (expression_src
+CodeExpression.cpp
+CodeExpressionStringConcatenation.cpp
+CodeExpressionBoolean.cpp
+CodeExpressionRelation.cpp
+CodeExpressionAdd.cpp
+CodeExpressionMultiply.cpp
+CodeExpressionFactorVariable.cpp
+CodeExpressionFactorInititialize.cpp
+CodeExpressionFactorCall.cpp
+CodeExpressionMonadicOperator.cpp
+)
+add_library(expression OBJECT ${expression_src})
