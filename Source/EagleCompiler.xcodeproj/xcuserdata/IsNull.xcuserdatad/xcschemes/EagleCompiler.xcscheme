@@ -59,7 +59,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-t &quot;/Users/IsNull/Documents/Projects/EagleCompiler/Source/Parsetable_IML&quot;"
+            argument = "-t &quot;/Users/IsNull/Documents/Projects/EagleCompiler/Source/Parsetable_IML_corrected&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
