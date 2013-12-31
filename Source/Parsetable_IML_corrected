@@ -27,7 +27,7 @@
     <progParam> <repProgParam>
 <repProgParam>
   terminal COMMA
-    COMMA <progParam>
+    COMMA <progParamCps>
   terminal RPAREN
     
 <progParam>
@@ -172,7 +172,7 @@
     
 <repParam>
   terminal COMMA
-    COMMA <repParam>
+    COMMA <optParam>
   terminal RPAREN
     
 <param>
