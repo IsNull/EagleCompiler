@@ -12,14 +12,20 @@
 #include <string>
 
 #include "CodeObject.h"
+#include "identifier/CodeVariable.h"
 
 using namespace std;
 
 namespace AST {
 	class CodeGlobalInit : public CodeObject {
 	private:
-		
+		CodeVariable *_variable;
 	public:
+		CodeGlobalInit() : _variable(nullptr) { };
+		CodeGlobalInit(CodeVariable *variable) : _variable(variable) { };
+		
+		CodeVariable *getVariable() { return _variable; };
+		
 		string code();
 	};
 }

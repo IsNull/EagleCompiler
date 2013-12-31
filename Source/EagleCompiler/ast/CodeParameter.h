@@ -12,14 +12,39 @@
 #include <string>
 
 #include "CodeObject.h"
+#include "identifier/CodeVariable.h"
 
 using namespace std;
 
 namespace AST {
+	enum class FLOWMODE {
+		EMPTY,
+	};
+	enum class MECHMODE {
+		EMPTY,
+	};
+	enum class CHANGEMODE {
+		EMPTY,
+	};
+	
 	class CodeParameter : public CodeObject {
 	private:
-		
+		FLOWMODE _flowmode;
+		MECHMODE _mechmode;
+		CHANGEMODE _changemode;
+		CodeVariable *_variable;
 	public:
+		CodeParameter() : 
+		_flowmode(FLOWMODE::EMPTY), _mechmode(MECHMODE::EMPTY), _changemode(CHANGEMODE::EMPTY), _variable(nullptr) { };
+		
+		CodeParameter(FLOWMODE flowmode, MECHMODE mechmode, CHANGEMODE changemode, CodeVariable *variable) :
+			_flowmode(flowmode), _mechmode(mechmode), _changemode(changemode), _variable(variable) { };
+			
+		FLOWMODE& getFlowMode() { return _flowmode; };
+		MECHMODE& getMechMode() { return _mechmode; };
+		CHANGEMODE& getChangeMode() { return _changemode; };
+		CodeVariable *getVariable() { return _variable; };
+		
 		string code();
 	};
 }

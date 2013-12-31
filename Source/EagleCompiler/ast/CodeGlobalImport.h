@@ -12,14 +12,24 @@
 #include <string>
 
 #include "CodeObject.h"
+#include "CodeParameter.h"
+#include "identifier/CodeVariable.h"
 
 using namespace std;
 
 namespace AST {
 	class CodeGlobalImport : public CodeObject {
 	private:
-		
+		CodeParameter importParameter;
 	public:
+		CodeGlobalImport() : importParameter() { };
+		CodeGlobalImport(FLOWMODE flowmode, CHANGEMODE changemode, CodeVariable *variable) :
+			importParameter(flowmode, MECHMODE::EMPTY, changemode, variable) { };
+			
+		FLOWMODE& getFlowMode() { return importParameter.getFlowMode(); };
+		CHANGEMODE& getChangeMode() { return importParameter.getChangeMode(); };
+		CodeVariable *getVariable() { return importParameter.getVariable(); };
+		
 		string code();
 	};
 }
