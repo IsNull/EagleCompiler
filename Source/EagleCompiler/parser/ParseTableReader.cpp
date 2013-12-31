@@ -95,6 +95,7 @@ void printRules(ParseRuleTable* table){
     }
 }
 
+
 Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTable){
    
     
@@ -187,6 +188,7 @@ Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTa
         
         cout << "ERROR: Unhandled Line: " << line << "\n";
     }
+    cout << "\n--- Parsing done. ---\n";
     printRules(parseRuleTable);
     
     return new Parser(tokenlist, parseRuleTable, this);
