@@ -82,12 +82,9 @@ private:
 public:
     Terminal(string name){
         this->name = name;
-    //    this->tokenType = type;
     }
     
     bool isTerminal() const { return true; }
-    
-    //TokenType getTokenType() const { return tokenType; }
 };
 
 /**

@@ -176,8 +176,13 @@ Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTa
                         if(symbol == NULL){
                             symbol = getTerminalOrCreate(*wordIt);
                         }
-                        // add to our current rule
-                        prod->push_back(symbol);
+                        
+                        if(symbol != NULL){
+                            // add to our current rule
+                            prod->push_back(symbol);
+                        }else{
+                            cout << "ERROR: Can not handle symbol: '" << *wordIt << "'" ;
+                        }
                     }
                 }
             }

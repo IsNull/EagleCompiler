@@ -43,7 +43,7 @@ void scan() {
         // TODO create AST from ST
         
     }catch(GrammarException* ex){
-        cout << "GrammarException: " << ex->what() << "\n";
+        cout << "\n\nGrammarException: " << ex->what() << "\n";
     }
     
     
