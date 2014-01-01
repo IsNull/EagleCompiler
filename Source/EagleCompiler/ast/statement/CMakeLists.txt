@@ -1,9 +1,11 @@
 set (statement_src
 CodeStatement.cpp
+CodeSkipStatement.cpp
 CodeAssignmentStatement.cpp
 CodeIfStatement.cpp
 CodeWhileStatement.cpp
-CodeCallStatement.cpp
+CodeProcedureCallStatement.cpp
+CodeFunctionCallStatement.cpp
 CodeInputStatement.cpp
 CodeOutputStatment.cpp
 )

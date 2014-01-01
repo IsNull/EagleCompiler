@@ -12,14 +12,19 @@
 #include <string>
 
 #include "CodeStatement.h"
+#include "../expression/CodeExpression.h"
 
 using namespace std;
 
 namespace AST {
 	class CodeOutputStatment : public CodeStatement {
 	private:
-		
+		CodeExpression *_expression;
 	public:
+		CodeOutputStatment(CodeExpression *expression) : _expression(expression) { };
+		
+		CodeExpression *getExpression() { return _expression; };
+		
 		string code();
 	};
 }

@@ -17,15 +17,6 @@
 using namespace std;
 
 namespace AST {
-	enum class FLOWMODE {
-		EMPTY,
-	};
-	enum class MECHMODE {
-		EMPTY,
-	};
-	enum class CHANGEMODE {
-		EMPTY,
-	};
 	
 	class CodeParameter : public CodeObject {
 	private:
@@ -40,9 +31,9 @@ namespace AST {
 		CodeParameter(FLOWMODE flowmode, MECHMODE mechmode, CHANGEMODE changemode, CodeVariable *variable) :
 			_flowmode(flowmode), _mechmode(mechmode), _changemode(changemode), _variable(variable) { };
 			
-		FLOWMODE& getFlowMode() { return _flowmode; };
-		MECHMODE& getMechMode() { return _mechmode; };
-		CHANGEMODE& getChangeMode() { return _changemode; };
+		FLOWMODE getFlowMode() { return _flowmode; };
+		MECHMODE getMechMode() { return _mechmode; };
+		CHANGEMODE getChangeMode() { return _changemode; };
 		CodeVariable *getVariable() { return _variable; };
 		
 		string code();

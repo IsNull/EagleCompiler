@@ -12,14 +12,27 @@
 #include <string>
 
 #include "CodeExpression.h"
+#include "CodeExpressionFactor.h"
 
 using namespace std;
 
 namespace AST {
-	class CodeExpressionMonadicOperator : public CodeExpression {
+	enum class MONADICOPERATOR {
+		NOT,
+		ADDOPR,
+	};
+	
+	class CodeExpressionMonadicOperator : public CodeExpressionFactor {
 	private:
-		
+		CodeExpressionFactor *_factor;
+		MONADICOPERATOR _monadicOperator;
 	public:
+		CodeExpressionMonadicOperator(CodeExpressionFactor *factor, MONADICOPERATOR monadicOperator) :
+			_factor(factor), _monadicOperator(monadicOperator) { };
+		
+		CodeExpressionFactor *getFactor() { return _factor; };
+		MONADICOPERATOR getMonadicOperator() { return _monadicOperator; };
+		
 		string code();
 	};
 }

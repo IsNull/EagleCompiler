@@ -26,9 +26,9 @@ namespace AST {
 		CodeGlobalImport(FLOWMODE flowmode, CHANGEMODE changemode, CodeVariable *variable) :
 			importParameter(flowmode, MECHMODE::EMPTY, changemode, variable) { };
 			
-		FLOWMODE& getFlowMode() { return importParameter.getFlowMode(); };
-		CHANGEMODE& getChangeMode() { return importParameter.getChangeMode(); };
-		CodeVariable *getVariable() { return importParameter.getVariable(); };
+		FLOWMODE getFlowMode() { return importParameter.getFlowMode(); };
+		CHANGEMODE getChangeMode() { return importParameter.getChangeMode(); };
+		CodeVariable* getVariable() { return importParameter.getVariable(); };
 		
 		string code();
 	};

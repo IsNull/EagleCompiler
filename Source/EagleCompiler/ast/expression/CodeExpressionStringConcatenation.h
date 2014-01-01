@@ -10,16 +10,20 @@
 #define __EagleCompiler__CodeExpressionStringConcatenation__
 
 #include <string>
+#include <vector>
 
 #include "CodeExpression.h"
+#include "CodeExpressionBoolean.h"
 
 using namespace std;
 
 namespace AST {
 	class CodeExpressionStringConcatenation : public CodeExpression {
 	private:
-		
+		vector<CodeExpressionBoolean> booleanTerms;
 	public:
+		vector<CodeExpressionBoolean>& getBooleanTermExpressions() { return booleanTerms; };
+		
 		string code();
 	};
 }

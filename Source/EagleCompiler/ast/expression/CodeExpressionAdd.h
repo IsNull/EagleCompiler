@@ -10,16 +10,20 @@
 #define __EagleCompiler__CodeExpressionAdd__
 
 #include <string>
+#include <vector>
 
 #include "CodeExpression.h"
+#include "CodeExpressionMultiply.h"
 
 using namespace std;
 
 namespace AST {
 	class CodeExpressionAdd : public CodeExpression {
 	private:
-		
+		vector<CodeExpressionMultiply> multiplys;
 	public:
+		vector<CodeExpressionMultiply>& getMultiplyExpressions() { return multiplys; };
+		
 		string code();
 	};
 }

@@ -12,14 +12,19 @@
 #include <string>
 
 #include "CodeIdentifier.h"
+#include "../type/CodeType.h"
 
 using namespace std;
 
 namespace AST {
 	class CodeFunction : public CodeIdentifier {
 	private:
-		
+		CodeType _type;
 	public:
+		CodeFunction(string name, CodeType type) : CodeIdentifier(name), _type(type) { };
+		
+		CodeType getType() { return _type; };
+
 		string code();
 	};
 }

@@ -10,16 +10,20 @@
 #define __EagleCompiler__CodeExpressionRelation__
 
 #include <string>
+#include <vector>
 
 #include "CodeExpression.h"
+#include "CodeExpressionAdd.h"
 
 using namespace std;
 
 namespace AST {
 	class CodeExpressionRelation : public CodeExpression {
 	private:
-		
+		vector<CodeExpressionAdd> additions;
 	public:
+		vector<CodeExpressionAdd>& getAddExpressions() { return additions; };
+		
 		string code();
 	};
 }

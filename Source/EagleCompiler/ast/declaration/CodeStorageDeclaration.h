@@ -12,14 +12,22 @@
 #include <string>
 
 #include "CodeDeclaration.h"
+#include "../identifier/CodeVariable.h"
 
 using namespace std;
 
 namespace AST {
 	class CodeStorageDeclaration : public CodeDeclaration {
 	private:
-		
+		CodeVariable *_variable;
+		CHANGEMODE _changeMode;
 	public:
+		CodeStorageDeclaration(CHANGEMODE changeMode, CodeVariable *variable) : 
+		CodeDeclaration(variable), _variable(variable), _changeMode(changeMode) { };
+		
+		CHANGEMODE getChangeMode() { return _changeMode; };
+		CodeVariable *getVariable() { return _variable; };
+		
 		string code();
 	};
 }

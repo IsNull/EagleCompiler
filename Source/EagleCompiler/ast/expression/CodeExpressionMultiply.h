@@ -10,16 +10,20 @@
 #define __EagleCompiler__CodeExpressionMultiply__
 
 #include <string>
+#include <vector>
 
 #include "CodeExpression.h"
+#include "CodeExpressionFactor.h"
 
 using namespace std;
 
 namespace AST {
 	class CodeExpressionMultiply : public CodeExpression {
 	private:
-		
+		vector<CodeExpressionFactor> factors;
 	public:
+		vector<CodeExpressionFactor>& getFactors() { return factors; };
+		
 		string code();
 	};
 }

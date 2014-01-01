@@ -16,8 +16,12 @@ using namespace std;
 namespace AST {
 	class CodeIdentifier {
 	private:
-		
+		string _name;
 	public:
+		CodeIdentifier(string name) : _name(name) { };
+		
+		string getName() { return _name; };
+		
 		string code();
 	};
 }

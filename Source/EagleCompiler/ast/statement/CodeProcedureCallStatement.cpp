@@ -1,5 +1,5 @@
 //
-//  CodeExpressionFactorCall.cpp
+//  CodeProcedureCallStatement.cpp
 //  EagleCompiler
 //
 //  Created by Samuel Stachelski on 2013-12-30.
@@ -8,11 +8,11 @@
 
 #include <string.h>
 
-#include "CodeExpressionFactorCall.h"
+#include "CodeProcedureCallStatement.h"
 
 using namespace std;
 
-string AST::CodeExpressionFactorCall::code() {
+string AST::CodeProcedureCallStatement::code() {
 	return "";
 }
 

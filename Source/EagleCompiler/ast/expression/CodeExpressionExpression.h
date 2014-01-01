@@ -12,12 +12,18 @@
 #include <string>
 #include <vector>
 
+#include "CodeExpression.h"
+#include "CodeExpressionStringConcatenation.h"
+
 using namespace std;
 
 namespace AST {
 	class CodeExpression {
 	private:
-	public:		
+		vector<CodeExpressionStringConcatenation> strings;
+	public:
+		vector<CodeExpressionStringConcatenation>& getStringConcatenationExpressions() { return strings; };
+		
 		string code();
 	};
 }

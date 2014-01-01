@@ -18,8 +18,10 @@ using namespace std;
 namespace AST {
 	class CodeProcedure : public CodeIdentifier {
 	private:
-		
+
 	public:
+		CodeProcedure(string name) : CodeIdentifier(name) { };
+		
 		string code();
 	};
 }

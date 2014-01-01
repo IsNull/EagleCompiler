@@ -12,14 +12,22 @@
 #include <string>
 
 #include "CodeStatement.h"
+#include "../expression/CodeExpression.h"
 
 using namespace std;
 
 namespace AST {
 	class CodeAssignmentStatement : public CodeStatement {
 	private:
-		
+		CodeExpression *_lvalue;
+		CodeExpression *_rvalue;
 	public:
+		CodeAssignmentStatement(CodeExpression *lvalue, CodeExpression *rvalue) : 
+			_lvalue(lvalue), _rvalue(rvalue) { };
+		
+		CodeExpression *getLValue() { return _lvalue; };
+		CodeExpression *getRValue() { return _rvalue; };
+		
 		string code();
 	};
 }

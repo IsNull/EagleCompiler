@@ -1,22 +1,22 @@
 //
-//  CodeCallStatement
+//  CodeExpressionFactor
 //  EagleCompiler
 //
 //  Created by Samuel Stachelski on 2013-12-30.
 //  Copyright (c) 2013 Samuel Stachelski. All rights reserved.
 //
 
-#ifndef __EagleCompiler__CodeCallStatement__
-#define __EagleCompiler__CodeCallStatement__
+#ifndef __EagleCompiler__CodeExpressionFactor__
+#define __EagleCompiler__CodeExpressionFactor__
 
 #include <string>
 
-#include "CodeStatement.h"
+#include "CodeExpression.h"
 
 using namespace std;
 
 namespace AST {
-	class CodeCallStatement : public CodeStatement {
+	class CodeExpressionFactor : public CodeExpression {
 	private:
 		
 	public:

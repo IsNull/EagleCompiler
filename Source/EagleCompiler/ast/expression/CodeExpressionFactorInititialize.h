@@ -12,14 +12,20 @@
 #include <string>
 
 #include "CodeExpression.h"
+#include "CodeExpressionFactor.h"
+#include "../identifier/CodeVariable.h"
 
 using namespace std;
 
 namespace AST {
-	class CodeExpressionFactorInititialize : public CodeExpression {
+	class CodeExpressionFactorInititialize : public CodeExpressionFactor {
 	private:
-		
+		CodeVariable *_variable;
 	public:
+		CodeExpressionFactorInititialize(CodeVariable *variable) : _variable(variable) { };
+		
+		CodeVariable *getVariable() { return _variable; };
+		
 		string code();
 	};
 }
