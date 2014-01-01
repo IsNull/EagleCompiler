@@ -56,62 +56,22 @@
     <optChangeMode> <typedIdent>
 <funDecl>
   terminal FUN
-    FUN IDENT <paramList> RETURNS <stoDecl> <optGlobImpList> <optCpsStoDecl> <cpsCmd> ENDFUN
+    FUN IDENT <paramList> RETURNS <stoDecl> <optGlobImpList> <optCpsStoDecl> DO <cpsCmd> ENDFUN
 <optGlobImpList>
   terminal GLOBAL
     GLOBAL <globImplList>
-  terminal DEBUGOUT
-    
-  terminal DEBUGIN
-    
-  terminal CALL
-    
-  terminal WHILE
-    
-  terminal IF
-    
-  terminal LPAREN
-    
-  terminal ADDOPR
-    
-  terminal NOT
-    
-  terminal IDENT
-    
-  terminal LITERAL
-    
-  terminal SKIP
+  terminal DO
     
   terminal LOCAL
     
 <optCpsStoDecl>
   terminal LOCAL
     LOCAL <cpsStoDecl>
-  terminal DEBUGOUT
-    
-  terminal DEBUGIN
-    
-  terminal CALL
-    
-  terminal WHILE
-    
-  terminal IF
-    
-  terminal LPAREN
-    
-  terminal ADDOPR
-    
-  terminal NOT
-    
-  terminal IDENT
-    
-  terminal LITERAL
-    
-  terminal SKIP
+  terminal DO
     
 <procDecl>
   terminal PROC
-    PROC IDENT <paramList> <optGlobImpList> <optCpsStoDecl> <cpsCmd> ENDPROC
+    PROC IDENT <paramList> <optGlobImpList> <optCpsStoDecl> DO <cpsCmd> ENDPROC
 <cpsDecl>
   terminal PROC
     <decl> <repDecl>
@@ -134,27 +94,7 @@
 <repStoDecl>
   terminal SEMICOLON
     SEMICOLON <stoDecl> <repStoDecl>
-  terminal DEBUGOUT
-    
-  terminal DEBUGIN
-    
-  terminal CALL
-    
-  terminal WHILE
-    
-  terminal IF
-    
-  terminal LPAREN
-    
-  terminal ADDOPR
-    
-  terminal NOT
-    
-  terminal IDENT
-    
-  terminal LITERAL
-    
-  terminal SKIP
+  terminal DO
     
 <paramList>
   terminal LPAREN
@@ -210,27 +150,7 @@
 <repGlobImp>
   terminal COMMA
     COMMA <globImp> <repGlobImp>
-  terminal DEBUGOUT
-    
-  terminal DEBUGIN
-    
-  terminal CALL
-    
-  terminal WHILE
-    
-  terminal IF
-    
-  terminal LPAREN
-    
-  terminal ADDOPR
-    
-  terminal NOT
-    
-  terminal IDENT
-    
-  terminal LITERAL
-    
-  terminal SKIP
+  terminal DO
     
   terminal LOCAL
     
