@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeExpressionStringConcatenation::code() {
-	return "";
+	return "CodeExpressionStringConcatenation";
 }
 

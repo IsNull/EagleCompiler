@@ -19,11 +19,11 @@ using namespace std;
 namespace AST {
 	class CodeFunction : public CodeIdentifier {
 	private:
-		CodeType _type;
+		CodeType *_type;
 	public:
-		CodeFunction(string name, CodeType type) : CodeIdentifier(name), _type(type) { };
+		CodeFunction(string name, CodeType *type) : CodeIdentifier(name), _type(type) { };
 		
-		CodeType getType() { return _type; };
+		CodeType *getType() { return _type; };
 
 		string code();
 	};

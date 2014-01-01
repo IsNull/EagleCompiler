@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeExpressionAdd::code() {
-	return "";
+	return "CodeExpressionAdd";
 }
 

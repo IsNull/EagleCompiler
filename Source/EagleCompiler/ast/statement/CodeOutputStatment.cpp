@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeOutputStatment::code() {
-	return "";
+	return "CodeOutputStatment";
 }
 

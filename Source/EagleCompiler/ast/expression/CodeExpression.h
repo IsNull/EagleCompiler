@@ -12,13 +12,14 @@
 #include <string>
 #include <vector>
 
+#include "../CodeObject.h"
+
 using namespace std;
 
 namespace AST {
-	class CodeExpression {
+	class CodeExpression : public CodeObject{
 	private:
-	public:		
-		string code();
+	public:
 	};
 }
 

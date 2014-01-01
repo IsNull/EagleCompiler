@@ -25,9 +25,6 @@ namespace AST {
 		CHANGEMODE _changemode;
 		CodeVariable *_variable;
 	public:
-		CodeParameter() : 
-		_flowmode(FLOWMODE::EMPTY), _mechmode(MECHMODE::EMPTY), _changemode(CHANGEMODE::EMPTY), _variable(nullptr) { };
-		
 		CodeParameter(FLOWMODE flowmode, MECHMODE mechmode, CHANGEMODE changemode, CodeVariable *variable) :
 			_flowmode(flowmode), _mechmode(mechmode), _changemode(changemode), _variable(variable) { };
 			

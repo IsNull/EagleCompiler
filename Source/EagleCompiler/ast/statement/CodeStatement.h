@@ -11,14 +11,15 @@
 
 #include <string>
 
+#include "../CodeObject.h"
+
 using namespace std;
 
 namespace AST {
-	class CodeStatement {
+	class CodeStatement : CodeObject{
 	private:
 		
 	public:
-		string code();
 	};
 }
 

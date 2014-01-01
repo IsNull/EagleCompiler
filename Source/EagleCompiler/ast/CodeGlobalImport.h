@@ -22,7 +22,6 @@ namespace AST {
 	private:
 		CodeParameter importParameter;
 	public:
-		CodeGlobalImport() : importParameter() { };
 		CodeGlobalImport(FLOWMODE flowmode, CHANGEMODE changemode, CodeVariable *variable) :
 			importParameter(flowmode, MECHMODE::EMPTY, changemode, variable) { };
 			

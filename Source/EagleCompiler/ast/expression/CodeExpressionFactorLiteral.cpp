@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeExpressionFactorLiteral::code() {
-	return "";
+	return "CodeExpressionFactorLiteral";
 }
 

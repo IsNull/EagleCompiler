@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeGlobalImport::code() {
-	return "";
+	return "CodeGlobalImport";
 }
 

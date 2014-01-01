@@ -11,10 +11,12 @@
 
 #include <string>
 
+#include "CodeStatement.h"
+
 using namespace std;
 
 namespace AST {
-	class CodeSkipStatement {
+	class CodeSkipStatement : CodeStatement{
 	private:
 		
 	public:

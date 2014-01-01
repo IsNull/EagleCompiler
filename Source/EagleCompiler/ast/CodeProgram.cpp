@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeProgram::code() {
-	return "";
+	return "CodeProgram";
 }
 

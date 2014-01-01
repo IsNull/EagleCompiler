@@ -11,8 +11,3 @@
 #include "CodeDeclaration.h"
 
 using namespace std;
-
-string AST::CodeDeclaration::code() {
-	return "";
-}
-

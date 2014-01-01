@@ -11,8 +11,3 @@
 #include "CodeObject.h"
 
 using namespace std;
-
-string AST::CodeObject::code() {
-	return "";
-}
-

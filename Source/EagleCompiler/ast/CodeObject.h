@@ -18,7 +18,7 @@ namespace AST {
 	private:
 		
 	public:
-		string code();
+		virtual string code() = 0;
 	};
 }
 

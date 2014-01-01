@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeWhileStatement::code() {
-	return "";
+	return "CodeWhileStatement";
 }
 

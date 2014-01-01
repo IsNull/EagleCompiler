@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeExpressionMultiply::code() {
-	return "";
+	return "CodeExpressionMultiply";
 }
 

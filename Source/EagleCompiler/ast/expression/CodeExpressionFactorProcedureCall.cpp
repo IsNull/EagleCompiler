@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeExpressionFactorProcedureCall::code() {
-	return "";
+	return "CodeExpressionFactorProcedureCall";
 }
 

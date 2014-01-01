@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeParameter::code() {
-	return "";
+	return "CodeParameter";
 }
 

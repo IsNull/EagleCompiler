@@ -18,7 +18,7 @@
 using namespace std;
 
 namespace AST {
-	class CodeExpression {
+	class CodeExpressionExpression : CodeExpression{
 	private:
 		vector<CodeExpressionStringConcatenation> strings;
 	public:

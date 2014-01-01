@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeTypeBoolean::code() {
-	return "";
+	return "CodeTypeBoolean";
 }
 

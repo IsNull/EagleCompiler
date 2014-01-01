@@ -13,6 +13,7 @@
 #include "assemblizer/StringVariable.h"
 #include "parser/Parser.h"
 #include "parser/ParseTableReader.h"
+#include "ast/AST.h"
 
 #include "user.local"
 
@@ -50,12 +51,29 @@ void scan() {
 }
 
 void testSam() {
-	Assemblizer::Assemblizer a;
-	//Print text "foo" on standard output, use \\n for newline, to avoid escape string
-	a.addVariableDeclaration(new Assemblizer::StringVariable("myText", "foo\\n"));
-	a.addInstruction(new Assemblizer::WriteToStandardOutputInstruction("myText"));
+//Write this to ast-->
+//
+//	program
+//	 
+//	intDiv(in const m:int32, in const n:int32, out const q:int32, out const
+//	r:int32) global
+//		proc divide(in copy const m:int32, in copy const n:int32,
+//			out ref var q:int32, out ref var r:int32)
+//		do
+//			q init := 0;
+//			r init := m;
+//			while r >= n do
+//				q := q + 1;
+//				r := r - n
+//			endwhile
+//		endproc
+//	do
+//		call divide(m, n, q init, r init)
+//	endprogram
+	using namespace AST;
+	CodeProgram p;
 	
-	cout << a.getFinalAssemblerCode() << endl;
+	
 }
 
 

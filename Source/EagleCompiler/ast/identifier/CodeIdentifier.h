@@ -11,18 +11,18 @@
 
 #include <string>
 
+#include "../CodeObject.h"
+
 using namespace std;
 
 namespace AST {
-	class CodeIdentifier {
+	class CodeIdentifier : public CodeObject{
 	private:
 		string _name;
 	public:
 		CodeIdentifier(string name) : _name(name) { };
 		
 		string getName() { return _name; };
-		
-		string code();
 	};
 }
 

@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeVariable::code() {
-	return "";
+	return "CodeVariable";
 }
 

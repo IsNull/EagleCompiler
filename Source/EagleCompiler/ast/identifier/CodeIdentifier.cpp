@@ -12,7 +12,4 @@
 
 using namespace std;
 
-string AST::CodeIdentifier::code() {
-	return "";
-}
 

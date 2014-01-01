@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeExpressionBoolean::code() {
-	return "";
+	return "CodeExpressionBoolean";
 }
 

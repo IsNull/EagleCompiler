@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeFunctionDeclaration::code() {
-	return "";
+	return "CodeFunctionDeclaration";
 }
 

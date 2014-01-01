@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeExpressionMonadicOperator::code() {
-	return "";
+	return "CodeExpressionMonadicOperator";
 }
 

@@ -12,7 +12,3 @@
 
 using namespace std;
 
-string AST::CodeType::code() {
-	return "";
-}
-
