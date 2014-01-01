@@ -39,8 +39,11 @@ void scan() {
     
     try{
         SyntaxTree* syntaxtree = p->parse();
+        
+        // TODO create AST from ST
+        
     }catch(GrammarException* ex){
-        cout << "GrammarException: " << ex->what() << "\n";
+        cout << "\n\nGrammarException: " << ex->what() << "\n";
     }
     
     
@@ -125,9 +128,6 @@ int main(int argc, char* argv[])
         cout << "Missing mandatory param -t <Path to 'Fix & Foxi' Parse-Table>" << "\n";
         return -1;
     }
-    
-    
-
     
     
 	scan();

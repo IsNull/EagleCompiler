@@ -1,2 +1,4 @@
-var bool := (x = 12); //Comment haha
-test();
+program 
+	q init := 0;
+	debugout q;
+endprogram

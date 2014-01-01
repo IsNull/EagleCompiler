@@ -22,6 +22,8 @@
 SyntaxTree* ProductionRule::produce(IParseContext* ctx){
     SyntaxTree* node = new SyntaxTree(nonterminal);
     
+    cout << "\t-->" << *this << "\n";
+    
     const Token* currentToken = ctx->current();
     const Terminal* currentTerminal = ctx->getTerminal(currentToken->getType());
     
@@ -36,6 +38,9 @@ SyntaxTree* ProductionRule::produce(IParseContext* ctx){
                 
                 if(s->isTerminal()){
                     Terminal *t = (Terminal*)s;
+                    
+                    cout <<  *(this->nonterminal) << "  ";
+                    
                     ctx->consume(t); // will throw a GrammarExceptin if current terminal was not expected
                     node->add(new SyntaxTree(t)); // TODO add Token to SyntaxTree for later analysis
                     
@@ -50,7 +55,9 @@ SyntaxTree* ProductionRule::produce(IParseContext* ctx){
                 }
             }
         }else{
-            cout << "No production for " << *currentTerminal << "\n";
+            // an empty production (NULL) means that we have reached the end of this parse sub tree
+            cout << "! End of " << *this << "\n";
+            //cout << *this << " has no production for requested terminal " << *currentTerminal << "\n";
         }
     }else{
         ostringstream errStr;

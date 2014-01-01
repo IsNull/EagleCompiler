@@ -219,7 +219,7 @@ const map<TokenType, const string> TokenNames {
         // Keywords
         {TokenType::Colon, "COLON"},
         {TokenType::Semicolon, "SEMICOLON"},
-        {TokenType::Comma, "Comma"},
+        {TokenType::Comma, "COMMA"},
     
         // modifiers
         {TokenType::Keyword_Init, "INIT"},
@@ -256,10 +256,10 @@ const map<TokenType, const string> TokenNames {
         {TokenType::Keyword_Continue,"SKIP"},
         {TokenType::Keyword_Return,"RETURNS"},
     
-        {TokenType::Group_Type, "TYPE"},
-        {TokenType::Type_Int, "TYPE_Int32"},
-        {TokenType::Type_Bool,"TYPE_BOOL"},
-        {TokenType::Type_String,"TYPE_STRING"},
+        {TokenType::Group_Type, "ATOMTYPE"},
+        {TokenType::Type_Int, "ATOMTYPE_Int32"},
+        {TokenType::Type_Bool,"ATOMTYPE_BOOL"},
+        {TokenType::Type_String,"ATOMTYPE_STRING"},
     
     
         {TokenType::Group_Literal, "LITERAL"},
