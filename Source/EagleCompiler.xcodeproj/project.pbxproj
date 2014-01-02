@@ -10,6 +10,88 @@
 		D221B47517F745D900E76550 /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B47317F745D900E76550 /* Token.cpp */; };
 		D221B47C17F8252C00E76550 /* TokenList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B47A17F8252C00E76550 /* TokenList.cpp */; };
 		D221B48517F8451900E76550 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B48317F8451900E76550 /* Util.cpp */; };
+		D281BD07187594560097916F /* AST.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BCFB187594560097916F /* AST.h */; };
+		D281BD08187594560097916F /* CMakeLists.txt in Sources */ = {isa = PBXBuildFile; fileRef = D281BCFC187594560097916F /* CMakeLists.txt */; };
+		D281BD09187594560097916F /* CodeGlobalImport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BCFD187594560097916F /* CodeGlobalImport.cpp */; };
+		D281BD0A187594560097916F /* CodeGlobalImport.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BCFE187594560097916F /* CodeGlobalImport.h */; };
+		D281BD0B187594560097916F /* CodeGlobalInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BCFF187594560097916F /* CodeGlobalInit.cpp */; };
+		D281BD0C187594560097916F /* CodeGlobalInit.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD00187594560097916F /* CodeGlobalInit.h */; };
+		D281BD0D187594560097916F /* CodeObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD01187594560097916F /* CodeObject.cpp */; };
+		D281BD0E187594560097916F /* CodeObject.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD02187594560097916F /* CodeObject.h */; };
+		D281BD0F187594560097916F /* CodeParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD03187594560097916F /* CodeParameter.cpp */; };
+		D281BD10187594560097916F /* CodeParameter.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD04187594560097916F /* CodeParameter.h */; };
+		D281BD11187594560097916F /* CodeProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD05187594560097916F /* CodeProgram.cpp */; };
+		D281BD12187594560097916F /* CodeProgram.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD06187594560097916F /* CodeProgram.h */; };
+		D281BD1B187594630097916F /* CodeDeclaration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD13187594630097916F /* CodeDeclaration.cpp */; };
+		D281BD1C187594630097916F /* CodeDeclaration.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD14187594630097916F /* CodeDeclaration.h */; };
+		D281BD1D187594630097916F /* CodeFunctionDeclaration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD15187594630097916F /* CodeFunctionDeclaration.cpp */; };
+		D281BD1E187594630097916F /* CodeFunctionDeclaration.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD16187594630097916F /* CodeFunctionDeclaration.h */; };
+		D281BD1F187594630097916F /* CodeProcedureDeclaration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD17187594630097916F /* CodeProcedureDeclaration.cpp */; };
+		D281BD20187594630097916F /* CodeProcedureDeclaration.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD18187594630097916F /* CodeProcedureDeclaration.h */; };
+		D281BD21187594630097916F /* CodeStorageDeclaration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD19187594630097916F /* CodeStorageDeclaration.cpp */; };
+		D281BD22187594630097916F /* CodeStorageDeclaration.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD1A187594630097916F /* CodeStorageDeclaration.h */; };
+		D281BD3F1875946E0097916F /* CodeExpression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD231875946E0097916F /* CodeExpression.cpp */; };
+		D281BD401875946E0097916F /* CodeExpression.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD241875946E0097916F /* CodeExpression.h */; };
+		D281BD411875946E0097916F /* CodeExpressionAdd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD251875946E0097916F /* CodeExpressionAdd.cpp */; };
+		D281BD421875946E0097916F /* CodeExpressionAdd.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD261875946E0097916F /* CodeExpressionAdd.h */; };
+		D281BD431875946E0097916F /* CodeExpressionBoolean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD271875946E0097916F /* CodeExpressionBoolean.cpp */; };
+		D281BD441875946E0097916F /* CodeExpressionBoolean.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD281875946E0097916F /* CodeExpressionBoolean.h */; };
+		D281BD451875946E0097916F /* CodeExpressionExpression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD291875946E0097916F /* CodeExpressionExpression.cpp */; };
+		D281BD461875946E0097916F /* CodeExpressionExpression.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD2A1875946E0097916F /* CodeExpressionExpression.h */; };
+		D281BD471875946E0097916F /* CodeExpressionFactor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD2B1875946E0097916F /* CodeExpressionFactor.cpp */; };
+		D281BD481875946E0097916F /* CodeExpressionFactor.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD2C1875946E0097916F /* CodeExpressionFactor.h */; };
+		D281BD491875946E0097916F /* CodeExpressionFactorFunctionCall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD2D1875946E0097916F /* CodeExpressionFactorFunctionCall.cpp */; };
+		D281BD4A1875946E0097916F /* CodeExpressionFactorFunctionCall.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD2E1875946E0097916F /* CodeExpressionFactorFunctionCall.h */; };
+		D281BD4B1875946E0097916F /* CodeExpressionFactorInititialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD2F1875946E0097916F /* CodeExpressionFactorInititialize.cpp */; };
+		D281BD4C1875946E0097916F /* CodeExpressionFactorInititialize.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD301875946E0097916F /* CodeExpressionFactorInititialize.h */; };
+		D281BD4D1875946E0097916F /* CodeExpressionFactorLiteral.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD311875946E0097916F /* CodeExpressionFactorLiteral.cpp */; };
+		D281BD4E1875946E0097916F /* CodeExpressionFactorLiteral.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD321875946E0097916F /* CodeExpressionFactorLiteral.h */; };
+		D281BD4F1875946E0097916F /* CodeExpressionFactorProcedureCall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD331875946E0097916F /* CodeExpressionFactorProcedureCall.cpp */; };
+		D281BD501875946E0097916F /* CodeExpressionFactorProcedureCall.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD341875946E0097916F /* CodeExpressionFactorProcedureCall.h */; };
+		D281BD511875946E0097916F /* CodeExpressionFactorVariable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD351875946E0097916F /* CodeExpressionFactorVariable.cpp */; };
+		D281BD521875946E0097916F /* CodeExpressionFactorVariable.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD361875946E0097916F /* CodeExpressionFactorVariable.h */; };
+		D281BD531875946E0097916F /* CodeExpressionMonadicOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD371875946E0097916F /* CodeExpressionMonadicOperator.cpp */; };
+		D281BD541875946E0097916F /* CodeExpressionMonadicOperator.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD381875946E0097916F /* CodeExpressionMonadicOperator.h */; };
+		D281BD551875946E0097916F /* CodeExpressionMultiply.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD391875946E0097916F /* CodeExpressionMultiply.cpp */; };
+		D281BD561875946E0097916F /* CodeExpressionMultiply.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD3A1875946E0097916F /* CodeExpressionMultiply.h */; };
+		D281BD571875946E0097916F /* CodeExpressionRelation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD3B1875946E0097916F /* CodeExpressionRelation.cpp */; };
+		D281BD581875946E0097916F /* CodeExpressionRelation.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD3C1875946E0097916F /* CodeExpressionRelation.h */; };
+		D281BD591875946E0097916F /* CodeExpressionStringConcatenation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD3D1875946E0097916F /* CodeExpressionStringConcatenation.cpp */; };
+		D281BD5A1875946E0097916F /* CodeExpressionStringConcatenation.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD3E1875946E0097916F /* CodeExpressionStringConcatenation.h */; };
+		D281BD63187594780097916F /* CodeFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD5B187594780097916F /* CodeFunction.cpp */; };
+		D281BD64187594780097916F /* CodeFunction.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD5C187594780097916F /* CodeFunction.h */; };
+		D281BD65187594780097916F /* CodeIdentifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD5D187594780097916F /* CodeIdentifier.cpp */; };
+		D281BD66187594780097916F /* CodeIdentifier.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD5E187594780097916F /* CodeIdentifier.h */; };
+		D281BD67187594780097916F /* CodeProcedure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD5F187594780097916F /* CodeProcedure.cpp */; };
+		D281BD68187594780097916F /* CodeProcedure.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD60187594780097916F /* CodeProcedure.h */; };
+		D281BD69187594780097916F /* CodeVariable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD61187594780097916F /* CodeVariable.cpp */; };
+		D281BD6A187594780097916F /* CodeVariable.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD62187594780097916F /* CodeVariable.h */; };
+		D281BD7D187594800097916F /* CodeAssignmentStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD6B187594800097916F /* CodeAssignmentStatement.cpp */; };
+		D281BD7E187594800097916F /* CodeAssignmentStatement.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD6C187594800097916F /* CodeAssignmentStatement.h */; };
+		D281BD7F187594800097916F /* CodeFunctionCallStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD6D187594800097916F /* CodeFunctionCallStatement.cpp */; };
+		D281BD80187594800097916F /* CodeFunctionCallStatement.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD6E187594800097916F /* CodeFunctionCallStatement.h */; };
+		D281BD81187594800097916F /* CodeIfStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD6F187594800097916F /* CodeIfStatement.cpp */; };
+		D281BD82187594800097916F /* CodeIfStatement.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD70187594800097916F /* CodeIfStatement.h */; };
+		D281BD83187594800097916F /* CodeInputStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD71187594800097916F /* CodeInputStatement.cpp */; };
+		D281BD84187594800097916F /* CodeInputStatement.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD72187594800097916F /* CodeInputStatement.h */; };
+		D281BD85187594800097916F /* CodeOutputStatment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD73187594800097916F /* CodeOutputStatment.cpp */; };
+		D281BD86187594800097916F /* CodeOutputStatment.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD74187594800097916F /* CodeOutputStatment.h */; };
+		D281BD87187594800097916F /* CodeProcedureCallStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD75187594800097916F /* CodeProcedureCallStatement.cpp */; };
+		D281BD88187594800097916F /* CodeProcedureCallStatement.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD76187594800097916F /* CodeProcedureCallStatement.h */; };
+		D281BD89187594800097916F /* CodeSkipStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD77187594800097916F /* CodeSkipStatement.cpp */; };
+		D281BD8A187594800097916F /* CodeSkipStatement.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD78187594800097916F /* CodeSkipStatement.h */; };
+		D281BD8B187594800097916F /* CodeStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD79187594800097916F /* CodeStatement.cpp */; };
+		D281BD8C187594800097916F /* CodeStatement.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD7A187594800097916F /* CodeStatement.h */; };
+		D281BD8D187594800097916F /* CodeWhileStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD7B187594800097916F /* CodeWhileStatement.cpp */; };
+		D281BD8E187594800097916F /* CodeWhileStatement.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD7C187594800097916F /* CodeWhileStatement.h */; };
+		D281BD97187594890097916F /* CodeType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD8F187594890097916F /* CodeType.cpp */; };
+		D281BD98187594890097916F /* CodeType.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD90187594890097916F /* CodeType.h */; };
+		D281BD99187594890097916F /* CodeTypeBoolean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD91187594890097916F /* CodeTypeBoolean.cpp */; };
+		D281BD9A187594890097916F /* CodeTypeBoolean.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD92187594890097916F /* CodeTypeBoolean.h */; };
+		D281BD9B187594890097916F /* CodeTypeInteger32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD93187594890097916F /* CodeTypeInteger32.cpp */; };
+		D281BD9C187594890097916F /* CodeTypeInteger32.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD94187594890097916F /* CodeTypeInteger32.h */; };
+		D281BD9D187594890097916F /* CodeTypeString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BD95187594890097916F /* CodeTypeString.cpp */; };
+		D281BD9E187594890097916F /* CodeTypeString.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BD96187594890097916F /* CodeTypeString.h */; };
 		D28CFAE2185C5F4C00E62626 /* ParseTableReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D28CFAE0185C5F4C00E62626 /* ParseTableReader.cpp */; };
 		D29DBE1B1806D9FA00C9A5FE /* ScannerContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE191806D9FA00C9A5FE /* ScannerContext.cpp */; };
 		D29DBE1C1806D9FA00C9A5FE /* ScannerContext.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE1A1806D9FA00C9A5FE /* ScannerContext.h */; };
@@ -55,6 +137,89 @@
 		D221B48317F8451900E76550 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
 		D221B48417F8451900E76550 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		D221B48617FDB1AF00E76550 /* parser */ = {isa = PBXFileReference; lastKnownFileType = folder; path = parser; sourceTree = "<group>"; };
+		D281BCF918758ABC0097916F /* ast */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ast; sourceTree = "<group>"; };
+		D281BCFB187594560097916F /* AST.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = AST.h; path = EagleCompiler/ast/AST.h; sourceTree = "<group>"; };
+		D281BCFC187594560097916F /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = file; name = CMakeLists.txt; path = EagleCompiler/ast/CMakeLists.txt; sourceTree = "<group>"; };
+		D281BCFD187594560097916F /* CodeGlobalImport.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeGlobalImport.cpp; path = EagleCompiler/ast/CodeGlobalImport.cpp; sourceTree = "<group>"; };
+		D281BCFE187594560097916F /* CodeGlobalImport.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeGlobalImport.h; path = EagleCompiler/ast/CodeGlobalImport.h; sourceTree = "<group>"; };
+		D281BCFF187594560097916F /* CodeGlobalInit.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeGlobalInit.cpp; path = EagleCompiler/ast/CodeGlobalInit.cpp; sourceTree = "<group>"; };
+		D281BD00187594560097916F /* CodeGlobalInit.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeGlobalInit.h; path = EagleCompiler/ast/CodeGlobalInit.h; sourceTree = "<group>"; };
+		D281BD01187594560097916F /* CodeObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeObject.cpp; path = EagleCompiler/ast/CodeObject.cpp; sourceTree = "<group>"; };
+		D281BD02187594560097916F /* CodeObject.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeObject.h; path = EagleCompiler/ast/CodeObject.h; sourceTree = "<group>"; };
+		D281BD03187594560097916F /* CodeParameter.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeParameter.cpp; path = EagleCompiler/ast/CodeParameter.cpp; sourceTree = "<group>"; };
+		D281BD04187594560097916F /* CodeParameter.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeParameter.h; path = EagleCompiler/ast/CodeParameter.h; sourceTree = "<group>"; };
+		D281BD05187594560097916F /* CodeProgram.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeProgram.cpp; path = EagleCompiler/ast/CodeProgram.cpp; sourceTree = "<group>"; };
+		D281BD06187594560097916F /* CodeProgram.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeProgram.h; path = EagleCompiler/ast/CodeProgram.h; sourceTree = "<group>"; };
+		D281BD13187594630097916F /* CodeDeclaration.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeDeclaration.cpp; path = EagleCompiler/ast/declaration/CodeDeclaration.cpp; sourceTree = "<group>"; };
+		D281BD14187594630097916F /* CodeDeclaration.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeDeclaration.h; path = EagleCompiler/ast/declaration/CodeDeclaration.h; sourceTree = "<group>"; };
+		D281BD15187594630097916F /* CodeFunctionDeclaration.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeFunctionDeclaration.cpp; path = EagleCompiler/ast/declaration/CodeFunctionDeclaration.cpp; sourceTree = "<group>"; };
+		D281BD16187594630097916F /* CodeFunctionDeclaration.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeFunctionDeclaration.h; path = EagleCompiler/ast/declaration/CodeFunctionDeclaration.h; sourceTree = "<group>"; };
+		D281BD17187594630097916F /* CodeProcedureDeclaration.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeProcedureDeclaration.cpp; path = EagleCompiler/ast/declaration/CodeProcedureDeclaration.cpp; sourceTree = "<group>"; };
+		D281BD18187594630097916F /* CodeProcedureDeclaration.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeProcedureDeclaration.h; path = EagleCompiler/ast/declaration/CodeProcedureDeclaration.h; sourceTree = "<group>"; };
+		D281BD19187594630097916F /* CodeStorageDeclaration.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeStorageDeclaration.cpp; path = EagleCompiler/ast/declaration/CodeStorageDeclaration.cpp; sourceTree = "<group>"; };
+		D281BD1A187594630097916F /* CodeStorageDeclaration.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeStorageDeclaration.h; path = EagleCompiler/ast/declaration/CodeStorageDeclaration.h; sourceTree = "<group>"; };
+		D281BD231875946E0097916F /* CodeExpression.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpression.cpp; path = EagleCompiler/ast/expression/CodeExpression.cpp; sourceTree = "<group>"; };
+		D281BD241875946E0097916F /* CodeExpression.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpression.h; path = EagleCompiler/ast/expression/CodeExpression.h; sourceTree = "<group>"; };
+		D281BD251875946E0097916F /* CodeExpressionAdd.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionAdd.cpp; path = EagleCompiler/ast/expression/CodeExpressionAdd.cpp; sourceTree = "<group>"; };
+		D281BD261875946E0097916F /* CodeExpressionAdd.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionAdd.h; path = EagleCompiler/ast/expression/CodeExpressionAdd.h; sourceTree = "<group>"; };
+		D281BD271875946E0097916F /* CodeExpressionBoolean.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionBoolean.cpp; path = EagleCompiler/ast/expression/CodeExpressionBoolean.cpp; sourceTree = "<group>"; };
+		D281BD281875946E0097916F /* CodeExpressionBoolean.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionBoolean.h; path = EagleCompiler/ast/expression/CodeExpressionBoolean.h; sourceTree = "<group>"; };
+		D281BD291875946E0097916F /* CodeExpressionExpression.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionExpression.cpp; path = EagleCompiler/ast/expression/CodeExpressionExpression.cpp; sourceTree = "<group>"; };
+		D281BD2A1875946E0097916F /* CodeExpressionExpression.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionExpression.h; path = EagleCompiler/ast/expression/CodeExpressionExpression.h; sourceTree = "<group>"; };
+		D281BD2B1875946E0097916F /* CodeExpressionFactor.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionFactor.cpp; path = EagleCompiler/ast/expression/CodeExpressionFactor.cpp; sourceTree = "<group>"; };
+		D281BD2C1875946E0097916F /* CodeExpressionFactor.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionFactor.h; path = EagleCompiler/ast/expression/CodeExpressionFactor.h; sourceTree = "<group>"; };
+		D281BD2D1875946E0097916F /* CodeExpressionFactorFunctionCall.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionFactorFunctionCall.cpp; path = EagleCompiler/ast/expression/CodeExpressionFactorFunctionCall.cpp; sourceTree = "<group>"; };
+		D281BD2E1875946E0097916F /* CodeExpressionFactorFunctionCall.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionFactorFunctionCall.h; path = EagleCompiler/ast/expression/CodeExpressionFactorFunctionCall.h; sourceTree = "<group>"; };
+		D281BD2F1875946E0097916F /* CodeExpressionFactorInititialize.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionFactorInititialize.cpp; path = EagleCompiler/ast/expression/CodeExpressionFactorInititialize.cpp; sourceTree = "<group>"; };
+		D281BD301875946E0097916F /* CodeExpressionFactorInititialize.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionFactorInititialize.h; path = EagleCompiler/ast/expression/CodeExpressionFactorInititialize.h; sourceTree = "<group>"; };
+		D281BD311875946E0097916F /* CodeExpressionFactorLiteral.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionFactorLiteral.cpp; path = EagleCompiler/ast/expression/CodeExpressionFactorLiteral.cpp; sourceTree = "<group>"; };
+		D281BD321875946E0097916F /* CodeExpressionFactorLiteral.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionFactorLiteral.h; path = EagleCompiler/ast/expression/CodeExpressionFactorLiteral.h; sourceTree = "<group>"; };
+		D281BD331875946E0097916F /* CodeExpressionFactorProcedureCall.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionFactorProcedureCall.cpp; path = EagleCompiler/ast/expression/CodeExpressionFactorProcedureCall.cpp; sourceTree = "<group>"; };
+		D281BD341875946E0097916F /* CodeExpressionFactorProcedureCall.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionFactorProcedureCall.h; path = EagleCompiler/ast/expression/CodeExpressionFactorProcedureCall.h; sourceTree = "<group>"; };
+		D281BD351875946E0097916F /* CodeExpressionFactorVariable.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionFactorVariable.cpp; path = EagleCompiler/ast/expression/CodeExpressionFactorVariable.cpp; sourceTree = "<group>"; };
+		D281BD361875946E0097916F /* CodeExpressionFactorVariable.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionFactorVariable.h; path = EagleCompiler/ast/expression/CodeExpressionFactorVariable.h; sourceTree = "<group>"; };
+		D281BD371875946E0097916F /* CodeExpressionMonadicOperator.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionMonadicOperator.cpp; path = EagleCompiler/ast/expression/CodeExpressionMonadicOperator.cpp; sourceTree = "<group>"; };
+		D281BD381875946E0097916F /* CodeExpressionMonadicOperator.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionMonadicOperator.h; path = EagleCompiler/ast/expression/CodeExpressionMonadicOperator.h; sourceTree = "<group>"; };
+		D281BD391875946E0097916F /* CodeExpressionMultiply.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionMultiply.cpp; path = EagleCompiler/ast/expression/CodeExpressionMultiply.cpp; sourceTree = "<group>"; };
+		D281BD3A1875946E0097916F /* CodeExpressionMultiply.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionMultiply.h; path = EagleCompiler/ast/expression/CodeExpressionMultiply.h; sourceTree = "<group>"; };
+		D281BD3B1875946E0097916F /* CodeExpressionRelation.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionRelation.cpp; path = EagleCompiler/ast/expression/CodeExpressionRelation.cpp; sourceTree = "<group>"; };
+		D281BD3C1875946E0097916F /* CodeExpressionRelation.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionRelation.h; path = EagleCompiler/ast/expression/CodeExpressionRelation.h; sourceTree = "<group>"; };
+		D281BD3D1875946E0097916F /* CodeExpressionStringConcatenation.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionStringConcatenation.cpp; path = EagleCompiler/ast/expression/CodeExpressionStringConcatenation.cpp; sourceTree = "<group>"; };
+		D281BD3E1875946E0097916F /* CodeExpressionStringConcatenation.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeExpressionStringConcatenation.h; path = EagleCompiler/ast/expression/CodeExpressionStringConcatenation.h; sourceTree = "<group>"; };
+		D281BD5B187594780097916F /* CodeFunction.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeFunction.cpp; path = EagleCompiler/ast/identifier/CodeFunction.cpp; sourceTree = "<group>"; };
+		D281BD5C187594780097916F /* CodeFunction.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeFunction.h; path = EagleCompiler/ast/identifier/CodeFunction.h; sourceTree = "<group>"; };
+		D281BD5D187594780097916F /* CodeIdentifier.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeIdentifier.cpp; path = EagleCompiler/ast/identifier/CodeIdentifier.cpp; sourceTree = "<group>"; };
+		D281BD5E187594780097916F /* CodeIdentifier.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeIdentifier.h; path = EagleCompiler/ast/identifier/CodeIdentifier.h; sourceTree = "<group>"; };
+		D281BD5F187594780097916F /* CodeProcedure.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeProcedure.cpp; path = EagleCompiler/ast/identifier/CodeProcedure.cpp; sourceTree = "<group>"; };
+		D281BD60187594780097916F /* CodeProcedure.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeProcedure.h; path = EagleCompiler/ast/identifier/CodeProcedure.h; sourceTree = "<group>"; };
+		D281BD61187594780097916F /* CodeVariable.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeVariable.cpp; path = EagleCompiler/ast/identifier/CodeVariable.cpp; sourceTree = "<group>"; };
+		D281BD62187594780097916F /* CodeVariable.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeVariable.h; path = EagleCompiler/ast/identifier/CodeVariable.h; sourceTree = "<group>"; };
+		D281BD6B187594800097916F /* CodeAssignmentStatement.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeAssignmentStatement.cpp; path = EagleCompiler/ast/statement/CodeAssignmentStatement.cpp; sourceTree = "<group>"; };
+		D281BD6C187594800097916F /* CodeAssignmentStatement.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeAssignmentStatement.h; path = EagleCompiler/ast/statement/CodeAssignmentStatement.h; sourceTree = "<group>"; };
+		D281BD6D187594800097916F /* CodeFunctionCallStatement.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeFunctionCallStatement.cpp; path = EagleCompiler/ast/statement/CodeFunctionCallStatement.cpp; sourceTree = "<group>"; };
+		D281BD6E187594800097916F /* CodeFunctionCallStatement.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeFunctionCallStatement.h; path = EagleCompiler/ast/statement/CodeFunctionCallStatement.h; sourceTree = "<group>"; };
+		D281BD6F187594800097916F /* CodeIfStatement.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeIfStatement.cpp; path = EagleCompiler/ast/statement/CodeIfStatement.cpp; sourceTree = "<group>"; };
+		D281BD70187594800097916F /* CodeIfStatement.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeIfStatement.h; path = EagleCompiler/ast/statement/CodeIfStatement.h; sourceTree = "<group>"; };
+		D281BD71187594800097916F /* CodeInputStatement.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeInputStatement.cpp; path = EagleCompiler/ast/statement/CodeInputStatement.cpp; sourceTree = "<group>"; };
+		D281BD72187594800097916F /* CodeInputStatement.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeInputStatement.h; path = EagleCompiler/ast/statement/CodeInputStatement.h; sourceTree = "<group>"; };
+		D281BD73187594800097916F /* CodeOutputStatment.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeOutputStatment.cpp; path = EagleCompiler/ast/statement/CodeOutputStatment.cpp; sourceTree = "<group>"; };
+		D281BD74187594800097916F /* CodeOutputStatment.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeOutputStatment.h; path = EagleCompiler/ast/statement/CodeOutputStatment.h; sourceTree = "<group>"; };
+		D281BD75187594800097916F /* CodeProcedureCallStatement.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeProcedureCallStatement.cpp; path = EagleCompiler/ast/statement/CodeProcedureCallStatement.cpp; sourceTree = "<group>"; };
+		D281BD76187594800097916F /* CodeProcedureCallStatement.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeProcedureCallStatement.h; path = EagleCompiler/ast/statement/CodeProcedureCallStatement.h; sourceTree = "<group>"; };
+		D281BD77187594800097916F /* CodeSkipStatement.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeSkipStatement.cpp; path = EagleCompiler/ast/statement/CodeSkipStatement.cpp; sourceTree = "<group>"; };
+		D281BD78187594800097916F /* CodeSkipStatement.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeSkipStatement.h; path = EagleCompiler/ast/statement/CodeSkipStatement.h; sourceTree = "<group>"; };
+		D281BD79187594800097916F /* CodeStatement.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeStatement.cpp; path = EagleCompiler/ast/statement/CodeStatement.cpp; sourceTree = "<group>"; };
+		D281BD7A187594800097916F /* CodeStatement.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeStatement.h; path = EagleCompiler/ast/statement/CodeStatement.h; sourceTree = "<group>"; };
+		D281BD7B187594800097916F /* CodeWhileStatement.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeWhileStatement.cpp; path = EagleCompiler/ast/statement/CodeWhileStatement.cpp; sourceTree = "<group>"; };
+		D281BD7C187594800097916F /* CodeWhileStatement.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeWhileStatement.h; path = EagleCompiler/ast/statement/CodeWhileStatement.h; sourceTree = "<group>"; };
+		D281BD8F187594890097916F /* CodeType.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeType.cpp; path = EagleCompiler/ast/type/CodeType.cpp; sourceTree = "<group>"; };
+		D281BD90187594890097916F /* CodeType.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeType.h; path = EagleCompiler/ast/type/CodeType.h; sourceTree = "<group>"; };
+		D281BD91187594890097916F /* CodeTypeBoolean.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeTypeBoolean.cpp; path = EagleCompiler/ast/type/CodeTypeBoolean.cpp; sourceTree = "<group>"; };
+		D281BD92187594890097916F /* CodeTypeBoolean.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeTypeBoolean.h; path = EagleCompiler/ast/type/CodeTypeBoolean.h; sourceTree = "<group>"; };
+		D281BD93187594890097916F /* CodeTypeInteger32.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeTypeInteger32.cpp; path = EagleCompiler/ast/type/CodeTypeInteger32.cpp; sourceTree = "<group>"; };
+		D281BD94187594890097916F /* CodeTypeInteger32.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeTypeInteger32.h; path = EagleCompiler/ast/type/CodeTypeInteger32.h; sourceTree = "<group>"; };
+		D281BD95187594890097916F /* CodeTypeString.cpp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeTypeString.cpp; path = EagleCompiler/ast/type/CodeTypeString.cpp; sourceTree = "<group>"; };
+		D281BD96187594890097916F /* CodeTypeString.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = CodeTypeString.h; path = EagleCompiler/ast/type/CodeTypeString.h; sourceTree = "<group>"; };
 		D28CFAE0185C5F4C00E62626 /* ParseTableReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParseTableReader.cpp; path = EagleCompiler/parser/ParseTableReader.cpp; sourceTree = "<group>"; };
 		D28CFAE1185C5F4C00E62626 /* ParseTableReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParseTableReader.h; path = EagleCompiler/parser/ParseTableReader.h; sourceTree = "<group>"; };
 		D290B70B1806D28C0030DC82 /* scanner */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scanner; sourceTree = "<group>"; };
@@ -97,6 +262,88 @@
 		D2BED5CF17F744AB005EAFEA = {
 			isa = PBXGroup;
 			children = (
+				D281BD8F187594890097916F /* CodeType.cpp */,
+				D281BD90187594890097916F /* CodeType.h */,
+				D281BD91187594890097916F /* CodeTypeBoolean.cpp */,
+				D281BD92187594890097916F /* CodeTypeBoolean.h */,
+				D281BD93187594890097916F /* CodeTypeInteger32.cpp */,
+				D281BD94187594890097916F /* CodeTypeInteger32.h */,
+				D281BD95187594890097916F /* CodeTypeString.cpp */,
+				D281BD96187594890097916F /* CodeTypeString.h */,
+				D281BD6B187594800097916F /* CodeAssignmentStatement.cpp */,
+				D281BD6C187594800097916F /* CodeAssignmentStatement.h */,
+				D281BD6D187594800097916F /* CodeFunctionCallStatement.cpp */,
+				D281BD6E187594800097916F /* CodeFunctionCallStatement.h */,
+				D281BD6F187594800097916F /* CodeIfStatement.cpp */,
+				D281BD70187594800097916F /* CodeIfStatement.h */,
+				D281BD71187594800097916F /* CodeInputStatement.cpp */,
+				D281BD72187594800097916F /* CodeInputStatement.h */,
+				D281BD73187594800097916F /* CodeOutputStatment.cpp */,
+				D281BD74187594800097916F /* CodeOutputStatment.h */,
+				D281BD75187594800097916F /* CodeProcedureCallStatement.cpp */,
+				D281BD76187594800097916F /* CodeProcedureCallStatement.h */,
+				D281BD77187594800097916F /* CodeSkipStatement.cpp */,
+				D281BD78187594800097916F /* CodeSkipStatement.h */,
+				D281BD79187594800097916F /* CodeStatement.cpp */,
+				D281BD7A187594800097916F /* CodeStatement.h */,
+				D281BD7B187594800097916F /* CodeWhileStatement.cpp */,
+				D281BD7C187594800097916F /* CodeWhileStatement.h */,
+				D281BD5B187594780097916F /* CodeFunction.cpp */,
+				D281BD5C187594780097916F /* CodeFunction.h */,
+				D281BD5D187594780097916F /* CodeIdentifier.cpp */,
+				D281BD5E187594780097916F /* CodeIdentifier.h */,
+				D281BD5F187594780097916F /* CodeProcedure.cpp */,
+				D281BD60187594780097916F /* CodeProcedure.h */,
+				D281BD61187594780097916F /* CodeVariable.cpp */,
+				D281BD62187594780097916F /* CodeVariable.h */,
+				D281BD231875946E0097916F /* CodeExpression.cpp */,
+				D281BD241875946E0097916F /* CodeExpression.h */,
+				D281BD251875946E0097916F /* CodeExpressionAdd.cpp */,
+				D281BD261875946E0097916F /* CodeExpressionAdd.h */,
+				D281BD271875946E0097916F /* CodeExpressionBoolean.cpp */,
+				D281BD281875946E0097916F /* CodeExpressionBoolean.h */,
+				D281BD291875946E0097916F /* CodeExpressionExpression.cpp */,
+				D281BD2A1875946E0097916F /* CodeExpressionExpression.h */,
+				D281BD2B1875946E0097916F /* CodeExpressionFactor.cpp */,
+				D281BD2C1875946E0097916F /* CodeExpressionFactor.h */,
+				D281BD2D1875946E0097916F /* CodeExpressionFactorFunctionCall.cpp */,
+				D281BD2E1875946E0097916F /* CodeExpressionFactorFunctionCall.h */,
+				D281BD2F1875946E0097916F /* CodeExpressionFactorInititialize.cpp */,
+				D281BD301875946E0097916F /* CodeExpressionFactorInititialize.h */,
+				D281BD311875946E0097916F /* CodeExpressionFactorLiteral.cpp */,
+				D281BD321875946E0097916F /* CodeExpressionFactorLiteral.h */,
+				D281BD331875946E0097916F /* CodeExpressionFactorProcedureCall.cpp */,
+				D281BD341875946E0097916F /* CodeExpressionFactorProcedureCall.h */,
+				D281BD351875946E0097916F /* CodeExpressionFactorVariable.cpp */,
+				D281BD361875946E0097916F /* CodeExpressionFactorVariable.h */,
+				D281BD371875946E0097916F /* CodeExpressionMonadicOperator.cpp */,
+				D281BD381875946E0097916F /* CodeExpressionMonadicOperator.h */,
+				D281BD391875946E0097916F /* CodeExpressionMultiply.cpp */,
+				D281BD3A1875946E0097916F /* CodeExpressionMultiply.h */,
+				D281BD3B1875946E0097916F /* CodeExpressionRelation.cpp */,
+				D281BD3C1875946E0097916F /* CodeExpressionRelation.h */,
+				D281BD3D1875946E0097916F /* CodeExpressionStringConcatenation.cpp */,
+				D281BD3E1875946E0097916F /* CodeExpressionStringConcatenation.h */,
+				D281BD13187594630097916F /* CodeDeclaration.cpp */,
+				D281BD14187594630097916F /* CodeDeclaration.h */,
+				D281BD15187594630097916F /* CodeFunctionDeclaration.cpp */,
+				D281BD16187594630097916F /* CodeFunctionDeclaration.h */,
+				D281BD17187594630097916F /* CodeProcedureDeclaration.cpp */,
+				D281BD18187594630097916F /* CodeProcedureDeclaration.h */,
+				D281BD19187594630097916F /* CodeStorageDeclaration.cpp */,
+				D281BD1A187594630097916F /* CodeStorageDeclaration.h */,
+				D281BCFB187594560097916F /* AST.h */,
+				D281BCFC187594560097916F /* CMakeLists.txt */,
+				D281BCFD187594560097916F /* CodeGlobalImport.cpp */,
+				D281BCFE187594560097916F /* CodeGlobalImport.h */,
+				D281BCFF187594560097916F /* CodeGlobalInit.cpp */,
+				D281BD00187594560097916F /* CodeGlobalInit.h */,
+				D281BD01187594560097916F /* CodeObject.cpp */,
+				D281BD02187594560097916F /* CodeObject.h */,
+				D281BD03187594560097916F /* CodeParameter.cpp */,
+				D281BD04187594560097916F /* CodeParameter.h */,
+				D281BD05187594560097916F /* CodeProgram.cpp */,
+				D281BD06187594560097916F /* CodeProgram.h */,
 				D28CFAE0185C5F4C00E62626 /* ParseTableReader.cpp */,
 				D28CFAE1185C5F4C00E62626 /* ParseTableReader.h */,
 				D2F6CD76185999C400CDA4DB /* NumericVariable.cpp */,
@@ -135,6 +382,7 @@
 			children = (
 				D2BED5DB17F744AB005EAFEA /* main.cpp */,
 				D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */,
+				D281BCF918758ABC0097916F /* ast */,
 				D290B70B1806D28C0030DC82 /* scanner */,
 				D221B48617FDB1AF00E76550 /* parser */,
 				D221B47317F745D900E76550 /* Token.cpp */,
@@ -234,6 +482,76 @@
 				D29DBE2218071E4A00C9A5FE /* ScannerEnums.cpp in Sources */,
 				D29DBE201806F92500C9A5FE /* Singleton.h in Sources */,
 				D29DBE1E1806F4D500C9A5FE /* ScannerEnums.h in Sources */,
+				D281BD1B187594630097916F /* CodeDeclaration.cpp in Sources */,
+				D281BD1C187594630097916F /* CodeDeclaration.h in Sources */,
+				D281BD1D187594630097916F /* CodeFunctionDeclaration.cpp in Sources */,
+				D281BD1E187594630097916F /* CodeFunctionDeclaration.h in Sources */,
+				D281BD3F1875946E0097916F /* CodeExpression.cpp in Sources */,
+				D281BD401875946E0097916F /* CodeExpression.h in Sources */,
+				D281BD63187594780097916F /* CodeFunction.cpp in Sources */,
+				D281BD64187594780097916F /* CodeFunction.h in Sources */,
+				D281BD65187594780097916F /* CodeIdentifier.cpp in Sources */,
+				D281BD66187594780097916F /* CodeIdentifier.h in Sources */,
+				D281BD7D187594800097916F /* CodeAssignmentStatement.cpp in Sources */,
+				D281BD7E187594800097916F /* CodeAssignmentStatement.h in Sources */,
+				D281BD7F187594800097916F /* CodeFunctionCallStatement.cpp in Sources */,
+				D281BD97187594890097916F /* CodeType.cpp in Sources */,
+				D281BD98187594890097916F /* CodeType.h in Sources */,
+				D281BD99187594890097916F /* CodeTypeBoolean.cpp in Sources */,
+				D281BD9A187594890097916F /* CodeTypeBoolean.h in Sources */,
+				D281BD9B187594890097916F /* CodeTypeInteger32.cpp in Sources */,
+				D281BD9C187594890097916F /* CodeTypeInteger32.h in Sources */,
+				D281BD9D187594890097916F /* CodeTypeString.cpp in Sources */,
+				D281BD9E187594890097916F /* CodeTypeString.h in Sources */,
+				D281BD80187594800097916F /* CodeFunctionCallStatement.h in Sources */,
+				D281BD81187594800097916F /* CodeIfStatement.cpp in Sources */,
+				D281BD82187594800097916F /* CodeIfStatement.h in Sources */,
+				D281BD83187594800097916F /* CodeInputStatement.cpp in Sources */,
+				D281BD84187594800097916F /* CodeInputStatement.h in Sources */,
+				D281BD85187594800097916F /* CodeOutputStatment.cpp in Sources */,
+				D281BD86187594800097916F /* CodeOutputStatment.h in Sources */,
+				D281BD87187594800097916F /* CodeProcedureCallStatement.cpp in Sources */,
+				D281BD88187594800097916F /* CodeProcedureCallStatement.h in Sources */,
+				D281BD89187594800097916F /* CodeSkipStatement.cpp in Sources */,
+				D281BD8A187594800097916F /* CodeSkipStatement.h in Sources */,
+				D281BD8B187594800097916F /* CodeStatement.cpp in Sources */,
+				D281BD8C187594800097916F /* CodeStatement.h in Sources */,
+				D281BD8D187594800097916F /* CodeWhileStatement.cpp in Sources */,
+				D281BD8E187594800097916F /* CodeWhileStatement.h in Sources */,
+				D281BD67187594780097916F /* CodeProcedure.cpp in Sources */,
+				D281BD68187594780097916F /* CodeProcedure.h in Sources */,
+				D281BD69187594780097916F /* CodeVariable.cpp in Sources */,
+				D281BD6A187594780097916F /* CodeVariable.h in Sources */,
+				D281BD411875946E0097916F /* CodeExpressionAdd.cpp in Sources */,
+				D281BD421875946E0097916F /* CodeExpressionAdd.h in Sources */,
+				D281BD431875946E0097916F /* CodeExpressionBoolean.cpp in Sources */,
+				D281BD441875946E0097916F /* CodeExpressionBoolean.h in Sources */,
+				D281BD451875946E0097916F /* CodeExpressionExpression.cpp in Sources */,
+				D281BD461875946E0097916F /* CodeExpressionExpression.h in Sources */,
+				D281BD471875946E0097916F /* CodeExpressionFactor.cpp in Sources */,
+				D281BD481875946E0097916F /* CodeExpressionFactor.h in Sources */,
+				D281BD491875946E0097916F /* CodeExpressionFactorFunctionCall.cpp in Sources */,
+				D281BD4A1875946E0097916F /* CodeExpressionFactorFunctionCall.h in Sources */,
+				D281BD4B1875946E0097916F /* CodeExpressionFactorInititialize.cpp in Sources */,
+				D281BD4C1875946E0097916F /* CodeExpressionFactorInititialize.h in Sources */,
+				D281BD4D1875946E0097916F /* CodeExpressionFactorLiteral.cpp in Sources */,
+				D281BD4E1875946E0097916F /* CodeExpressionFactorLiteral.h in Sources */,
+				D281BD4F1875946E0097916F /* CodeExpressionFactorProcedureCall.cpp in Sources */,
+				D281BD501875946E0097916F /* CodeExpressionFactorProcedureCall.h in Sources */,
+				D281BD511875946E0097916F /* CodeExpressionFactorVariable.cpp in Sources */,
+				D281BD521875946E0097916F /* CodeExpressionFactorVariable.h in Sources */,
+				D281BD531875946E0097916F /* CodeExpressionMonadicOperator.cpp in Sources */,
+				D281BD541875946E0097916F /* CodeExpressionMonadicOperator.h in Sources */,
+				D281BD551875946E0097916F /* CodeExpressionMultiply.cpp in Sources */,
+				D281BD561875946E0097916F /* CodeExpressionMultiply.h in Sources */,
+				D281BD571875946E0097916F /* CodeExpressionRelation.cpp in Sources */,
+				D281BD581875946E0097916F /* CodeExpressionRelation.h in Sources */,
+				D281BD591875946E0097916F /* CodeExpressionStringConcatenation.cpp in Sources */,
+				D281BD5A1875946E0097916F /* CodeExpressionStringConcatenation.h in Sources */,
+				D281BD1F187594630097916F /* CodeProcedureDeclaration.cpp in Sources */,
+				D281BD20187594630097916F /* CodeProcedureDeclaration.h in Sources */,
+				D281BD21187594630097916F /* CodeStorageDeclaration.cpp in Sources */,
+				D281BD22187594630097916F /* CodeStorageDeclaration.h in Sources */,
 				D29DBE1B1806D9FA00C9A5FE /* ScannerContext.cpp in Sources */,
 				D29DBE1C1806D9FA00C9A5FE /* ScannerContext.h in Sources */,
 				D2D92BA21806D41B0099CBDB /* Scanner.cpp in Sources */,
@@ -242,6 +560,18 @@
 				D221B47517F745D900E76550 /* Token.cpp in Sources */,
 				D221B47C17F8252C00E76550 /* TokenList.cpp in Sources */,
 				D221B48517F8451900E76550 /* Util.cpp in Sources */,
+				D281BD07187594560097916F /* AST.h in Sources */,
+				D281BD08187594560097916F /* CMakeLists.txt in Sources */,
+				D281BD09187594560097916F /* CodeGlobalImport.cpp in Sources */,
+				D281BD0A187594560097916F /* CodeGlobalImport.h in Sources */,
+				D281BD0B187594560097916F /* CodeGlobalInit.cpp in Sources */,
+				D281BD0C187594560097916F /* CodeGlobalInit.h in Sources */,
+				D281BD0D187594560097916F /* CodeObject.cpp in Sources */,
+				D281BD0E187594560097916F /* CodeObject.h in Sources */,
+				D281BD0F187594560097916F /* CodeParameter.cpp in Sources */,
+				D281BD10187594560097916F /* CodeParameter.h in Sources */,
+				D281BD11187594560097916F /* CodeProgram.cpp in Sources */,
+				D281BD12187594560097916F /* CodeProgram.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +606,7 @@
 		D2BED5DF17F744AB005EAFEA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -304,8 +634,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = /Users/IsNull/Documents/Projects/EagleCompiler/Source;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -313,7 +645,7 @@
 		D2BED5E017F744AB005EAFEA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -336,7 +668,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = /Users/IsNull/Documents/Projects/EagleCompiler/Source;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = macosx;
 			};
 			name = Release;

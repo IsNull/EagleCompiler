@@ -133,10 +133,9 @@ TokenList* Scanner::scan(string source){
             
             break; // We are done now
         }
-        
     }
     
-    Token* t = new Token(TokenType::Sentinel);
+    Token* t = new Token(TokenType::Sentinel,"", _lineNumber);
     _tokens->add(t);
     
     return _tokens;
@@ -283,8 +282,10 @@ void Scanner::endToken(TokenType type, int start, int end){
         return;
     
     // Filter newlines if desired
-    if(_omitNewlines && type == TokenType::NewLine)
-        return;
+    if(type == TokenType::NewLine){
+        _lineNumber++;
+        if(_omitNewlines)return;
+    }
     
     // Extract the token string from the source data
     string tokenValue = range(start, end);
@@ -297,7 +298,7 @@ void Scanner::endToken(TokenType type, int start, int end){
             type = keyword;
     }
     
-    Token* t = new Token(type, tokenValue);
+    Token* t = new Token(type, tokenValue, _lineNumber);
     _tokens->add(t);
 }
 
