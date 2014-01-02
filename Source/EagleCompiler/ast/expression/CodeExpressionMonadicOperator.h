@@ -11,15 +11,16 @@
 
 #include <string>
 
-#include "CodeExpression.h"
 #include "CodeExpressionFactor.h"
 
 using namespace std;
 
 namespace AST {
+	class CodeExpressionFactor;
+	
 	enum class MONADICOPERATOR {
 		NOT,
-		ADDOPR,
+		NEGATIVE,
 	};
 	
 	class CodeExpressionMonadicOperator : public CodeExpressionFactor {
@@ -30,8 +31,11 @@ namespace AST {
 		CodeExpressionMonadicOperator(CodeExpressionFactor *factor, MONADICOPERATOR monadicOperator) :
 			_factor(factor), _monadicOperator(monadicOperator) { };
 		
-		CodeExpressionFactor *getFactor() { return _factor; };
-		MONADICOPERATOR getMonadicOperator() { return _monadicOperator; };
+		CodeExpressionFactor *getFactor() 
+			{ return _factor; };
+			
+		MONADICOPERATOR getMonadicOperator() 
+			{ return _monadicOperator; };
 		
 		string code();
 	};

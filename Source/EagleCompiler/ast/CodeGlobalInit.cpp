@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeGlobalInit::code() {
-	return "CodeGlobalInit";
+	return "init->" + _variable->code();
 }
 

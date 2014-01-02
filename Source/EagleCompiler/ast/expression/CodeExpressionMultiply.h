@@ -11,18 +11,30 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 
-#include "CodeExpression.h"
-#include "CodeExpressionFactor.h"
+#include "CodeExpressionAdd.h"
 
 using namespace std;
 
 namespace AST {
-	class CodeExpressionMultiply : public CodeExpression {
+	class CodeExpressionFactor;
+
+	enum class MULTIPLYOPERATOR {
+		TIMES,
+		DIV,
+		MOD,
+	};
+	
+	class CodeExpressionMultiply : public CodeExpressionAdd {
 	private:
-		vector<CodeExpressionFactor> factors;
+		vector<pair<MULTIPLYOPERATOR,CodeExpressionFactor*>> _factors;
 	public:
-		vector<CodeExpressionFactor>& getFactors() { return factors; };
+		void addFactor(CodeExpressionFactor *factor, MULTIPLYOPERATOR op) 
+			{ _factors.push_back(make_pair(op, factor)); }
+		
+		auto getFactors() -> decltype(_factors)
+			{ return _factors; };
 		
 		string code();
 	};

@@ -20,7 +20,6 @@ namespace AST {
 	private:
 		
 	public:
-
 	};
 }
 

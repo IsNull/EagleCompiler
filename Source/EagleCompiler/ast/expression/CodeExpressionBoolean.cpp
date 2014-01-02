@@ -7,12 +7,27 @@
 //
 
 #include <string.h>
+#include <map>
 
 #include "CodeExpressionBoolean.h"
+#include "CodeExpressionRelation.h"
 
 using namespace std;
 
+namespace AST {
+	map<BOOLEANOPERATOR, string> BooleanOperatorString = { 
+		{ BOOLEANOPERATOR::AND, "&&" }, 
+		{ BOOLEANOPERATOR::OR, "||" },
+		{ BOOLEANOPERATOR::CAND, "&?" }, 
+		{ BOOLEANOPERATOR::COR, "|?" },
+	};
+}
+
 string AST::CodeExpressionBoolean::code() {
-	return "CodeExpressionBoolean";
+	string ret; 
+	for(auto m : _relations) {
+		ret += BooleanOperatorString[m.first] + m.second->code();
+	}
+	return ret;
 }
 

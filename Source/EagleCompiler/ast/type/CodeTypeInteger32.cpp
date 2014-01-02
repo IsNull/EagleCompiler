@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeTypeInteger32::code() {
-	return "CodeTypeInteger32";
+	return "int32";
 }
 

@@ -12,7 +12,26 @@
 
 using namespace std;
 
+namespace AST {
+	map<FLOWMODE, string> FlowModeString = { 
+		{ FLOWMODE::EMPTY, "flowmode::empty" },  
+		{ FLOWMODE::IN, "flowmode::in" }, 
+		{ FLOWMODE::OUT, "flowmode::out" }, 
+		{ FLOWMODE::INOUT, "flowmode::inout" } 
+	};
+		map<MECHMODE, string> MechModeString = { 
+		{ MECHMODE::EMPTY, "mechmode::empty" },  
+		{ MECHMODE::COPY, "mechmode::copy" }, 
+		{ MECHMODE::REF, "mechmode::out" } 
+	};
+	map<CHANGEMODE, string> ChangeModeString = { 
+		{ CHANGEMODE::EMPTY, "changemode::empty" },  
+		{ CHANGEMODE::CONST, "changemode::const" }, 
+		{ CHANGEMODE::VAR, "changemode::var" } 
+	};
+}
+
 string AST::CodeVariable::code() {
-	return "CodeVariable";
+	return getName() + ":" + _type->code();
 }
 

@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeTypeString::code() {
-	return "CodeTypeString";
+	return "string";
 }
 

@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeProcedure::code() {
-	return "CodeProcedure";
+	return getName() + "()";
 }
 

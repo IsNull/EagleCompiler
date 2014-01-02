@@ -13,6 +13,10 @@
 using namespace std;
 
 string AST::CodeWhileStatement::code() {
-	return "CodeWhileStatement";
+	string statementBlock;
+	for(auto s : _loopStatements) {
+		statementBlock += "  " + s->code() + "\n";
+	}
+	return "while (" + _condition->code() + ") {\n" + statementBlock + "}";
 }
 

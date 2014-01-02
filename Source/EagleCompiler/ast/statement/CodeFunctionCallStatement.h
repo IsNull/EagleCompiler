@@ -21,12 +21,18 @@ namespace AST {
 	class CodeFunctionCallStatement : public CodeStatement {
 	private:
 		CodeFunction *_function;
-		vector<CodeExpression> _parameters;
+		vector<CodeExpression*> _parameters;
 	public:
 		CodeFunctionCallStatement(CodeFunction *function) : _function(function) { };
 		
-		CodeFunction *getFunction() { return _function; };
-		vector<CodeExpression>& getParameters() { return _parameters; };
+		void addParameterExpression(CodeExpression *parameter)
+			{ _parameters.push_back(parameter); };
+		
+		CodeFunction *getFunction()
+			{ return _function; };
+		
+		auto getParameters() -> decltype(_parameters) 
+			{ return _parameters; };
 		
 		string code();
 	};

@@ -13,6 +13,14 @@
 using namespace std;
 
 string AST::CodeIfStatement::code() {
-	return "CodeIfStatement";
+	string ifStatementBlock;
+	string elseStatementBlock;
+	for(auto s : _ifStatements) {
+		ifStatementBlock += "  " + s->code() + "\n";
+	}
+	for(auto s : _elseStatements) {
+		elseStatementBlock += "  " + s->code() + "\n";
+	}
+	return "if (" + _condition->code() + ") {\n" + ifStatementBlock + "} else {" + elseStatementBlock + "}";
 }
 

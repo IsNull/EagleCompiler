@@ -9,10 +9,15 @@
 #include <string.h>
 
 #include "CodeExpressionStringConcatenation.h"
+#include "CodeExpressionBoolean.h"
 
 using namespace std;
 
 string AST::CodeExpressionStringConcatenation::code() {
-	return "CodeExpressionStringConcatenation";
+	string ret; 
+	for(auto m : _booleanTerms) {
+		ret += "&" + m->code();
+	}
+	return ret;
 }
 

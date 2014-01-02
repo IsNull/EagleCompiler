@@ -7,12 +7,21 @@
 //
 
 #include <string.h>
+#include <map>
 
 #include "CodeExpressionMonadicOperator.h"
 
 using namespace std;
 
+namespace AST {
+	map<MONADICOPERATOR, string> MonadicOperatorString = { 
+		{ MONADICOPERATOR::NOT, "!" },  
+		{ MONADICOPERATOR::NEGATIVE, "-" }, 
+	};
+}
+
+
 string AST::CodeExpressionMonadicOperator::code() {
-	return "CodeExpressionMonadicOperator";
+	return MonadicOperatorString[_monadicOperator] + _factor->code();
 }
 

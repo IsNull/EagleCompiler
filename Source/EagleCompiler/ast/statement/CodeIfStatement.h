@@ -22,14 +22,19 @@ namespace AST {
 	class CodeIfStatement : public CodeStatement {
 	private:
 		CodeExpression *_condition;
-		vector<CodeStatement> _ifStatements;
-		vector<CodeStatement> _elseStatements;
+		vector<CodeStatement*> _ifStatements;
+		vector<CodeStatement*> _elseStatements;
 	public:
 		CodeIfStatement(CodeExpression *condition) : _condition(condition) { };
 		
-		CodeExpression *getConditionExpression() { return _condition; };
-		vector<CodeStatement>& getIfStatements() { return _ifStatements; };
-		vector<CodeStatement>& getElseStatements() { return _elseStatements; };
+		CodeExpression *getConditionExpression() 
+			{ return _condition; };
+			
+		auto getIfStatements() -> decltype(_ifStatements)
+			{ return _ifStatements; };
+			
+		auto getElseStatements() -> decltype(_elseStatements)
+			{ return _elseStatements; };
 
 		string code();
 	};

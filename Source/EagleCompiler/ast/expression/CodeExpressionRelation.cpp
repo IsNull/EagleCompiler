@@ -7,12 +7,25 @@
 //
 
 #include <string.h>
+#include <map>
 
 #include "CodeExpressionRelation.h"
+#include "CodeExpressionAdd.h"
 
 using namespace std;
 
+namespace AST {
+	map<RELATIONOPERATOR, string> RelationOperatorString = { 
+		{ RELATIONOPERATOR::EQ, "==" }, 
+		{ RELATIONOPERATOR::NE, "!=" },
+		{ RELATIONOPERATOR::GE, ">=" }, 
+		{ RELATIONOPERATOR::GT, ">" },
+		{ RELATIONOPERATOR::LE, "<=" }, 
+		{ RELATIONOPERATOR::LT, "<" },
+	};
+}
+
 string AST::CodeExpressionRelation::code() {
-	return "CodeExpressionRelation";
+	return _left->code() + RelationOperatorString[_op] + _right->code();
 }
 

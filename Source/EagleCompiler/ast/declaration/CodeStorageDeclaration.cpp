@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeStorageDeclaration::code() {
-	return "CodeStorageDeclaration";
+	return ChangeModeString[_changeMode] + " " + _variable->code();
 }
 

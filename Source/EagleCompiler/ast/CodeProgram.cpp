@@ -13,6 +13,23 @@
 using namespace std;
 
 string AST::CodeProgram::code() {
-	return "CodeProgram";
+	string ret = "progParams:\n";
+	
+	for (auto p : _progParams) {
+		ret += p->code() + "\n";
+	}
+	
+	ret += "\nglobalDecl:\n";
+	for (auto p : _globalDecl) {
+		ret += p->code() + "\n";
+	}
+	
+	ret += "\nprogStatements:\n";
+	for (auto p : _progStatements) {
+		ret += "  " + p->code() + "\n";
+	}
+	
+	ret += "\n";
+	return ret;
 }
 

@@ -10,6 +10,7 @@
 #define __EagleCompiler__CodeVariable__
 
 #include <string>
+#include <map>
 
 #include "CodeIdentifier.h"
 #include "../type/CodeType.h"
@@ -20,14 +21,27 @@ namespace AST {
 	
 	enum class FLOWMODE {
 		EMPTY,
-	};
-	enum class MECHMODE {
-		EMPTY,
-	};
-	enum class CHANGEMODE {
-		EMPTY,
+		IN,
+		OUT,
+		INOUT
 	};
 	
+	enum class MECHMODE {
+		EMPTY,
+		COPY,
+		REF
+	};
+
+	enum class CHANGEMODE {
+		EMPTY,
+		CONST,
+		VAR
+	};
+	
+	extern map<FLOWMODE, string> FlowModeString;
+	extern map<MECHMODE, string> MechModeString;
+	extern map<CHANGEMODE, string> ChangeModeString;
+
 	class CodeVariable : public CodeIdentifier {
 	private:
 		CodeType *_type;

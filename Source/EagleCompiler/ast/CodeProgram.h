@@ -22,15 +22,30 @@ using namespace std;
 namespace AST {
 	class CodeProgram : public CodeObject {
 	private:
-		vector<CodeParameter> progParams;
-		vector<CodeDeclaration> globalDecl;
-		vector<CodeStatement> progStatements;
+		vector<CodeParameter*> _progParams;
+		vector<CodeDeclaration*> _globalDecl;
+		vector<CodeStatement*> _progStatements;
 		
 	public:
+		void addProgParam(CodeParameter *progParam)
+			{ _progParams.push_back(progParam); }
+			
+		void addGlobalDecl(CodeDeclaration *globalDecl)
+			{ _globalDecl.push_back(globalDecl); }
+			
+		void addProgStatement(CodeStatement *progStatement)
+			{ _progStatements.push_back(progStatement); }
+			
+		auto getProgParams() -> decltype(_progParams)
+			{ return _progParams; };
+			
+		auto getGlobalDecl() -> decltype(_globalDecl)
+			{ return _globalDecl; };
+			
+		auto getProgStatements() -> decltype(_progStatements)
+			{ return _progStatements; };
+		
 		string code();
-		vector<CodeParameter>& getProgParams() { return progParams; };
-		vector<CodeDeclaration>& getGlobalDecl() { return globalDecl; };
-		vector<CodeStatement>& getProgStatements() { return progStatements; };
 	};
 }
 

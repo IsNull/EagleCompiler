@@ -12,17 +12,40 @@
 #include <string>
 #include <vector>
 
-#include "CodeExpression.h"
-#include "CodeExpressionAdd.h"
+#include "CodeExpressionBoolean.h"
 
 using namespace std;
 
 namespace AST {
-	class CodeExpressionRelation : public CodeExpression {
+	class CodeExpressionAdd;
+	
+	enum class RELATIONOPERATOR {
+		EQ,
+		NE,
+		GE,
+		GT,
+		LE,
+		LT
+	};
+	
+	class CodeExpressionRelation : public CodeExpressionBoolean {
 	private:
-		vector<CodeExpressionAdd> additions;
+		CodeExpressionAdd *_left;
+		RELATIONOPERATOR _op;
+		CodeExpressionAdd *_right;
 	public:
-		vector<CodeExpressionAdd>& getAddExpressions() { return additions; };
+		CodeExpressionRelation(){};
+		CodeExpressionRelation(CodeExpressionAdd *left, RELATIONOPERATOR op, CodeExpressionAdd *right) :
+			_left(left), _op(op), _right(right) { };
+		
+		CodeExpressionAdd * getLeftExpressions()
+			{ return _left; };
+			
+		CodeExpressionAdd * getRightExpressions()
+			{ return _right; };
+			
+		RELATIONOPERATOR getOperator()
+			{ return _op; };
 		
 		string code();
 	};
