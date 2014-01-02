@@ -37,6 +37,7 @@ datatype term
   | WHILE
   | IDENT
   | STRCONCATOPR
+  | THEN
 
 val string_of_term =
   fn LPAREN  => "LPAREN"
@@ -77,6 +78,7 @@ val string_of_term =
    | WHILE => "WHILE"
    | IDENT => "IDENT"
    | STRCONCATOPR => "STRCONCATOPR"
+   | THEN => "THEN"
 
 datatype nonterm
   = program
@@ -130,6 +132,7 @@ datatype nonterm
   | optExpr
   | repExpr
   | monadicOpr
+  | identFactor
 
 val string_of_nonterm =
   fn program => "program"
@@ -183,6 +186,7 @@ val string_of_nonterm =
    | optExpr => "optExpr"
    | repExpr => "repExpr"
    | monadicOpr => "monadicOpr"
+   | identFactor => "identFactor"
 
 val string_of_gramsym = (string_of_term, string_of_nonterm)
 
@@ -266,8 +270,8 @@ val productions =
 (cmd,
     [[T SKIP],
     [N expr, T BECOMES, N expr],
-    [T IF, T LPAREN, N expr, T RPAREN, N cpsCmd, T ELSE, N cpsCmd, T ENDIF],
-    [T WHILE, T LPAREN, N expr, T RPAREN, T DO , N cpsCmd, T ENDWHILE],
+    [T IF, N expr, T THEN, N cpsCmd, T ELSE, N cpsCmd, T ENDIF],
+    [T WHILE, N expr, T DO , N cpsCmd, T ENDWHILE],
     [T CALL, T IDENT, N exprList, N optGlobInitList],
     [T DEBUGIN, N expr],
     [T DEBUGOUT, N expr]]),
@@ -290,8 +294,7 @@ val productions =
     [[T STRCONCATOPR, N strTerm, N repConcOprExpr],
     []]),
 (strTerm,
-    [[N term1, N repBoolOprTerm1]
-    ]),
+    [[N term1, N repBoolOprTerm1]]),
 (repBoolOprTerm1,
     [[T BOOLOPR, N term1, N repBoolOprTerm1],
     []]),
@@ -312,9 +315,13 @@ val productions =
     []]),
 (factor,
     [[T LITERAL],
-    [T IDENT],
+    [T IDENT, N identFactor],
     [N monadicOpr, N factor],
     [T LPAREN, N expr, T RPAREN]]),
+(identFactor,
+	[[T INIT],
+	[N exprList],
+	[]]),
 (exprList,
     [[T LPAREN, N optExpr, T RPAREN]]),
 (optExpr,

@@ -180,9 +180,9 @@
   terminal LITERAL
     <expr> BECOMES <expr>
   terminal IF
-    IF LPAREN <expr> RPAREN <cpsCmd> ELSE <cpsCmd> ENDIF
+    IF <expr> THEN <cpsCmd> ELSE <cpsCmd> ENDIF
   terminal WHILE
-    WHILE LPAREN <expr> RPAREN DO <cpsCmd> ENDWHILE
+    WHILE <expr> DO <cpsCmd> ENDWHILE
   terminal CALL
     CALL IDENT <exprList> <optGlobInitList>
   terminal DEBUGIN
@@ -282,6 +282,10 @@
     
   terminal RPAREN
     
+  terminal DO
+    
+  terminal THEN
+    
   terminal ENDWHILE
     
   terminal ENDIF
@@ -315,6 +319,10 @@
   terminal COMMA
     
   terminal RPAREN
+    
+  terminal DO
+    
+  terminal THEN
     
   terminal ENDWHILE
     
@@ -351,6 +359,10 @@
   terminal COMMA
     
   terminal RPAREN
+    
+  terminal DO
+    
+  terminal THEN
     
   terminal ENDWHILE
     
@@ -389,6 +401,10 @@
   terminal COMMA
     
   terminal RPAREN
+    
+  terminal DO
+    
+  terminal THEN
     
   terminal ENDWHILE
     
@@ -430,6 +446,10 @@
     
   terminal RPAREN
     
+  terminal DO
+    
+  terminal THEN
+    
   terminal ENDWHILE
     
   terminal ENDIF
@@ -458,13 +478,52 @@
   terminal LITERAL
     LITERAL
   terminal IDENT
-    IDENT
+    IDENT <identFactor>
   terminal ADDOPR
     <monadicOpr> <factor>
   terminal NOT
     <monadicOpr> <factor>
   terminal LPAREN
     LPAREN <expr> RPAREN
+<identFactor>
+  terminal INIT
+    INIT
+  terminal LPAREN
+    <exprList>
+  terminal COMMA
+    
+  terminal RPAREN
+    
+  terminal DO
+    
+  terminal THEN
+    
+  terminal ENDWHILE
+    
+  terminal ENDIF
+    
+  terminal ELSE
+    
+  terminal ENDPROC
+    
+  terminal ENDFUN
+    
+  terminal ENDPROGRAM
+    
+  terminal SEMICOLON
+    
+  terminal BECOMES
+    
+  terminal STRCONCATOPR
+    
+  terminal BOOLOPR
+    
+  terminal RELOPR
+    
+  terminal ADDOPR
+    
+  terminal MULTOPR
+    
 <exprList>
   terminal LPAREN
     LPAREN <optExpr> RPAREN
