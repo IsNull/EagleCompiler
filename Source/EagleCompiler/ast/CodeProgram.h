@@ -27,7 +27,7 @@ namespace AST {
 		vector<CodeStatement> progStatements;
 		
 	public:
-		string code();
+		string code() { return "coooode"; }
 		vector<CodeParameter>& getProgParams() { return progParams; };
 		vector<CodeDeclaration>& getGlobalDecl() { return globalDecl; };
 		vector<CodeStatement>& getProgStatements() { return progStatements; };
