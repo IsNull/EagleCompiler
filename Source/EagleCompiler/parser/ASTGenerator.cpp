@@ -206,6 +206,7 @@ CodeParameter* ASTGenerator::genCodeParameter(SyntaxTree* paramNode){
         SyntaxTree* identNode = findChildTerminal(typeIdentNode, TokenType::Identifier);
         if(identNode != NULL){
             paramName = identNode->getToken()->getValue();
+            cout << "param: " << paramName << "\n";
         }else
             throw new GrammarException("ASTGenerator: CodeParameter Missing Identifier!");
         
@@ -247,7 +248,10 @@ CodeType* ASTGenerator::genCodeType(SyntaxTree* atomTypeNode){
             break;
             
         default:
-            throw new GrammarException("ASTGenerator: Unknown Code-Type!");
+            ostringstream errStr;
+            errStr << "ASTGenerator: Unknown Code-Type: " << *atomTypeNode->getToken() << " node was " << *atomTypeNode;
+
+            throw new GrammarException(errStr.str());
             break;
     }
     return codeType;
