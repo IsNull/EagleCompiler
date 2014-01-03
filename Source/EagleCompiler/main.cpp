@@ -41,6 +41,8 @@ void scan() {
     try{
         SyntaxTree* syntaxtree = p->parse();
         
+        
+        cout << "\n\nSyntaxTree created:\n" << *syntaxtree;
         // TODO create AST from ST
         
     }catch(GrammarException* ex){

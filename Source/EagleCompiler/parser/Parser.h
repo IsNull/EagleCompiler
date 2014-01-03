@@ -111,7 +111,7 @@ class SyntaxTree
 {
 private:
     const IGrammarSymbol* _grammarSymbol;
-    list<SyntaxTree*> _children;
+    vector<SyntaxTree*> _children;
     
     
 public:
@@ -120,7 +120,7 @@ public:
     {
     }
     
-    list<SyntaxTree*> getChildren() { return _children; }
+    vector<SyntaxTree*> getChildren() { return _children; }
     bool hasChildren() const { return _children.size() != 0; }
     void add(SyntaxTree* node){ _children.push_back(node); }
     
@@ -130,6 +130,26 @@ public:
     
     NonTerminal* getNonTerminal() const { return (NonTerminal*)_grammarSymbol; }
     Terminal* getTerminal() const { return (Terminal*)_grammarSymbol; }
+    
+    
+    std::ostream& prettyPrint(std::ostream& stream, int level) const {
+
+        for (int i=0; level > i; i++) { stream << "\t"; }
+        
+        stream << (!this->isTerminal() ? "[" : "") << *(this->_grammarSymbol) << (!this->isTerminal() ? "]" : "") << "\n";
+        
+        int sublevel = level + 1;
+        for (int i=0; this->_children.size() > i; i++) {
+            SyntaxTree* child = this->_children[i];
+            child->prettyPrint(stream, sublevel);
+        }
+        
+        return stream;
+    };
+    
+    friend std::ostream& operator<< (std::ostream& stream, const SyntaxTree& node) {
+        return node.prettyPrint(stream, 0);
+    }
 };
 
 
