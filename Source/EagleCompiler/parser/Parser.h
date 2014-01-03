@@ -143,7 +143,9 @@ public:
 
         for (int i=0; level > i; i++) { stream << "\t"; }
         
-        stream << (!this->isTerminal() ? "[" : "") << *(this->_grammarSymbol) << (!this->isTerminal() ? "]" : "") << "\n";
+        stream << (!this->isTerminal() ? "[" : "") << *(this->_grammarSymbol) << (!this->isTerminal() ? "]" : "");
+        if(this->isTerminal()) stream << " " << *this->getToken();
+        stream << "\n";
         
         int sublevel = level + 1;
         for (int i=0; this->_children.size() > i; i++) {
