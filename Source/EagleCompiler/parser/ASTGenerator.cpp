@@ -279,6 +279,23 @@ vector<CodeParameter*> ASTGenerator::genCodeParameters(SyntaxTree* node){
 };
 
 
+vector<CodeExpression*> ASTGenerator::genCodeExpressionList(SyntaxTree* node){
+    vector<CodeExpression*> expressions;
+
+    vector<SyntaxTree*> exprNodes = findAllNonTerminals(node, "EXPR");
+    vector<SyntaxTree*> repNodes = findAllNonTerminals(node, "REPEXPR");
+    // concat the two lists
+    exprNodes.insert( exprNodes.end(), repNodes.begin(), repNodes.end() );
+    
+    for (int i=0; exprNodes.size() > i; i++) {
+        CodeExpression* expr = genExpresseion(exprNodes[i]);
+        expressions.push_back(expr);
+    }
+    
+    return expressions;
+};
+
+
 CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
     CodeStatement* statement = NULL;
     vector<SyntaxTree*> cmdChilds = cmdNode->getChildren();
@@ -354,8 +371,30 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
                 break;
             }
             case TokenType::Keyword_Call:
-            {
+            { //  CALL IDENT <exprList> <optGlobInitList>
                 
+                CodeProcedure *procedure = NULL;
+                
+                SyntaxTree* identNode = cmdChilds[1];
+                if(identNode->isTerminal() && identNode->getToken()->getType() == TokenType::Identifier){
+                    string procName = identNode->getToken()->getValue();
+                    procedure = new CodeProcedure(procName);
+                }else{
+                    throw new GrammarException("ASTGenerator Expected Identifier but got...");
+                }
+                
+                CodeProcedureCallStatement* procCall = new CodeProcedureCallStatement(procedure);
+                
+                // ExpressionList: expr, expr, expr....
+                
+                SyntaxTree* exprListNode = cmdChilds[2];
+                SyntaxTree* optExprNode = findChildNonTerminal(exprListNode, "OPTEXPR");
+                
+                vector<CodeExpression*> expressions = genCodeExpressionList(optExprNode);
+                
+                for (int i=0; expressions.size()>i; i++) {
+                    procCall->addParameterExpression(expressions[i]);
+                }
             }
                 break;
                 
@@ -390,13 +429,17 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
                 
             case TokenType::Command_DebugIn:
             {
-                
+                SyntaxTree* lValueNode = cmdChilds[1];
+                CodeExpression* lvalue = genExpresseion(lValueNode);
+                statement = new CodeInputStatement(lvalue);
             }
                 break;
                 
             case TokenType::Command_DebugOut:
             {
-                
+                SyntaxTree* exprNode = cmdChilds[1];
+                CodeExpression* expr = genExpresseion(exprNode);
+                statement = new CodeOutputStatment(expr);
             }
                 break;
                 

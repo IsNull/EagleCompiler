@@ -28,7 +28,7 @@ private:
     CodeParameter* genCodeParameter(SyntaxTree* node);
     CodeExpression* genExpresseion(SyntaxTree* exprNode);
 
-    
+    vector<CodeExpression*> genCodeExpressionList(SyntaxTree* node);
     vector<CodeParameter*> genCodeParameters(SyntaxTree* node);
     vector<CodeStatement*> genCodeStatements(SyntaxTree* node);
     vector<CodeDeclaration*> genCodeDeclarations(SyntaxTree* node);
