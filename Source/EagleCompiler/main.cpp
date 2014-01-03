@@ -78,7 +78,7 @@ void testSam() {
 //		call divide(m, n, q init, r init)
 //	endprogram
 	using namespace AST;
-	CodeTypeInteger32 int32;
+	CodeTypeInteger32* int32 = CodeTypeInteger32::getInstance();
 	//	program
 	CodeProgram p;
 	CodeProcedure proc("divide");
@@ -87,17 +87,17 @@ void testSam() {
 // 		proc divide(in copy const m:int32, in copy const n:int32,
 //			out ref var q:int32, out ref var r:int32)
 		CodeProcedureDeclaration *procdef = new CodeProcedureDeclaration(&proc);
-		CodeVariable *m = new CodeVariable("m", &int32);
-		CodeVariable *n = new CodeVariable("n", &int32);
-		CodeVariable *q = new CodeVariable("q", &int32);
-		CodeVariable *r = new CodeVariable("r", &int32);
+		CodeVariable *m = new CodeVariable("m", int32);
+		CodeVariable *n = new CodeVariable("n", int32);
+		CodeVariable *q = new CodeVariable("q", int32);
+		CodeVariable *r = new CodeVariable("r", int32);
 		procdef->addParam(new CodeParameter(FLOWMODE::IN, MECHMODE::COPY, CHANGEMODE::CONST, m) );
 		procdef->addParam(new CodeParameter(FLOWMODE::IN, MECHMODE::COPY, CHANGEMODE::CONST, n) );
 		procdef->addParam(new CodeParameter(FLOWMODE::OUT, MECHMODE::REF, CHANGEMODE::VAR, q) );
 		procdef->addParam(new CodeParameter(FLOWMODE::OUT, MECHMODE::REF, CHANGEMODE::VAR, r) );
 		
 //		q init := 0;
-		procdef->addStatement(new CodeAssignmentStatement(new CodeExpressionFactorInitialize(q), new CodeExpressionFactorLiteral(&int32, "0")));
+		procdef->addStatement(new CodeAssignmentStatement(new CodeExpressionFactorInitialize(q), new CodeExpressionFactorLiteral(int32, "0")));
 		
 //		r init := m;
 		procdef->addStatement(new CodeAssignmentStatement(new CodeExpressionFactorInitialize(r), new CodeExpressionFactorVariable(m)));
@@ -108,7 +108,7 @@ void testSam() {
 //		q := q + 1;
 		CodeExpressionAdd *add1 = new CodeExpressionAdd();
 		add1->addExpression(ADDOPERATOR::PLUS, new CodeExpressionFactorVariable(q));
-		add1->addExpression(ADDOPERATOR::PLUS, new CodeExpressionFactorLiteral(&int32, "1"));
+		add1->addExpression(ADDOPERATOR::PLUS, new CodeExpressionFactorLiteral(int32, "1"));
 		loop->addLoopStatement(new CodeAssignmentStatement(new CodeExpressionFactorVariable(q), add1));
 		
 //		r := r - n
@@ -124,10 +124,10 @@ void testSam() {
 	{
 //		intDiv(in const m:int32, in const n:int32, out const q:int32, out const
 //			r:int32) global
-		CodeVariable *m = new CodeVariable("m", &int32);
-		CodeVariable *n = new CodeVariable("n", &int32);
-		CodeVariable *q = new CodeVariable("q", &int32);
-		CodeVariable *r = new CodeVariable("r", &int32);
+		CodeVariable *m = new CodeVariable("m", int32);
+		CodeVariable *n = new CodeVariable("n", int32);
+		CodeVariable *q = new CodeVariable("q", int32);
+		CodeVariable *r = new CodeVariable("r", int32);
 		p.addProgParam(new CodeParameter(FLOWMODE::IN, MECHMODE::EMPTY, CHANGEMODE::CONST, m) );
 		p.addProgParam(new CodeParameter(FLOWMODE::IN, MECHMODE::EMPTY, CHANGEMODE::CONST, n) );
 		p.addProgParam(new CodeParameter(FLOWMODE::OUT, MECHMODE::EMPTY, CHANGEMODE::CONST, q) );
