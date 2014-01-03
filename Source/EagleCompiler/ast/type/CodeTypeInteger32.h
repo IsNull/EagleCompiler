@@ -19,8 +19,6 @@ namespace AST {
 	class CodeTypeInteger32 : public CodeType {
     private:
         static CodeTypeInteger32* _instance;
-        CodeTypeInteger32();
-        
 	public:
 		string code();
         static CodeTypeInteger32* getInstance();

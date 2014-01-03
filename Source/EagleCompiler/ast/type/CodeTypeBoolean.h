@@ -19,7 +19,6 @@ namespace AST {
 	class CodeTypeBoolean : public CodeType {
 	private:
         static CodeTypeBoolean* _instance;
-        CodeTypeBoolean();
 	public:
 		string code();
         static CodeTypeBoolean* getInstance();

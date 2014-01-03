@@ -234,7 +234,7 @@ CodeType* ASTGenerator::genCodeType(SyntaxTree* atomTypeNode){
     
     TokenType type = atomTypeNode->getToken()->getType();
     switch (type) {
-            /*
+            
         case TokenType::Type_Int:
             codeType = CodeTypeInteger32::getInstance();
             break;
@@ -245,7 +245,7 @@ CodeType* ASTGenerator::genCodeType(SyntaxTree* atomTypeNode){
         case TokenType::Type_String:
             codeType = CodeTypeString::getInstance();
             break;
-            */
+            
         default:
             throw new GrammarException("ASTGenerator: Unknown Code-Type!");
             break;
