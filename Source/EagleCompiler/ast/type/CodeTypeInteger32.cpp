@@ -11,8 +11,18 @@
 #include "CodeTypeInteger32.h"
 
 using namespace std;
+using namespace AST;
 
-string AST::CodeTypeInteger32::code() {
+CodeTypeInteger32 *::CodeTypeInteger32::_instance = 0;
+
+string CodeTypeInteger32::code() {
 	return "int32";
-}
+};
+
+CodeTypeInteger32* CodeTypeInteger32::getInstance()
+{
+    if(_instance == NULL)
+        _instance = new CodeTypeInteger32();
+        return _instance;
+};
 

@@ -18,9 +18,11 @@ using namespace std;
 namespace AST {
 	class CodeTypeString : public CodeType {
 	private:
-		
+        static CodeTypeString* _instance;
+        CodeTypeString();
 	public:
 		string code();
+        static CodeTypeString* getInstance();
 	};
 }
 

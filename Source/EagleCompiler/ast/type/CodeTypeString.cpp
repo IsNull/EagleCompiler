@@ -11,8 +11,18 @@
 #include "CodeTypeString.h"
 
 using namespace std;
+using namespace AST;
 
-string AST::CodeTypeString::code() {
+CodeTypeString *CodeTypeString::_instance = 0;
+
+string CodeTypeString::code() {
 	return "string";
 }
 
+
+CodeTypeString* CodeTypeString::getInstance(){
+    if(_instance == NULL){
+        _instance = new CodeTypeString();
+    }
+    return _instance;
+}

@@ -11,8 +11,17 @@
 #include "CodeTypeBoolean.h"
 
 using namespace std;
+using namespace AST;
 
-string AST::CodeTypeBoolean::code() {
+CodeTypeBoolean *CodeTypeBoolean::_instance = 0;
+
+string CodeTypeBoolean::code() {
 	return "boolean";
 }
 
+CodeTypeBoolean* CodeTypeBoolean::getInstance()
+{
+    if(_instance == NULL)
+        _instance = new CodeTypeBoolean();
+    return _instance;
+};
