@@ -146,7 +146,7 @@ void Parser::consume(const Terminal* expectedTerminal){
     }else{
         // Grammar Error!
         ostringstream errStr;
-        errStr << "ERROR: Unexpected Token: '" << *_current << "' in Line " << _current->getLineNumber() << " Expected Terminal: "  << *expectedTerminal << "\n";
+        errStr << "ERROR: Unexpected Token: '" << *_current << "' Expected Terminal: "  << *expectedTerminal << "\n";
         throw new GrammarException(errStr.str());
     }
 };

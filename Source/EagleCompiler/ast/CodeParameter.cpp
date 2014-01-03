@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeParameter::code() {
-	return "CodeParameter";
+	return "[" + FlowModeString[_flowmode] + "|" + MechModeString[_mechmode] + "|" + ChangeModeString[_changemode] + "#" + _variable->code() + "]";
 }
 

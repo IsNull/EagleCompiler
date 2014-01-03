@@ -11,18 +11,32 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 
-#include "CodeExpression.h"
-#include "CodeExpressionRelation.h"
+#include "CodeExpressionStringConcatenation.h"
 
 using namespace std;
 
 namespace AST {
-	class CodeExpressionBoolean : public CodeExpression {
+	class CodeExpressionRelation;
+	
+	enum class BOOLEANOPERATOR {
+		AND,
+		OR,
+		CAND,
+		COR
+	};
+	
+	class CodeExpressionBoolean : public CodeExpressionStringConcatenation {
 	private:
-		vector<CodeExpressionRelation> relations;
+		vector<pair<BOOLEANOPERATOR,CodeExpressionRelation*>> _relations;
 	public:
-		vector<CodeExpressionRelation>& getRelationExpressions() { return relations; };
+		//On the first element, op will be ignored
+		void addExpression(BOOLEANOPERATOR op, CodeExpressionRelation *expression) 
+			{ _relations.push_back(make_pair(op, expression)); }
+		
+		auto getRelationExpressions() -> decltype(_relations)
+			{ return _relations; };
 		
 		string code();
 	};

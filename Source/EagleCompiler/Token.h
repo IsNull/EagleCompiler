@@ -161,24 +161,22 @@ const TokenGroupMap TokenGroups {
 
 
 const map<TokenType, const string> TokenNames {
-    
-        // Specail Tokens
         {None, "None"},
         {TokenType::Sentinel, "Sentinel"},
+    
+        {TokenType::Identifier, "IDENT"},
         {TokenType::WhiteSpace, "Whitespace"},
         {TokenType::NewLine, "NewLine"},
+    
         {TokenType::LiteralNumber, "LiteralNumber"},
         {TokenType::LiteralString, "LiteralString"},
+    
+        {TokenType::StatementEnd, "StatementEnd"},
     
         // Comments
         {TokenType::Comment_ML_Start,"Comment_ML_Start"},
         {TokenType::Comment_ML_End, "Comment_ML_End"},
         {TokenType::Comment_Line, "Comment_Line"},
-    
-        // IML TOKENS
-    
-        {TokenType::Identifier, "IDENT"},
-        {TokenType::StatementEnd, "SEMICOLON"},
     
         // Brackets
         {TokenType::Bracked_Round_Open,"LPAREN"},       // (
@@ -337,18 +335,19 @@ class Token
 private:
     TokenType _type;
     string _value;
-    int _sourceline;
     
     Token();
+    
+    void Init(TokenType type, string value){
+        _type = type;
+        _value = value;
+    }
     
 public:
     
     // Constructors
-    Token(TokenType type, string value="", int sourceLine=-1) {
-        _type = type;
-        _value = value;
-        _sourceline = sourceLine;
-    };
+    Token(TokenType type) { Init(type, ""); };
+    Token(TokenType type, string value) { Init(type, value); };
     
     /**
      * Gets the Type of this token
@@ -360,7 +359,7 @@ public:
      */
     string getValue() const { return _value; }
     
-    int getLineNumber() const { return _sourceline; }
+    
     
     friend std::ostream& operator<< (std::ostream& stream, const Token& token) {
         if(token._value.size() == 0)

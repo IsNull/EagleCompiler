@@ -11,7 +11,6 @@
 
 #include <string>
 
-#include "CodeExpression.h"
 #include "CodeExpressionFactor.h"
 #include "../identifier/CodeVariable.h"
 
@@ -20,12 +19,14 @@ using namespace std;
 namespace AST {
 	class CodeExpressionFactorLiteral : public CodeExpressionFactor {
 	private:
-		CodeVariable *_value;
+		CodeType *_type;
+		string _value;
 	public:
-		CodeExpressionFactorLiteral(CodeVariable *value) : _value(value) { };
+		CodeExpressionFactorLiteral(CodeType *type, string value) : _type(type), _value(value) { };
 		
-		CodeVariable *getVariable() { return _value; };
-		
+		CodeType *getType() { return _type; };
+		string getValue() { return _value; };
+
 		string code();
 	};
 }

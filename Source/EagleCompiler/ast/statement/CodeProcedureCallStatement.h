@@ -21,13 +21,19 @@ namespace AST {
 	class CodeProcedureCallStatement : public CodeStatement {
 	private:
 		CodeProcedure *_procedure;
-		vector<CodeExpression> _parameters;
+		vector<CodeExpression *> _parameters;
 
 	public:
 		CodeProcedureCallStatement(CodeProcedure *procedure) : _procedure(procedure) { };
 		
-		CodeProcedure *getProcedure() { return _procedure; };
-		vector<CodeExpression>& getParameters() { return _parameters; };
+		void addParameterExpression(CodeExpression *parameter)
+			{ _parameters.push_back(parameter); };
+		
+		CodeProcedure *getProcedure()
+			{ return _procedure; };
+			
+		auto getParameters() -> decltype(_parameters)
+			{ return _parameters; };
 
 		string code();
 	};

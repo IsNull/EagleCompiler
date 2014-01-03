@@ -11,16 +11,15 @@
 
 #include <string>
 
-#include "CodeExpression.h"
+#include "CodeExpressionMultiply.h"
 
 using namespace std;
 
 namespace AST {
-	class CodeExpressionFactor : public CodeExpression {
+	class CodeExpressionFactor : public CodeExpressionMultiply {
 	private:
 		
 	public:
-		string code();
 	};
 }
 

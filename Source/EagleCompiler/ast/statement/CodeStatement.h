@@ -16,7 +16,7 @@
 using namespace std;
 
 namespace AST {
-	class CodeStatement : CodeObject{
+	class CodeStatement : public CodeObject{
 	private:
 		
 	public:

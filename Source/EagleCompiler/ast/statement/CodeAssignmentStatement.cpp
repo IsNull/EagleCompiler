@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeAssignmentStatement::code() {
-	return "CodeAssignmentStatement";
+	return _lvalue->code() + " = " + _rvalue->code();
 }
 

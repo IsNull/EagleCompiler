@@ -11,8 +11,8 @@
 
 #include <string>
 
-#include "CodeExpression.h"
 #include "CodeExpressionFactor.h"
+#include "CodeExpression.h"
 #include "../identifier/CodeFunction.h"
 
 using namespace std;
@@ -21,12 +21,18 @@ namespace AST {
 	class CodeExpressionFactorFunctionCall : public CodeExpressionFactor {
 	private:
 		CodeFunction *_function;
-		vector<CodeExpression> _parameters;
+		vector<CodeExpression*> _parameters;
 	public:
 		CodeExpressionFactorFunctionCall(CodeFunction *function) : _function(function) { };
 		
-		CodeFunction *getFunction() { return _function; };
-		vector<CodeExpression>& getParameters() { return _parameters; };
+		void addParameter(CodeExpression *expression) 
+			{ _parameters.push_back(expression); }
+		
+		CodeFunction *getFunction()
+			{ return _function; };
+		
+		auto getParameters() -> decltype(_parameters)
+			{ return _parameters; };
 		
 		string code();
 	};

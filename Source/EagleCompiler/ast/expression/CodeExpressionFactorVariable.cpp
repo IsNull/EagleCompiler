@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeExpressionFactorVariable::code() {
-	return "CodeExpressionFactorVariable";
+	return _variable->code();
 }
 

@@ -71,9 +71,70 @@ void testSam() {
 //		call divide(m, n, q init, r init)
 //	endprogram
 	using namespace AST;
+	CodeTypeInteger32 int32;
+	//	program
 	CodeProgram p;
+	CodeProcedure proc("divide");
 	
+	{
+// 		proc divide(in copy const m:int32, in copy const n:int32,
+//			out ref var q:int32, out ref var r:int32)
+		CodeProcedureDeclaration *procdef = new CodeProcedureDeclaration(&proc);
+		CodeVariable *m = new CodeVariable("m", &int32);
+		CodeVariable *n = new CodeVariable("n", &int32);
+		CodeVariable *q = new CodeVariable("q", &int32);
+		CodeVariable *r = new CodeVariable("r", &int32);
+		procdef->addParam(new CodeParameter(FLOWMODE::IN, MECHMODE::COPY, CHANGEMODE::CONST, m) );
+		procdef->addParam(new CodeParameter(FLOWMODE::IN, MECHMODE::COPY, CHANGEMODE::CONST, n) );
+		procdef->addParam(new CodeParameter(FLOWMODE::OUT, MECHMODE::REF, CHANGEMODE::VAR, q) );
+		procdef->addParam(new CodeParameter(FLOWMODE::OUT, MECHMODE::REF, CHANGEMODE::VAR, r) );
+		
+//		q init := 0;
+		procdef->addStatement(new CodeAssignmentStatement(new CodeExpressionFactorInitialize(q), new CodeExpressionFactorLiteral(&int32, "0")));
+		
+//		r init := m;
+		procdef->addStatement(new CodeAssignmentStatement(new CodeExpressionFactorInitialize(r), new CodeExpressionFactorVariable(m)));
+		
+//		while r >= n do
+		CodeWhileStatement *loop = new CodeWhileStatement(new CodeExpressionRelation(new CodeExpressionFactorVariable(r), RELATIONOPERATOR::GE, new CodeExpressionFactorVariable(n)));
+		
+//		q := q + 1;
+		CodeExpressionAdd *add1 = new CodeExpressionAdd();
+		add1->addExpression(ADDOPERATOR::PLUS, new CodeExpressionFactorVariable(q));
+		add1->addExpression(ADDOPERATOR::PLUS, new CodeExpressionFactorLiteral(&int32, "1"));
+		loop->addLoopStatement(new CodeAssignmentStatement(new CodeExpressionFactorVariable(q), add1));
+		
+//		r := r - n
+		CodeExpressionAdd *add2 = new CodeExpressionAdd();
+		add2->addExpression(ADDOPERATOR::PLUS, new CodeExpressionFactorVariable(r));
+		add2->addExpression(ADDOPERATOR::MINUS, new CodeExpressionFactorVariable(n));
+		loop->addLoopStatement(new CodeAssignmentStatement(new CodeExpressionFactorVariable(r), add2));
+		
+		procdef->addStatement(loop);
+	 	p.addGlobalDecl(procdef);
+	}
 	
+	{
+//		intDiv(in const m:int32, in const n:int32, out const q:int32, out const
+//			r:int32) global
+		CodeVariable *m = new CodeVariable("m", &int32);
+		CodeVariable *n = new CodeVariable("n", &int32);
+		CodeVariable *q = new CodeVariable("q", &int32);
+		CodeVariable *r = new CodeVariable("r", &int32);
+		p.addProgParam(new CodeParameter(FLOWMODE::IN, MECHMODE::EMPTY, CHANGEMODE::CONST, m) );
+		p.addProgParam(new CodeParameter(FLOWMODE::IN, MECHMODE::EMPTY, CHANGEMODE::CONST, n) );
+		p.addProgParam(new CodeParameter(FLOWMODE::OUT, MECHMODE::EMPTY, CHANGEMODE::CONST, q) );
+		p.addProgParam(new CodeParameter(FLOWMODE::OUT, MECHMODE::EMPTY, CHANGEMODE::CONST, r) );
+		
+//		call divide(m, n, q init, r init)
+		CodeProcedureCallStatement *procCall = new CodeProcedureCallStatement(&proc);
+		procCall->addParameterExpression(new CodeExpressionFactorVariable(m));
+		procCall->addParameterExpression(new CodeExpressionFactorVariable(n));
+		procCall->addParameterExpression(new CodeExpressionFactorInitialize(q));
+		procCall->addParameterExpression(new CodeExpressionFactorInitialize(r));
+		p.addProgStatement(procCall);
+	}
+	cout << p.code() << endl;
 }
 
 

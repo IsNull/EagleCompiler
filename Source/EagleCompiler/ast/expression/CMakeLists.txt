@@ -8,9 +8,8 @@ CodeExpressionMultiply.cpp
 CodeExpressionFactor.cpp
 CodeExpressionFactorLiteral.cpp
 CodeExpressionFactorVariable.cpp
-CodeExpressionFactorInititialize.cpp
+CodeExpressionFactorInitialize.cpp
 CodeExpressionFactorFunctionCall.cpp
-CodeExpressionFactorProcedureCall.cpp
 CodeExpressionMonadicOperator.cpp
 )
 add_library(expression OBJECT ${expression_src})

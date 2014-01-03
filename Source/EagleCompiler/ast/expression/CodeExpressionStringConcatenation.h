@@ -11,18 +11,24 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 
 #include "CodeExpression.h"
-#include "CodeExpressionBoolean.h"
 
 using namespace std;
 
 namespace AST {
+	class CodeExpressionBoolean;
+	
 	class CodeExpressionStringConcatenation : public CodeExpression {
 	private:
-		vector<CodeExpressionBoolean> booleanTerms;
+		vector<CodeExpressionBoolean*> _booleanTerms;
 	public:
-		vector<CodeExpressionBoolean>& getBooleanTermExpressions() { return booleanTerms; };
+		void addExpression(CodeExpressionBoolean *expression)
+			{ _booleanTerms.push_back(expression); }
+		
+		auto getBooleanTermExpressions() -> decltype(_booleanTerms) 
+			{ return _booleanTerms; };
 		
 		string code();
 	};

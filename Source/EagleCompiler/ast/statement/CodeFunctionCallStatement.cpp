@@ -13,6 +13,13 @@
 using namespace std;
 
 string AST::CodeFunctionCallStatement::code() {
-	return "CodeFunctionCallStatement";
+	string params;
+	for(auto e : _parameters) {
+		params += e->code() + ",";
+	}
+	
+	//remove last character
+	if(_parameters.size() > 0)_parameters.pop_back();
+	return "call " + _function->code() + "(" + params + ")";
 }
 

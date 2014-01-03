@@ -11,18 +11,30 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 
-#include "CodeExpression.h"
-#include "CodeExpressionMultiply.h"
+#include "CodeExpressionRelation.h"
 
 using namespace std;
 
 namespace AST {
-	class CodeExpressionAdd : public CodeExpression {
+	class CodeExpressionMultiply;
+	
+	enum class ADDOPERATOR {
+		PLUS,
+		MINUS
+	};
+	
+	class CodeExpressionAdd : public CodeExpressionRelation {
 	private:
-		vector<CodeExpressionMultiply> multiplys;
+		vector<pair<ADDOPERATOR, CodeExpressionMultiply*>> _multiplys;
 	public:
-		vector<CodeExpressionMultiply>& getMultiplyExpressions() { return multiplys; };
+		
+		void addExpression(ADDOPERATOR op, CodeExpressionMultiply *expression) 
+			{ _multiplys.push_back(make_pair(op, expression)); }
+		
+		auto getMultiplyExpressions() -> decltype(_multiplys)
+			{ return _multiplys; };
 		
 		string code();
 	};

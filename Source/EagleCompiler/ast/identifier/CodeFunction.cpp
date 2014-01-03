@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeFunction::code() {
-	return "CodeFunction";
+	return getName() + "():" + _type->code();
 }
 

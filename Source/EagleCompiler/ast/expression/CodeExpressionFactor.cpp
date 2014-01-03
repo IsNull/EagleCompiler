@@ -11,8 +11,3 @@
 #include "CodeExpressionFactor.h"
 
 using namespace std;
-
-string AST::CodeExpressionFactor::code() {
-	return "CodeExpressionFactor";
-}
-
