@@ -42,8 +42,9 @@ SyntaxTree* ProductionRule::produce(IParseContext* ctx){
                     // DEBUG consume output
                     cout <<  *(this->nonterminal) << "  ";
                     
+                    const Token*  tok = ctx->current();
                     ctx->consume(t); // will throw a GrammarExceptin if current terminal was not expected
-                    node->add(new SyntaxTree(t, currentToken));
+                    node->add(new SyntaxTree(t, tok));
                     
                 }else{
                     NonTerminal *nt = (NonTerminal*)s;
