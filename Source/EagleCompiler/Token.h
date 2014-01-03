@@ -139,7 +139,7 @@ typedef map<TokenType, list<TokenType>> TokenGroupMap;
 const TokenGroupMap TokenGroups {
     
     {TokenType::Group_Literal,
-        { TokenType::Keyword_True, TokenType::Keyword_False } },
+        { TokenType::Keyword_True, TokenType::Keyword_False, TokenType::LiteralNumber, TokenType::LiteralString } },
     {TokenType::Group_Type,
         { TokenType::Type_Int, TokenType::Type_Bool, TokenType::Type_String } },
     {TokenType::Group_Flowmode,
@@ -168,10 +168,7 @@ const map<TokenType, const string> TokenNames {
         {TokenType::WhiteSpace, "Whitespace"},
         {TokenType::NewLine, "NewLine"},
     
-        {TokenType::LiteralNumber, "LiteralNumber"},
-        {TokenType::LiteralString, "LiteralString"},
-    
-        {TokenType::StatementEnd, "StatementEnd"},
+        {TokenType::StatementEnd, "SEMICOLON"},
     
         // Comments
         {TokenType::Comment_ML_Start,"Comment_ML_Start"},
@@ -261,10 +258,12 @@ const map<TokenType, const string> TokenNames {
         {TokenType::Type_Bool,"ATOMTYPE_BOOL"},
         {TokenType::Type_String,"ATOMTYPE_STRING"},
     
-    
+        // Literal values
         {TokenType::Group_Literal, "LITERAL"},
         {TokenType::Keyword_True, "LITERAL_TRUE"},
-        {TokenType::Keyword_False,"LITERAL_FALSE"}
+        {TokenType::Keyword_False,"LITERAL_FALSE"},
+        {TokenType::LiteralNumber, "LITERAL_Number"},
+        {TokenType::LiteralString, "LITERAL_String"},
     };
 
 
