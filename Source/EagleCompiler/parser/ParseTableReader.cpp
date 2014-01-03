@@ -14,6 +14,9 @@
 #include <algorithm>
 #include <iterator>
 
+const bool ParseTableReader_DEBUG = false;
+
+
 const string ParseTableReader::KEYWORD_TERMINAL = "terminal";
 
 
@@ -98,7 +101,6 @@ void printRules(ParseRuleTable* table){
 
 Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTable){
    
-    
     cout << "\n\nParsing Fix & Foxi Parse-Table:\n\n";
     
     
@@ -128,7 +130,7 @@ Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTa
             // First char must be < in order to identify as a NT-Def
             
             state = TableParserState::EXPECT_NONTERM_DEF;
-            cout << "Parsing NT Definition: " << line << "\n";
+            if(ParseTableReader_DEBUG) cout << "Parsing NT Definition: " << line << "\n";
             unsigned long end = line.find(">");
             if(end != string::npos)
             {
@@ -149,7 +151,7 @@ Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTa
             // we found a terminal decl
             vector<string> words = Util::split(line," ", false);
             
-            cout << "terminal decl: " << line << "\n";
+            if(ParseTableReader_DEBUG) cout << "terminal decl: " << line << "\n";
             
             string terminalName = words[1];
             currentTerminal = getTerminalOrCreate(terminalName);
@@ -160,7 +162,7 @@ Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTa
         
         if(state == TableParserState::EXPECT_RULELIST){
             
-            cout << "rule list: " << line << "\n";
+            if(ParseTableReader_DEBUG) cout << "rule list: " << line << "\n";
             
             Production* prod = NULL;
             // expect rule list
@@ -193,8 +195,8 @@ Parser* ParseTableReader::createParser(TokenList* tokenlist, string serializedTa
         
         cout << "ERROR: Unhandled Line: " << line << "\n";
     }
-    cout << "\n--- Parsing done. ---\n";
-    printRules(parseRuleTable);
+    cout << "\n--- Parsing Fix&Foxi done. ---\n";
+    if(ParseTableReader_DEBUG) printRules(parseRuleTable);
     
     return new Parser(tokenlist, parseRuleTable, this);
 }
