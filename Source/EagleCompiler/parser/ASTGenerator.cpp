@@ -18,8 +18,6 @@
 CodeProcedureDeclaration* ASTGenerator::genProcedureDecl(SyntaxTree* procDeclNode){
     // NODE := PROCDECL
     CodeProcedureDeclaration* procDecl = NULL;
-    
-    // TODO
     CodeProcedure* procedure = NULL;
     
     SyntaxTree* procNameNode = findChildTerminal(procDeclNode, TokenType::Identifier);
@@ -40,7 +38,9 @@ CodeProcedureDeclaration* ASTGenerator::genProcedureDecl(SyntaxTree* procDeclNod
         for (int i=0; params.size() > i; i++) {
             procDecl->addParam(params[i]);
         }
-    }
+    }else
+        throw GrammarException("CodeProcedureDeclaration missing Procedure PARAMLIST!");
+
     
     // add procedure local imports
     SyntaxTree* procImportListNode = findChildNonTerminal(procDeclNode, "OPTGLOBIMPLIST");
@@ -72,44 +72,44 @@ CodeProcedureDeclaration* ASTGenerator::genProcedureDecl(SyntaxTree* procDeclNod
 };
 
 
-// TODO
-
 vector<CodeDeclaration*> ASTGenerator::genCodeDeclarations(SyntaxTree* node){
     vector<CodeDeclaration*> decls;
     
-    vector<SyntaxTree*> childs = node->getChildren();
-    for (int i=0; childs.size() > i; i++) {
-        
-        SyntaxTree* procDeclNode = findRecursiveNonTerminal(childs[i], "PROCDECL");
-        if(procDeclNode != NULL)
-        {
-            CodeProcedureDeclaration* procDecl = genProcedureDecl(procDeclNode);
-            decls.push_back(procDecl);
-        }
-        
-        // TODO other decls?
-        
+    // PROCDECL
+    
+    vector<SyntaxTree*> procDeclNodes = findAllNonTerminalRec(node, "PROCDECL");
+    cout << "found " << procDeclNodes.size() << " PROCDECL!\n";
+    for (int i=0; procDeclNodes.size() > i; i++) {
+        CodeProcedureDeclaration* procDecl = genProcedureDecl(procDeclNodes[i]);
+        decls.push_back(procDecl);
     }
+    
+    
+    // TODO: Other decls (functions etc)
     
     return decls;
 };
 
 
+/**
+ * Parse a parameter into AST
+ *
+ * Expected Tree-Structure of paramNode:
+ *
+ *[PARAM]
+ *  [OPTFLOWMODE]
+ *      FLOWMODE
+ *  [OPTMECHMODE]
+ *      MECHMODE
+ *  [OPTCHANGEMODE]
+ *      CHANGEMODE
+ *  [TYPEDIDENT]
+ *      IDENT
+ *      COLON
+ *      ATOMTYPE
+ *
+ */
 CodeParameter* ASTGenerator::genCodeParameter(SyntaxTree* paramNode){
-    
-    /*
-    [PARAM]
-     [OPTFLOWMODE]
-        FLOWMODE
-     [OPTMECHMODE]
-        MECHMODE
-     [OPTCHANGEMODE]
-        CHANGEMODE
-     [TYPEDIDENT]
-        IDENT
-        COLON
-        ATOMTYPE
-     */
     
     FLOWMODE flowMode = FLOWMODE::EMPTY;
     MECHMODE mechMode = MECHMODE::EMPTY;
@@ -206,7 +206,7 @@ CodeParameter* ASTGenerator::genCodeParameter(SyntaxTree* paramNode){
         SyntaxTree* identNode = findChildTerminal(typeIdentNode, TokenType::Identifier);
         if(identNode != NULL){
             paramName = identNode->getToken()->getValue();
-            cout << "param: " << paramName << "\n";
+            cout << "param: " << paramName << ", ";
         }else
             throw new GrammarException("ASTGenerator: CodeParameter Missing Identifier!");
         
@@ -221,7 +221,6 @@ CodeParameter* ASTGenerator::genCodeParameter(SyntaxTree* paramNode){
         
     }else{
         throw new GrammarException("ASTGenerator: CodeParameter could not be created, missing TYPEDIDENT NT!");
-
     }
     
     CodeParameter* parameter = new CodeParameter(flowMode, mechMode, changeMode, variable);
@@ -266,10 +265,15 @@ vector<CodeParameter*> ASTGenerator::genCodeParameters(SyntaxTree* node){
     const string paramId = (node->getNonTerminal()->getName()  == "PROGPARAMLIST") ? "PROGPARAM" : "PARAM";
     
     vector<SyntaxTree*> paramNodes = findAllNonTerminalRec(node, paramId, false /*dont search nested*/);
+    
+    cout << "ASTGenerator::genCodeParameters: " << paramId << ", found " << paramNodes.size() << " param Nodes\n";
+    
     for(int i=0; paramNodes.size() > i; i++){
         SyntaxTree* child = paramNodes[i];
         params.push_back(genCodeParameter(child));
     }
+    
+    cout << "\n";
     
     return params;
 };
@@ -345,8 +349,11 @@ vector<SyntaxTree*> ASTGenerator::findAllNonTerminalRec(SyntaxTree* parent, cons
     if(parent->hasChildren())
     {
         vector<SyntaxTree*> children = parent->getChildren();
+        
+        SyntaxTree* child;
         for (int i=0; children.size() > i; i++) {
-            SyntaxTree* child = children[i];
+            child = children[i];
+            
             if(!child->isTerminal()){
                 if(child->getNonTerminal()->getName() == name){
                     matches.push_back(child);
@@ -355,9 +362,10 @@ vector<SyntaxTree*> ASTGenerator::findAllNonTerminalRec(SyntaxTree* parent, cons
                 
                 vector<SyntaxTree*> subMatches = findAllNonTerminalRec(child, name, searchNested);
                 for(int j=0; subMatches.size() > j; j++){
-                    matches.push_back(subMatches[i]);
+                    matches.push_back(subMatches[j]);
                 }
             }
+            
         }
     }
     
@@ -374,19 +382,26 @@ CodeProgram* ASTGenerator::generate(SyntaxTree* syntaxParseTree){
     if(progParamList != NULL)
     {
         vector<CodeParameter*> params = genCodeParameters(progParamList);
+        
+        cout << "found PROGPARAMLIST with " << params.size() << " params.\n";
+        
         for (int i=0; params.size() > i; i++) {
             program->addProgParam(params[i]);
         }
+    }else{
+        throw new GrammarException("Missing PROGPARAMLIST!");
     }
     
     // extract decls
     SyntaxTree* gobalDecls = findChildNonTerminal(node, "OPTGLOBALCPSDECL");
     if(gobalDecls != NULL)
     {
-        vector<CodeDeclaration*> params = genCodeDeclarations(progParamList);
+        vector<CodeDeclaration*> params = genCodeDeclarations(gobalDecls);
         for (int i=0; params.size() > i; i++) {
             program->addGlobalDecl(params[i]);
         }
+    }else{
+        throw new GrammarException("Missing OPTGLOBALCPSDECL!");
     }
     
     // extract Statements
@@ -397,6 +412,8 @@ CodeProgram* ASTGenerator::generate(SyntaxTree* syntaxParseTree){
         for (int i=0; statements.size() > i; i++) {
             program->addProgStatement(statements[i]);
         }
+    }else{
+          throw new GrammarException("Missing CPSCMD!");
     }
     
     return program;
