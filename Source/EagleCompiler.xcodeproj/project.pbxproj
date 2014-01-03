@@ -48,6 +48,9 @@
 		D281BE1B1876B8ED0097916F /* CodeTypeBoolean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF21876B8ED0097916F /* CodeTypeBoolean.cpp */; };
 		D281BE1C1876B8ED0097916F /* CodeTypeInteger32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF41876B8ED0097916F /* CodeTypeInteger32.cpp */; };
 		D281BE1D1876B8ED0097916F /* CodeTypeString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF61876B8ED0097916F /* CodeTypeString.cpp */; };
+		D281BE261876DC8E0097916F /* ASTGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BE1F1876DC8E0097916F /* ASTGenerator.cpp */; };
+		D281BE271876DC8E0097916F /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BE221876DC8E0097916F /* Parser.cpp */; };
+		D281BE281876DC8E0097916F /* ParseTableReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BE241876DC8E0097916F /* ParseTableReader.cpp */; };
 		D28CFAE2185C5F4C00E62626 /* ParseTableReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D28CFAE0185C5F4C00E62626 /* ParseTableReader.cpp */; };
 		D29DBE1B1806D9FA00C9A5FE /* ScannerContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE191806D9FA00C9A5FE /* ScannerContext.cpp */; };
 		D29DBE1C1806D9FA00C9A5FE /* ScannerContext.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE1A1806D9FA00C9A5FE /* ScannerContext.h */; };
@@ -92,7 +95,6 @@
 		D221B47B17F8252C00E76550 /* TokenList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenList.h; sourceTree = "<group>"; };
 		D221B48317F8451900E76550 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
 		D221B48417F8451900E76550 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
-		D221B48617FDB1AF00E76550 /* parser */ = {isa = PBXFileReference; lastKnownFileType = folder; path = parser; sourceTree = "<group>"; };
 		D281BDA01876B8ED0097916F /* AST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AST.h; sourceTree = "<group>"; };
 		D281BDA11876B8ED0097916F /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		D281BDA21876B8ED0097916F /* CodeGlobalImport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CodeGlobalImport.cpp; sourceTree = "<group>"; };
@@ -176,6 +178,13 @@
 		D281BDF51876B8ED0097916F /* CodeTypeInteger32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeTypeInteger32.h; sourceTree = "<group>"; };
 		D281BDF61876B8ED0097916F /* CodeTypeString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CodeTypeString.cpp; sourceTree = "<group>"; };
 		D281BDF71876B8ED0097916F /* CodeTypeString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeTypeString.h; sourceTree = "<group>"; };
+		D281BE1F1876DC8E0097916F /* ASTGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ASTGenerator.cpp; sourceTree = "<group>"; };
+		D281BE201876DC8E0097916F /* ASTGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTGenerator.h; sourceTree = "<group>"; };
+		D281BE211876DC8E0097916F /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D281BE221876DC8E0097916F /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
+		D281BE231876DC8E0097916F /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
+		D281BE241876DC8E0097916F /* ParseTableReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParseTableReader.cpp; sourceTree = "<group>"; };
+		D281BE251876DC8E0097916F /* ParseTableReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseTableReader.h; sourceTree = "<group>"; };
 		D28CFAE0185C5F4C00E62626 /* ParseTableReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParseTableReader.cpp; path = EagleCompiler/parser/ParseTableReader.cpp; sourceTree = "<group>"; };
 		D28CFAE1185C5F4C00E62626 /* ParseTableReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParseTableReader.h; path = EagleCompiler/parser/ParseTableReader.h; sourceTree = "<group>"; };
 		D290B70B1806D28C0030DC82 /* scanner */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scanner; sourceTree = "<group>"; };
@@ -345,6 +354,20 @@
 			path = type;
 			sourceTree = "<group>";
 		};
+		D281BE1E1876DC8E0097916F /* parser */ = {
+			isa = PBXGroup;
+			children = (
+				D281BE1F1876DC8E0097916F /* ASTGenerator.cpp */,
+				D281BE201876DC8E0097916F /* ASTGenerator.h */,
+				D281BE211876DC8E0097916F /* CMakeLists.txt */,
+				D281BE221876DC8E0097916F /* Parser.cpp */,
+				D281BE231876DC8E0097916F /* Parser.h */,
+				D281BE241876DC8E0097916F /* ParseTableReader.cpp */,
+				D281BE251876DC8E0097916F /* ParseTableReader.h */,
+			);
+			path = parser;
+			sourceTree = "<group>";
+		};
 		D2BED5CF17F744AB005EAFEA = {
 			isa = PBXGroup;
 			children = (
@@ -386,9 +409,9 @@
 			children = (
 				D2BED5DB17F744AB005EAFEA /* main.cpp */,
 				D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */,
+				D281BE1E1876DC8E0097916F /* parser */,
 				D281BD9F1876B8ED0097916F /* ast */,
 				D290B70B1806D28C0030DC82 /* scanner */,
-				D221B48617FDB1AF00E76550 /* parser */,
 				D221B47317F745D900E76550 /* Token.cpp */,
 				D29DBE2A1812BBCA00C9A5FE /* assemblizer */,
 				D221B47417F745D900E76550 /* Token.h */,
@@ -470,6 +493,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D281BE281876DC8E0097916F /* ParseTableReader.cpp in Sources */,
 				D281BE091876B8ED0097916F /* CodeExpressionMonadicOperator.cpp in Sources */,
 				D2F6CD7C185999C400CDA4DB /* NumericVariable.cpp in Sources */,
 				D281BE0D1876B8ED0097916F /* CodeFunction.cpp in Sources */,
@@ -495,6 +519,7 @@
 				D29DBE301812BD9E00C9A5FE /* AssemblerInstruction.h in Sources */,
 				D29DBE311812BD9E00C9A5FE /* Assemblizer.cpp in Sources */,
 				D29DBE321812BD9E00C9A5FE /* Assemblizer.h in Sources */,
+				D281BE261876DC8E0097916F /* ASTGenerator.cpp in Sources */,
 				D281BE011876B8ED0097916F /* CodeExpression.cpp in Sources */,
 				D281BE0F1876B8ED0097916F /* CodeProcedure.cpp in Sources */,
 				D281BE1C1876B8ED0097916F /* CodeTypeInteger32.cpp in Sources */,
@@ -509,6 +534,7 @@
 				D281BE111876B8ED0097916F /* CodeAssignmentStatement.cpp in Sources */,
 				D281BE051876B8ED0097916F /* CodeExpressionFactorFunctionCall.cpp in Sources */,
 				D29DBE201806F92500C9A5FE /* Singleton.h in Sources */,
+				D281BE271876DC8E0097916F /* Parser.cpp in Sources */,
 				D29DBE1E1806F4D500C9A5FE /* ScannerEnums.h in Sources */,
 				D29DBE1B1806D9FA00C9A5FE /* ScannerContext.cpp in Sources */,
 				D281BDFF1876B8ED0097916F /* CodeProcedureDeclaration.cpp in Sources */,

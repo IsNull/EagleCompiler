@@ -14,6 +14,7 @@
 #include "parser/Parser.h"
 #include "parser/ParseTableReader.h"
 #include "ast/AST.h"
+#include "parser/ASTGenerator.h"
 
 #include "user.local"
 
@@ -43,7 +44,11 @@ void scan() {
         
         
         cout << "\n\nSyntaxTree created:\n" << *syntaxtree;
-        // TODO create AST from ST
+        
+        cout << "\n\nGenerating AST:\n";
+        
+        ASTGenerator astGen;
+        AST::CodeProgram* p = astGen.generate(syntaxtree);
         
     }catch(GrammarException* ex){
         cout << "\n\nGrammarException: " << ex->what() << "\n";
