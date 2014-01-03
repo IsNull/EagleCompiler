@@ -111,12 +111,18 @@ class SyntaxTree
 {
 private:
     const IGrammarSymbol* _grammarSymbol;
+    const Token* _token;
     vector<SyntaxTree*> _children;
     
     
 public:
     SyntaxTree(const IGrammarSymbol* symbol)
-        :_grammarSymbol(symbol)
+        :_grammarSymbol(symbol), _token(NULL)
+    {
+    }
+    
+    SyntaxTree(const IGrammarSymbol* symbol, const Token* _token)
+    :_grammarSymbol(symbol), _token(_token)
     {
     }
     
@@ -130,6 +136,7 @@ public:
     
     NonTerminal* getNonTerminal() const { return (NonTerminal*)_grammarSymbol; }
     Terminal* getTerminal() const { return (Terminal*)_grammarSymbol; }
+    const Token* getToken() const { return _token; }
     
     
     std::ostream& prettyPrint(std::ostream& stream, int level) const {
