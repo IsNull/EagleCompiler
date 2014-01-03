@@ -22,7 +22,11 @@ using namespace AST;
 class ASTGenerator
 {
 private:
-    vector<CodeParameter*> genCodeParameter(SyntaxTree* node);
+    
+    CodeType* genCodeType(SyntaxTree* atomTypeNode);
+    CodeParameter* genCodeParameter(SyntaxTree* node);
+    
+    vector<CodeParameter*> genCodeParameters(SyntaxTree* node);
     vector<CodeStatement*> genCodeStatements(SyntaxTree* node);
     vector<CodeDeclaration*> genCodeDeclarations(SyntaxTree* node);
     
@@ -30,9 +34,11 @@ private:
     
     SyntaxTree* findChildNonTerminal(SyntaxTree* parent, const string& name);
     SyntaxTree* findChildTerminal(SyntaxTree* parent, const TokenType token);
+    SyntaxTree* findChildTerminal(SyntaxTree* parent, const string terminalName);
     
     SyntaxTree* findRecursiveNonTerminal(SyntaxTree* parent, const string& name, int maxDeepth=10);
     
+    vector<SyntaxTree*> findAllNonTerminalRec(SyntaxTree* parent, const string& name, bool searchNested = false);
     
 public:
     CodeProgram* generate(SyntaxTree* syntaxParseTree);

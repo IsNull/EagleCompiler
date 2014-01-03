@@ -51,6 +51,10 @@
 		D281BE261876DC8E0097916F /* ASTGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BE1F1876DC8E0097916F /* ASTGenerator.cpp */; };
 		D281BE271876DC8E0097916F /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BE221876DC8E0097916F /* Parser.cpp */; };
 		D281BE281876DC8E0097916F /* ParseTableReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BE241876DC8E0097916F /* ParseTableReader.cpp */; };
+		D281BE29187714310097916F /* CodeType.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF11876B8ED0097916F /* CodeType.h */; };
+		D281BE2A187714310097916F /* CodeTypeBoolean.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF31876B8ED0097916F /* CodeTypeBoolean.h */; };
+		D281BE2B187714310097916F /* CodeTypeInteger32.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF51876B8ED0097916F /* CodeTypeInteger32.h */; };
+		D281BE2C187714310097916F /* CodeTypeString.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF71876B8ED0097916F /* CodeTypeString.h */; };
 		D29DBE1B1806D9FA00C9A5FE /* ScannerContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE191806D9FA00C9A5FE /* ScannerContext.cpp */; };
 		D29DBE1C1806D9FA00C9A5FE /* ScannerContext.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE1A1806D9FA00C9A5FE /* ScannerContext.h */; };
 		D29DBE1E1806F4D500C9A5FE /* ScannerEnums.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE1D1806F4BF00C9A5FE /* ScannerEnums.h */; };
@@ -482,6 +486,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D281BE29187714310097916F /* CodeType.h in Sources */,
+				D281BE2A187714310097916F /* CodeTypeBoolean.h in Sources */,
+				D281BE2B187714310097916F /* CodeTypeInteger32.h in Sources */,
+				D281BE2C187714310097916F /* CodeTypeString.h in Sources */,
 				D281BE281876DC8E0097916F /* ParseTableReader.cpp in Sources */,
 				D281BE091876B8ED0097916F /* CodeExpressionMonadicOperator.cpp in Sources */,
 				D2F6CD7C185999C400CDA4DB /* NumericVariable.cpp in Sources */,
