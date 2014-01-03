@@ -29,6 +29,10 @@ namespace AST {
 		
 		CodeExpression *getConditionExpression() 
 			{ return _condition; };
+        
+        void addIfStatement(CodeStatement* statement){ _ifStatements.push_back(statement); }
+        
+        void addElseStatement(CodeStatement* statement){ _elseStatements.push_back(statement); }
 			
 		auto getIfStatements() -> decltype(_ifStatements)
 			{ return _ifStatements; };

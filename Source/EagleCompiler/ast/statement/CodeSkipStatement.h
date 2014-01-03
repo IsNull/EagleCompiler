@@ -16,7 +16,7 @@
 using namespace std;
 
 namespace AST {
-	class CodeSkipStatement : CodeStatement{
+	class CodeSkipStatement : public CodeStatement{
 	private:
 		
 	public:

@@ -23,8 +23,11 @@ class ASTGenerator
 {
 private:
     
+    CodeStatement* genCodeStatement(SyntaxTree* node);
     CodeType* genCodeType(SyntaxTree* atomTypeNode);
     CodeParameter* genCodeParameter(SyntaxTree* node);
+    CodeExpression* genExpresseion(SyntaxTree* exprNode);
+
     
     vector<CodeParameter*> genCodeParameters(SyntaxTree* node);
     vector<CodeStatement*> genCodeStatements(SyntaxTree* node);
@@ -32,12 +35,17 @@ private:
     
     CodeProcedureDeclaration* genProcedureDecl(SyntaxTree* procDeclNode);
     
+    /**
+     * Searches the next Terminal starting at parent (recursive)
+     */
+    SyntaxTree* findNextTerminalRec(SyntaxTree* parent);
     SyntaxTree* findChildNonTerminal(SyntaxTree* parent, const string& name);
     SyntaxTree* findChildTerminal(SyntaxTree* parent, const TokenType token);
     SyntaxTree* findChildTerminal(SyntaxTree* parent, const string terminalName);
     
     SyntaxTree* findRecursiveNonTerminal(SyntaxTree* parent, const string& name, int maxDeepth=10);
     
+    vector<SyntaxTree*> findAllNonTerminals(SyntaxTree* parent, const string& name);
     vector<SyntaxTree*> findAllNonTerminalRec(SyntaxTree* parent, const string& name, bool searchNested = false);
     
 public:

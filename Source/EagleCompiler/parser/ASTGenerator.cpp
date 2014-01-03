@@ -278,12 +278,187 @@ vector<CodeParameter*> ASTGenerator::genCodeParameters(SyntaxTree* node){
     return params;
 };
 
+
+CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
+    CodeStatement* statement = NULL;
+    vector<SyntaxTree*> cmdChilds = cmdNode->getChildren();
+    
+    /*
+     terminal SKIP
+        SKIP
+     terminal LPAREN
+        <expr> BECOMES <expr>
+     terminal ADDOPR
+        <expr> BECOMES <expr>
+     terminal NOT
+        <expr> BECOMES <expr>
+     terminal IDENT
+        <expr> BECOMES <expr>
+     terminal LITERAL
+        <expr> BECOMES <expr>
+     terminal IF
+        IF <expr> THEN <cpsCmd> ELSE <cpsCmd> ENDIF
+     terminal WHILE
+        WHILE <expr> DO <cpsCmd> ENDWHILE
+     terminal CALL
+        CALL IDENT <exprList> <optGlobInitList>
+     terminal DEBUGIN
+        DEBUGIN <expr>
+     terminal DEBUGOUT
+        DEBUGOUT <expr>
+     */
+    
+    SyntaxTree* nextTerminal = findNextTerminalRec(cmdNode);
+    if(nextTerminal != NULL)
+    {
+        switch (nextTerminal->getToken()->getType()) {
+            case TokenType::Keyword_Continue:
+            {
+                statement = new CodeSkipStatement();
+            }
+                break;
+                
+            case TokenType::Operator_Assignment:
+            {
+                SyntaxTree* lValueNode = cmdChilds[0];
+                SyntaxTree* rValueNode = cmdChilds[2];
+                
+                CodeExpression* lvalue = genExpresseion(lValueNode);
+                CodeExpression* rvalue = genExpresseion(rValueNode);
+                
+                CodeExpressionFactorVariable* v = dynamic_cast<CodeExpressionFactorVariable*>(lvalue);
+                if(v != 0) {
+                    statement = new CodeAssignmentStatement(lvalue, rvalue);
+                }else{
+                    ostringstream errStr;
+                    errStr << "ASTGenerator: Semantic issue: Assignment LValue must be CodeExpressionFactorVariable but was " << lvalue;
+                    throw new GrammarException(errStr.str());
+                }
+            }
+                break;
+                
+            case TokenType::Keyword_While:
+            {
+                SyntaxTree* conditionNode = cmdChilds[1];
+                CodeExpression* condition = genExpresseion(conditionNode);
+                
+                CodeWhileStatement* whileStatement = new CodeWhileStatement(condition);
+                statement = whileStatement;
+                
+                SyntaxTree* condStatements = findChildNonTerminal(cmdNode, "CPSCMD");
+                vector<CodeStatement*> statements = genCodeStatements(condStatements);
+                for (int i=0; statements.size()>i; i++) {
+                    whileStatement->addLoopStatement(statements[i]);
+                }
+                
+                break;
+            }
+            case TokenType::Keyword_Call:
+            {
+                
+            }
+                break;
+                
+            case TokenType::Keyword_Condition:
+            { // IF <expr> THEN <cpsCmd> ELSE <cpsCmd> ENDIF
+                
+                if(cmdChilds.size() >= 7){ // TODO handle ifs without else block
+                    SyntaxTree* condExprNode = cmdChilds[1];
+                    SyntaxTree* ifCmdsNode = cmdChilds[3];
+                    SyntaxTree* elseCmdsNode = cmdChilds[5];
+                    
+                    CodeExpression* condExpr = genExpresseion(condExprNode);
+                    vector<CodeStatement*> ifStatements = genCodeStatements(ifCmdsNode);
+                    vector<CodeStatement*> elseStatements = genCodeStatements(elseCmdsNode);
+                    
+                    CodeIfStatement* condition = new CodeIfStatement(condExpr);
+                    statement = condition;
+                    
+                    for (int i=0; ifStatements.size()>i; i++) {
+                         condition->addIfStatement(ifStatements[i]);
+                    }
+                    
+                    for (int i=0; elseStatements.size()>i; i++) {
+                        condition->addElseStatement(elseStatements[i]);
+                    }
+                }else{
+                    throw new GrammarException("ASTGenerator: Missing tokens for valid WHILE command!");
+                }
+                
+            }
+                break;
+                
+            case TokenType::Command_DebugIn:
+            {
+                
+            }
+                break;
+                
+            case TokenType::Command_DebugOut:
+            {
+                
+            }
+                break;
+                
+                
+            default:
+            {
+                ostringstream errStr;
+                errStr << "ASTGenerator: Command -> Unexpected Token " <<  *nextTerminal->getToken();
+                throw new GrammarException(errStr.str());
+            }
+        }
+    }
+    return statement;
+};
+
+CodeExpression* ASTGenerator::genExpresseion(SyntaxTree* exprNode){
+    // TODO generate expression
+    
+    /*
+    CodeVariable* id = new CodeVariable(nextTerminal->getToken()->getValue(), NULL); // TODO Type???
+    CodeExpression* lvalue = new CodeExpressionFactorVariable(id);
+    
+    if(){
+        CodeExpressionFactorInitialize();
+    }*/
+    
+    return NULL;
+};
+
+SyntaxTree* ASTGenerator::findNextTerminalRec(SyntaxTree* parent){
+    
+    vector<SyntaxTree*> children = parent->getChildren();
+    for (int i=0; children.size() > i; i++) {
+        SyntaxTree* child = children[i];
+        if(child->isTerminal())
+            return child;
+    }
+    
+    for (int i=0; children.size() > i; i++) {
+        SyntaxTree* child = children[i];
+        if(!child->isTerminal())
+            return findNextTerminalRec(child);
+    }
+    
+    return NULL;
+};
+
+
 vector<CodeStatement*> ASTGenerator::genCodeStatements(SyntaxTree* node){
-    vector<CodeStatement*> params;
+    vector<CodeStatement*> statements;
     
-    // TODO
+    vector<SyntaxTree*> statementNodes = findAllNonTerminals(node, "CMD");
+    vector<SyntaxTree*> repNodes = findAllNonTerminals(node, "REPCMD");
+    // concat the two lists
+    statementNodes.insert( statementNodes.end(), repNodes.begin(), repNodes.end() );
     
-    return params;
+    for (int i=0; statementNodes.size() > i; i++) {
+        CodeStatement* statement = genCodeStatement(statementNodes[i]);
+        statements.push_back(statement);
+    }
+    
+    return statements;
 };
 
 SyntaxTree* ASTGenerator::findRecursiveNonTerminal(SyntaxTree* parent, const string& name, int maxDeepth){
@@ -371,6 +546,33 @@ vector<SyntaxTree*> ASTGenerator::findAllNonTerminalRec(SyntaxTree* parent, cons
     
     return matches;
 };
+
+
+vector<SyntaxTree*> ASTGenerator::findAllNonTerminals(SyntaxTree* parent, const string& name){
+    vector<SyntaxTree*> matches;
+    
+    if(parent->hasChildren())
+    {
+        vector<SyntaxTree*> children = parent->getChildren();
+        
+        SyntaxTree* child;
+        for (int i=0; children.size() > i; i++) {
+            child = children[i];
+            
+            if(!child->isTerminal()){
+                if(child->getNonTerminal()->getName() == name){
+                    matches.push_back(child);
+                }
+            }
+        }
+    }
+    
+    return matches;
+};
+
+
+
+
 
 CodeProgram* ASTGenerator::generate(SyntaxTree* syntaxParseTree){
     
