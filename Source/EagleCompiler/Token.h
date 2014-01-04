@@ -54,9 +54,10 @@ enum TokenType {
     Bracked_Square_Open,    // [
     Bracked_Square_Close,   // ]
     
-    // Operator
-    Operator_Not,           // !
     Operator_Assignment,    // :=
+    
+    // Binary Operators
+    Operator_Not,           // !
     Operator_Plus,          // +
     Operator_Minus,         // -
     Operator_Div,           // div
@@ -161,7 +162,26 @@ const TokenGroupMap TokenGroups {
         { TokenType::Operator_BOOL_AND, TokenType::Operator_BOOL_OR, TokenType::Operator_BOOL_CAND, TokenType::Operator_BOOL_COR } }
 };
 
-
+// All binary Operators
+const list<TokenType> BinaryOperatorTokens = {
+    Operator_Not,           // !
+    Operator_Plus,          // +
+    Operator_Minus,         // -
+    Operator_Div,           // div
+    Operator_Multiply,      // *
+    Operator_Modulo,        // mod
+    Operator_Equals,        // =
+    Operator_GreaterThan,   // >
+    Operator_SmallerThan,   // <
+    Operator_GreaterThanOrEqual,   // >=
+    Operator_SmallerThanOrEqual,   // <=
+    Operator_StringConcat,  // &
+    
+    Operator_BOOL_AND,      // &&
+    Operator_BOOL_OR,       // ||
+    Operator_BOOL_CAND,     // |&
+    Operator_BOOL_COR      // |?
+};
 
 const map<TokenType, const string> TokenNames {
         {None, "None"},

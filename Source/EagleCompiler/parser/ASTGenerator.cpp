@@ -506,31 +506,61 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
     }else{
         // current node is NT
         if(!exprNode->hasChildren()){
-            // Empty NT Node
+            // Empty NT Node, means dead end
             return NULL;
         }else if(exprNode->getChildren().size() == 1){
+            // Single Child hande recursive
             expr = genExpression(exprNode->getChildren()[0]);
         }else{
+            // Multiple children - check for specail expressions
+            // such as BinaryOperators or Function calls
             
-            vector<string> operatorNTs = { "REPADDOPRTERM3", "REPMULTOPRFACTOR" };
+            /*
+             [TERM2]
+                [TERM3]
+                    [FACTOR]
+                        LITERAL [LITERAL_Number,0]
+                    [REPMULTOPRFACTOR]
+                [REPADDOPRTERM3]
+                    ADDOPR [ADDOPR_PLUS,+]
+                    [TERM3]
+                        [FACTOR]
+                            LITERAL [LITERAL_Number,2]
+                        [REPMULTOPRFACTOR]
+                [REPADDOPRTERM3]
+             [OPTRELOPRTERM2]
+             */
             
-            // Check for binary Operator nodes
-            SyntaxTree* oprNode = NULL;
-            for(int i=0;operatorNTs.size()>i;i++){
-                oprNode = findChildNonTerminal(exprNode, operatorNTs[i]);
-                if(oprNode != NULL && oprNode->getChildren().size() > 1){
-                    // Case ADD/MIN node
-                    break;
-                }else{
-                    oprNode = NULL;
+            // this (exprNode) would be [TERM2]
+            // childOperatorNode should then be found as [REPADDOPRTERM3]
+            
+            SyntaxTree* childOperatorNode = NULL;
+            
+            for (int i=0; exprNode->getChildren().size() > i; i++) {
+                SyntaxTree* child = exprNode->getChildren()[i];
+                
+                // check now if child has a Operator-Terminal Child on first slot
+                
+                if(child->hasChildren() && child->getChildren()[0]->isTerminal()){
+                    TokenType type = child->getChildren()[0]->getToken()->getType();
+                    
+                    list<TokenType>::const_iterator findIter = std::find(BinaryOperatorTokens.begin(), BinaryOperatorTokens.end(), type);
+                    if(findIter != BinaryOperatorTokens.end()){
+                        // found!!
+                        childOperatorNode = child;
+                        break;
+                    }else{
+                        cout << "ASTGenerator: Terminal was not expected Operator but:" << child->getChildren()[0]->getToken() << "\n";
+                    }
                 }
             }
             
-            if(oprNode != NULL){
+            if(childOperatorNode != NULL){
+                // found an binary operator. Build binary expression
                 
                 SyntaxTree* leftSideExprNode = exprNode->getChildren()[0];
-                SyntaxTree* operatorTerminalNode = oprNode->getChildren()[0];
-                SyntaxTree* rightSideExprNode = oprNode->getChildren()[1];
+                SyntaxTree* operatorTerminalNode = childOperatorNode->getChildren()[0];
+                SyntaxTree* rightSideExprNode = childOperatorNode->getChildren()[1];
                 
                 if(!operatorTerminalNode->isTerminal()){
                     ostringstream errStr;
