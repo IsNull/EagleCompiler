@@ -37,7 +37,7 @@ private:
     
     bool _omitWhiteSpaces = true;
     bool _omitNewlines = true;
-    
+    bool _omitComments = true;
     
     void init(string source);
     

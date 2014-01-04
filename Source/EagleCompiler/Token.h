@@ -38,8 +38,6 @@ enum TokenType {
     LiteralStringToggle,    // "
     StringInlineExprToggle, // %
     
-    StatementEnd,           // ;
-    
     // Comments
     
     Comment_ML_Start,       // /*
@@ -190,8 +188,6 @@ const map<TokenType, const string> TokenNames {
         {TokenType::Identifier, "IDENT"},
         {TokenType::WhiteSpace, "Whitespace"},
         {TokenType::NewLine, "NewLine"},
-    
-        {TokenType::StatementEnd, "SEMICOLON"},
     
         // Comments
         {TokenType::Comment_ML_Start,"Comment_ML_Start"},

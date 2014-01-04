@@ -59,7 +59,7 @@ private:
     /**
      * Searches the next Terminal starting at parent (recursive)
      */
-    SyntaxTree* findNextTerminalRec(SyntaxTree* parent);
+    SyntaxTree* findNextTerminalRec(SyntaxTree* parent, TokenType ignoreToken);
     SyntaxTree* findChildNonTerminal(SyntaxTree* parent, const string& name);
     SyntaxTree* findChildTerminal(SyntaxTree* parent, const TokenType token);
     SyntaxTree* findChildTerminal(SyntaxTree* parent, const string terminalName);

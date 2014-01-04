@@ -23,7 +23,7 @@ using namespace std;
  */
 const TokenMap TokenMap_Default =
 {
-    {";", TokenType::StatementEnd},
+    {";", TokenType::Semicolon},
     
     // Comments
     {"/*", TokenType::Comment_ML_Start},

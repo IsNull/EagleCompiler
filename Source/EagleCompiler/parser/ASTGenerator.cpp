@@ -325,7 +325,7 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
         DEBUGOUT <expr>
      */
     
-    SyntaxTree* nextTerminal = findNextTerminalRec(cmdNode);
+    SyntaxTree* nextTerminal = findNextTerminalRec(cmdNode, TokenType::Semicolon);
     if(nextTerminal != NULL)
     {
         switch (nextTerminal->getToken()->getType()) {
@@ -447,7 +447,7 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
             default:
             {
                 ostringstream errStr;
-                errStr << "ASTGenerator: Command -> Unexpected Token " <<  *nextTerminal->getToken();
+                errStr << "ASTGenerator:genCodeStatement Command -> Unexpected Token " <<  *nextTerminal->getToken() << "Cmd Subtree:\n" << *cmdNode;
                 throw new GrammarException(errStr.str());
             }
         }
@@ -621,19 +621,25 @@ CodeExpression* ASTGenerator::genBinrayExpression(SyntaxTree* exprNode){
 
 
 
-SyntaxTree* ASTGenerator::findNextTerminalRec(SyntaxTree* parent){
+SyntaxTree* ASTGenerator::findNextTerminalRec(SyntaxTree* parent, TokenType ignoreToken){
     
     vector<SyntaxTree*> children = parent->getChildren();
     for (int i=0; children.size() > i; i++) {
         SyntaxTree* child = children[i];
         if(child->isTerminal())
-            return child;
+        {
+            if(child->getToken()->getType() != TokenType::Semicolon){
+                
+                cout << "found terminal " << child->getToken()->getType() << " ignoring " << ignoreToken;
+                return child;
+            }
+        }
     }
     
     for (int i=0; children.size() > i; i++) {
         SyntaxTree* child = children[i];
         if(!child->isTerminal())
-            return findNextTerminalRec(child);
+            return findNextTerminalRec(child, ignoreToken);
     }
     
     return NULL;

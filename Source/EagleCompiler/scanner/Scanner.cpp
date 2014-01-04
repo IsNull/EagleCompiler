@@ -286,6 +286,11 @@ void Scanner::endToken(TokenType type, int start, int end){
     if(_omitNewlines && type == TokenType::NewLine)
         return;
     
+    // Filter Comments if desired
+    if(_omitComments && type == TokenType::Comment_Line) // || type == TokenType::Comment_ML_Start || TokenType::Comment_ML_End ))
+        return;
+    
+    
     // Extract the token string from the source data
     string tokenValue = range(start, end);
     
