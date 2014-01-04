@@ -164,7 +164,7 @@ const TokenGroupMap TokenGroups {
 
 // All binary Operators
 const list<TokenType> BinaryOperatorTokens = {
-    Operator_Not,           // !
+    //Operator_Not,           // not
     Operator_Plus,          // +
     Operator_Minus,         // -
     Operator_Div,           // div
