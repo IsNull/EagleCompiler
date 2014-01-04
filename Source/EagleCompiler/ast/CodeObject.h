@@ -9,6 +9,8 @@
 #ifndef __EagleCompiler__CodeObject__
 #define __EagleCompiler__CodeObject__
 
+#include <iostream>
+#include <sstream>
 #include <string>
 
 using namespace std;
@@ -19,6 +21,12 @@ namespace AST {
 		
 	public:
 		virtual string code() = 0;
+        virtual string toString() const { return "<CodeObject>";}
+        
+        friend std::ostream& operator<< (std::ostream& stream, const CodeObject& node) {
+            stream << node.toString();
+            return stream;
+        };
 	};
 }
 

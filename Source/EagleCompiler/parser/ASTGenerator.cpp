@@ -348,7 +348,7 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
                     statement = new CodeAssignmentStatement(lvalue, rvalue);
                 }else{
                     ostringstream errStr;
-                    errStr << "ASTGenerator: Semantic issue: Assignment LValue must be CodeExpressionFactorVariable but was " << lvalue;
+                    errStr << "ASTGenerator: Semantic issue: Assignment LValue must be of type 'CodeExpressionVariable' but was " << lvalue->toString();
                     throw new GrammarException(errStr.str());
                 }
             }
@@ -489,28 +489,54 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
             }
         }
         expr = new CodeExpressionLiteral(type, exprNode->getToken()->getValue());
+        cout << "ASTGenerator gen"<< *expr <<"\n";
     }else{
         // current node is NT
         if(!exprNode->hasChildren()){
             // Empty NT Node, means dead end
             return NULL;
         }else if(exprNode->getChildren().size() == 1){
-            // Single Child hande recursive
+            // Single Child are handled recursive
             expr = genExpression(exprNode->getChildren()[0]);
         }else{
             // Multiple children - check for specail expressions
             // such as BinaryOperators or Function calls
             
-            expr = genBinrayExpression(exprNode);
+            if(exprNode->getChildren()[0]->isTerminal()
+               && exprNode->getChildren()[0]->getToken()->getType() == TokenType::Identifier){
+                SyntaxTree* initFac = exprNode->getChildren()[1];
+                if(initFac->hasChildren()
+                   && initFac->getChildren()[0]->isTerminal()
+                   && initFac->getChildren()[0]->getToken()->getType() == TokenType::Keyword_Init){
+                    
+                    CodeVariable* var = new CodeVariable(exprNode->getChildren()[0]->getToken()->getValue(), NULL /* TYPE UNKNOWN */);
+                    expr = new CodeExpressionInitializeVariable(var);
+                }
+            }
             
             if(expr == NULL){
-                // check for other possibilities Function Call
-                
-                // TODO
-                
+                expr = genBinrayExpression(exprNode);
+            }
+            
+            // check for other possibilities Function Call
+            
+            // TODO
+            
+            if(expr == NULL){
+               // for now just fetch the first child-expression which is viable:
+                for (int i=0; exprNode->getChildren().size() > i; i++) {
+                    SyntaxTree* child = exprNode->getChildren()[i];
+                    expr = genExpression(child);
+                    if(expr != NULL) break;
+                }
             }
         }
     }
+    
+    if(expr == NULL){
+        // null
+    }
+    
     
     return expr;
 };
@@ -554,7 +580,7 @@ CodeExpression* ASTGenerator::genBinrayExpression(SyntaxTree* exprNode){
                 childOperatorNode = child;
                 break;
             }else{
-                cout << "ASTGenerator: Terminal was not expected Operator but:" << child->getChildren()[0]->getToken() << "\n";
+                cout << "ASTGenerator: Terminal was not expected Operator but:" << *child->getChildren()[0]->getToken() << "\n";
             }
         }
     }
@@ -575,42 +601,18 @@ CodeExpression* ASTGenerator::genBinrayExpression(SyntaxTree* exprNode){
         CodeExpression* leftSideExpr = genExpression(leftSideExprNode);
         CodeExpression* rightSideExpr = genExpression(rightSideExprNode);
         
-        // find now the matching binary operator expression (dydiac expr)
-        switch(operatorTerminalNode->getToken()->getType()){
-            case TokenType::Operator_Plus:
-                
-                // TODO
-                //expr = new CodeExpressionAdd(OPERATOR::PLUS, );
-                
-                break;
-                
-            case TokenType::Operator_Minus:
-                
-                break;
-                
-            case TokenType::Operator_Multiply:
-                
-                break;
-                
-            case TokenType::Operator_Div:
-                
-                break;
-                
-            case TokenType::Operator_Modulo:
-                
-                break;
-                
-                /*
-            case TokenType::Operator_Not:
-                
-                break;
-                 */
-                
-            default:
+        // find now the matching binary operator for binary-expression
+        
+        TokenType opToken = operatorTerminalNode->getToken()->getType();
+        
+        map<TokenType, BINARYOPERATOR>::const_iterator findIt =  BINARYOPERATOR_MAP.find(opToken);
+        if(findIt != BINARYOPERATOR_MAP.end()){
+            BINARYOPERATOR op = findIt->second;
+            binaryExpression = new CodeBinaryExpression(leftSideExpr, op, rightSideExpr);
+        }else{
                 ostringstream errStr;
                 errStr << "Unhandled Operator-Token: " << *operatorTerminalNode->getToken() << "\n";
                 throw new GrammarException(errStr.str());
-                break;
         }
     }
     

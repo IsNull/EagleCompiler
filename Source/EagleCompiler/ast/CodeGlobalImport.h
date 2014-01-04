@@ -30,6 +30,8 @@ namespace AST {
 		CodeVariable* getVariable() { return importParameter.getVariable(); };
 		
 		string code();
+        
+        virtual string toString() const { return "<CodeGlobalImport>";}
 	};
 }
 

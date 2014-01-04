@@ -36,6 +36,9 @@ namespace AST {
 			{ return _unaryOperator; };
 		
 		string code();
+        
+        
+        virtual string toString(){ return "CodeExpressionUnaryExpression"; }
 	};
 }
 

@@ -19,6 +19,26 @@
 using namespace std;
 using namespace AST;
 
+
+
+const map<TokenType, BINARYOPERATOR> BINARYOPERATOR_MAP = {
+    {Operator_Plus, BINARYOPERATOR::PLUS},
+    {Operator_Minus, BINARYOPERATOR::MINUS},
+    {Operator_Div, BINARYOPERATOR::DIV},
+    {Operator_Multiply, BINARYOPERATOR::TIMES},
+    {Operator_Modulo, BINARYOPERATOR::MOD},
+    {Operator_Equals,BINARYOPERATOR::EQUAL},
+    {Operator_GreaterThan, BINARYOPERATOR::GREATER},
+    {Operator_SmallerThan, BINARYOPERATOR::LESS},
+    {Operator_GreaterThanOrEqual, BINARYOPERATOR::GREATER_EQ},
+    {Operator_SmallerThanOrEqual, BINARYOPERATOR::LESS_EQ},
+    {Operator_StringConcat, BINARYOPERATOR::STR_CONCAT},
+    {Operator_BOOL_AND, BINARYOPERATOR::COND_AND},
+    {Operator_BOOL_OR, BINARYOPERATOR::COND_OR},
+    //{Operator_BOOL_CAND,},
+    //{Operator_BOOL_COR}
+};
+
 class ASTGenerator
 {
 private:

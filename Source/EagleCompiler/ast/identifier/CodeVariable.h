@@ -60,6 +60,11 @@ namespace AST {
 		CodeExpressionInitializeVariable *asInitExpression() { return _initExpression; };
 		
 		string code();
+        
+        friend std::ostream& operator<< (std::ostream& stream, const CodeVariable& node) {
+            stream << "CodeVariable";
+            return stream;
+        };
 	};
 }
 

@@ -13,6 +13,6 @@
 using namespace std;
 
 string AST::CodeExpressionLiteral::code() {
-	return _value + ":" + _type->code();
+	return _value + ":" + (_type != NULL ? _type->code() : "null");
 }
 

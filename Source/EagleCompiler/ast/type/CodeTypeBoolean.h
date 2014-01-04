@@ -22,6 +22,11 @@ namespace AST {
 	public:
 		string code();
         static CodeTypeBoolean* getInstance();
+        
+        friend std::ostream& operator<< (std::ostream& stream, const CodeTypeBoolean& node) {
+            stream << "CodeTypeBoolean";
+            return stream;
+        };
 	};
 }
 

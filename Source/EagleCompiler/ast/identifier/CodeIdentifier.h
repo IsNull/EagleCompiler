@@ -23,6 +23,11 @@ namespace AST {
 		CodeIdentifier(string name) : _name(name) { };
 		
 		string getName() { return _name; };
+        
+        friend std::ostream& operator<< (std::ostream& stream, const CodeIdentifier& node) {
+            stream << "CodeIdentifier";
+            return stream;
+        };
 	};
 }
 

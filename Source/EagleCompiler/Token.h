@@ -355,21 +355,22 @@ const TokenMap KeywordTokens =
 class Token
 {
 private:
-    TokenType _type;
-    string _value;
+    const TokenType _type;
+    const string _value;
     
     Token();
-    
-    void Init(TokenType type, string value){
-        _type = type;
-        _value = value;
-    }
     
 public:
     
     // Constructors
-    Token(TokenType type) { Init(type, ""); };
-    Token(TokenType type, string value) { Init(type, value); };
+    Token(TokenType type)    :
+    _type(type),
+    _value("") { };
+    
+    Token(TokenType type, string value)
+    :   _type(type),
+        _value(value)
+    { };
     
     /**
      * Gets the Type of this token

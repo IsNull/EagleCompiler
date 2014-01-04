@@ -12,23 +12,24 @@
 #include <string>
 
 #include "CodeExpression.h"
+#include "CodeExpressionVariable.h"
 
 using namespace std;
 
 namespace AST {
 	
 	//forward declaration
-	class CodeVariable;
+    class CodeVariable;
 	
-	class CodeExpressionInitializeVariable : public CodeExpression {
-	private:
-		CodeVariable *_variable;
+	class CodeExpressionInitializeVariable : public CodeExpressionVariable {
+
 	public:
-		CodeExpressionInitializeVariable(CodeVariable *variable) : _variable(variable) { };
-		
-		CodeVariable *getVariable() { return _variable; };
-		
+		CodeExpressionInitializeVariable(CodeVariable *variable)
+        : CodeExpressionVariable(variable) { };
+				
 		string code();
+        
+        virtual string toString(){ return "<CodeExpressionInitializeVariable>"; }
 	};
 }
 

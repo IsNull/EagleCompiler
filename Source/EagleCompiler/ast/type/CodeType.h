@@ -20,6 +20,12 @@ namespace AST {
 	private:
 		
 	public:
+        
+        
+        friend std::ostream& operator<< (std::ostream& stream, const CodeType& node) {
+            stream << "CodeType";
+            return stream;
+        };
 	};
 }
 

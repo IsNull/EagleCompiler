@@ -24,6 +24,9 @@ namespace AST {
 		CodeDeclaration(CodeIdentifier *identifier) : _identifier(identifier) { };
 		
 		CodeIdentifier *getIdentifier() { return _identifier; };
+        
+        
+        virtual string toString()const{ return "<CodeDeclaration>";}
 	};
 }
 

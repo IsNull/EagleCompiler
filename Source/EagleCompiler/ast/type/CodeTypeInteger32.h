@@ -22,6 +22,12 @@ namespace AST {
 	public:
 		string code();
         static CodeTypeInteger32* getInstance();
+        
+        
+        friend std::ostream& operator<< (std::ostream& stream, const CodeTypeInteger32& node) {
+            stream << "CodeTypeInteger32";
+            return stream;
+        };
 	};
 }
 

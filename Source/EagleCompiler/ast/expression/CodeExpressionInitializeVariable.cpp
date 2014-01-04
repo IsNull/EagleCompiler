@@ -15,6 +15,6 @@
 using namespace std;
 
 string AST::CodeExpressionInitializeVariable::code() {
-	return _variable->code() + "->init";
+	return getVariable()->code() + "->init";
 }
 

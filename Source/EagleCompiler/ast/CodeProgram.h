@@ -46,6 +46,9 @@ namespace AST {
 			{ return _progStatements; };
 		
 		string code();
+        
+        
+        virtual string toString()const{ return "<CodeProgram>";}
 	};
 }
 

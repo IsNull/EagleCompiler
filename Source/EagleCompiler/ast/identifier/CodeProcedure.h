@@ -23,6 +23,12 @@ namespace AST {
 		CodeProcedure(string name) : CodeIdentifier(name) { };
 		
 		string code();
+        
+        
+        friend std::ostream& operator<< (std::ostream& stream, const CodeProcedure& node) {
+            stream << "CodeProcedure";
+            return stream;
+        };
 	};
 }
 

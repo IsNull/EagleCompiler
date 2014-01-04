@@ -29,6 +29,9 @@ namespace AST {
 		CodeVariable *getVariable() { return _variable; };
 		
 		string code();
+        
+        virtual string toString(){ return "CodeExpressionVariable"; }
+
 	};
 }
 

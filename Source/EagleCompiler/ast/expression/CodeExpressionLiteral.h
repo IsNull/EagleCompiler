@@ -29,6 +29,8 @@ namespace AST {
 		string getValue() { return _value; };
 
 		string code();
+        
+        virtual string toString(){ return "CodeExpressionLiteral(" + _value + ")"; }
 	};
 }
 

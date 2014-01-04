@@ -62,6 +62,9 @@ namespace AST {
 			{ return _statements; };
 		
 		string code();
+        
+        
+         virtual string toString()const{ return "<CodeFunctionDeclaration>";}
 	};
 }
 

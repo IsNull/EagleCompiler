@@ -34,6 +34,8 @@ namespace AST {
 			{ return _parameters; };
 		
 		string code();
+        
+        virtual string toString(){ return "<CodeExpressionFunctionCall>"; }
 	};
 }
 

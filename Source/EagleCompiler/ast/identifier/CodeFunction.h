@@ -26,6 +26,11 @@ namespace AST {
 		CodeType *getType() { return _type; };
 
 		string code();
+        
+        friend std::ostream& operator<< (std::ostream& stream, const CodeFunction& node) {
+            stream << "CodeFunction";
+            return stream;
+        };
 	};
 }
 

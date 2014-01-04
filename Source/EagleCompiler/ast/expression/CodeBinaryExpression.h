@@ -48,6 +48,9 @@ namespace AST {
 		CodeExpression *getRightExpression() { return _right; };
 		
 		string code();
+        
+        
+        virtual string toString(){ return "<CodeBinaryExpression>"; }
 	};
 }
 
