@@ -288,7 +288,7 @@ vector<CodeExpression*> ASTGenerator::genCodeExpressionList(SyntaxTree* node){
     exprNodes.insert( exprNodes.end(), repNodes.begin(), repNodes.end() );
     
     for (int i=0; exprNodes.size() > i; i++) {
-        CodeExpression* expr = genExpresseion(exprNodes[i]);
+        CodeExpression* expr = genExpression(exprNodes[i]);
         expressions.push_back(expr);
     }
     
@@ -340,8 +340,8 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
                 SyntaxTree* lValueNode = cmdChilds[0];
                 SyntaxTree* rValueNode = cmdChilds[2];
                 
-                CodeExpression* lvalue = genExpresseion(lValueNode);
-                CodeExpression* rvalue = genExpresseion(rValueNode);
+                CodeExpression* lvalue = genExpression(lValueNode);
+                CodeExpression* rvalue = genExpression(rValueNode);
                 
                 CodeExpressionFactorVariable* v = dynamic_cast<CodeExpressionFactorVariable*>(lvalue);
                 if(v != 0) {
@@ -357,7 +357,7 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
             case TokenType::Keyword_While:
             {
                 SyntaxTree* conditionNode = cmdChilds[1];
-                CodeExpression* condition = genExpresseion(conditionNode);
+                CodeExpression* condition = genExpression(conditionNode);
                 
                 CodeWhileStatement* whileStatement = new CodeWhileStatement(condition);
                 statement = whileStatement;
@@ -406,7 +406,7 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
                     SyntaxTree* ifCmdsNode = cmdChilds[3];
                     SyntaxTree* elseCmdsNode = cmdChilds[5];
                     
-                    CodeExpression* condExpr = genExpresseion(condExprNode);
+                    CodeExpression* condExpr = genExpression(condExprNode);
                     vector<CodeStatement*> ifStatements = genCodeStatements(ifCmdsNode);
                     vector<CodeStatement*> elseStatements = genCodeStatements(elseCmdsNode);
                     
@@ -430,7 +430,7 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
             case TokenType::Command_DebugIn:
             {
                 SyntaxTree* lValueNode = cmdChilds[1];
-                CodeExpression* lvalue = genExpresseion(lValueNode);
+                CodeExpression* lvalue = genExpression(lValueNode);
                 statement = new CodeInputStatement(lvalue);
             }
                 break;
@@ -438,7 +438,7 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
             case TokenType::Command_DebugOut:
             {
                 SyntaxTree* exprNode = cmdChilds[1];
-                CodeExpression* expr = genExpresseion(exprNode);
+                CodeExpression* expr = genExpression(exprNode);
                 statement = new CodeOutputStatment(expr);
             }
                 break;
@@ -455,7 +455,12 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
     return statement;
 };
 
-CodeExpression* ASTGenerator::genExpresseion(SyntaxTree* exprNode){
+CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
+    
+    static int MAX_DEPTH = 30;
+    
+    CodeExpression* expr = NULL;
+    
     // TODO generate expression
     
     /*
@@ -466,8 +471,124 @@ CodeExpression* ASTGenerator::genExpresseion(SyntaxTree* exprNode){
         CodeExpressionFactorInitialize();
     }*/
     
-    return NULL;
+    //SyntaxTree* node = findRecursiveNonTerminal(exprNode, "TERM3", MAX_DEPTH);
+    //SyntaxTree* addExpr = findChildNonTerminal(node, "REPADDOPRTERM3");
+    
+    
+    if(exprNode->isTerminal()){
+        CodeType* type = NULL;
+        if(exprNode->getTerminal()->getName() == "LITERAL")
+        {
+            // CodeExpressionFactorLiteral(CodeType *type, string value)
+            switch(exprNode->getToken()->getType()){
+                case TokenType::Literal_Number:
+                    type = CodeTypeInteger32::getInstance();
+                    break;
+                    
+                case TokenType::Literal_String:
+                    type = CodeTypeString::getInstance();
+                    break;
+                    
+                case TokenType::Literal_True:
+                case TokenType::Literal_False:
+                    
+                    type = CodeTypeBoolean::getInstance();
+                    break;
+                    
+                    default:
+                    ostringstream errStr;
+                    errStr << "Unknown Literal Type: " << *exprNode->getToken();
+                    throw new GrammarException(errStr.str());
+                    break;
+            }
+        }
+        expr = new CodeExpressionFactorLiteral(type, exprNode->getToken()->getValue());
+    }else{
+        // current node is NT
+        if(!exprNode->hasChildren()){
+            // Empty NT Node
+            return NULL;
+        }else if(exprNode->getChildren().size() == 1){
+            expr = genExpression(exprNode->getChildren()[0]);
+        }else{
+            
+            vector<string> operatorNTs = { "REPADDOPRTERM3", "REPMULTOPRFACTOR" };
+            
+            // Check for binary Operator nodes
+            SyntaxTree* oprNode = NULL;
+            for(int i=0;operatorNTs.size()>i;i++){
+                oprNode = findChildNonTerminal(exprNode, operatorNTs[i]);
+                if(oprNode != NULL && oprNode->getChildren().size() > 1){
+                    // Case ADD/MIN node
+                    break;
+                }else{
+                    oprNode = NULL;
+                }
+            }
+            
+            if(oprNode != NULL){
+                
+                SyntaxTree* leftSideExprNode = exprNode->getChildren()[0];
+                SyntaxTree* operatorTerminalNode = oprNode->getChildren()[0];
+                SyntaxTree* rightSideExprNode = oprNode->getChildren()[1];
+                
+                if(!operatorTerminalNode->isTerminal()){
+                    ostringstream errStr;
+                    errStr << "Expected node to be Operator TERMINAL but was: " << *operatorTerminalNode->getNonTerminal() << "\n";
+                    throw new GrammarException(errStr.str());
+                }
+                
+                // find now the matching binary operator expression (dydiac expr)
+                switch(operatorTerminalNode->getToken()->getType()){
+                    case TokenType::Operator_Plus:
+                        
+                        // TODO
+                        //expr = new CodeExpressionAdd(ADDOPERATOR::PLUS, );
+                        
+                        break;
+                        
+                    case TokenType::Operator_Minus:
+                        
+                        break;
+                        
+                    case TokenType::Operator_Multiply:
+                        
+                        break;
+                        
+                    case TokenType::Operator_Div:
+                        
+                        break;
+                        
+                    case TokenType::Operator_Modulo:
+                        
+                        break;
+                        
+                    case TokenType::Operator_Not:
+                        
+                        break;
+                        
+                        default:
+                        ostringstream errStr;
+                        errStr << "Unhandled Operator-Token: " << *operatorTerminalNode->getToken() << "\n";
+                        throw new GrammarException(errStr.str());
+                        break;
+                        
+                }
+                
+                
+                
+                
+            }
+
+        }
+    }
+    
+    return expr;
 };
+
+
+
+
 
 SyntaxTree* ASTGenerator::findNextTerminalRec(SyntaxTree* parent){
     

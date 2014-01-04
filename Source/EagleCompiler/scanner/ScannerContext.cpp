@@ -120,7 +120,7 @@ TokenType ScannerContextDefault::stepRangeInternal(int start, int end){
         
         if(_scanner->isNumber(start, end))
         {
-            rangeTokenType = TokenType::LiteralNumber;
+            rangeTokenType = TokenType::Literal_Number;
         }else if(_scanner->isIdentifier(start, end)){
             rangeTokenType = TokenType::Identifier;
         }else if(_scanner->isWhiteSpace(start, end)){
@@ -143,7 +143,7 @@ KnownScannerState ScannerContextDefault::mapNextState(TokenType token){
             return KnownScannerState::MultiLineComment;
             break;
             
-        case TokenType::LiteralString:
+        case TokenType::Literal_String:
             return KnownScannerState::LiteralString;
             break;
             
@@ -266,7 +266,7 @@ TokenType ScannerContextLiteralStringExpression::stepRangeInternal(int start, in
         
         if(_scanner->isNumber(start, end))
         {
-            rangeTokenType = TokenType::LiteralNumber;
+            rangeTokenType = TokenType::Literal_Number;
         }else if(_scanner->isIdentifier(start, end)){
             rangeTokenType = TokenType::Identifier;
         }else if(_scanner->isWhiteSpace(start, end)){

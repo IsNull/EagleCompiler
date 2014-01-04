@@ -29,8 +29,12 @@ enum TokenType {
     
     Identifier,             // abc | abc12
     
-    LiteralNumber,          // 123 | 0xFF
-    LiteralString,          // normal text
+    Literal_Number,          // 123 | 0xFF
+    Literal_String,          // normal text
+    Literal_True,
+    Literal_False,
+    
+    // specail markers
     LiteralStringToggle,    // "
     StringInlineExprToggle, // %
     
@@ -109,8 +113,7 @@ enum TokenType {
     Keyword_Return,         // returns
     
     // ...
-    Keyword_True,
-    Keyword_False,
+
     
     Type_Int,
     Type_Bool,
@@ -139,7 +142,7 @@ typedef map<TokenType, list<TokenType>> TokenGroupMap;
 const TokenGroupMap TokenGroups {
     
     {TokenType::Group_Literal,
-        { TokenType::Keyword_True, TokenType::Keyword_False, TokenType::LiteralNumber, TokenType::LiteralString } },
+        { TokenType::Literal_True, TokenType::Literal_False, TokenType::Literal_Number, TokenType::Literal_String } },
     {TokenType::Group_Type,
         { TokenType::Type_Int, TokenType::Type_Bool, TokenType::Type_String } },
     {TokenType::Group_Flowmode,
@@ -151,7 +154,7 @@ const TokenGroupMap TokenGroups {
     {TokenType::Group_AddOpr,
         { TokenType::Operator_Plus, TokenType::Operator_Minus } },
     {TokenType::Group_MultOpr,
-        { TokenType::Operator_Multiply, TokenType::Operator_Div } },
+        { TokenType::Operator_Multiply, TokenType::Operator_Div, TokenType::Operator_Modulo } },
     {TokenType::Group_RelOpr,
         {TokenType::Operator_Equals, TokenType::Operator_GreaterThan,TokenType::Operator_SmallerThan,TokenType::Operator_GreaterThanOrEqual,TokenType::Operator_SmallerThanOrEqual} },
     {TokenType::Group_BoolOpr,
@@ -260,10 +263,10 @@ const map<TokenType, const string> TokenNames {
     
         // Literal values
         {TokenType::Group_Literal, "LITERAL"},
-        {TokenType::Keyword_True, "LITERAL_TRUE"},
-        {TokenType::Keyword_False,"LITERAL_FALSE"},
-        {TokenType::LiteralNumber, "LITERAL_Number"},
-        {TokenType::LiteralString, "LITERAL_String"},
+        {TokenType::Literal_True, "LITERAL_TRUE"},
+        {TokenType::Literal_False,"LITERAL_FALSE"},
+        {TokenType::Literal_Number, "LITERAL_Number"},
+        {TokenType::Literal_String, "LITERAL_String"},
     };
 
 
@@ -320,8 +323,8 @@ const TokenMap KeywordTokens =
     {"string",TokenType::Type_String},
     
     // Literals
-    {"true", TokenType::Keyword_True},
-    {"false", TokenType::Keyword_False}
+    {"true", TokenType::Literal_True},
+    {"false", TokenType::Literal_False}
 };
 
 /**
