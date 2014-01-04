@@ -1,5 +1,5 @@
 //
-//  CodeExpressionFactorInitialize.cpp
+//  CodeExpressionInitializeVariable.cpp
 //  EagleCompiler
 //
 //  Created by Samuel Stachelski on 2013-12-30.
@@ -8,11 +8,13 @@
 
 #include <string.h>
 
-#include "CodeExpressionFactorInitialize.h"
+#include "CodeExpressionInitializeVariable.h"
+#include "../identifier/CodeVariable.h"
+
 
 using namespace std;
 
-string AST::CodeExpressionFactorInitialize::code() {
+string AST::CodeExpressionInitializeVariable::code() {
 	return _variable->code() + "->init";
 }
 

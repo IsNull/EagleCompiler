@@ -1,5 +1,5 @@
 //
-//  CodeExpressionFactorFunctionCall.cpp
+//  CodeExpressionFunctionCall.cpp
 //  EagleCompiler
 //
 //  Created by Samuel Stachelski on 2013-12-30.
@@ -8,11 +8,11 @@
 
 #include <string.h>
 
-#include "CodeExpressionFactorFunctionCall.h"
+#include "CodeExpressionFunctionCall.h"
 
 using namespace std;
 
-string AST::CodeExpressionFactorFunctionCall::code() {
+string AST::CodeExpressionFunctionCall::code() {
 	string params;
 	for(auto e : _parameters) {
 		params += e->code() + ",";

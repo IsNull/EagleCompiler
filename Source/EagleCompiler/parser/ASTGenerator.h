@@ -12,7 +12,7 @@
 #include <iostream>
 #include <string>
 #include "Parser.h"
-#include "AST.h"
+#include "../ast/AST.h"
 
 // TODO
 

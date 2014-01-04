@@ -1,5 +1,5 @@
 //
-//  CodeExpressionFactorVariable.cpp
+//  CodeExpressionVariable.cpp
 //  EagleCompiler
 //
 //  Created by Samuel Stachelski on 2013-12-30.
@@ -8,11 +8,13 @@
 
 #include <string.h>
 
-#include "CodeExpressionFactorVariable.h"
+#include "CodeExpressionVariable.h"
+#include "../identifier/CodeVariable.h"
+
 
 using namespace std;
 
-string AST::CodeExpressionFactorVariable::code() {
+string AST::CodeExpressionVariable::code() {
 	return _variable->code();
 }
 

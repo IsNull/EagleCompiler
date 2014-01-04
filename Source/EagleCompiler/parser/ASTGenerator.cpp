@@ -9,10 +9,10 @@
 #include "ASTGenerator.h"
 #include <string>
 #include <vector>
-#include "CodeType.h"
-#include "CodeTypeBoolean.h"
-#include "CodeTypeInteger32.h"
-#include "CodeTypeString.h"
+#include "../ast/type/CodeType.h"
+#include "../ast/type/CodeTypeBoolean.h"
+#include "../ast/type/CodeTypeInteger32.h"
+#include "../ast/type/CodeTypeString.h"
 
 
 CodeProcedureDeclaration* ASTGenerator::genProcedureDecl(SyntaxTree* procDeclNode){
@@ -343,7 +343,7 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
                 CodeExpression* lvalue = genExpression(lValueNode);
                 CodeExpression* rvalue = genExpression(rValueNode);
                 
-                CodeExpressionFactorVariable* v = dynamic_cast<CodeExpressionFactorVariable*>(lvalue);
+                CodeExpressionVariable* v = dynamic_cast<CodeExpressionVariable*>(lvalue);
                 if(v != 0) {
                     statement = new CodeAssignmentStatement(lvalue, rvalue);
                 }else{
@@ -502,7 +502,7 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                     break;
             }
         }
-        expr = new CodeExpressionFactorLiteral(type, exprNode->getToken()->getValue());
+        expr = new CodeExpressionLiteral(type, exprNode->getToken()->getValue());
     }else{
         // current node is NT
         if(!exprNode->hasChildren()){

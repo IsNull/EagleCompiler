@@ -1,5 +1,5 @@
 //
-//  CodeExpressionFactorInititialize.cpp
+//  CodeExpressionLiteral.cpp
 //  EagleCompiler
 //
 //  Created by Samuel Stachelski on 2013-12-30.
@@ -8,6 +8,11 @@
 
 #include <string.h>
 
-#include "CodeExpressionFactor.h"
+#include "CodeExpressionLiteral.h"
 
 using namespace std;
+
+string AST::CodeExpressionLiteral::code() {
+	return _value + ":" + _type->code();
+}
+

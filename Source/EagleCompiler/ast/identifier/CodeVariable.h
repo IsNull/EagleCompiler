@@ -14,11 +14,13 @@
 
 #include "CodeIdentifier.h"
 #include "../type/CodeType.h"
+#include "../expression/CodeExpressionVariable.h"
+#include "../expression/CodeExpressionInitializeVariable.h"
 
 using namespace std;
 
 namespace AST {
-	
+		
 	enum class FLOWMODE {
 		EMPTY,
 		IN,
@@ -45,10 +47,17 @@ namespace AST {
 	class CodeVariable : public CodeIdentifier {
 	private:
 		CodeType *_type;
+		CodeExpressionVariable *_expression;
+		CodeExpressionInitializeVariable *_initExpression;
 	public:
-		CodeVariable(string name, CodeType *type) : CodeIdentifier(name), _type(type) { };
+		CodeVariable(string name, CodeType *type) : 
+			CodeIdentifier(name), _type(type), 
+			_expression( new CodeExpressionVariable(this)),
+			_initExpression(new CodeExpressionInitializeVariable(this)) { };
 		
 		CodeType *getType() { return _type; };
+		CodeExpressionVariable *asExpression() { return _expression; };
+		CodeExpressionInitializeVariable *asInitExpression() { return _initExpression; };
 		
 		string code();
 	};
