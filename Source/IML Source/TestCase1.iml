@@ -3,6 +3,8 @@ program
 
 	do
 
+		x init := -1 + 2;
+
 		m init := ((0 + 2) - 10);
 
 		z init := 10 * cool(m+2, 2);
