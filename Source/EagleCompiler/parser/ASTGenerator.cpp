@@ -461,20 +461,6 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
     
     CodeExpression* expr = NULL;
     
-    // TODO generate expression
-    
-    /*
-    CodeVariable* id = new CodeVariable(nextTerminal->getToken()->getValue(), NULL); // TODO Type???
-    CodeExpression* lvalue = new CodeExpressionFactorVariable(id);
-    
-    if(){
-        CodeExpressionFactorInitialize();
-    }*/
-    
-    //SyntaxTree* node = findRecursiveNonTerminal(exprNode, "TERM3", MAX_DEPTH);
-    //SyntaxTree* addExpr = findChildNonTerminal(node, "REPADDOPRTERM3");
-    
-    
     if(exprNode->isTerminal()){
         CodeType* type = NULL;
         if(exprNode->getTerminal()->getName() == "LITERAL")
@@ -515,108 +501,121 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
             // Multiple children - check for specail expressions
             // such as BinaryOperators or Function calls
             
-            /*
-             [TERM2]
-                [TERM3]
-                    [FACTOR]
-                        LITERAL [LITERAL_Number,0]
-                    [REPMULTOPRFACTOR]
-                [REPADDOPRTERM3]
-                    ADDOPR [ADDOPR_PLUS,+]
-                    [TERM3]
-                        [FACTOR]
-                            LITERAL [LITERAL_Number,2]
-                        [REPMULTOPRFACTOR]
-                [REPADDOPRTERM3]
-             [OPTRELOPRTERM2]
-             */
+            expr = genBinrayExpression(exprNode);
             
-            // this (exprNode) would be [TERM2]
-            // childOperatorNode should then be found as [REPADDOPRTERM3]
-            
-            SyntaxTree* childOperatorNode = NULL;
-            
-            for (int i=0; exprNode->getChildren().size() > i; i++) {
-                SyntaxTree* child = exprNode->getChildren()[i];
+            if(expr == NULL){
+                // check for other possibilities Function Call
                 
-                // check now if child has a Operator-Terminal Child on first slot
-                
-                if(child->hasChildren() && child->getChildren()[0]->isTerminal()){
-                    TokenType type = child->getChildren()[0]->getToken()->getType();
-                    
-                    list<TokenType>::const_iterator findIter = std::find(BinaryOperatorTokens.begin(), BinaryOperatorTokens.end(), type);
-                    if(findIter != BinaryOperatorTokens.end()){
-                        // found!!
-                        childOperatorNode = child;
-                        break;
-                    }else{
-                        cout << "ASTGenerator: Terminal was not expected Operator but:" << child->getChildren()[0]->getToken() << "\n";
-                    }
-                }
-            }
-            
-            if(childOperatorNode != NULL){
-                // found an binary operator. Build binary expression
-                
-                SyntaxTree* leftSideExprNode = exprNode->getChildren()[0];
-                SyntaxTree* operatorTerminalNode = childOperatorNode->getChildren()[0];
-                SyntaxTree* rightSideExprNode = childOperatorNode->getChildren()[1];
-                
-                if(!operatorTerminalNode->isTerminal()){
-                    ostringstream errStr;
-                    errStr << "Expected node to be Operator TERMINAL but was: " << *operatorTerminalNode->getNonTerminal() << "\n";
-                    throw new GrammarException(errStr.str());
-                }
-                
-                // find now the matching binary operator expression (dydiac expr)
-                switch(operatorTerminalNode->getToken()->getType()){
-                    case TokenType::Operator_Plus:
-                        
-                        // TODO
-                        //expr = new CodeExpressionAdd(ADDOPERATOR::PLUS, );
-                        
-                        break;
-                        
-                    case TokenType::Operator_Minus:
-                        
-                        break;
-                        
-                    case TokenType::Operator_Multiply:
-                        
-                        break;
-                        
-                    case TokenType::Operator_Div:
-                        
-                        break;
-                        
-                    case TokenType::Operator_Modulo:
-                        
-                        break;
-                        
-                    case TokenType::Operator_Not:
-                        
-                        break;
-                        
-                        default:
-                        ostringstream errStr;
-                        errStr << "Unhandled Operator-Token: " << *operatorTerminalNode->getToken() << "\n";
-                        throw new GrammarException(errStr.str());
-                        break;
-                        
-                }
-                
-                
-                
+                // TODO
                 
             }
-
         }
     }
     
     return expr;
 };
 
-
+CodeExpression* ASTGenerator::genBinrayExpression(SyntaxTree* exprNode){
+    
+    CodeExpression* binaryExpression = NULL;
+    
+    /*
+     [TERM2]
+     [TERM3]
+     [FACTOR]
+     LITERAL [LITERAL_Number,0]
+     [REPMULTOPRFACTOR]
+     [REPADDOPRTERM3]
+     ADDOPR [ADDOPR_PLUS,+]
+     [TERM3]
+     [FACTOR]
+     LITERAL [LITERAL_Number,2]
+     [REPMULTOPRFACTOR]
+     [REPADDOPRTERM3]
+     [OPTRELOPRTERM2]
+     */
+    
+    // this (exprNode) would be [TERM2]
+    // childOperatorNode should then be found as [REPADDOPRTERM3]
+    
+    SyntaxTree* childOperatorNode = NULL;
+    
+    for (int i=0; exprNode->getChildren().size() > i; i++) {
+        SyntaxTree* child = exprNode->getChildren()[i];
+        
+        // check now if child has a Operator-Terminal Child on first slot
+        
+        if(child->hasChildren() && child->getChildren()[0]->isTerminal()){
+            TokenType type = child->getChildren()[0]->getToken()->getType();
+            
+            list<TokenType>::const_iterator findIter = std::find(BinaryOperatorTokens.begin(), BinaryOperatorTokens.end(), type);
+            if(findIter != BinaryOperatorTokens.end()){
+                // found!!
+                childOperatorNode = child;
+                break;
+            }else{
+                cout << "ASTGenerator: Terminal was not expected Operator but:" << child->getChildren()[0]->getToken() << "\n";
+            }
+        }
+    }
+    
+    if(childOperatorNode != NULL){
+        // found an binary operator. Build binary expression
+        
+        SyntaxTree* leftSideExprNode = exprNode->getChildren()[0];
+        SyntaxTree* operatorTerminalNode = childOperatorNode->getChildren()[0];
+        SyntaxTree* rightSideExprNode = childOperatorNode->getChildren()[1];
+        
+        if(!operatorTerminalNode->isTerminal()){
+            ostringstream errStr;
+            errStr << "Expected node to be Operator TERMINAL but was: " << *operatorTerminalNode->getNonTerminal() << "\n";
+            throw new GrammarException(errStr.str());
+        }
+        
+        CodeExpression* leftSideExpr = genExpression(leftSideExprNode);
+        CodeExpression* rightSideExpr = genExpression(rightSideExprNode);
+        
+        // find now the matching binary operator expression (dydiac expr)
+        switch(operatorTerminalNode->getToken()->getType()){
+            case TokenType::Operator_Plus:
+                
+                // TODO
+                //expr = new CodeExpressionAdd(OPERATOR::PLUS, );
+                
+                break;
+                
+            case TokenType::Operator_Minus:
+                
+                break;
+                
+            case TokenType::Operator_Multiply:
+                
+                break;
+                
+            case TokenType::Operator_Div:
+                
+                break;
+                
+            case TokenType::Operator_Modulo:
+                
+                break;
+                
+                /*
+            case TokenType::Operator_Not:
+                
+                break;
+                 */
+                
+            default:
+                ostringstream errStr;
+                errStr << "Unhandled Operator-Token: " << *operatorTerminalNode->getToken() << "\n";
+                throw new GrammarException(errStr.str());
+                break;
+        }
+    }
+    
+    return binaryExpression;
+}
 
 
 

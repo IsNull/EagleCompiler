@@ -27,6 +27,7 @@ private:
     CodeType* genCodeType(SyntaxTree* atomTypeNode);
     CodeParameter* genCodeParameter(SyntaxTree* node);
     CodeExpression* genExpression(SyntaxTree* exprNode);
+    CodeExpression* genBinrayExpression(SyntaxTree* exprNode);
 
     vector<CodeExpression*> genCodeExpressionList(SyntaxTree* node);
     vector<CodeParameter*> genCodeParameters(SyntaxTree* node);
