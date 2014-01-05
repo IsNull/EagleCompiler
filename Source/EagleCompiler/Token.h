@@ -53,9 +53,9 @@ enum TokenType {
     Bracked_Square_Close,   // ]
     
     Operator_Assignment,    // :=
+    Operator_Not,           // !
     
     // Binary Operators
-    Operator_Not,           // !
     Operator_Plus,          // +
     Operator_Minus,         // -
     Operator_Div,           // div
@@ -206,6 +206,8 @@ const map<TokenType, const string> TokenNames {
         {TokenType::Operator_Not, "NOT"},
         {TokenType::Operator_Assignment,"BECOMES"},
     
+        {TokenType::Operator_StringConcat,"STRCONCATOPR"},
+
         {TokenType::Group_AddOpr,"ADDOPR"},
         {TokenType::Operator_Plus,"ADDOPR_PLUS"},
         {TokenType::Operator_Minus,"ADDOPR_MINUS"},

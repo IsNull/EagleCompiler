@@ -87,15 +87,18 @@ TokenList* Scanner::scan(string source){
     
     while (true) {
         
+        TokenType rollingToken;
+        
         if(_contextState->nextState() != _contextState->getState()){
             cout << "\t>>>\t\tSwitching state to: " << _contextState->nextState() << " <<<\n";
             setContext(_contextState->nextState());
             cout << "\t>>>\t\tContext is now " << _contextState->getState() << " <<<\n";
 
+            tokenStart = tokenEnd;
         }
         
         
-        TokenType rollingToken = isToken(tokenStart, tokenEnd);
+       rollingToken = isToken(tokenStart, tokenEnd);
         
         
         
@@ -116,7 +119,7 @@ TokenList* Scanner::scan(string source){
                     _currentType = TokenType::None;
                 }else{
 
-                    cout << "ERROR UNEXPECTED SIGN: '" + range(tokenStart, tokenEnd) + "' (no Token matches)\n";
+                    cout << "ERROR UNEXPECTED SIGN: '" + range(tokenStart, tokenEnd) + "' (no Token matches) Context: " << _contextState->getState() << "\n";
                     
                     // ignore unknown tokes (alternatively, just throw an exception here... but thats lazy u know :) )
                     // just advance scan range +1

@@ -45,7 +45,7 @@ const TokenMap TokenMap_Default =
     {"&", TokenType::Operator_StringConcat},
     
     {"%", TokenType::StringInlineExprToggle},
-    {"""", TokenType::LiteralStringToggle},
+    {"\"", TokenType::LiteralStringToggle},
     
     {":", TokenType::Colon},
     {",", TokenType::Comma},
@@ -72,7 +72,7 @@ const TokenMap TokenMap_MlComment =
 const TokenMap TokenMap_LiteralString =
 {
     {"%", TokenType::StringInlineExprToggle},
-    {"""", TokenType::LiteralStringToggle}
+    {"\"", TokenType::LiteralStringToggle}
 };
 
 
@@ -143,7 +143,7 @@ KnownScannerState ScannerContextDefault::mapNextState(TokenType token){
             return KnownScannerState::MultiLineComment;
             break;
             
-        case TokenType::Literal_String:
+        case TokenType::LiteralStringToggle:
             return KnownScannerState::LiteralString;
             break;
             
@@ -223,9 +223,24 @@ KnownScannerState ScannerContextMultiLineComment::mapNextState(TokenType token){
 
 TokenType ScannerContextLiteralString::stepRangeInternal(int start, int end){
     
+    
+    //string str = _scanner->range(start, end);
+    //cout << "Scanner: LieralString looking up: " << str << "\n";
+    
     TokenType rangeTokenType = lookupToken(start, end, TokenMap_LiteralString);
     
     // TODO handle two %% escape sequence and overwrite token with NONE
+    
+    // no simple token found.
+    
+    if(rangeTokenType == TokenType::None){
+        
+        string str = _scanner->range(end, end);
+        if(str[0] != '"'){
+            rangeTokenType = TokenType::Literal_String;
+        }
+    }
+    
     
     return rangeTokenType;
 };

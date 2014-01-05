@@ -8,7 +8,7 @@ program
 		while i > 5
 		do
 			t := t + i * 2;
-			debugout t
+			debugout t & "Test"
 		endwhile;
 
 
