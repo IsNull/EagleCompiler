@@ -324,8 +324,17 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
      terminal DEBUGOUT
         DEBUGOUT <expr>
      */
+    SyntaxTree* nextTerminal = NULL;
+    for(int i=0; cmdChilds.size() > i; i++){
+        if(cmdChilds[i]->isTerminal()){
+            const Token* tok = cmdChilds[i]->getToken();
+            if(tok->getType() != TokenType::Semicolon)
+                nextTerminal = cmdChilds[i];
+            break;
+        }
+    }
     
-    SyntaxTree* nextTerminal = findNextTerminalRec(cmdNode, TokenType::Semicolon);
+    
     if(nextTerminal != NULL)
     {
         switch (nextTerminal->getToken()->getType()) {
@@ -348,7 +357,11 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
                     statement = new CodeAssignmentStatement(lvalue, rvalue);
                 }else{
                     ostringstream errStr;
-                    errStr << "ASTGenerator: Semantic issue: Assignment LValue must be of type 'CodeExpressionVariable' but was " << lvalue->toString();
+                    errStr << "ASTGenerator: Semantic issue: Assignment LValue must be of type 'CodeExpressionVariable' but was "
+                    << ((lvalue != NULL) ? lvalue->toString() : "<null>\n");
+                    
+                    errStr << "LValue-Node:\n" << *lValueNode;
+                    
                     throw new GrammarException(errStr.str());
                 }
             }
@@ -462,9 +475,11 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
     CodeExpression* expr = NULL;
     
     if(exprNode->isTerminal()){
-        CodeType* type = NULL;
+        
         if(exprNode->getTerminal()->getName() == "LITERAL")
         {
+            CodeType* type = NULL;
+            
             // CodeExpressionFactorLiteral(CodeType *type, string value)
             switch(exprNode->getToken()->getType()){
                 case TokenType::Literal_Number:
@@ -487,9 +502,12 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                     throw new GrammarException(errStr.str());
                     break;
             }
+            
+            
+            expr = new CodeExpressionLiteral(type, exprNode->getToken()->getValue());
+            cout << "ASTGenerator generated: "<< expr->toString() <<"\n";
         }
-        expr = new CodeExpressionLiteral(type, exprNode->getToken()->getValue());
-        cout << "ASTGenerator gen"<< *expr <<"\n";
+
     }else{
         // current node is NT
         if(!exprNode->hasChildren()){
@@ -502,14 +520,23 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
             // Multiple children - check for specail expressions
             // such as BinaryOperators or Function calls
             
-            if(exprNode->getChildren()[0]->isTerminal()
-               && exprNode->getChildren()[0]->getToken()->getType() == TokenType::Identifier){
-                SyntaxTree* initFac = exprNode->getChildren()[1];
-                if(initFac->hasChildren()
-                   && initFac->getChildren()[0]->isTerminal()
-                   && initFac->getChildren()[0]->getToken()->getType() == TokenType::Keyword_Init){
+            SyntaxTree* firstChild = exprNode->getChildren()[0];
+            
+            if(firstChild->isTerminal()
+               && firstChild->getToken()->getType() == TokenType::Identifier){
+                
+                SyntaxTree* secondChild = exprNode->getChildren()[1];
+                
+                if(secondChild->getNonTerminal()->getName() == "IDENTFACTOR"){
+                
+                    CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), NULL /* TYPE UNKNOWN */);
+                    expr = new CodeExpressionVariable(var);
                     
-                    CodeVariable* var = new CodeVariable(exprNode->getChildren()[0]->getToken()->getValue(), NULL /* TYPE UNKNOWN */);
+                }else if(secondChild->hasChildren()
+                   && secondChild->getChildren()[0]->isTerminal()
+                   && secondChild->getChildren()[0]->getToken()->getType() == TokenType::Keyword_Init){
+                    
+                    CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), NULL /* TYPE UNKNOWN */);
                     expr = new CodeExpressionInitializeVariable(var);
                 }
             }
@@ -580,7 +607,7 @@ CodeExpression* ASTGenerator::genBinrayExpression(SyntaxTree* exprNode){
                 childOperatorNode = child;
                 break;
             }else{
-                cout << "ASTGenerator: Terminal was not expected Operator but:" << *child->getChildren()[0]->getToken() << "\n";
+                //cout << "ASTGenerator: Expected Binary-OperatorTerminal but was: " << *child->getChildren()[0]->getToken() << "\n" << *exprNode << "\n";
             }
         }
     }
@@ -628,9 +655,7 @@ SyntaxTree* ASTGenerator::findNextTerminalRec(SyntaxTree* parent, TokenType igno
         SyntaxTree* child = children[i];
         if(child->isTerminal())
         {
-            if(child->getToken()->getType() != TokenType::Semicolon){
-                
-                cout << "found terminal " << child->getToken()->getType() << " ignoring " << ignoreToken;
+            if(child->getToken()->getType() != ignoreToken){
                 return child;
             }
         }
@@ -645,18 +670,44 @@ SyntaxTree* ASTGenerator::findNextTerminalRec(SyntaxTree* parent, TokenType igno
     return NULL;
 };
 
+vector<SyntaxTree*> ASTGenerator::findCommandNodes(SyntaxTree* node){
+    vector<SyntaxTree*> statementNodes;
+    
+    if(node->hasChildren()){
+        
+        vector<SyntaxTree*> childs = node->getChildren();
+        
+        for (int i=0; childs.size() > i; i++) {
+            SyntaxTree* possibleCmd = childs[i];
+            
+            if(!possibleCmd->isTerminal()){
+                if(possibleCmd->getNonTerminal()->getName() == "CMD"
+                   || possibleCmd->getNonTerminal()->getName() == "REPCMD"){
+                    
+                    statementNodes.push_back(possibleCmd);
+                    
+                    vector<SyntaxTree*> subCmds = findCommandNodes(possibleCmd);
+                    statementNodes.insert( statementNodes.end(), subCmds.begin(), subCmds.end() );
+                }
+            }
+        }
+        
+    }
+    
+
+    return statementNodes;
+};
 
 vector<CodeStatement*> ASTGenerator::genCodeStatements(SyntaxTree* node){
     vector<CodeStatement*> statements;
     
-    vector<SyntaxTree*> statementNodes = findAllNonTerminals(node, "CMD");
-    vector<SyntaxTree*> repNodes = findAllNonTerminals(node, "REPCMD");
-    // concat the two lists
-    statementNodes.insert( statementNodes.end(), repNodes.begin(), repNodes.end() );
+    vector<SyntaxTree*> statementNodes = findCommandNodes(node);
+    
+    cout << "ASTGenerator: found " << statementNodes.size() << " Statements\n";
     
     for (int i=0; statementNodes.size() > i; i++) {
         CodeStatement* statement = genCodeStatement(statementNodes[i]);
-        statements.push_back(statement);
+        if(statement != NULL) statements.push_back(statement);
     }
     
     return statements;

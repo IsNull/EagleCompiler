@@ -3,12 +3,19 @@ program
 
 	do
 
+		i init := 0;
+		t init := 0;
+		while i > 5
+		do
+			t := t + i * 2;
+			debugout t
+		endwhile;
+
+
 		//x init := -1 + 2;
 		//z init := 10 * cool(m+2, 2);
-
 		m init := ((0 + 2) - 10);
 		r init := m mod 5;
-
 		debugout (r + (10 * m)) * r
 
 endprogram

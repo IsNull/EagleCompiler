@@ -49,6 +49,8 @@ private:
     CodeExpression* genExpression(SyntaxTree* exprNode);
     CodeExpression* genBinrayExpression(SyntaxTree* exprNode);
 
+    vector<SyntaxTree*> findCommandNodes(SyntaxTree* cmdNode);
+    
     vector<CodeExpression*> genCodeExpressionList(SyntaxTree* node);
     vector<CodeParameter*> genCodeParameters(SyntaxTree* node);
     vector<CodeStatement*> genCodeStatements(SyntaxTree* node);
