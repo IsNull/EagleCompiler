@@ -29,7 +29,7 @@ ostream& operator<<(ostream& o, KnownScannerState t){
             break;
             
         case KnownScannerState::LiteralStringExpression:
-            o << "LiteralString";
+            o << "LiteralStringExpression";
             break;
             
         default:

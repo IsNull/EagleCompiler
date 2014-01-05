@@ -236,7 +236,7 @@ TokenType ScannerContextLiteralString::stepRangeInternal(int start, int end){
     if(rangeTokenType == TokenType::None){
         
         string str = _scanner->range(end, end);
-        if(str[0] != '"'){
+        if(str[0] != '"' && str[0] != '%'){
             rangeTokenType = TokenType::Literal_String;
         }
     }
@@ -249,10 +249,11 @@ TokenType ScannerContextLiteralString::stepRangeInternal(int start, int end){
 KnownScannerState ScannerContextLiteralString::mapNextState(TokenType token){
     switch (token) {
         case TokenType::LiteralStringToggle: // Literal string is finished
-            return _previousContext;
+            return KnownScannerState::Default;
             break;
             
         case TokenType::StringInlineExprToggle: // Literal string inline expression starts
+            _scanner->emitToken(new Token(TokenType::Operator_StringConcat));
             return KnownScannerState::LiteralStringExpression;
             break;
             
@@ -296,9 +297,11 @@ TokenType ScannerContextLiteralStringExpression::stepRangeInternal(int start, in
 
 
 KnownScannerState ScannerContextLiteralStringExpression::mapNextState(TokenType token){
+    
     switch (token) {
             
         case TokenType::StringInlineExprToggle: // Literal string inline expression ends here
+            _scanner->emitToken(new Token(TokenType::Operator_StringConcat));
             return KnownScannerState::LiteralString;
             break;
             

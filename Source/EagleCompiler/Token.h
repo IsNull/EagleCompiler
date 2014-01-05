@@ -189,6 +189,9 @@ const map<TokenType, const string> TokenNames {
         {TokenType::WhiteSpace, "Whitespace"},
         {TokenType::NewLine, "NewLine"},
     
+        {TokenType::StringInlineExprToggle, "STRING_EXPR_TOGGLE"},
+        {TokenType::LiteralStringToggle, "LITERAL_STRING_TOGGLE"},
+    
         // Comments
         {TokenType::Comment_ML_Start,"Comment_ML_Start"},
         {TokenType::Comment_ML_End, "Comment_ML_End"},

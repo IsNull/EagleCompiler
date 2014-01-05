@@ -86,6 +86,8 @@ public:
     bool isWhiteSpace(int start, int end);
     
     bool isNewLine(int start, int end);
+    
+    void emitToken(Token* token);
 };
 
 

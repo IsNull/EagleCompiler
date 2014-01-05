@@ -4,11 +4,11 @@ program
 	do
 
 		i init := 0;
-		t init := 0;
+		age init := 0;
 		while i > 5
 		do
-			t := t + i * 2;
-			debugout t & "Test"
+			age := age + i * 2;
+			debugout t & "I am %age% years old now!"
 		endwhile;
 
 

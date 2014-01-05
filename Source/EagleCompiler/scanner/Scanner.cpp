@@ -305,7 +305,10 @@ void Scanner::endToken(TokenType type, int start, int end){
             type = keyword;
     }
     
-    Token* t = new Token(type, tokenValue);
-    _tokens->add(t);
+    emitToken(new Token(type, tokenValue));
+}
+
+void Scanner::emitToken(Token* token){
+     _tokens->add(token);
 }
 
