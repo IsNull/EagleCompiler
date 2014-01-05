@@ -1,0 +1,24 @@
+program tyepCheck()
+global
+var string1:string;
+var string2:string;
+var number1:int32;
+var number2:int32;
+var bool1:bool
+do
+	string1 init := "schnurzel";
+	string2 init := "hopel";
+	number1 init := 4;
+	number2 init := 2;
+	bool1 init := true;
+	
+	string1 := number1; //ok, string1 is 4
+	string1 := true; //ok, string1 is "true"
+	string1 := number1 + number2; //ok, string1 is "6"
+	string1 := number1 & number2; //ok, string1 is "42"
+	
+	string2 := number1 & string1; //ok, string2 is "442"
+	string2 := number1 + string2; //bad, cannot use operator + with string
+	string2 := string1 & number2 & number1 + number2 //ok, string2 is "4226" ->"42" & "2" & "6"
+	
+endprogram

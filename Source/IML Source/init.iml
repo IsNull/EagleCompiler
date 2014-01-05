@@ -1,0 +1,15 @@
+program 
+stringInit()
+global 
+proc initString(out copy var toInit:string) do
+	toInit init := "myInit"
+endproc;
+
+const testVariable1:string;
+const testVariable2:string
+
+do
+	testVariable1 init := "dumdi";
+	initString(testVariable2 init)
+	
+endprogram

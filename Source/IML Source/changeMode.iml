@@ -1,0 +1,24 @@
+program 
+changeModeString()
+global
+
+proc changeString(out copy modify1:string, out copy modify2:string) do
+	modify1 init = "modified param1";
+	modify2 init = "modified param2"
+endproc;
+
+const testVariable1:string;
+var testVariable2:string
+
+do
+	testVariable1 init := "dumdi";
+	testVariable2 init := "hase";
+	testVariable2 init := "hase"; //should fail, only one init per variable is allowed 
+
+	testVariable2 := testVariable1  //allowed, since testVariable2 is not const but var
+	testVariable1 := testVariable2; //not allowed, testVariable1 is const
+	
+	changeString(testVariable2, testVariable1) // not allowed, because Parameter 2 is out, but testVariable1 is const
+	changeString(testVariable2, testVariable2) // ok
+
+endprogram
