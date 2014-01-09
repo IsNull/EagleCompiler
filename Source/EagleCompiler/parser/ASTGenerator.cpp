@@ -13,6 +13,8 @@
 #include "../ast/type/CodeTypeBoolean.h"
 #include "../ast/type/CodeTypeInteger32.h"
 #include "../ast/type/CodeTypeString.h"
+#include "../Token.h"
+#include <algorithm>
 
 
 CodeProcedureDeclaration* ASTGenerator::genProcedureDecl(SyntaxTree* procDeclNode){
@@ -600,7 +602,7 @@ CodeExpression* ASTGenerator::genBinrayExpression(SyntaxTree* exprNode){
         
         if(child->hasChildren() && child->getChildren()[0]->isTerminal()){
             TokenType type = child->getChildren()[0]->getToken()->getType();
-            
+             
             list<TokenType>::const_iterator findIter = std::find(BinaryOperatorTokens.begin(), BinaryOperatorTokens.end(), type);
             if(findIter != BinaryOperatorTokens.end()){
                 // found!!

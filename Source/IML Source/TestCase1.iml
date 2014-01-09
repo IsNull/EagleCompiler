@@ -1,21 +1,11 @@
 program 
-	Test()
 
-	do
-
-		i init := 0;
-		age init := 0;
-		while i > 5
-		do
-			age := age + i * 2;
-			debugout t & "I am %age% years old now!"
-		endwhile;
-
-
-		//x init := -1 + 2;
-		//z init := 10 * cool(m+2, 2);
-		m init := ((0 + 2) - 10);
-		r init := m mod 5;
-		debugout (r + (10 * m)) * r
-
+inlinSyntax()
+global
+	const age:int32;
+	const term:string;
+do
+	debugout "Geben Sie ihr alter ein: ";
+	debugin age init;
+	debugout "Sie sind %age% Jahre alt."
 endprogram
