@@ -18,11 +18,13 @@
 // ============= ProductionRule =============
 //
 
+const bool Parser_DEBUG = false;
+
 
 SyntaxTree* ProductionRule::produce(IParseContext* ctx){
     SyntaxTree* node = new SyntaxTree(nonterminal);
     
-    cout << "\t-->" << *this << "\n";
+    if(Parser_DEBUG) cout << "\t-->" << *this << "\n";
     
     const Token* currentToken = ctx->current();
     const Terminal* currentTerminal = ctx->getTerminal(currentToken->getType());
@@ -40,7 +42,7 @@ SyntaxTree* ProductionRule::produce(IParseContext* ctx){
                     Terminal *t = (Terminal*)s;
                     
                     // DEBUG consume output
-                    cout <<  *(this->nonterminal) << "  ";
+                     if(Parser_DEBUG) cout <<  *(this->nonterminal) << "  ";
                     
                     const Token*  tok = ctx->current();
                     ctx->consume(t); // will throw a GrammarExceptin if current terminal was not expected
@@ -58,7 +60,7 @@ SyntaxTree* ProductionRule::produce(IParseContext* ctx){
             }
         }else{
             // an empty production (NULL) means that we have reached the end of this parse sub tree
-            cout << "! End of " << *this << "\n";
+             if(Parser_DEBUG) cout << "! End of " << *this << "\n";
             //cout << *this << " has no production for requested terminal " << *currentTerminal << "\n";
         }
     }else{
@@ -143,7 +145,7 @@ void Parser::consume(const Terminal* expectedTerminal){
     
     if(isMatchingToken(expectedTerminal, _current)){
         // the expected token is present thus we can consume it
-        cout << "consumed " << *_current << "\n";
+         if(Parser_DEBUG) cout << "consumed " << *_current << "\n";
         _current = _tokenlist->stepNext();
     }else{
         // Grammar Error!
