@@ -457,7 +457,6 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
             case TokenType::Command_DebugOut:
             {
                 SyntaxTree* exprNode = cmdChilds[1];
-                cout << "ASTGenerator: found debugout, expr Node:\n" << *exprNode;
                 CodeExpression* expr = genExpression(exprNode);
                 statement = new CodeOutputStatment(expr);
             }
@@ -472,6 +471,10 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
             }
         }
     }
+    
+    if(statement != NULL)
+        cout << "!! ASTGenerator: generatet Statement: " << statement->toString() << "\n";
+    
     return statement;
 };
 
@@ -512,11 +515,22 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
             
             
             expr = new CodeExpressionLiteral(type, exprNode->getToken()->getValue());
-            cout << "ASTGenerator generated: "<< expr->toString() <<"\n";
         }
 
     }else{
         // current node is NT
+        
+        // purge all NT-childless childs
+        
+        vector<SyntaxTree*> children = exprNode->getChildren();
+        for(int i=0; children.size() > i; i++){
+            if(!children[i]->isTerminal() && !children[i]->hasChildren()){
+                exprNode->remove(children[i]);
+            }
+        }
+        
+        
+        
         if(!exprNode->hasChildren()){
             // Empty NT Node, means dead end
             return NULL;
@@ -557,20 +571,23 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
             // TODO
             
             if(expr == NULL){
+                
+                cout << "AST Expression: Can not handle node: " << exprNode;
+                
                // for now just fetch the first child-expression which is viable:
+                /*
                 for (int i=0; exprNode->getChildren().size() > i; i++) {
                     SyntaxTree* child = exprNode->getChildren()[i];
                     expr = genExpression(child);
                     if(expr != NULL) break;
-                }
+                }*/
             }
         }
     }
     
-    if(expr == NULL){
-        // null
+    if(expr != NULL){
+       cout << "ASTGenerator generated: "<< expr->toString() <<"\n";
     }
-    
     
     return expr;
 };
@@ -651,7 +668,7 @@ CodeExpression* ASTGenerator::genOperatorExpression(SyntaxTree* exprNode){
 
                 opExpression = genBinaryExpression(leftSideExprNode, operatorTerminalNode, rightSideExprNode);
                 
-                cout << "ASTGenerator: generated " << opExpression->toString() << "\n";
+                //cout << "ASTGenerator: generated " << opExpression->toString() << "\n";
                 
                 break;
             

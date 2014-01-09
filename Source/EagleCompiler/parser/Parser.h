@@ -129,6 +129,11 @@ public:
     vector<SyntaxTree*> getChildren() { return _children; }
     bool hasChildren() const { return _children.size() != 0; }
     void add(SyntaxTree* node){ _children.push_back(node); }
+    void remove(SyntaxTree* node){
+        _children.erase(
+                        std::remove(_children.begin(), _children.end(), node), _children.end()
+                        );
+    }
     
     bool isTerminal() const {
         return _grammarSymbol->isTerminal();
