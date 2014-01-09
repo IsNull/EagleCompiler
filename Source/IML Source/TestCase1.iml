@@ -1,11 +1,5 @@
 program 
 
-inlinSyntax()
-global
-	const age:int32;
 	const term:string;
-do
-	debugout "Geben Sie ihr alter ein: ";
-	debugin age init;
-	debugout "Sie sind %age% Jahre alt."
+	debugout t & "I am " & age & "years old now!"
 endprogram

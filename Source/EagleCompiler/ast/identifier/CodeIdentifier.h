@@ -24,8 +24,12 @@ namespace AST {
 		
 		string getName() { return _name; };
         
+        virtual string toString() const {
+            return "CodeIdentifier(" + _name + ")";
+        }
+        
         friend std::ostream& operator<< (std::ostream& stream, const CodeIdentifier& node) {
-            stream << "CodeIdentifier";
+            stream << "CodeIdentifier(" << node._name << ")";
             return stream;
         };
 	};

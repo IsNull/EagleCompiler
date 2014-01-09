@@ -41,6 +41,9 @@ namespace AST {
 			{ return _elseStatements; };
 
 		string code();
+        
+        virtual string toString(){ return "CodeFunctionCallStatement"; }
+        
 	};
 }
 

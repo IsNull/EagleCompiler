@@ -17,6 +17,7 @@
 using namespace std;
 
 namespace AST {
+    
 	enum class BINARYOPERATOR {
 		TIMES,
 		DIV,
@@ -32,6 +33,23 @@ namespace AST {
 		COND_AND,
 		COND_OR,
 		STR_CONCAT,
+	};
+    
+    const map<BINARYOPERATOR, string> BinaryOperatorString = {
+		{ BINARYOPERATOR::TIMES, "*" },
+		{ BINARYOPERATOR::DIV, "/" },
+		{ BINARYOPERATOR::MOD, "%" },
+		{ BINARYOPERATOR::PLUS, "+" },
+		{ BINARYOPERATOR::MINUS, "-" },
+		{ BINARYOPERATOR::LESS, "<" },
+		{ BINARYOPERATOR::GREATER_EQ, ">=" },
+		{ BINARYOPERATOR::EQUAL, "==" },
+		{ BINARYOPERATOR::NOT_EQ, "!=" },
+		{ BINARYOPERATOR::GREATER, ">" },
+		{ BINARYOPERATOR::LESS_EQ, "<=" },
+		{ BINARYOPERATOR::COND_AND, "&?" },
+		{ BINARYOPERATOR::COND_OR, "|?" },
+		{ BINARYOPERATOR::STR_CONCAT, "&" },
 	};
 	
 	class CodeBinaryExpression : public CodeExpression{
@@ -50,7 +68,7 @@ namespace AST {
 		string code();
         
         
-        virtual string toString(){ return "<CodeBinaryExpression>"; }
+        virtual string toString(){ return "(" + _left->toString() + " " + BinaryOperatorString.find(_binaryOperator)->second + " " + _right->toString() + ")"; }
 	};
 }
 

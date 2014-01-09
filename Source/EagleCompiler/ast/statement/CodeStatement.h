@@ -20,6 +20,7 @@ namespace AST {
 	private:
 		
 	public:
+        virtual string toString(){ return "CodeStatement"; }
 	};
 }
 
