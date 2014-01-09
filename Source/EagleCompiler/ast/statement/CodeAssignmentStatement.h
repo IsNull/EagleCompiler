@@ -28,6 +28,8 @@ namespace AST {
 		CodeExpression *getLValue() { return _lvalue; };
 		CodeExpression *getRValue() { return _rvalue; };
 		
+        virtual string toString(){ return "CodeAssignmentStatement"; }
+        
 		string code();
 	};
 }

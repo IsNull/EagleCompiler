@@ -26,6 +26,8 @@ namespace AST {
 		CodeExpression *getExpression() { return _expression; };
 		
 		string code();
+        
+        virtual string toString(){ return "CodeInputStatement"; }
 	};
 }
 

@@ -21,6 +21,10 @@ namespace AST {
 		
 	public:
 		string code();
+        
+        
+        virtual string toString(){ return "CodeSkipStatement"; }
+
 	};
 }
 

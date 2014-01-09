@@ -34,6 +34,8 @@ namespace AST {
 			{ return _loopStatements; };
 
 		string code();
+        
+         virtual string toString(){ return "CodeWhileStatement"; }
 	};
 }
 

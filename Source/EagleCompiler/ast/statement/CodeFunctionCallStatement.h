@@ -34,6 +34,8 @@ namespace AST {
 		auto getParameters() -> decltype(_parameters) 
 			{ return _parameters; };
 		
+        virtual string toString(){ return "CodeFunctionCallStatement"; }
+        
 		string code();
 	};
 }

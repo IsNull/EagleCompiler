@@ -97,20 +97,20 @@ void testSam() {
 		procdef->addParam(new CodeParameter(FLOWMODE::OUT, MECHMODE::REF, CHANGEMODE::VAR, r) );
 		
 //		q init := 0;
-		procdef->addStatement(new CodeAssignmentStatement(q->asInitExpression(), new CodeExpressionLiteral(int32, "0")));
+		procdef->addStatement(new CodeAssignmentStatement(new CodeExpressionInitializeVariable(q), new CodeExpressionLiteral(int32, "0")));
 		
 //		r init := m;
-		procdef->addStatement(new CodeAssignmentStatement(r->asInitExpression(), m->asExpression()));
+		procdef->addStatement(new CodeAssignmentStatement(new CodeExpressionInitializeVariable(r), new CodeExpressionVariable(m)));
 		
 //		while r >= n do
-		CodeWhileStatement *loop = new CodeWhileStatement(new CodeBinaryExpression(r->asExpression(), BINARYOPERATOR::GREATER_EQ, n->asExpression()));
+		CodeWhileStatement *loop = new CodeWhileStatement(new CodeBinaryExpression(new CodeExpressionVariable(r), BINARYOPERATOR::GREATER_EQ, new CodeExpressionVariable(n)));
 		
 //		q := q + 1;
-		CodeBinaryExpression *add1 = new CodeBinaryExpression(q->asExpression(), BINARYOPERATOR::PLUS,  new CodeExpressionLiteral(int32, "1"));
-		loop->addLoopStatement(new CodeAssignmentStatement(q->asExpression(), add1));
+		CodeBinaryExpression *add1 = new CodeBinaryExpression(new CodeExpressionVariable(q), BINARYOPERATOR::PLUS,  new CodeExpressionLiteral(int32, "1"));
+		loop->addLoopStatement(new CodeAssignmentStatement(new CodeExpressionVariable(q), add1));
 		
-		CodeBinaryExpression *add2 = new CodeBinaryExpression(r->asExpression(), BINARYOPERATOR::MINUS,  n->asExpression());
-		loop->addLoopStatement(new CodeAssignmentStatement(r->asExpression(), add2));
+		CodeBinaryExpression *add2 = new CodeBinaryExpression(new CodeExpressionVariable(r), BINARYOPERATOR::MINUS,  new CodeExpressionVariable(n));
+		loop->addLoopStatement(new CodeAssignmentStatement(new CodeExpressionVariable(r), add2));
 		
 		procdef->addStatement(loop);
 	 	p.addGlobalDecl(procdef);
@@ -130,15 +130,14 @@ void testSam() {
 		
 //		call divide(m, n, q init, r init)
 		CodeProcedureCallStatement *procCall = new CodeProcedureCallStatement(&proc);
-		procCall->addParameterExpression(m->asExpression());
-		procCall->addParameterExpression(n->asExpression());
-		procCall->addParameterExpression(q->asExpression());
-		procCall->addParameterExpression(r->asExpression());
+		procCall->addParameterExpression(new CodeExpressionVariable(m));
+		procCall->addParameterExpression(new CodeExpressionVariable(n));
+		procCall->addParameterExpression(new CodeExpressionVariable(q));
+		procCall->addParameterExpression(new CodeExpressionVariable(r));
 		p.addProgStatement(procCall);
 	}
 	cout << p.code() << endl;
 }
-
 
 
 

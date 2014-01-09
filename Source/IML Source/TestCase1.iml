@@ -3,19 +3,13 @@ program
 
 	do
 
-		i init := 0;
-		age init := 0;
-		while i > 5
-		do
-			age := age + i * 2;
-			debugout t & "I am %age% years old now!"
-		endwhile;
+	t init := 10;
+	age init := 15;
 
+	debugout 10 + 4 + 5;
 
-		//x init := -1 + 2;
-		//z init := 10 * cool(m+2, 2);
-		m init := ((0 + 2) - 10);
-		r init := m mod 5;
-		debugout (r + (10 * m)) * r
+	debugout t & "I am " & age & " years old now!"
+
+	//debugout t & "I am %age% years old now!"
 
 endprogram
