@@ -3,12 +3,8 @@ program
 
 	do
 
-	t init := 10;
-	age init := 15;
 
-	debugout 10 + 4 + 5;
-
-	debugout t & "I am " & age & " years old now!"
+	debugout t & "I am " & age & "years old now!"
 
 	//debugout t & "I am %age% years old now!"
 

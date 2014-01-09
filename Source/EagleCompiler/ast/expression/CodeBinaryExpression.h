@@ -68,7 +68,7 @@ namespace AST {
 		string code();
         
         
-        virtual string toString(){ return "<CodeBinaryExpression: " + BinaryOperatorString.find(_binaryOperator)->second + ">"; }
+        virtual string toString(){ return "(" + _left->toString() + " " + BinaryOperatorString.find(_binaryOperator)->second + " " + _right->toString() + ")"; }
 	};
 }
 

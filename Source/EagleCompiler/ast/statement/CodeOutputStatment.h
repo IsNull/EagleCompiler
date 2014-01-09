@@ -28,7 +28,7 @@ namespace AST {
 		string code();
         
         
-        virtual string toString(){ return "CodeOutputStatment"; }
+        virtual string toString(){ return "output " + _expression->toString(); }
 	};
 }
 

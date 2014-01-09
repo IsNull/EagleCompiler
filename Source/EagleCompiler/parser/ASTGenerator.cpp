@@ -473,14 +473,12 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
     }
     
     if(statement != NULL)
-        cout << "!! ASTGenerator: generatet Statement: " << statement->toString() << "\n";
+        cout << "ASTGenerator: Statement: " << statement->toString() << "\n";
     
     return statement;
 };
 
 CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
-    
-    static int MAX_DEPTH = 30;
     
     CodeExpression* expr = NULL;
     
@@ -520,22 +518,11 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
     }else{
         // current node is NT
         
-        // purge all NT-childless childs
-        
-        vector<SyntaxTree*> children = exprNode->getChildren();
-        for(int i=0; children.size() > i; i++){
-            if(!children[i]->isTerminal() && !children[i]->hasChildren()){
-                exprNode->remove(children[i]);
-            }
-        }
-        
-        
-        
         if(!exprNode->hasChildren()){
             // Empty NT Node, means dead end
             return NULL;
         }else if(exprNode->getChildren().size() == 1){
-            // Single Child are handled recursive
+            // Single childs are handled recursive
             expr = genExpression(exprNode->getChildren()[0]);
         }else{
             // Multiple children - check for specail expressions
@@ -572,30 +559,30 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
             
             if(expr == NULL){
                 
-                cout << "AST Expression: Can not handle node: " << exprNode;
+                //cout << "AST Expression: Can not handle node: " << *exprNode << "\n";
                 
                // for now just fetch the first child-expression which is viable:
-                /*
+                
                 for (int i=0; exprNode->getChildren().size() > i; i++) {
                     SyntaxTree* child = exprNode->getChildren()[i];
                     expr = genExpression(child);
                     if(expr != NULL) break;
-                }*/
+                }
             }
         }
     }
     
     if(expr != NULL){
-       cout << "ASTGenerator generated: "<< expr->toString() <<"\n";
+       //cout << "ASTGenerator generated: "<< expr->toString() <<"\n";
     }
     
     return expr;
 };
 
 
-CodeBinaryExpression* ASTGenerator::genBinaryExpression(SyntaxTree* leftSideExprNode, SyntaxTree* operatorTerminalNode, SyntaxTree* rightSideExprNode){
+CodeBinaryExpression* ASTGenerator::genBinaryExpression(CodeExpression* leftSideExpr, SyntaxTree* operatorTerminalNode, CodeExpression* rightSideExpr){
     CodeBinaryExpression* binaryExpression = NULL;
-
+    
     
     if(!operatorTerminalNode->isTerminal()){
         ostringstream errStr;
@@ -603,8 +590,7 @@ CodeBinaryExpression* ASTGenerator::genBinaryExpression(SyntaxTree* leftSideExpr
         throw new GrammarException(errStr.str());
     }
     
-    CodeExpression* leftSideExpr = genExpression(leftSideExprNode);
-    CodeExpression* rightSideExpr = genExpression(rightSideExprNode);
+
     
     // find now the matching binary operator for binary-expression
     
@@ -662,14 +648,41 @@ CodeExpression* ASTGenerator::genOperatorExpression(SyntaxTree* exprNode){
                 // found binary operator!!
                 cout << "ASTGenerator: found binary operator: " << type << "\n";
                 
+                
                 SyntaxTree* leftSideExprNode = exprNode->getChildren()[0];
                 SyntaxTree* operatorTerminalNode = child->getChildren()[0];
                 SyntaxTree* rightSideExprNode = child->getChildren()[1];
+                
+                //cout << "gen binary expr: Right side:" << *rightSideExprNode << "\n";
+                CodeExpression* leftSideExpr = genExpression(leftSideExprNode);
+                CodeExpression* rightSideExpr = genExpression(rightSideExprNode);
+                
+                
+                if(child->getChildren().size() > 2){
+                    
+                    
+                    CodeExpression* innerExpr = genBinaryExpression(leftSideExpr, operatorTerminalNode, rightSideExpr);
+                    SyntaxTree* repNode = child->getChildren()[2];
+                    
+                    // TODO make dynamic recursive
+                    if(repNode->getChildren().size() > 1){
+                    
+                        SyntaxTree* operatorTerminalNode2 = repNode->getChildren()[0];
+                        SyntaxTree* rightSideNode2 = repNode->getChildren()[1];
+                        CodeExpression* rightSideExpr2 = genExpression(rightSideNode2);
+                    
+                        opExpression = genBinaryExpression(innerExpr, operatorTerminalNode2, rightSideExpr2);
+                    }else{
+                        //cout << "Error GenBinaryExpression:\n" << *repNode;
+                        opExpression = genBinaryExpression(leftSideExpr, operatorTerminalNode, rightSideExpr);
+                    }
+                    
+                }else{
+                    opExpression = genBinaryExpression(leftSideExpr, operatorTerminalNode, rightSideExpr);
+                }
 
-                opExpression = genBinaryExpression(leftSideExprNode, operatorTerminalNode, rightSideExprNode);
                 
                 //cout << "ASTGenerator: generated " << opExpression->toString() << "\n";
-                
                 break;
             
             }else{
