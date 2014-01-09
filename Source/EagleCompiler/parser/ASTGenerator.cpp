@@ -284,8 +284,14 @@ vector<CodeExpression*> ASTGenerator::genCodeExpressionList(SyntaxTree* node){
 
     vector<SyntaxTree*> exprNodes = findAllNonTerminals(node, "EXPR");
     vector<SyntaxTree*> repNodes = findAllNonTerminals(node, "REPEXPR");
+    vector<SyntaxTree*> repconNodes = findAllNonTerminals(node, "REPCONCOPREXPR");
+    
+    if(repconNodes.size() > 0)
+        cout << "ASTGenerator: found REPCONCOPREXPR " << repconNodes.size();
+    
     // concat the two lists
     exprNodes.insert( exprNodes.end(), repNodes.begin(), repNodes.end() );
+    exprNodes.insert( repconNodes.end(), repconNodes.begin(), repconNodes.end() );
     
     for (int i=0; exprNodes.size() > i; i++) {
         CodeExpression* expr = genExpression(exprNodes[i]);
@@ -451,6 +457,7 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
             case TokenType::Command_DebugOut:
             {
                 SyntaxTree* exprNode = cmdChilds[1];
+                cout << "ASTGenerator: found debugout, expr Node:\n" << *exprNode;
                 CodeExpression* expr = genExpression(exprNode);
                 statement = new CodeOutputStatment(expr);
             }
@@ -542,7 +549,7 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
             }
             
             if(expr == NULL){
-                expr = genBinrayExpression(exprNode);
+                expr = genOperatorExpression(exprNode);
             }
             
             // check for other possibilities Function Call
@@ -568,9 +575,40 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
     return expr;
 };
 
-CodeExpression* ASTGenerator::genBinrayExpression(SyntaxTree* exprNode){
+
+CodeBinaryExpression* ASTGenerator::genBinaryExpression(SyntaxTree* leftSideExprNode, SyntaxTree* operatorTerminalNode, SyntaxTree* rightSideExprNode){
+    CodeBinaryExpression* binaryExpression = NULL;
+
     
-    CodeExpression* binaryExpression = NULL;
+    if(!operatorTerminalNode->isTerminal()){
+        ostringstream errStr;
+        errStr << "Expected node to be Operator TERMINAL but was: " << *operatorTerminalNode->getNonTerminal() << "\n";
+        throw new GrammarException(errStr.str());
+    }
+    
+    CodeExpression* leftSideExpr = genExpression(leftSideExprNode);
+    CodeExpression* rightSideExpr = genExpression(rightSideExprNode);
+    
+    // find now the matching binary operator for binary-expression
+    
+    TokenType opToken = operatorTerminalNode->getToken()->getType();
+    
+    map<TokenType, BINARYOPERATOR>::const_iterator findIt =  BINARYOPERATOR_MAP.find(opToken);
+    if(findIt != BINARYOPERATOR_MAP.end()){
+        BINARYOPERATOR op = findIt->second;
+        binaryExpression = new CodeBinaryExpression(leftSideExpr, op, rightSideExpr);
+    }else{
+        ostringstream errStr;
+        errStr << "Unhandled Operator-Token: " << *operatorTerminalNode->getToken() << "\n";
+        throw new GrammarException(errStr.str());
+    }
+    
+    return binaryExpression;
+}
+
+CodeExpression* ASTGenerator::genOperatorExpression(SyntaxTree* exprNode){
+    
+    CodeExpression* opExpression = NULL;
     
     /*
      [TERM2]
@@ -591,7 +629,7 @@ CodeExpression* ASTGenerator::genBinrayExpression(SyntaxTree* exprNode){
     // this (exprNode) would be [TERM2]
     // childOperatorNode should then be found as [REPADDOPRTERM3]
     
-    SyntaxTree* childOperatorNode = NULL;
+    // handle STRCONCATOPR!!
     
     for (int i=0; exprNode->getChildren().size() > i; i++) {
         SyntaxTree* child = exprNode->getChildren()[i];
@@ -601,49 +639,29 @@ CodeExpression* ASTGenerator::genBinrayExpression(SyntaxTree* exprNode){
         if(child->hasChildren() && child->getChildren()[0]->isTerminal()){
             TokenType type = child->getChildren()[0]->getToken()->getType();
             
+            
             list<TokenType>::const_iterator findIter = std::find(BinaryOperatorTokens.begin(), BinaryOperatorTokens.end(), type);
             if(findIter != BinaryOperatorTokens.end()){
-                // found!!
-                childOperatorNode = child;
+                // found binary operator!!
+                cout << "ASTGenerator: found binary operator: " << type << "\n";
+                
+                SyntaxTree* leftSideExprNode = exprNode->getChildren()[0];
+                SyntaxTree* operatorTerminalNode = child->getChildren()[0];
+                SyntaxTree* rightSideExprNode = child->getChildren()[1];
+
+                opExpression = genBinaryExpression(leftSideExprNode, operatorTerminalNode, rightSideExprNode);
+                
+                cout << "ASTGenerator: generated " << opExpression->toString() << "\n";
+                
                 break;
+            
             }else{
                 //cout << "ASTGenerator: Expected Binary-OperatorTerminal but was: " << *child->getChildren()[0]->getToken() << "\n" << *exprNode << "\n";
             }
         }
     }
     
-    if(childOperatorNode != NULL){
-        // found an binary operator. Build binary expression
-        
-        SyntaxTree* leftSideExprNode = exprNode->getChildren()[0];
-        SyntaxTree* operatorTerminalNode = childOperatorNode->getChildren()[0];
-        SyntaxTree* rightSideExprNode = childOperatorNode->getChildren()[1];
-        
-        if(!operatorTerminalNode->isTerminal()){
-            ostringstream errStr;
-            errStr << "Expected node to be Operator TERMINAL but was: " << *operatorTerminalNode->getNonTerminal() << "\n";
-            throw new GrammarException(errStr.str());
-        }
-        
-        CodeExpression* leftSideExpr = genExpression(leftSideExprNode);
-        CodeExpression* rightSideExpr = genExpression(rightSideExprNode);
-        
-        // find now the matching binary operator for binary-expression
-        
-        TokenType opToken = operatorTerminalNode->getToken()->getType();
-        
-        map<TokenType, BINARYOPERATOR>::const_iterator findIt =  BINARYOPERATOR_MAP.find(opToken);
-        if(findIt != BINARYOPERATOR_MAP.end()){
-            BINARYOPERATOR op = findIt->second;
-            binaryExpression = new CodeBinaryExpression(leftSideExpr, op, rightSideExpr);
-        }else{
-                ostringstream errStr;
-                errStr << "Unhandled Operator-Token: " << *operatorTerminalNode->getToken() << "\n";
-                throw new GrammarException(errStr.str());
-        }
-    }
-    
-    return binaryExpression;
+    return opExpression;
 }
 
 

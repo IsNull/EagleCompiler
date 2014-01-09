@@ -47,7 +47,8 @@ private:
     CodeType* genCodeType(SyntaxTree* atomTypeNode);
     CodeParameter* genCodeParameter(SyntaxTree* node);
     CodeExpression* genExpression(SyntaxTree* exprNode);
-    CodeExpression* genBinrayExpression(SyntaxTree* exprNode);
+    CodeExpression* genOperatorExpression(SyntaxTree* exprNode);
+    CodeBinaryExpression* genBinaryExpression(SyntaxTree* leftSideExprNode, SyntaxTree* operatorTerminalNode, SyntaxTree* rightSideExprNode);
 
     vector<SyntaxTree*> findCommandNodes(SyntaxTree* cmdNode);
     
