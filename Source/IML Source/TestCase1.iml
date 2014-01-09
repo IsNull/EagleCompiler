@@ -4,7 +4,9 @@ program
 	do
 
 
-	debugout t & "I am " & age & "years old now!"
+	debugout a + b + c + d + e;
+
+	debugout a + b * c + d + e
 
 	//debugout t & "I am %age% years old now!"
 

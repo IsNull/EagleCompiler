@@ -583,14 +583,11 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
 CodeBinaryExpression* ASTGenerator::genBinaryExpression(CodeExpression* leftSideExpr, SyntaxTree* operatorTerminalNode, CodeExpression* rightSideExpr){
     CodeBinaryExpression* binaryExpression = NULL;
     
-    
     if(!operatorTerminalNode->isTerminal()){
         ostringstream errStr;
         errStr << "Expected node to be Operator TERMINAL but was: " << *operatorTerminalNode->getNonTerminal() << "\n";
         throw new GrammarException(errStr.str());
     }
-    
-
     
     // find now the matching binary operator for binary-expression
     
@@ -607,33 +604,57 @@ CodeBinaryExpression* ASTGenerator::genBinaryExpression(CodeExpression* leftSide
     }
     
     return binaryExpression;
-}
+};
+
+CodeBinaryExpression* ASTGenerator::genBinaryExpression(CodeExpression* leftSideExpr, SyntaxTree* opNode){
+    
+    SyntaxTree* opTerminalNode = opNode->getChildren()[0];
+    SyntaxTree* rightSideNode = opNode->getChildren()[1];
+    CodeExpression* rightSideExpr = genExpression(rightSideNode);
+    
+    CodeBinaryExpression* expr = genBinaryExpression(leftSideExpr, opTerminalNode, rightSideExpr);
+    
+    if(opNode->getChildren().size() == 2){
+        // we are done
+    }else if(opNode->getChildren().size() == 3){
+        SyntaxTree* possibleRepNode = opNode->getChildren()[2];
+        if(possibleRepNode->hasChildren()){
+            // it is a NT with children -> recurse into!
+            CodeBinaryExpression* outerExpr = genBinaryExpression(expr, possibleRepNode);
+            if(outerExpr != NULL)
+                expr = outerExpr;
+        }
+    }else{
+        // Invalid
+        cout << "Error: genBinaryExpression() -> Unexpected node for generating binary expression!\n" << *opNode;
+    }
+
+    return expr;
+};
+
 
 CodeExpression* ASTGenerator::genOperatorExpression(SyntaxTree* exprNode){
     
     CodeExpression* opExpression = NULL;
     
+    for (int i=0; exprNode->getChildren().size() > i; i++) {
+        SyntaxTree* child = exprNode->getChildren()[i];
+
+        if(child->hasChildren() && child->getChildren()[0]->isTerminal()){
+            TokenType type = child->getChildren()[0]->getToken()->getType();
+            
+            list<TokenType>::const_iterator findIter = std::find(BinaryOperatorTokens.begin(), BinaryOperatorTokens.end(), type);
+            if(findIter != BinaryOperatorTokens.end()){
+                // found dyadic operator
+                SyntaxTree* leftSideExprNode = exprNode->getChildren()[0];
+                CodeExpression* leftSideExpr = genExpression(leftSideExprNode);
+                
+                opExpression = genBinaryExpression(leftSideExpr, child);
+            }
+        }
+    }
+    
     /*
-     [TERM2]
-     [TERM3]
-     [FACTOR]
-     LITERAL [LITERAL_Number,0]
-     [REPMULTOPRFACTOR]
-     [REPADDOPRTERM3]
-     ADDOPR [ADDOPR_PLUS,+]
-     [TERM3]
-     [FACTOR]
-     LITERAL [LITERAL_Number,2]
-     [REPMULTOPRFACTOR]
-     [REPADDOPRTERM3]
-     [OPTRELOPRTERM2]
-     */
-    
-    // this (exprNode) would be [TERM2]
-    // childOperatorNode should then be found as [REPADDOPRTERM3]
-    
-    // handle STRCONCATOPR!!
-    
     for (int i=0; exprNode->getChildren().size() > i; i++) {
         SyntaxTree* child = exprNode->getChildren()[i];
         
@@ -653,7 +674,6 @@ CodeExpression* ASTGenerator::genOperatorExpression(SyntaxTree* exprNode){
                 SyntaxTree* operatorTerminalNode = child->getChildren()[0];
                 SyntaxTree* rightSideExprNode = child->getChildren()[1];
                 
-                //cout << "gen binary expr: Right side:" << *rightSideExprNode << "\n";
                 CodeExpression* leftSideExpr = genExpression(leftSideExprNode);
                 CodeExpression* rightSideExpr = genExpression(rightSideExprNode);
                 
@@ -689,10 +709,10 @@ CodeExpression* ASTGenerator::genOperatorExpression(SyntaxTree* exprNode){
                 //cout << "ASTGenerator: Expected Binary-OperatorTerminal but was: " << *child->getChildren()[0]->getToken() << "\n" << *exprNode << "\n";
             }
         }
-    }
+    }*/
     
     return opExpression;
-}
+};
 
 
 

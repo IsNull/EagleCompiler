@@ -49,6 +49,7 @@ private:
     CodeExpression* genExpression(SyntaxTree* exprNode);
     CodeExpression* genOperatorExpression(SyntaxTree* exprNode);
     CodeBinaryExpression* genBinaryExpression(CodeExpression* leftSide, SyntaxTree* operatorTerminalNode, CodeExpression* rightSide);
+    CodeBinaryExpression* genBinaryExpression(CodeExpression* leftSideExpr, SyntaxTree* repNode);
 
     vector<SyntaxTree*> findCommandNodes(SyntaxTree* cmdNode);
     
