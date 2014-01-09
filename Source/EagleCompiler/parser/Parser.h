@@ -12,6 +12,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <algorithm>
 #include "../TokenList.h"
 #include "../Token.h"
 

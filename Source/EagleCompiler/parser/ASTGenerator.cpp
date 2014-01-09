@@ -9,12 +9,12 @@
 #include "ASTGenerator.h"
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "../ast/type/CodeType.h"
 #include "../ast/type/CodeTypeBoolean.h"
 #include "../ast/type/CodeTypeInteger32.h"
 #include "../ast/type/CodeTypeString.h"
 #include "../Token.h"
-#include <algorithm>
 
 
 CodeProcedureDeclaration* ASTGenerator::genProcedureDecl(SyntaxTree* procDeclNode){
