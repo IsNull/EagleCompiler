@@ -23,7 +23,7 @@ using namespace std;
 string sourceCode;
 string serializedParseTable;
 
-void scan() {
+void compile() {
 
     // tokenize it:
     cout << "\nListing Source code:\n\n"<< sourceCode << "\n\n";
@@ -47,8 +47,10 @@ void scan() {
         
         cout << "\n\nGenerating AST:\n";
         
-        ASTGenerator astGen;
-        AST::CodeProgram* p = astGen.generate(syntaxtree);
+        ASTGenerator astGen(syntaxtree);
+        AST::CodeProgram* p = astGen.generate();
+        
+        cout << "Compiled ASM:\n" << p->code() << endl;
         
     }catch(GrammarException* ex){
         cout << "\n\nGrammarException: " << ex->what() << "\n";
@@ -151,7 +153,7 @@ int main(int argc, char* argv[])
     }
     
     
-	scan();
+	compile();
 #endif
 #ifdef SAM
 	testSam();

@@ -35,7 +35,7 @@ namespace AST {
 		
 		string code();
         
-        virtual string toString(){ return "<CodeExpressionFunctionCall>"; }
+        virtual string toString(){ return "f:" + _function->getName() + "()"; }
 	};
 }
 

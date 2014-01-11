@@ -30,7 +30,7 @@ namespace AST {
 		string code();
         
         virtual string toString(){
-            return "variable(" + _variable->toString() + ")";
+            return "var(" + _variable->toString() + ")";
         }
 
 	};

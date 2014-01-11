@@ -1,15 +1,12 @@
-program
-	Test()
+program 
+	test1()
+global
+	var a:string;
+	var b:string
+do
 
-
-	do
-	debugout a + b + c + d + e;
-
-	debugout a + b * c + d + e;
-
-	//debugout t & "I am %age% years old now!"
-
-	//const term:string;
-	debugout t & "I am " & age & "years old now!"
+	c init := "test: ";
+	a init := "woot";
+	debugout c & function(a, b)
 
 endprogram

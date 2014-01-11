@@ -555,16 +555,37 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                 SyntaxTree* secondChild = exprNode->getChildren()[1];
                 
                 if(secondChild->getNonTerminal()->getName() == "IDENTFACTOR"){
-                
-                    CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), CodeType::VOID /* TYPE UNKNOWN */);
-                    expr = new CodeExpressionVariable(var);
                     
-                }else if(secondChild->hasChildren()
-                   && secondChild->getChildren()[0]->isTerminal()
-                   && secondChild->getChildren()[0]->getToken()->getType() == TokenType::Keyword_Init){
-                    
-                    CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), CodeType::VOID  /* TYPE UNKNOWN */);
-                    expr = new CodeExpressionInitializeVariable(var);
+                    // this might be either a variable or a function invokation
+                    // check if we have an expression list NT
+                    if(secondChild->hasChildren()
+                       && !secondChild->getChildren()[0]->isTerminal()
+                       && secondChild->getChildren()[0]->getNonTerminal()->getName() == "EXPRLIST"){
+                        
+                        // we have a function call here
+
+                        SyntaxTree* exprListNode = secondChild->getChildren()[0];
+                        SyntaxTree* optExprNode = findChildNonTerminal(exprListNode, "OPTEXPR");
+                        vector<CodeExpression*> expressions = genCodeExpressionList(optExprNode);
+                        
+                        CodeFunction* fun = new CodeFunction(firstChild->getToken()->getValue(), CodeType::VOID /* TYPE UNKNOWN */);
+                        CodeExpressionFunctionCall* funexpr = new CodeExpressionFunctionCall(fun);
+                        expr = funexpr;
+                        for (int i=0; expressions.size()>i; i++) {
+                            funexpr->addParameter(expressions[i]);
+                        }
+                    } else if(secondChild->hasChildren()
+                              && secondChild->getChildren()[0]->isTerminal()
+                              && secondChild->getChildren()[0]->getToken()->getType() == TokenType::Keyword_Init){
+                        
+                        // it is a init variable reference
+                        CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), CodeType::VOID /* TYPE UNKNOWN */);
+                        expr = new CodeExpressionInitializeVariable(var);
+                    }else{
+                        // it is a siple variable reference
+                        CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), CodeType::VOID /* TYPE UNKNOWN */);
+                        expr = new CodeExpressionVariable(var);
+                    }
                 }
             }
             
@@ -856,13 +877,12 @@ vector<SyntaxTree*> ASTGenerator::findAllNonTerminals(SyntaxTree* parent, const 
 
 
 
-CodeProgram* ASTGenerator::generate(SyntaxTree* syntaxParseTree){
+CodeProgram* ASTGenerator::generate(){
     
-    SyntaxTree* node = syntaxParseTree;
-    CodeProgram* program = new CodeProgram();
+    _program = new CodeProgram();
     
     // extract prog param list
-    SyntaxTree* progParamList = findChildNonTerminal(node, "PROGPARAMLIST");
+    SyntaxTree* progParamList = findChildNonTerminal(_rootNode, "PROGPARAMLIST");
     if(progParamList != NULL)
     {
         vector<CodeParameter*> params = genCodeParameters(progParamList);
@@ -870,35 +890,35 @@ CodeProgram* ASTGenerator::generate(SyntaxTree* syntaxParseTree){
         cout << "found PROGPARAMLIST with " << params.size() << " params.\n";
         
         for (int i=0; params.size() > i; i++) {
-            program->addProgParam(params[i]);
+            _program->addProgParam(params[i]);
         }
     }else{
         throw new GrammarException("Missing PROGPARAMLIST!");
     }
     
-    // extract decls
-    SyntaxTree* gobalDecls = findChildNonTerminal(node, "OPTGLOBALCPSDECL");
+    // extract declarations
+    SyntaxTree* gobalDecls = findChildNonTerminal(_rootNode, "OPTGLOBALCPSDECL");
     if(gobalDecls != NULL)
     {
         vector<CodeDeclaration*> params = genCodeDeclarations(gobalDecls);
         for (int i=0; params.size() > i; i++) {
-            program->addGlobalDecl(params[i]);
+            _program->addGlobalDecl(params[i]);
         }
     }else{
         throw new GrammarException("Missing OPTGLOBALCPSDECL!");
     }
     
     // extract Statements
-    SyntaxTree* cmdNode = findChildNonTerminal(node, "CPSCMD");
+    SyntaxTree* cmdNode = findChildNonTerminal(_rootNode, "CPSCMD");
     if(cmdNode != NULL)
     {
         vector<CodeStatement*> statements = genCodeStatements(cmdNode);
         for (int i=0; statements.size() > i; i++) {
-            program->addProgStatement(statements[i]);
+            _program->addProgStatement(statements[i]);
         }
     }else{
           throw new GrammarException("Missing CPSCMD!");
     }
     
-    return program;
+    return _program;
 };

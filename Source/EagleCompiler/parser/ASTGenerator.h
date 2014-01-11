@@ -42,6 +42,8 @@ const map<TokenType, BINARYOPERATOR> BINARYOPERATOR_MAP = {
 class ASTGenerator
 {
 private:
+    CodeProgram* _program;
+    SyntaxTree* _rootNode;
     
     CodeStatement* genCodeStatement(SyntaxTree* node);
     CodeType genCodeType(SyntaxTree* atomTypeNode);
@@ -74,7 +76,13 @@ private:
     vector<SyntaxTree*> findAllNonTerminalRec(SyntaxTree* parent, const string& name, bool searchNested = false);
     
 public:
-    CodeProgram* generate(SyntaxTree* syntaxParseTree);
+    /**
+     * Create an AST Generator for the given SyntaxTree
+     */
+    ASTGenerator(SyntaxTree* syntaxTree)
+        : _rootNode(syntaxTree) { }
+    
+    CodeProgram* generate();
 };
 
 #endif /* defined(__EagleCompiler__ASTGenerator__) */
