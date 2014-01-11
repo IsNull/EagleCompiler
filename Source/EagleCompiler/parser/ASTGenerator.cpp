@@ -17,20 +17,34 @@
 #include <algorithm>
 
 
-CodeProcedureDeclaration* ASTGenerator::genProcedureDecl(SyntaxTree* procDeclNode){
-    // NODE := PROCDECL
-    CodeProcedureDeclaration* procDecl = NULL;
-    CodeProcedure* procedure = NULL;
+CodeInvokableDeclaration* ASTGenerator::genInvokableDecl(SyntaxTree* procDeclNode, bool isfunction){
+    // NODE := PROCDECL or FUNDECL
+    
+    CodeInvokableDeclaration* invokDecl = NULL;
     
     SyntaxTree* procNameNode = findChildTerminal(procDeclNode, TokenType::Identifier);
     if(procNameNode != NULL)
     {
         string name = procNameNode->getToken()->getValue();
-        procedure = new CodeProcedure(name);
+        if(isfunction){
+            
+            // check the return storage and add it
+            SyntaxTree* retStoDecl = findChildNonTerminal(procDeclNode, "STODECL");
+            CodeParameter* codeParam = genCodeParameter(retStoDecl);
+            
+            if(codeParam != NULL){
+                CodeStorageDeclaration* storDecl = new CodeStorageDeclaration(codeParam->getChangeMode(), codeParam->getVariable());
+                invokDecl = new CodeFunctionDeclaration(new CodeFunction(name, storDecl->getVariable()->getType()), storDecl);
+            }else
+                throw new GrammarException("CodeFunctionDeclaration missing return param (STODECL)!");
+            
+        }else{
+            invokDecl = new CodeProcedureDeclaration(new CodeProcedure(name));
+        }
     }else
-        throw GrammarException("CodeProcedureDeclaration missing Procedure Name (Identifier)!");
+        throw new GrammarException("CodeInvokableDeclaration missing Procedure/Function Name (Identifier)!");
     
-    procDecl = new CodeProcedureDeclaration(procedure);
+    
     
     // add procedure params
     SyntaxTree* procParamListNode = findChildNonTerminal(procDeclNode, "PARAMLIST");
@@ -38,7 +52,7 @@ CodeProcedureDeclaration* ASTGenerator::genProcedureDecl(SyntaxTree* procDeclNod
     {
         vector<CodeParameter*> params = genCodeParameters(procParamListNode);
         for (int i=0; params.size() > i; i++) {
-            procDecl->addParam(params[i]);
+            invokDecl->addParam(params[i]);
         }
     }else
         throw GrammarException("CodeProcedureDeclaration missing Procedure PARAMLIST!");
@@ -66,11 +80,11 @@ CodeProcedureDeclaration* ASTGenerator::genProcedureDecl(SyntaxTree* procDeclNod
     {
         vector<CodeStatement*> statements = genCodeStatements(cmdNode);
         for (int i=0; statements.size() > i; i++) {
-            procDecl->addStatement(statements[i]);
+            invokDecl->addStatement(statements[i]);
         }
     }
     
-    return procDecl;
+    return invokDecl;
 };
 
 
@@ -82,12 +96,18 @@ vector<CodeDeclaration*> ASTGenerator::genCodeDeclarations(SyntaxTree* node){
     vector<SyntaxTree*> procDeclNodes = findAllNonTerminalRec(node, "PROCDECL");
     cout << "found " << procDeclNodes.size() << " PROCDECL!\n";
     for (int i=0; procDeclNodes.size() > i; i++) {
-        CodeProcedureDeclaration* procDecl = genProcedureDecl(procDeclNodes[i]);
+        CodeInvokableDeclaration* procDecl = genInvokableDecl(procDeclNodes[i], false);
         decls.push_back(procDecl);
     }
     
+    vector<SyntaxTree*> funDeclNodes = findAllNonTerminalRec(node, "FUNDECL");
+    cout << "found " << funDeclNodes.size() << " FUNDECL!\n";
+    for (int i=0; funDeclNodes.size() > i; i++) {
+        CodeInvokableDeclaration* funDecl = genInvokableDecl(funDeclNodes[i], true);
+        decls.push_back(funDecl);
+    }
     
-    // TODO: Other decls (functions etc)
+    // TODO: Other decls
     
     return decls;
 };
