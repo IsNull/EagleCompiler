@@ -100,6 +100,8 @@ enum TokenType {
     
     Keyword_Proc,           // proc
     Keyword_ProcEnd,        // endproc
+    Keyword_Fun,           // fun
+    Keyword_FunEnd,        // endfun
     
     Keyword_While,          // while
     Keyword_WhileEnd,       // endwhile
@@ -264,6 +266,8 @@ const map<TokenType, const string> TokenNames {
         // flow
         {TokenType::Keyword_Proc, "PROC"},
         {TokenType::Keyword_ProcEnd, "ENDPROC"},
+        {TokenType::Keyword_Fun, "FUN"},
+        {TokenType::Keyword_FunEnd, "ENDFUN"},
         {TokenType::Keyword_While, "WHILE"},
         {TokenType::Keyword_WhileEnd, "ENDWHILE"},
         {TokenType::Keyword_Program, "PROGRAM"},
@@ -326,6 +330,8 @@ const TokenMap KeywordTokens =
     // flow
     {"proc", TokenType::Keyword_Proc},
     {"endproc", TokenType::Keyword_ProcEnd},
+    {"fun", TokenType::Keyword_Fun},
+    {"endfun", TokenType::Keyword_FunEnd},
     {"program", TokenType::Keyword_Program},
     {"endprogram", TokenType::Keyword_ProgramEnd},
     {"if", TokenType::Keyword_Condition},
