@@ -1,0 +1,22 @@
+program 
+changeModeString()
+global
+
+
+fun doSomeCool(in copy a:string, in copy b:string) returns res:string
+	do
+  	res := a & " soo coool " & b
+endfun;
+
+const testVariable1:string;
+var testVariable2:string
+
+do
+	a init := "dumdi";
+	b init := "hase";
+	
+	c init := "function returned: " & doSomeCool(a, b);
+
+	debugout c
+
+endprogram
