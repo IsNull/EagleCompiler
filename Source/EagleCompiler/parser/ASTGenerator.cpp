@@ -558,16 +558,37 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                 SyntaxTree* secondChild = exprNode->getChildren()[1];
                 
                 if(secondChild->getNonTerminal()->getName() == "IDENTFACTOR"){
-                
-                    CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), NULL /* TYPE UNKNOWN */);
-                    expr = new CodeExpressionVariable(var);
                     
-                }else if(secondChild->hasChildren()
-                   && secondChild->getChildren()[0]->isTerminal()
-                   && secondChild->getChildren()[0]->getToken()->getType() == TokenType::Keyword_Init){
-                    
-                    CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), NULL /* TYPE UNKNOWN */);
-                    expr = new CodeExpressionInitializeVariable(var);
+                    // this might be either a variable or a function invokation
+                    // check if we have an expression list NT
+                    if(secondChild->hasChildren()
+                       && !secondChild->getChildren()[0]->isTerminal()
+                       && secondChild->getChildren()[0]->getNonTerminal()->getName() == "EXPRLIST"){
+                        
+                        // we have a function call here
+
+                        SyntaxTree* exprListNode = secondChild->getChildren()[0];
+                        SyntaxTree* optExprNode = findChildNonTerminal(exprListNode, "OPTEXPR");
+                        vector<CodeExpression*> expressions = genCodeExpressionList(optExprNode);
+                        
+                        CodeFunction* fun = new CodeFunction(firstChild->getToken()->getValue(), NULL /* TYPE UNKNOWN */);
+                        CodeExpressionFunctionCall* funexpr = new CodeExpressionFunctionCall(fun);
+                        expr = funexpr;
+                        for (int i=0; expressions.size()>i; i++) {
+                            funexpr->addParameter(expressions[i]);
+                        }
+                    } else if(secondChild->hasChildren()
+                              && secondChild->getChildren()[0]->isTerminal()
+                              && secondChild->getChildren()[0]->getToken()->getType() == TokenType::Keyword_Init){
+                        
+                        // it is a init variable reference
+                        CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), NULL /* TYPE UNKNOWN */);
+                        expr = new CodeExpressionInitializeVariable(var);
+                    }else{
+                        // it is a siple variable reference
+                        CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), NULL /* TYPE UNKNOWN */);
+                        expr = new CodeExpressionVariable(var);
+                    }
                 }
             }
             
