@@ -20,7 +20,7 @@ string AST::CodeAssignmentStatement::code() {
 	CodeExpressionVariable *v1 = dynamic_cast<CodeExpressionVariable*>(_lvalue);
 	if(v1 != nullptr) {
 		ret += _rvalue->code();
-		ret += "mov [" + v1->getVariable()->code() + "],eax\n";
+		ret += "mov " + v1->getVariable()->code() + ",eax\n";
 	} else {
 		throw std::exception();
 	}

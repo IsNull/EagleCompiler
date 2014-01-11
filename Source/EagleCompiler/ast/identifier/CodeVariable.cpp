@@ -32,6 +32,6 @@ namespace AST {
 }
 
 string AST::CodeVariable::code() {
-	return "_var_"+getName()+"_";
+	return "[ebp+" + to_string(_stackOffset) +"]";
 }
 

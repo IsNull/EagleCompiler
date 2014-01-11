@@ -19,8 +19,7 @@ string AST::CodeOutputStatment::code() {
 	ret += "push dword eax\n";
 	ret += "push int32print\n";
 	ret += "call printf\n";
-	ret += "pop eax\n";
-	ret += "pop eax\n";
+	ret += "add esp,8\n";
 	return ret;
 }
 

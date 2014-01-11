@@ -80,7 +80,7 @@ string AST::CodeBinaryExpression::code() {
 		}
 	}
 	
-	return _left->code() + AST::BinaryOperatorString.find(_binaryOperator)->second + _right->code();
+	return ret;
 };
 
 CodeType CodeBinaryExpression::getType(){

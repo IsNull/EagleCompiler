@@ -21,7 +21,7 @@ string AST::CodeExpressionFunctionCall::code() {
 	}
 	
 	ret += "call " + _function->code() + "\n";
-	for(auto e : _parameters) {
+	for(int i=0; i<_parameters.size(); i++) {
 		ret += "pop ebx\n";
 	}	
 	return ret;

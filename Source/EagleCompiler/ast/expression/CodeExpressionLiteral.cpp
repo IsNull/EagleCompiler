@@ -14,12 +14,8 @@ using namespace std;
 
 string AST::CodeExpressionLiteral::code() {
 	string ret;
-	
-	if(_variable->getType() == CodeType::STRING) {
-		ret += "mov eax," + _variable->code() + "\n";
-	} else if(_variable->getType() == CodeType::INT32 || _variable->getType() == CodeType::BOOL) {
-		ret += "mov eax,[" + _variable->code() + "]\n";
-	}
+	ret += "mov eax," + _variable->code() + "\n";
+
 	
 	return ret;
 }

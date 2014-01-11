@@ -13,10 +13,25 @@
 using namespace std;
 
 string AST::CodeWhileStatement::code() {
+	string ret;
 	string statementBlock;
+	string conditionBlock;
+	string whileLable = "_"+to_string((long)this) + "_while";//create a unique label for this statement
+	
 	for(auto s : _loopStatements) {
-		statementBlock += "  " + s->code() + "\n";
+		statementBlock += s->code();
 	}
-	return "while (" + _condition->code() + ") {\n" + statementBlock + "}";
+	
+	conditionBlock = _condition->code();
+	
+	ret += whileLable + ":\n";
+	ret += conditionBlock;
+	ret += "cmp eax,0\n";
+	ret += "je .end\n";
+	ret += statementBlock;
+	ret += "jmp " + whileLable + "\n";
+	ret += ".end:\n";
+	
+	return ret;
 }
 

@@ -13,13 +13,27 @@
 using namespace std;
 
 string AST::CodeProcedureDeclaration::code() {
+	string ret;
+	
+	for(int i=0; i<_params.size(); i++) {
+		_params[i]->getVariable()->setStackPos(8 + (4*i));
+	}		
+	
+	
+	
+	ret += "push ebp\n";
+	ret += "mov ebp,esp\n";
+	ret += "sub esp," + to_string(_localStoDecls.size()) + "\n";
+	
+	ret += "leave\n";
+	ret += "ret\n";
+	
+
 	string params;
 	string globalImports;
 	string stoDecl;
 	string code;
-	for(auto e : _params) {
-		params += e->code() + ",";
-	}
+
 	for(auto e : _globalImps) {
 		globalImports += e->code() + ",";
 	}
@@ -29,10 +43,7 @@ string AST::CodeProcedureDeclaration::code() {
 	for(auto e : _statements) {
 		code += "  " + e->code() + "\n";
 	}
-	if(_params.size() > 0)_params.pop_back();
-	if(_globalImps.size() > 0)_globalImps.pop_back();
-	if(_localStoDecls.size() > 0)_localStoDecls.pop_back();
 	
-	return _procedure->code() + "(" + params + ") " + globalImports + " " + stoDecl + "{\n" + code + "}";
+	return ret;
 }
 

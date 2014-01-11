@@ -45,6 +45,7 @@ namespace AST {
 	class CodeVariable : public CodeIdentifier {
 	private:
 		CodeType _type;
+		int _stackOffset;
 	public:
 		CodeVariable(string name, CodeType type) : 
 			CodeIdentifier(name), _type(type)
@@ -53,6 +54,9 @@ namespace AST {
 		CodeType getType() { return _type; };
 		
 		string code();
+		
+		int getStackPos() { return _stackOffset; };
+		void setStackPos(int i) { _stackOffset = i; };
         
         friend std::ostream& operator<< (std::ostream& stream, const CodeVariable& node) {
             stream << "CodeVariable";
