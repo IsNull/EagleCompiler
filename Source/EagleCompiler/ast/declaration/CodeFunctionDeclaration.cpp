@@ -33,6 +33,6 @@ string AST::CodeFunctionDeclaration::code() {
 	if(_globalImps.size() > 0)_globalImps.pop_back();
 	if(_localStoDecls.size() > 0)_localStoDecls.pop_back();
 	
-	return _function->code() + "(" + params + "):" + returnValue->code() + " " + globalImports + " " + stoDecl + "{\n" + code + "}";
+	return _function->code() + "(" + params + "):" + _returnValue->code() + " " + globalImports + " " + stoDecl + "{\n" + code + "}";
 }
 
