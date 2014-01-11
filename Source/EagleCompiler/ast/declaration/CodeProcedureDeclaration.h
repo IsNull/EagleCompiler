@@ -22,44 +22,61 @@
 using namespace std;
 
 namespace AST {
-	class CodeProcedureDeclaration : public CodeDeclaration {
+    
+    
+    class CodeInvokableDeclaration : public CodeDeclaration{
+	protected:
+        vector<CodeParameter*> _params;
+        vector<CodeGlobalImport*> _globalImps;
+        vector<CodeStorageDeclaration*> _localStoDecls;
+        vector<CodeStatement*> _statements;
+	public:
+        
+        CodeInvokableDeclaration(CodeIdentifier *identifier)
+            : CodeDeclaration(identifier) { }
+        
+		void addParam(CodeParameter *param)
+        { _params.push_back(param); }
+        
+		void addGlobalImport(CodeGlobalImport *import)
+        { _globalImps.push_back(import); }
+        
+		void addLocalStoDecl(CodeStorageDeclaration *stoDecl)
+        { _localStoDecls.push_back(stoDecl); }
+        
+		void addStatement(CodeStatement *statement)
+        { _statements.push_back(statement); }
+        
+        
+        auto getParameters() -> decltype(_params)
+        { return _params; };
+        
+		auto getPGlobalImports() -> decltype(_globalImps)
+        { return _globalImps; };
+        
+		auto getLocalStorageDeclarations() -> decltype(_localStoDecls)
+        { return _localStoDecls; };
+        
+		auto getStatements() -> decltype(_statements)
+        { return _statements; };
+
+        
+        virtual string toString()const{ return "<CodeInvokableDeclaration>";}
+	};
+    
+    
+    
+    
+	class CodeProcedureDeclaration : public CodeInvokableDeclaration {
 	private:
 		CodeProcedure *_procedure;
-		vector<CodeParameter*> _params;
-		vector<CodeGlobalImport*> _globalImps;
-		vector<CodeStorageDeclaration*> _localStoDecls;
-		vector<CodeStatement*> _statements;
 		
 	public:
 		CodeProcedureDeclaration(CodeProcedure *procedure) : 
-			CodeDeclaration(procedure), _procedure(procedure) { };
+			CodeInvokableDeclaration(procedure), _procedure(procedure) { };
 		
-		void addParam(CodeParameter *param)
-			{ _params.push_back(param); }
-			
-		void addGlobalImport(CodeGlobalImport *import)
-			{ _globalImps.push_back(import); }
-			
-		void addLocalStoDecl(CodeStorageDeclaration *stoDecl)
-			{ _localStoDecls.push_back(stoDecl); }
-			
-		void addStatement(CodeStatement *statement)
-			{ _statements.push_back(statement); }
-			
 		CodeProcedure *getProcedure() { return _procedure; };
-		
-		auto getParameters() -> decltype(_params)
-			{ return _params; };
-			
-		auto getPGlobalImports() -> decltype(_globalImps)
-			{ return _globalImps; };
-			
-		auto getLocalStorageDeclarations() -> decltype(_localStoDecls)
-			{ return _localStoDecls; };
-			
-		auto getStatements() -> decltype(_statements)
-			{ return _statements; };
-
+	
 		string code();
         
       

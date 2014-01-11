@@ -49,6 +49,7 @@ private:
     CodeExpression* genExpression(SyntaxTree* exprNode);
     CodeExpression* genOperatorExpression(SyntaxTree* exprNode);
     CodeBinaryExpression* genBinaryExpression(CodeExpression* leftSide, SyntaxTree* operatorTerminalNode, CodeExpression* rightSide);
+    CodeBinaryExpression* genBinaryExpression(CodeExpression* leftSideExpr, SyntaxTree* repNode);
 
     vector<SyntaxTree*> findCommandNodes(SyntaxTree* cmdNode);
     
@@ -57,7 +58,7 @@ private:
     vector<CodeStatement*> genCodeStatements(SyntaxTree* node);
     vector<CodeDeclaration*> genCodeDeclarations(SyntaxTree* node);
     
-    CodeProcedureDeclaration* genProcedureDecl(SyntaxTree* procDeclNode);
+    CodeInvokableDeclaration* genInvokableDecl(SyntaxTree* procDeclNode, bool isfunction);
     
     /**
      * Searches the next Terminal starting at parent (recursive)

@@ -1,5 +1,15 @@
-program 
+program
+	Test()
 
-	const term:string;
+
+	do
+	debugout a + b + c + d + e;
+
+	debugout a + b * c + d + e;
+
+	//debugout t & "I am %age% years old now!"
+
+	//const term:string;
 	debugout t & "I am " & age & "years old now!"
+
 endprogram

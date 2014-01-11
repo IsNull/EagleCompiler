@@ -88,6 +88,8 @@ public:
     bool isNewLine(int start, int end);
     
     void emitToken(Token* token);
+    
+    TokenType getCurrentToken() { return _currentType; };
 };
 
 

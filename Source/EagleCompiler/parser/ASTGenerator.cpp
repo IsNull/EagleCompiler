@@ -17,20 +17,34 @@
 #include "../Token.h"
 
 
-CodeProcedureDeclaration* ASTGenerator::genProcedureDecl(SyntaxTree* procDeclNode){
-    // NODE := PROCDECL
-    CodeProcedureDeclaration* procDecl = NULL;
-    CodeProcedure* procedure = NULL;
+CodeInvokableDeclaration* ASTGenerator::genInvokableDecl(SyntaxTree* procDeclNode, bool isfunction){
+    // NODE := PROCDECL or FUNDECL
+    
+    CodeInvokableDeclaration* invokDecl = NULL;
     
     SyntaxTree* procNameNode = findChildTerminal(procDeclNode, TokenType::Identifier);
     if(procNameNode != NULL)
     {
         string name = procNameNode->getToken()->getValue();
-        procedure = new CodeProcedure(name);
+        if(isfunction){
+            
+            // check the return storage and add it
+            SyntaxTree* retStoDecl = findChildNonTerminal(procDeclNode, "STODECL");
+            CodeParameter* codeParam = genCodeParameter(retStoDecl);
+            
+            if(codeParam != NULL){
+                CodeStorageDeclaration* storDecl = new CodeStorageDeclaration(codeParam->getChangeMode(), codeParam->getVariable());
+                invokDecl = new CodeFunctionDeclaration(new CodeFunction(name, storDecl->getVariable()->getType()), storDecl);
+            }else
+                throw new GrammarException("CodeFunctionDeclaration missing return param (STODECL)!");
+            
+        }else{
+            invokDecl = new CodeProcedureDeclaration(new CodeProcedure(name));
+        }
     }else
-        throw GrammarException("CodeProcedureDeclaration missing Procedure Name (Identifier)!");
+        throw new GrammarException("CodeInvokableDeclaration missing Procedure/Function Name (Identifier)!");
     
-    procDecl = new CodeProcedureDeclaration(procedure);
+    
     
     // add procedure params
     SyntaxTree* procParamListNode = findChildNonTerminal(procDeclNode, "PARAMLIST");
@@ -38,7 +52,7 @@ CodeProcedureDeclaration* ASTGenerator::genProcedureDecl(SyntaxTree* procDeclNod
     {
         vector<CodeParameter*> params = genCodeParameters(procParamListNode);
         for (int i=0; params.size() > i; i++) {
-            procDecl->addParam(params[i]);
+            invokDecl->addParam(params[i]);
         }
     }else
         throw GrammarException("CodeProcedureDeclaration missing Procedure PARAMLIST!");
@@ -66,11 +80,11 @@ CodeProcedureDeclaration* ASTGenerator::genProcedureDecl(SyntaxTree* procDeclNod
     {
         vector<CodeStatement*> statements = genCodeStatements(cmdNode);
         for (int i=0; statements.size() > i; i++) {
-            procDecl->addStatement(statements[i]);
+            invokDecl->addStatement(statements[i]);
         }
     }
     
-    return procDecl;
+    return invokDecl;
 };
 
 
@@ -82,12 +96,18 @@ vector<CodeDeclaration*> ASTGenerator::genCodeDeclarations(SyntaxTree* node){
     vector<SyntaxTree*> procDeclNodes = findAllNonTerminalRec(node, "PROCDECL");
     cout << "found " << procDeclNodes.size() << " PROCDECL!\n";
     for (int i=0; procDeclNodes.size() > i; i++) {
-        CodeProcedureDeclaration* procDecl = genProcedureDecl(procDeclNodes[i]);
+        CodeInvokableDeclaration* procDecl = genInvokableDecl(procDeclNodes[i], false);
         decls.push_back(procDecl);
     }
     
+    vector<SyntaxTree*> funDeclNodes = findAllNonTerminalRec(node, "FUNDECL");
+    cout << "found " << funDeclNodes.size() << " FUNDECL!\n";
+    for (int i=0; funDeclNodes.size() > i; i++) {
+        CodeInvokableDeclaration* funDecl = genInvokableDecl(funDeclNodes[i], true);
+        decls.push_back(funDecl);
+    }
     
-    // TODO: Other decls (functions etc)
+    // TODO: Other decls
     
     return decls;
 };
@@ -405,7 +425,7 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
                 }
                 
                 CodeProcedureCallStatement* procCall = new CodeProcedureCallStatement(procedure);
-                
+                statement = procCall;
                 // ExpressionList: expr, expr, expr....
                 
                 SyntaxTree* exprListNode = cmdChilds[2];
@@ -585,14 +605,11 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
 CodeBinaryExpression* ASTGenerator::genBinaryExpression(CodeExpression* leftSideExpr, SyntaxTree* operatorTerminalNode, CodeExpression* rightSideExpr){
     CodeBinaryExpression* binaryExpression = NULL;
     
-    
     if(!operatorTerminalNode->isTerminal()){
         ostringstream errStr;
         errStr << "Expected node to be Operator TERMINAL but was: " << *operatorTerminalNode->getNonTerminal() << "\n";
         throw new GrammarException(errStr.str());
     }
-    
-
     
     // find now the matching binary operator for binary-expression
     
@@ -609,92 +626,58 @@ CodeBinaryExpression* ASTGenerator::genBinaryExpression(CodeExpression* leftSide
     }
     
     return binaryExpression;
-}
+};
+
+CodeBinaryExpression* ASTGenerator::genBinaryExpression(CodeExpression* leftSideExpr, SyntaxTree* opNode){
+    
+    SyntaxTree* opTerminalNode = opNode->getChildren()[0];
+    SyntaxTree* rightSideNode = opNode->getChildren()[1];
+    CodeExpression* rightSideExpr = genExpression(rightSideNode);
+    
+    CodeBinaryExpression* expr = genBinaryExpression(leftSideExpr, opTerminalNode, rightSideExpr);
+    
+    if(opNode->getChildren().size() == 2){
+        // we are done
+    }else if(opNode->getChildren().size() == 3){
+        SyntaxTree* possibleRepNode = opNode->getChildren()[2];
+        if(possibleRepNode->hasChildren()){
+            // it is a NT with rep Expr -> recurse into!
+            CodeBinaryExpression* outerExpr = genBinaryExpression(expr, possibleRepNode);
+            if(outerExpr != NULL)
+                expr = outerExpr;
+        }
+    }else{
+        // Invalid
+        cout << "Error: genBinaryExpression() -> Unexpected node for generating binary expression!\n" << *opNode;
+    }
+
+    return expr;
+};
+
 
 CodeExpression* ASTGenerator::genOperatorExpression(SyntaxTree* exprNode){
     
     CodeExpression* opExpression = NULL;
     
-    /*
-     [TERM2]
-     [TERM3]
-     [FACTOR]
-     LITERAL [LITERAL_Number,0]
-     [REPMULTOPRFACTOR]
-     [REPADDOPRTERM3]
-     ADDOPR [ADDOPR_PLUS,+]
-     [TERM3]
-     [FACTOR]
-     LITERAL [LITERAL_Number,2]
-     [REPMULTOPRFACTOR]
-     [REPADDOPRTERM3]
-     [OPTRELOPRTERM2]
-     */
-    
-    // this (exprNode) would be [TERM2]
-    // childOperatorNode should then be found as [REPADDOPRTERM3]
-    
-    // handle STRCONCATOPR!!
-    
     for (int i=0; exprNode->getChildren().size() > i; i++) {
         SyntaxTree* child = exprNode->getChildren()[i];
-        
-        // check now if child has a Operator-Terminal Child on first slot
-        
+
         if(child->hasChildren() && child->getChildren()[0]->isTerminal()){
             TokenType type = child->getChildren()[0]->getToken()->getType();
-             
             
             list<TokenType>::const_iterator findIter = std::find(BinaryOperatorTokens.begin(), BinaryOperatorTokens.end(), type);
             if(findIter != BinaryOperatorTokens.end()){
-                // found binary operator!!
-                cout << "ASTGenerator: found binary operator: " << type << "\n";
-                
-                
+                // found dyadic operator
                 SyntaxTree* leftSideExprNode = exprNode->getChildren()[0];
-                SyntaxTree* operatorTerminalNode = child->getChildren()[0];
-                SyntaxTree* rightSideExprNode = child->getChildren()[1];
-                
-                //cout << "gen binary expr: Right side:" << *rightSideExprNode << "\n";
                 CodeExpression* leftSideExpr = genExpression(leftSideExprNode);
-                CodeExpression* rightSideExpr = genExpression(rightSideExprNode);
                 
-                
-                if(child->getChildren().size() > 2){
-                    
-                    
-                    CodeExpression* innerExpr = genBinaryExpression(leftSideExpr, operatorTerminalNode, rightSideExpr);
-                    SyntaxTree* repNode = child->getChildren()[2];
-                    
-                    // TODO make dynamic recursive
-                    if(repNode->getChildren().size() > 1){
-                    
-                        SyntaxTree* operatorTerminalNode2 = repNode->getChildren()[0];
-                        SyntaxTree* rightSideNode2 = repNode->getChildren()[1];
-                        CodeExpression* rightSideExpr2 = genExpression(rightSideNode2);
-                    
-                        opExpression = genBinaryExpression(innerExpr, operatorTerminalNode2, rightSideExpr2);
-                    }else{
-                        //cout << "Error GenBinaryExpression:\n" << *repNode;
-                        opExpression = genBinaryExpression(leftSideExpr, operatorTerminalNode, rightSideExpr);
-                    }
-                    
-                }else{
-                    opExpression = genBinaryExpression(leftSideExpr, operatorTerminalNode, rightSideExpr);
-                }
-
-                
-                //cout << "ASTGenerator: generated " << opExpression->toString() << "\n";
-                break;
-            
-            }else{
-                //cout << "ASTGenerator: Expected Binary-OperatorTerminal but was: " << *child->getChildren()[0]->getToken() << "\n" << *exprNode << "\n";
+                opExpression = genBinaryExpression(leftSideExpr, child);
             }
         }
     }
     
     return opExpression;
-}
+};
 
 
 
