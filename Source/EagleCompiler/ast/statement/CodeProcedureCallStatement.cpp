@@ -13,15 +13,17 @@
 using namespace std;
 
 string AST::CodeProcedureCallStatement::code() {
-	string params;
+	string ret;
 	for(auto e : _parameters) {
-		string expr = e->toCode();
-		expr += "push eax\n"
-		params = expr + params;
+		string expr = e->code();
+		expr += "push eax\n";
+		ret = expr + ret;
 	}
 	
-	//remove last character
-	if(_parameters.size() > 0)_parameters.pop_back();
-	return "call " + _procedure->code() + "(" + params + ")";
+	ret += "call " + _procedure->code() + "\n";
+	for(auto e : _parameters) {
+		ret += "pop ebx\n";
+	}	
+	return ret;
 }
 

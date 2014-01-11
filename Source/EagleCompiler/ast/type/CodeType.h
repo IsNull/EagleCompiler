@@ -16,17 +16,17 @@
 using namespace std;
 
 namespace AST {
-	class CodeType : public CodeObject {
-	private:
-		
-	public:
-        
-        
-        friend std::ostream& operator<< (std::ostream& stream, const CodeType& node) {
-            stream << "CodeType";
-            return stream;
-        };
+	enum class CodeType {
+		VOID,
+		INT32,
+		BOOL,
+		STRING
 	};
+	
+	namespace STRING {
+		const int BUFFER_LEN = 256;
+	}
+
 }
 
 #endif

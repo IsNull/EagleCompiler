@@ -13,13 +13,17 @@
 using namespace std;
 
 string AST::CodeExpressionFunctionCall::code() {
-	string params;
+	string ret;
 	for(auto e : _parameters) {
-		params += e->code() + ",";
+		string expr = e->code();
+		expr += "push eax\n";
+		ret = expr + ret;
 	}
 	
-	//remove last character
-	if(_parameters.size() > 0) _parameters.pop_back();
-	return _function->code() + "(" + params + ")";
+	ret += "call " + _function->code() + "\n";
+	for(auto e : _parameters) {
+		ret += "pop ebx\n";
+	}	
+	return ret;
 }
 

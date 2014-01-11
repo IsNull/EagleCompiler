@@ -19,5 +19,69 @@ namespace AST {
 
 
 string AST::CodeBinaryExpression::code() {
+	string ret;
+	
+	ret += _left->code();
+	ret += "push eax\n";
+	
+	if(_binaryOperator == BINARYOPERATOR::COND_AND) {
+		
+	} else if(_binaryOperator == BINARYOPERATOR::COND_OR) {
+		
+	} else {
+		
+		ret += _right->code();
+		
+		ret += "pop ebx\n";
+		
+		switch(_binaryOperator) {
+			
+			case BINARYOPERATOR::TIMES :
+				ret += "imul ebx\n";
+			break;
+			case BINARYOPERATOR::DIV :
+				ret += "idiv ebx\n";
+			break;
+			case BINARYOPERATOR::MOD :
+				ret += "idiv ebx\n";
+				ret += "mov eax,edx";
+			break;
+			case BINARYOPERATOR::PLUS :
+				ret += "add eax,ebx\n";
+			break;
+			case BINARYOPERATOR::MINUS :
+				ret += "sub eax,ebx\n";
+			break;
+			case BINARYOPERATOR::LESS :
+				ret += "cmp eax,ebx\n";
+				ret += "setle eax\n";
+			break;
+			case BINARYOPERATOR::GREATER_EQ :
+				ret += "cmp eax,ebx\n";
+				ret += "setl eax\n";
+			break;
+			case BINARYOPERATOR::EQUAL:
+				ret += "cmp eax,ebx\n";
+				ret += "sete eax\n";
+			break;
+			case BINARYOPERATOR::NOT_EQ :
+				ret += "cmp eax,ebx\n";
+				ret += "setne eax\n";
+			break;
+			case BINARYOPERATOR::GREATER :
+				ret += "cmp eax,ebx\n";
+				ret += "setg eax\n";
+			break;
+			case BINARYOPERATOR::LESS_EQ :
+				ret += "cmp eax,ebx\n";
+				ret += "setle eax\n";
+			break;
+			case BINARYOPERATOR::STR_CONCAT :
+				
+			break;
+			default: break;
+		}
+	}
+	
 	return _left->code() + AST::BinaryOperatorString.find(_binaryOperator)->second + _right->code();
 }

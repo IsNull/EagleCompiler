@@ -22,6 +22,16 @@ namespace AST {
 
 
 string AST::CodeExpressionUnaryExpression::code() {
-	return UnaryOperatorString[_unaryOperator] + _expression->code();
+	string ret;
+	
+	ret += _expression->code();
+	
+	if(_unaryOperator == UNARYOPERATOR::NOT) {
+		ret += "not eax\n";
+	} else if(_unaryOperator == UNARYOPERATOR::NEGATIVE) {
+		ret += "neg eax\n";
+	}
+	
+	return ret;
 }
 

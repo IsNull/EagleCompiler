@@ -44,13 +44,13 @@ namespace AST {
 
 	class CodeVariable : public CodeIdentifier {
 	private:
-		CodeType *_type;
+		CodeType _type;
 	public:
-		CodeVariable(string name, CodeType *type) : 
+		CodeVariable(string name, CodeType type) : 
 			CodeIdentifier(name), _type(type)
 			{ };
 		
-		CodeType *getType() { return _type; };
+		CodeType getType() { return _type; };
 		
 		string code();
         

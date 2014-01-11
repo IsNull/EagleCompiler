@@ -44,7 +44,7 @@ class ASTGenerator
 private:
     
     CodeStatement* genCodeStatement(SyntaxTree* node);
-    CodeType* genCodeType(SyntaxTree* atomTypeNode);
+    CodeType genCodeType(SyntaxTree* atomTypeNode);
     CodeParameter* genCodeParameter(SyntaxTree* node);
     CodeExpression* genExpression(SyntaxTree* exprNode);
     CodeExpression* genOperatorExpression(SyntaxTree* exprNode);

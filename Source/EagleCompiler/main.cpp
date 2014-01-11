@@ -59,12 +59,10 @@ void scan() {
 
 void testSam() {
 	using namespace AST;
-	CodeTypeInteger32* int32 = CodeTypeInteger32::getInstance();
-	CodeTypeInteger32* int32 = CodeTypeInteger32::getInstance();
 	CodeProgram p;
 	
-	CodeVariable *v1 = new CodeVariable("var1", int32);
-	CodeVariable *v2 = new CodeVariable("var2", int32);
+	CodeVariable *v1 = new CodeVariable("var1", CodeType::INT32);
+	CodeVariable *v2 = new CodeVariable("var2", CodeType::INT32);
 
 	CodeIfStatement *myIf = new CodeIfStatement(new CodeBinaryExpression(new CodeExpressionVariable(v1), BINARYOPERATOR::LESS, new CodeExpressionVariable(v2)));
 	myIf->addIfStatement(new CodeAssignmentStatement(new CodeExpressionVariable(v1), new CodeExpressionVariable(v2)));
@@ -73,7 +71,7 @@ void testSam() {
 	p.addGlobalDecl(new CodeStorageDeclaration(CHANGEMODE::VAR, v1));
 	p.addGlobalDecl(new CodeStorageDeclaration(CHANGEMODE::VAR, v2));
 	
-	p.addProgStatement(new CodeAssignmentStatement(new CodeExpressionVariable(v1), new CodeExpressionLiteral(int32, "42")));
+	p.addProgStatement(new CodeAssignmentStatement(new CodeExpressionVariable(v1), new CodeExpressionLiteral(new CodeVariable("MyLiteral", CodeType::INT32), "42")));
 	
 // 	p.addProgStatement(new CodeOutputStatment(new CodeExpressionVariable(v2)));
 	p.addProgStatement(myIf);

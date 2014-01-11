@@ -10,15 +10,13 @@
 
 #include "CodeStorageDeclaration.h"
 
-#include "../type/CodeTypeString.h"
-
 using namespace std;
 
 string AST::CodeStorageDeclaration::code() {
-	if(dynamic_cast<CodeTypeString*>(_variable->getType()) != nullptr) {
-		return _variable->code() + ": times " + to_string(CodeTypeString::BUFFERLEN) + " " + _variable->getType()->code() + " 0\n";
+	if(_variable->getType() == CodeType::STRING) {
+		return _variable->code() + ": times " + to_string(STRING::BUFFER_LEN) + " db 0\n";
 	} else {
-		return _variable->code() + ": " + _variable->getType()->code() + " 0\n";
+		return _variable->code() + ": dd 0\n";
 	}
 }
 

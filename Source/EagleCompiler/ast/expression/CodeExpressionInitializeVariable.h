@@ -27,7 +27,7 @@ namespace AST {
 		CodeExpressionInitializeVariable(CodeVariable *variable)
         : CodeExpressionVariable(variable) { };
 				
-		string code();
+		//string code();
         
         virtual string toString(){ return "<CodeExpressionInitializeVariable>"; }
 	};

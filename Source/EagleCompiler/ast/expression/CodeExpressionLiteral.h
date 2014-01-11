@@ -20,12 +20,13 @@ using namespace std;
 namespace AST {
 	class CodeExpressionLiteral : public CodeExpression {
 	private:
-		CodeType *_type;
 		string _value;
+		CodeVariable *_variable;
 	public:
-		CodeExpressionLiteral(CodeType *type, string value) : _type(type), _value(value) { };
+		CodeExpressionLiteral(CodeVariable *variable, string value) : 
+			_value(value), _variable(variable) { };
 		
-		CodeType *getType() { return _type; };
+		CodeVariable *getVariable() { return _variable; };
 		string getValue() { return _value; };
 
 		string code();

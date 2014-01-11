@@ -11,9 +11,6 @@
 #include <vector>
 #include <algorithm>
 #include "../ast/type/CodeType.h"
-#include "../ast/type/CodeTypeBoolean.h"
-#include "../ast/type/CodeTypeInteger32.h"
-#include "../ast/type/CodeTypeString.h"
 #include "../Token.h"
 
 
@@ -222,7 +219,7 @@ CodeParameter* ASTGenerator::genCodeParameter(SyntaxTree* paramNode){
     if(typeIdentNode != NULL && typeIdentNode->hasChildren())
     {
         string paramName = "";
-        CodeType* paramType = NULL;
+        CodeType paramType = CodeType::VOID;
         
         
         SyntaxTree* identNode = findChildTerminal(typeIdentNode, TokenType::Identifier);
@@ -250,22 +247,22 @@ CodeParameter* ASTGenerator::genCodeParameter(SyntaxTree* paramNode){
     return parameter;
 }
 
-CodeType* ASTGenerator::genCodeType(SyntaxTree* atomTypeNode){
+CodeType ASTGenerator::genCodeType(SyntaxTree* atomTypeNode){
     
-    CodeType* codeType = NULL;
+    CodeType codeType = CodeType::VOID;
     
     TokenType type = atomTypeNode->getToken()->getType();
     switch (type) {
             
         case TokenType::Type_Int:
-            codeType = CodeTypeInteger32::getInstance();
+            codeType = CodeType::INT32;
             break;
         case TokenType::Type_Bool:
-            codeType = CodeTypeBoolean::getInstance();
+            codeType = CodeType::BOOL;
             break;
             
         case TokenType::Type_String:
-            codeType = CodeTypeString::getInstance();
+            codeType = CodeType::STRING;
             break;
             
         default:
@@ -508,22 +505,22 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
         
         if(exprNode->getTerminal()->getName() == "LITERAL")
         {
-            CodeType* type = NULL;
+            CodeType type = CodeType::VOID;
             
             // CodeExpressionFactorLiteral(CodeType *type, string value)
             switch(exprNode->getToken()->getType()){
                 case TokenType::Literal_Number:
-                    type = CodeTypeInteger32::getInstance();
+                    type = CodeType::INT32;
                     break;
                     
                 case TokenType::Literal_String:
-                    type = CodeTypeString::getInstance();
+                    type = CodeType::STRING;
                     break;
                     
                 case TokenType::Literal_True:
                 case TokenType::Literal_False:
                     
-                    type = CodeTypeBoolean::getInstance();
+                    type = CodeType::BOOL;
                     break;
                     
                     default:
@@ -534,7 +531,7 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
             }
             
             
-            expr = new CodeExpressionLiteral(type, exprNode->getToken()->getValue());
+            expr = new CodeExpressionLiteral(new CodeVariable("_lit_"+exprNode->getToken()->getValue()+"_", type), exprNode->getToken()->getValue());
         }
 
     }else{
@@ -559,14 +556,14 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                 
                 if(secondChild->getNonTerminal()->getName() == "IDENTFACTOR"){
                 
-                    CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), NULL /* TYPE UNKNOWN */);
+                    CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), CodeType::VOID /* TYPE UNKNOWN */);
                     expr = new CodeExpressionVariable(var);
                     
                 }else if(secondChild->hasChildren()
                    && secondChild->getChildren()[0]->isTerminal()
                    && secondChild->getChildren()[0]->getToken()->getType() == TokenType::Keyword_Init){
                     
-                    CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), NULL /* TYPE UNKNOWN */);
+                    CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), CodeType::VOID  /* TYPE UNKNOWN */);
                     expr = new CodeExpressionInitializeVariable(var);
                 }
             }
