@@ -16,6 +16,9 @@ using namespace std;
 // ============================= ScannerContextDefault =============================
 //
 
+const char Symbol_InlineExprToggle = '%';
+const char Symbol_StringToggle = '"';
+
 /*
  * Tokenmap for the default context.
  * Contains all tokens which have to be detected in this context
@@ -44,8 +47,8 @@ const TokenMap TokenMap_Default =
     {"!", TokenType::Operator_Not},
     {"&", TokenType::Operator_StringConcat},
     
-    {"%", TokenType::StringInlineExprToggle},
-    {"\"", TokenType::LiteralStringToggle},
+    {string(&Symbol_InlineExprToggle), TokenType::StringInlineExprToggle},
+    {string(&Symbol_StringToggle), TokenType::LiteralStringToggle},
     
     {":", TokenType::Colon},
     {",", TokenType::Comma},
@@ -224,8 +227,6 @@ KnownScannerState ScannerContextMultiLineComment::mapNextState(TokenType token){
 TokenType ScannerContextLiteralString::stepRangeInternal(int start, int end){
     
     
-    //string str = _scanner->range(start, end);
-    //cout << "Scanner: LieralString looking up: " << str << "\n";
     
     TokenType rangeTokenType = lookupToken(start, end, TokenMap_LiteralString);
     
@@ -233,10 +234,21 @@ TokenType ScannerContextLiteralString::stepRangeInternal(int start, int end){
     
     // no simple token found.
     
-    if(rangeTokenType == TokenType::None){
+    //cout << "range " << start << " to " << end << " :: " << _scanner->range(start, end) << "\n";
+    
+    if(start == end){
         
+        // ensure that we emit an empty string
+        if(_scanner->range(end, end)[0] == Symbol_StringToggle
+           && _scanner->getCurrentToken() == TokenType::LiteralStringToggle){
+            _scanner->emitToken(new Token(TokenType::Literal_String, ""));
+        }
+    }
+    
+
+    if(rangeTokenType == TokenType::None){
         string str = _scanner->range(end, end);
-        if(str[0] != '"' && str[0] != '%'){
+        if(str[0] != Symbol_StringToggle && str[0] != Symbol_InlineExprToggle){
             rangeTokenType = TokenType::Literal_String;
         }
     }
