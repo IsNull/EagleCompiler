@@ -32,6 +32,6 @@ namespace AST {
 }
 
 string AST::CodeVariable::code() {
-	return getName() + ":" + _type->code();
+	return getName() + ":" + ((_type != NULL) ? _type->code() : "<no type>");
 }
 
