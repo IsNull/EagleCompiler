@@ -621,7 +621,7 @@ CodeBinaryExpression* ASTGenerator::genBinaryExpression(CodeExpression* leftSide
     }else if(opNode->getChildren().size() == 3){
         SyntaxTree* possibleRepNode = opNode->getChildren()[2];
         if(possibleRepNode->hasChildren()){
-            // it is a NT with children -> recurse into!
+            // it is a NT with rep Expr -> recurse into!
             CodeBinaryExpression* outerExpr = genBinaryExpression(expr, possibleRepNode);
             if(outerExpr != NULL)
                 expr = outerExpr;
