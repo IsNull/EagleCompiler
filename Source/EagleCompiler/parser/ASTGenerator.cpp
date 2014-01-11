@@ -9,10 +9,6 @@
 #include "ASTGenerator.h"
 #include <string>
 #include <vector>
-#include "../ast/type/CodeType.h"
-#include "../ast/type/CodeTypeBoolean.h"
-#include "../ast/type/CodeTypeInteger32.h"
-#include "../ast/type/CodeTypeString.h"
 #include "../Token.h"
 #include <algorithm>
 
@@ -880,13 +876,12 @@ vector<SyntaxTree*> ASTGenerator::findAllNonTerminals(SyntaxTree* parent, const 
 
 
 
-CodeProgram* ASTGenerator::generate(SyntaxTree* syntaxParseTree){
+CodeProgram* ASTGenerator::generate(){
     
-    SyntaxTree* node = syntaxParseTree;
-    CodeProgram* program = new CodeProgram();
+    _program = new CodeProgram();
     
     // extract prog param list
-    SyntaxTree* progParamList = findChildNonTerminal(node, "PROGPARAMLIST");
+    SyntaxTree* progParamList = findChildNonTerminal(_rootNode, "PROGPARAMLIST");
     if(progParamList != NULL)
     {
         vector<CodeParameter*> params = genCodeParameters(progParamList);
@@ -894,35 +889,35 @@ CodeProgram* ASTGenerator::generate(SyntaxTree* syntaxParseTree){
         cout << "found PROGPARAMLIST with " << params.size() << " params.\n";
         
         for (int i=0; params.size() > i; i++) {
-            program->addProgParam(params[i]);
+            _program->addProgParam(params[i]);
         }
     }else{
         throw new GrammarException("Missing PROGPARAMLIST!");
     }
     
-    // extract decls
-    SyntaxTree* gobalDecls = findChildNonTerminal(node, "OPTGLOBALCPSDECL");
+    // extract declarations
+    SyntaxTree* gobalDecls = findChildNonTerminal(_rootNode, "OPTGLOBALCPSDECL");
     if(gobalDecls != NULL)
     {
         vector<CodeDeclaration*> params = genCodeDeclarations(gobalDecls);
         for (int i=0; params.size() > i; i++) {
-            program->addGlobalDecl(params[i]);
+            _program->addGlobalDecl(params[i]);
         }
     }else{
         throw new GrammarException("Missing OPTGLOBALCPSDECL!");
     }
     
     // extract Statements
-    SyntaxTree* cmdNode = findChildNonTerminal(node, "CPSCMD");
+    SyntaxTree* cmdNode = findChildNonTerminal(_rootNode, "CPSCMD");
     if(cmdNode != NULL)
     {
         vector<CodeStatement*> statements = genCodeStatements(cmdNode);
         for (int i=0; statements.size() > i; i++) {
-            program->addProgStatement(statements[i]);
+            _program->addProgStatement(statements[i]);
         }
     }else{
           throw new GrammarException("Missing CPSCMD!");
     }
     
-    return program;
+    return _program;
 };
