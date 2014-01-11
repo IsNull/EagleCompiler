@@ -58,84 +58,27 @@ void scan() {
 }
 
 void testSam() {
-//Write this to ast-->
-//
-//	program
-//	 
-//	intDiv(in const m:int32, in const n:int32, out const q:int32, out const
-//	r:int32) global
-//		proc divide(in copy const m:int32, in copy const n:int32,
-//			out ref var q:int32, out ref var r:int32)
-//		do
-//			q init := 0;
-//			r init := m;
-//			while r >= n do
-//				q := q + 1;
-//				r := r - n
-//			endwhile
-//		endproc
-//	do
-//		call divide(m, n, q init, r init)
-//	endprogram
 	using namespace AST;
 	CodeTypeInteger32* int32 = CodeTypeInteger32::getInstance();
-	//	program
+	CodeTypeInteger32* int32 = CodeTypeInteger32::getInstance();
 	CodeProgram p;
-	CodeProcedure proc("divide");
 	
-	{
-// 		proc divide(in copy const m:int32, in copy const n:int32,
-//			out ref var q:int32, out ref var r:int32)
-		CodeProcedureDeclaration *procdef = new CodeProcedureDeclaration(&proc);
-		CodeVariable *m = new CodeVariable("m", int32);
-		CodeVariable *n = new CodeVariable("n", int32);
-		CodeVariable *q = new CodeVariable("q", int32);
-		CodeVariable *r = new CodeVariable("r", int32);
-		procdef->addParam(new CodeParameter(FLOWMODE::IN, MECHMODE::COPY, CHANGEMODE::CONST, m) );
-		procdef->addParam(new CodeParameter(FLOWMODE::IN, MECHMODE::COPY, CHANGEMODE::CONST, n) );
-		procdef->addParam(new CodeParameter(FLOWMODE::OUT, MECHMODE::REF, CHANGEMODE::VAR, q) );
-		procdef->addParam(new CodeParameter(FLOWMODE::OUT, MECHMODE::REF, CHANGEMODE::VAR, r) );
-		
-//		q init := 0;
-		procdef->addStatement(new CodeAssignmentStatement(new CodeExpressionInitializeVariable(q), new CodeExpressionLiteral(int32, "0")));
-		
-//		r init := m;
-		procdef->addStatement(new CodeAssignmentStatement(new CodeExpressionInitializeVariable(r), new CodeExpressionVariable(m)));
-		
-//		while r >= n do
-		CodeWhileStatement *loop = new CodeWhileStatement(new CodeBinaryExpression(new CodeExpressionVariable(r), BINARYOPERATOR::GREATER_EQ, new CodeExpressionVariable(n)));
-		
-//		q := q + 1;
-		CodeBinaryExpression *add1 = new CodeBinaryExpression(new CodeExpressionVariable(q), BINARYOPERATOR::PLUS,  new CodeExpressionLiteral(int32, "1"));
-		loop->addLoopStatement(new CodeAssignmentStatement(new CodeExpressionVariable(q), add1));
-		
-		CodeBinaryExpression *add2 = new CodeBinaryExpression(new CodeExpressionVariable(r), BINARYOPERATOR::MINUS,  new CodeExpressionVariable(n));
-		loop->addLoopStatement(new CodeAssignmentStatement(new CodeExpressionVariable(r), add2));
-		
-		procdef->addStatement(loop);
-	 	p.addGlobalDecl(procdef);
-	}
+	CodeVariable *v1 = new CodeVariable("var1", int32);
+	CodeVariable *v2 = new CodeVariable("var2", int32);
+
+	CodeIfStatement *myIf = new CodeIfStatement(new CodeBinaryExpression(new CodeExpressionVariable(v1), BINARYOPERATOR::LESS, new CodeExpressionVariable(v2)));
+	myIf->addIfStatement(new CodeAssignmentStatement(new CodeExpressionVariable(v1), new CodeExpressionVariable(v2)));
+	myIf->addElseStatement(new CodeAssignmentStatement(new CodeExpressionVariable(v2), new CodeExpressionVariable(v1)));
 	
-	{
-//		intDiv(in const m:int32, in const n:int32, out const q:int32, out const
-//			r:int32) global
-		CodeVariable *m = new CodeVariable("m", int32);
-		CodeVariable *n = new CodeVariable("n", int32);
-		CodeVariable *q = new CodeVariable("q", int32);
-		CodeVariable *r = new CodeVariable("r", int32);
-		p.addProgParam(new CodeParameter(FLOWMODE::IN, MECHMODE::EMPTY, CHANGEMODE::CONST, m) );
-		p.addProgParam(new CodeParameter(FLOWMODE::IN, MECHMODE::EMPTY, CHANGEMODE::CONST, n) );
-		p.addProgParam(new CodeParameter(FLOWMODE::OUT, MECHMODE::EMPTY, CHANGEMODE::CONST, q) );
-		p.addProgParam(new CodeParameter(FLOWMODE::OUT, MECHMODE::EMPTY, CHANGEMODE::CONST, r) );
-		
-//		call divide(m, n, q init, r init)
-		CodeProcedureCallStatement *procCall = new CodeProcedureCallStatement(&proc);
-		procCall->addParameterExpression(new CodeExpressionVariable(m));
-		procCall->addParameterExpression(new CodeExpressionVariable(n));
-		procCall->addParameterExpression(new CodeExpressionVariable(q));
-		procCall->addParameterExpression(new CodeExpressionVariable(r));
-		p.addProgStatement(procCall);
-	}
+	p.addGlobalDecl(new CodeStorageDeclaration(CHANGEMODE::VAR, v1));
+	p.addGlobalDecl(new CodeStorageDeclaration(CHANGEMODE::VAR, v2));
+	
+	p.addProgStatement(new CodeAssignmentStatement(new CodeExpressionVariable(v1), new CodeExpressionLiteral(int32, "42")));
+	
+// 	p.addProgStatement(new CodeOutputStatment(new CodeExpressionVariable(v2)));
+	p.addProgStatement(myIf);
+	p.addProgStatement(new CodeOutputStatment(new CodeExpressionVariable(v2)));
+
 	cout << p.code() << endl;
 }
 

@@ -16,7 +16,7 @@ using namespace AST;
 CodeTypeBoolean *CodeTypeBoolean::_instance = 0;
 
 string CodeTypeBoolean::code() {
-	return "boolean";
+	return "dd";
 }
 
 CodeTypeBoolean* CodeTypeBoolean::getInstance()

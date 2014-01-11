@@ -20,6 +20,7 @@ namespace AST {
 	private:
         static CodeTypeString* _instance;
 	public:
+		static const int BUFFERLEN = 256;
 		string code();
         static CodeTypeString* getInstance();
         

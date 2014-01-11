@@ -15,6 +15,8 @@
 using namespace std;
 
 string AST::CodeExpressionVariable::code() {
-	return _variable->code();
+	string ret;
+	ret += "mov eax,[" + _variable->code() + "]\n";
+	return ret;
 }
 

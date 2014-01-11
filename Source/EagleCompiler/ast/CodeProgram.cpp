@@ -13,23 +13,30 @@
 using namespace std;
 
 string AST::CodeProgram::code() {
-	string ret = "progParams:\n";
+	
+	string ret = "global main\n\n";
+	ret += "extern  printf\n";
+	
+	ret += "\n";
 	
 	for (auto p : _progParams) {
 		ret += p->code() + "\n";
 	}
 	
-	ret += "\nglobalDecl:\n";
+	ret += "section .data\n";
+	ret += "int32print: db \"%d\",10,0\n";
+	ret += "stringprint: db \"%s\",10,0\n";
 	for (auto p : _globalDecl) {
-		ret += p->code() + "\n";
+		ret += p->code();
 	}
-	
-	ret += "\nprogStatements:\n";
-	for (auto p : _progStatements) {
-		ret += "  " + p->code() + "\n";
-	}
-	
 	ret += "\n";
+	
+	ret += "section .text\n";
+	ret += "main:\n";
+	for (auto p : _progStatements) {
+		ret += p->code();
+	}
+	
 	return ret;
 }
 

@@ -13,6 +13,14 @@
 using namespace std;
 
 string AST::CodeOutputStatment::code() {
-	return "debugout " + _expression->code();
+	string ret;
+	
+	ret += _expression->code();
+	ret += "push dword eax\n";
+	ret += "push int32print\n";
+	ret += "call printf\n";
+	ret += "pop eax\n";
+	ret += "pop eax\n";
+	return ret;
 }
 

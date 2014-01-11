@@ -32,6 +32,6 @@ namespace AST {
 }
 
 string AST::CodeVariable::code() {
-	return getName() + ":" + _type->code();
+	return "_var_"+getName()+"_";
 }
 

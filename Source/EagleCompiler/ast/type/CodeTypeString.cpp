@@ -16,7 +16,7 @@ using namespace AST;
 CodeTypeString *CodeTypeString::_instance = 0;
 
 string CodeTypeString::code() {
-	return "string";
+	return "db";
 }
 
 

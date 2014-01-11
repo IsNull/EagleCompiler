@@ -16,7 +16,7 @@ using namespace AST;
 CodeTypeInteger32 *::CodeTypeInteger32::_instance = 0;
 
 string CodeTypeInteger32::code() {
-	return "int32";
+	return "dd";
 };
 
 CodeTypeInteger32* CodeTypeInteger32::getInstance()

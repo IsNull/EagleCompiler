@@ -20,6 +20,6 @@ string AST::CodeFunctionCallStatement::code() {
 	
 	//remove last character
 	if(_parameters.size() > 0)_parameters.pop_back();
-	return "call " + _function->code() + "(" + params + ")";
+	return "call " + _function->getName() + "(...)";
 }
 

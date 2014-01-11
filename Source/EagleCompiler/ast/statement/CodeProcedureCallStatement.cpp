@@ -15,7 +15,9 @@ using namespace std;
 string AST::CodeProcedureCallStatement::code() {
 	string params;
 	for(auto e : _parameters) {
-		params += e->code() + ",";
+		string expr = e->toCode();
+		expr += "push eax\n"
+		params = expr + params;
 	}
 	
 	//remove last character

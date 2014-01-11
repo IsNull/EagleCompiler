@@ -13,14 +13,25 @@
 using namespace std;
 
 string AST::CodeIfStatement::code() {
+	string ret;
 	string ifStatementBlock;
 	string elseStatementBlock;
 	for(auto s : _ifStatements) {
-		ifStatementBlock += "  " + s->code() + "\n";
+		ifStatementBlock += s->code();
 	}
 	for(auto s : _elseStatements) {
-		elseStatementBlock += "  " + s->code() + "\n";
+		elseStatementBlock += s->code();
 	}
-	return "if (" + _condition->code() + ") {\n" + ifStatementBlock + "} else {" + elseStatementBlock + "}";
+	
+	ret += "_"+to_string((long)this) + "_if:\n";//create a unique label for this statement
+	ret += "cmp eax,0\n";
+	ret += "je .else\n";
+	ret += ifStatementBlock;
+	ret += "jmp .end\n";
+	ret += ".else:\n";
+	ret += elseStatementBlock;
+	ret += ".end:\n";
+	
+	return ret;
 }
 
