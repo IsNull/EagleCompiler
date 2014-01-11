@@ -12,10 +12,7 @@
 #include "CodeBinaryExpression.h"
 
 using namespace std;
-
-namespace AST {
-	
-}
+using namespace AST;
 
 
 string AST::CodeBinaryExpression::code() {
@@ -84,4 +81,39 @@ string AST::CodeBinaryExpression::code() {
 	}
 	
 	return _left->code() + AST::BinaryOperatorString.find(_binaryOperator)->second + _right->code();
-}
+};
+
+CodeType CodeBinaryExpression::getType(){
+    CodeType type = CodeType::UNKNOWN;
+    
+    switch (_binaryOperator) {
+            
+        case BINARYOPERATOR::TIMES:
+        case BINARYOPERATOR::DIV:
+        case BINARYOPERATOR::MOD:
+        case BINARYOPERATOR::PLUS:
+        case BINARYOPERATOR::MINUS:
+            type = CodeType::INT32;
+            break;
+            
+        case BINARYOPERATOR::LESS:
+        case BINARYOPERATOR::GREATER_EQ:
+        case BINARYOPERATOR::EQUAL:
+        case BINARYOPERATOR::NOT_EQ:
+        case BINARYOPERATOR::GREATER:
+        case BINARYOPERATOR::LESS_EQ:
+        case BINARYOPERATOR::COND_AND:
+        case BINARYOPERATOR::COND_OR:
+            type = CodeType::BOOL;
+            break;
+        case BINARYOPERATOR::STR_CONCAT:
+            type = CodeType::STRING;
+            break;
+            
+        default:
+            cout << "ERROR: getType: unhandled operator: " << BinaryOperatorString.find(_binaryOperator)->second << "\n";
+            break;
+    }
+    
+    return type;
+};

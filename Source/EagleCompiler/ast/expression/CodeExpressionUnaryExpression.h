@@ -37,6 +37,9 @@ namespace AST {
 		
 		string code();
         
+        virtual CodeType getType() {
+            return _expression->getType();
+        };
         
         virtual string toString(){ return "CodeExpressionUnaryExpression"; }
 	};

@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "../CodeObject.h"
+#include "../type/CodeType.h"
 
 using namespace std;
 
@@ -21,6 +22,8 @@ namespace AST {
 	private:
 
 	public:
+        
+        virtual CodeType getType()=0;
         
         virtual string toString(){ return "<CodeExpression>"; }
 	};

@@ -29,6 +29,7 @@ namespace AST {
 				
 		//string code();
         
+        
         virtual string toString(){
             return "init:var(" + getVariable()->toString() + ")";
         }

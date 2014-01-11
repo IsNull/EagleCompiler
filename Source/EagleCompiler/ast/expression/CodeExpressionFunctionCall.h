@@ -35,6 +35,10 @@ namespace AST {
 		
 		string code();
         
+        virtual CodeType getType() {
+            return _function->getType();
+        };
+        
         virtual string toString(){ return "f:" + _function->getName() + "()"; }
 	};
 }

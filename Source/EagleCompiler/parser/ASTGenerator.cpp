@@ -219,7 +219,7 @@ CodeParameter* ASTGenerator::genCodeParameter(SyntaxTree* paramNode){
     if(typeIdentNode != NULL && typeIdentNode->hasChildren())
     {
         string paramName = "";
-        CodeType paramType = CodeType::VOID;
+        CodeType paramType = CodeType::UNKNOWN;
         
         
         SyntaxTree* identNode = findChildTerminal(typeIdentNode, TokenType::Identifier);
@@ -249,7 +249,7 @@ CodeParameter* ASTGenerator::genCodeParameter(SyntaxTree* paramNode){
 
 CodeType ASTGenerator::genCodeType(SyntaxTree* atomTypeNode){
     
-    CodeType codeType = CodeType::VOID;
+    CodeType codeType = CodeType::UNKNOWN;
     
     TokenType type = atomTypeNode->getToken()->getType();
     switch (type) {
@@ -505,7 +505,7 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
         
         if(exprNode->getTerminal()->getName() == "LITERAL")
         {
-            CodeType type = CodeType::VOID;
+            CodeType type = CodeType::UNKNOWN;
             
             // CodeExpressionFactorLiteral(CodeType *type, string value)
             switch(exprNode->getToken()->getType()){
@@ -568,7 +568,7 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                         SyntaxTree* optExprNode = findChildNonTerminal(exprListNode, "OPTEXPR");
                         vector<CodeExpression*> expressions = genCodeExpressionList(optExprNode);
                         
-                        CodeFunction* fun = new CodeFunction(firstChild->getToken()->getValue(), CodeType::VOID /* TYPE UNKNOWN */);
+                        CodeFunction* fun = new CodeFunction(firstChild->getToken()->getValue(), CodeType::UNKNOWN /* TYPE UNKNOWN */);
                         CodeExpressionFunctionCall* funexpr = new CodeExpressionFunctionCall(fun);
                         expr = funexpr;
                         for (int i=0; expressions.size()>i; i++) {
@@ -579,11 +579,11 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                               && secondChild->getChildren()[0]->getToken()->getType() == TokenType::Keyword_Init){
                         
                         // it is a init variable reference
-                        CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), CodeType::VOID /* TYPE UNKNOWN */);
+                        CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), CodeType::UNKNOWN /* TYPE UNKNOWN */);
                         expr = new CodeExpressionInitializeVariable(var);
                     }else{
                         // it is a siple variable reference
-                        CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), CodeType::VOID /* TYPE UNKNOWN */);
+                        CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), CodeType::UNKNOWN /* TYPE UNKNOWN */);
                         expr = new CodeExpressionVariable(var);
                     }
                 }

@@ -34,16 +34,10 @@
 		D281BE181876B8ED0097916F /* CodeStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BDEA1876B8ED0097916F /* CodeStatement.cpp */; };
 		D281BE191876B8ED0097916F /* CodeWhileStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BDEC1876B8ED0097916F /* CodeWhileStatement.cpp */; };
 		D281BE1A1876B8ED0097916F /* CodeType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF01876B8ED0097916F /* CodeType.cpp */; };
-		D281BE1B1876B8ED0097916F /* CodeTypeBoolean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF21876B8ED0097916F /* CodeTypeBoolean.cpp */; };
-		D281BE1C1876B8ED0097916F /* CodeTypeInteger32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF41876B8ED0097916F /* CodeTypeInteger32.cpp */; };
-		D281BE1D1876B8ED0097916F /* CodeTypeString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF61876B8ED0097916F /* CodeTypeString.cpp */; };
 		D281BE261876DC8E0097916F /* ASTGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BE1F1876DC8E0097916F /* ASTGenerator.cpp */; };
 		D281BE271876DC8E0097916F /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BE221876DC8E0097916F /* Parser.cpp */; };
 		D281BE281876DC8E0097916F /* ParseTableReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BE241876DC8E0097916F /* ParseTableReader.cpp */; };
 		D281BE29187714310097916F /* CodeType.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF11876B8ED0097916F /* CodeType.h */; };
-		D281BE2A187714310097916F /* CodeTypeBoolean.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF31876B8ED0097916F /* CodeTypeBoolean.h */; };
-		D281BE2B187714310097916F /* CodeTypeInteger32.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF51876B8ED0097916F /* CodeTypeInteger32.h */; };
-		D281BE2C187714310097916F /* CodeTypeString.h in Sources */ = {isa = PBXBuildFile; fileRef = D281BDF71876B8ED0097916F /* CodeTypeString.h */; };
 		D29DBE1B1806D9FA00C9A5FE /* ScannerContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE191806D9FA00C9A5FE /* ScannerContext.cpp */; };
 		D29DBE1C1806D9FA00C9A5FE /* ScannerContext.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE1A1806D9FA00C9A5FE /* ScannerContext.h */; };
 		D29DBE1E1806F4D500C9A5FE /* ScannerEnums.h in Sources */ = {isa = PBXBuildFile; fileRef = D29DBE1D1806F4BF00C9A5FE /* ScannerEnums.h */; };
@@ -146,12 +140,6 @@
 		D281BDEF1876B8ED0097916F /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		D281BDF01876B8ED0097916F /* CodeType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CodeType.cpp; sourceTree = "<group>"; };
 		D281BDF11876B8ED0097916F /* CodeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeType.h; sourceTree = "<group>"; };
-		D281BDF21876B8ED0097916F /* CodeTypeBoolean.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CodeTypeBoolean.cpp; sourceTree = "<group>"; };
-		D281BDF31876B8ED0097916F /* CodeTypeBoolean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeTypeBoolean.h; sourceTree = "<group>"; };
-		D281BDF41876B8ED0097916F /* CodeTypeInteger32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CodeTypeInteger32.cpp; sourceTree = "<group>"; };
-		D281BDF51876B8ED0097916F /* CodeTypeInteger32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeTypeInteger32.h; sourceTree = "<group>"; };
-		D281BDF61876B8ED0097916F /* CodeTypeString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CodeTypeString.cpp; sourceTree = "<group>"; };
-		D281BDF71876B8ED0097916F /* CodeTypeString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeTypeString.h; sourceTree = "<group>"; };
 		D281BE1F1876DC8E0097916F /* ASTGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ASTGenerator.cpp; sourceTree = "<group>"; };
 		D281BE201876DC8E0097916F /* ASTGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTGenerator.h; sourceTree = "<group>"; };
 		D281BE211876DC8E0097916F /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -316,12 +304,6 @@
 				D281BDEF1876B8ED0097916F /* CMakeLists.txt */,
 				D281BDF01876B8ED0097916F /* CodeType.cpp */,
 				D281BDF11876B8ED0097916F /* CodeType.h */,
-				D281BDF21876B8ED0097916F /* CodeTypeBoolean.cpp */,
-				D281BDF31876B8ED0097916F /* CodeTypeBoolean.h */,
-				D281BDF41876B8ED0097916F /* CodeTypeInteger32.cpp */,
-				D281BDF51876B8ED0097916F /* CodeTypeInteger32.h */,
-				D281BDF61876B8ED0097916F /* CodeTypeString.cpp */,
-				D281BDF71876B8ED0097916F /* CodeTypeString.h */,
 			);
 			path = type;
 			sourceTree = "<group>";
@@ -463,10 +445,7 @@
 			files = (
 				D281BE29187714310097916F /* CodeType.h in Sources */,
 				D29F206F1878A3460086B4C2 /* CodeBinaryExpression.cpp in Sources */,
-				D281BE2A187714310097916F /* CodeTypeBoolean.h in Sources */,
-				D281BE2B187714310097916F /* CodeTypeInteger32.h in Sources */,
 				D29F207A1878A35D0086B4C2 /* CodeExpressionFunctionCall.cpp in Sources */,
-				D281BE2C187714310097916F /* CodeTypeString.h in Sources */,
 				D281BE281876DC8E0097916F /* ParseTableReader.cpp in Sources */,
 				D2F6CD7C185999C400CDA4DB /* NumericVariable.cpp in Sources */,
 				D281BE0D1876B8ED0097916F /* CodeFunction.cpp in Sources */,
@@ -496,11 +475,9 @@
 				D281BE261876DC8E0097916F /* ASTGenerator.cpp in Sources */,
 				D281BE011876B8ED0097916F /* CodeExpression.cpp in Sources */,
 				D281BE0F1876B8ED0097916F /* CodeProcedure.cpp in Sources */,
-				D281BE1C1876B8ED0097916F /* CodeTypeInteger32.cpp in Sources */,
 				D281BE131876B8ED0097916F /* CodeIfStatement.cpp in Sources */,
 				D29F207D1878A35D0086B4C2 /* CodeExpressionUnaryExpression.cpp in Sources */,
 				D281BDFA1876B8ED0097916F /* CodeObject.cpp in Sources */,
-				D281BE1D1876B8ED0097916F /* CodeTypeString.cpp in Sources */,
 				D29DBE2218071E4A00C9A5FE /* ScannerEnums.cpp in Sources */,
 				D281BE111876B8ED0097916F /* CodeAssignmentStatement.cpp in Sources */,
 				D29DBE201806F92500C9A5FE /* Singleton.h in Sources */,
@@ -509,7 +486,6 @@
 				D29DBE1B1806D9FA00C9A5FE /* ScannerContext.cpp in Sources */,
 				D281BDFF1876B8ED0097916F /* CodeProcedureDeclaration.cpp in Sources */,
 				D281BE101876B8ED0097916F /* CodeVariable.cpp in Sources */,
-				D281BE1B1876B8ED0097916F /* CodeTypeBoolean.cpp in Sources */,
 				D29DBE1C1806D9FA00C9A5FE /* ScannerContext.h in Sources */,
 				D281BE141876B8ED0097916F /* CodeInputStatement.cpp in Sources */,
 				D2D92BA21806D41B0099CBDB /* Scanner.cpp in Sources */,

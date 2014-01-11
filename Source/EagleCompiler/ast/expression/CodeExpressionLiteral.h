@@ -31,6 +31,10 @@ namespace AST {
 
 		string code();
         
+        virtual CodeType getType() {
+            return _variable->getType();
+        };
+        
         virtual string toString(){ return "CodeExpressionLiteral('" + _value + "')"; }
 	};
 }

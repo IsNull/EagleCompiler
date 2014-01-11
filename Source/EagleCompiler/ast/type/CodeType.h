@@ -11,13 +11,13 @@
 
 #include <string>
 
-#include "../CodeObject.h"
-
 using namespace std;
 
 namespace AST {
 	enum class CodeType {
-		VOID,
+        UNKNOWN,
+        
+		//VOID,
 		INT32,
 		BOOL,
 		STRING
