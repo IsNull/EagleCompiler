@@ -405,7 +405,7 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
                 }
                 
                 CodeProcedureCallStatement* procCall = new CodeProcedureCallStatement(procedure);
-                
+                statement = procCall;
                 // ExpressionList: expr, expr, expr....
                 
                 SyntaxTree* exprListNode = cmdChilds[2];
@@ -655,63 +655,6 @@ CodeExpression* ASTGenerator::genOperatorExpression(SyntaxTree* exprNode){
             }
         }
     }
-    
-    /*
-    for (int i=0; exprNode->getChildren().size() > i; i++) {
-        SyntaxTree* child = exprNode->getChildren()[i];
-        
-        // check now if child has a Operator-Terminal Child on first slot
-        
-        if(child->hasChildren() && child->getChildren()[0]->isTerminal()){
-            TokenType type = child->getChildren()[0]->getToken()->getType();
-             
-            
-            list<TokenType>::const_iterator findIter = std::find(BinaryOperatorTokens.begin(), BinaryOperatorTokens.end(), type);
-            if(findIter != BinaryOperatorTokens.end()){
-                // found binary operator!!
-                cout << "ASTGenerator: found binary operator: " << type << "\n";
-                
-                
-                SyntaxTree* leftSideExprNode = exprNode->getChildren()[0];
-                SyntaxTree* operatorTerminalNode = child->getChildren()[0];
-                SyntaxTree* rightSideExprNode = child->getChildren()[1];
-                
-                CodeExpression* leftSideExpr = genExpression(leftSideExprNode);
-                CodeExpression* rightSideExpr = genExpression(rightSideExprNode);
-                
-                
-                if(child->getChildren().size() > 2){
-                    
-                    
-                    CodeExpression* innerExpr = genBinaryExpression(leftSideExpr, operatorTerminalNode, rightSideExpr);
-                    SyntaxTree* repNode = child->getChildren()[2];
-                    
-                    // TODO make dynamic recursive
-                    if(repNode->getChildren().size() > 1){
-                    
-                        SyntaxTree* operatorTerminalNode2 = repNode->getChildren()[0];
-                        SyntaxTree* rightSideNode2 = repNode->getChildren()[1];
-                        CodeExpression* rightSideExpr2 = genExpression(rightSideNode2);
-                    
-                        opExpression = genBinaryExpression(innerExpr, operatorTerminalNode2, rightSideExpr2);
-                    }else{
-                        //cout << "Error GenBinaryExpression:\n" << *repNode;
-                        opExpression = genBinaryExpression(leftSideExpr, operatorTerminalNode, rightSideExpr);
-                    }
-                    
-                }else{
-                    opExpression = genBinaryExpression(leftSideExpr, operatorTerminalNode, rightSideExpr);
-                }
-
-                
-                //cout << "ASTGenerator: generated " << opExpression->toString() << "\n";
-                break;
-            
-            }else{
-                //cout << "ASTGenerator: Expected Binary-OperatorTerminal but was: " << *child->getChildren()[0]->getToken() << "\n" << *exprNode << "\n";
-            }
-        }
-    }*/
     
     return opExpression;
 };
