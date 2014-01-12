@@ -12,10 +12,11 @@
 
 using namespace std;
 
+vector<AST::CodeExpressionLiteral*> AST::CodeExpressionLiteral::literals;
+
 string AST::CodeExpressionLiteral::code() {
 	string ret;
-	ret += "mov eax," + _variable->code() + "\n";
-
+	ret += "mov eax," + _variable->label() + "\n";
 	
 	return ret;
 }

@@ -19,8 +19,17 @@ string AST::CodeAssignmentStatement::code() {
 	
 	CodeExpressionVariable *v1 = dynamic_cast<CodeExpressionVariable*>(_lvalue);
 	if(v1 != nullptr) {
-		ret += _rvalue->code();
-		ret += "mov " + v1->getVariable()->code() + ",eax\n";
+			ret += _rvalue->code();
+		if(v1->getVariable()->getType() == CodeType::INT32 || v1->getVariable()->getType() == CodeType::BOOL) {
+			ret += "mov " + v1->getVariable()->code() + ",eax\n";
+		} else if (v1->getVariable()->getType() == CodeType::STRING) {
+			ret += "push 255\n";
+			ret += "push dword eax\n";
+			ret += "push " + v1->code() + "\n";
+			ret += "call strncpy\n";
+			ret += "add esp,12\n";
+		}
+
 	} else {
 		throw std::exception();
 	}

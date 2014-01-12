@@ -48,12 +48,13 @@ namespace AST {
 		int _stackOffset;
 	public:
 		CodeVariable(string name, CodeType type) : 
-			CodeIdentifier(name), _type(type)
-			{ };
+			CodeIdentifier(name), _type(type) { /*if(type == CodeType::UNKNOWN) cout << "##########unkown:" + name + "############\n"; else cout << "##########kown:" + name + "############\n";*/};
 		
 		CodeType getType() { return _type; };
 		
 		string code();
+		
+		string label();
 		
 		int getStackPos() { return _stackOffset; };
 		void setStackPos(int i) { _stackOffset = i; };

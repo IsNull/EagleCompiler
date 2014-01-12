@@ -35,3 +35,7 @@ string AST::CodeVariable::code() {
 	return "[ebp+" + to_string(_stackOffset) +"]";
 }
 
+string AST::CodeVariable::label() {
+	return "_var_" + to_string((long)this) + "_" + this->getName();
+}
+

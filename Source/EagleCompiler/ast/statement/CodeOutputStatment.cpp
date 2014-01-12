@@ -17,7 +17,13 @@ string AST::CodeOutputStatment::code() {
 	
 	ret += _expression->code();
 	ret += "push dword eax\n";
-	ret += "push int32print\n";
+	if(_expression->getType() == CodeType::INT32 || _expression->getType() == CodeType::BOOL) {
+		ret += "push int32print\n";
+	} else if(_expression->getType() == CodeType::STRING) {
+		ret += "push stringprint\n";
+	} else {
+		//throw std::exception();
+	}
 	ret += "call printf\n";
 	ret += "add esp,8\n";
 	return ret;

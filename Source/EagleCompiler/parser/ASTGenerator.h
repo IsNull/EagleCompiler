@@ -78,6 +78,9 @@ private:
     
     vector<SyntaxTree*> findAllNonTerminals(SyntaxTree* parent, const string& name);
     vector<SyntaxTree*> findAllNonTerminalRec(SyntaxTree* parent, const string& name, bool searchNested = false);
+	
+	map<string, CodeVariable*> _variables;
+	string _context;
     
 public:
     /**

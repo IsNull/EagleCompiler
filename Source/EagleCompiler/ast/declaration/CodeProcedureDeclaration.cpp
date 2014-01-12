@@ -17,32 +17,20 @@ string AST::CodeProcedureDeclaration::code() {
 	
 	for(int i=0; i<_params.size(); i++) {
 		_params[i]->getVariable()->setStackPos(8 + (4*i));
-	}		
+	}
 	
-	
+	ret += getIdentifier()->getName() + ":\n";
 	
 	ret += "push ebp\n";
 	ret += "mov ebp,esp\n";
 	ret += "sub esp," + to_string(_localStoDecls.size()) + "\n";
 	
+	for(auto s : _statements) {
+		ret += s->code();
+	}
+	
 	ret += "leave\n";
 	ret += "ret\n";
-	
-
-	string params;
-	string globalImports;
-	string stoDecl;
-	string code;
-
-	for(auto e : _globalImps) {
-		globalImports += e->code() + ",";
-	}
-	for(auto e : _localStoDecls) {
-		stoDecl += e->code() + ",";
-	}
-	for(auto e : _statements) {
-		code += "  " + e->code() + "\n";
-	}
 	
 	return ret;
 }

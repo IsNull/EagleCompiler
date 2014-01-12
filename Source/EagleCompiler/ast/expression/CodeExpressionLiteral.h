@@ -10,6 +10,7 @@
 #define __EagleCompiler__CodeExpressionLiteral__
 
 #include <string>
+#include <vector>
 
 #include "CodeExpression.h"
 #include "../identifier/CodeVariable.h"
@@ -22,9 +23,10 @@ namespace AST {
 	private:
 		string _value;
 		CodeVariable *_variable;
+		static vector<CodeExpressionLiteral*> literals;
 	public:
 		CodeExpressionLiteral(CodeVariable *variable, string value) : 
-			_value(value), _variable(variable) { };
+			_value(value), _variable(variable) { CodeExpressionLiteral::literals.push_back(this); };
 		
 		CodeVariable *getVariable() { return _variable; };
 		string getValue() { return _value; };
@@ -36,6 +38,9 @@ namespace AST {
         };
         
         virtual string toString(){ return "CodeExpressionLiteral('" + _value + "')"; }
+        
+        static auto getAllLiterals() -> decltype(CodeExpressionLiteral::literals)
+			{ return CodeExpressionLiteral::literals; };
 	};
 }
 

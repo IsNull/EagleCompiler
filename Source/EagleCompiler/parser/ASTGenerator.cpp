@@ -23,6 +23,7 @@ CodeInvokableDeclaration* ASTGenerator::genInvokableDecl(SyntaxTree* procDeclNod
     if(procNameNode != NULL)
     {
         string name = procNameNode->getToken()->getValue();
+		_context = name + "_";
         if(isfunction){
             
             // check the return storage and add it
@@ -110,6 +111,8 @@ vector<CodeDeclaration*> ASTGenerator::genCodeDeclarations(SyntaxTree* node){
         CodeInvokableDeclaration* funDecl = genInvokableDecl(funDeclNodes[i], true);
         decls.push_back(funDecl);
     }
+    
+    _context = "__main__";
     
     // STORAGE DECL
     
@@ -251,7 +254,7 @@ CodeParameter* ASTGenerator::genCodeParameter(SyntaxTree* paramNode){
             throw new GrammarException("ASTGenerator: CodeParameter Missing AtomType!");
         
         variable = new CodeVariable(paramName, paramType);
-        
+		_variables.insert(make_pair(_context+paramName, variable));        
     }else{
         throw new GrammarException("ASTGenerator: CodeParameter could not be created, missing TYPEDIDENT NT!");
     }
@@ -430,7 +433,7 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
                 SyntaxTree* identNode = cmdChilds[1];
                 if(identNode->isTerminal() && identNode->getToken()->getType() == TokenType::Identifier){
                     string procName = identNode->getToken()->getValue();
-                    procedure = findProcedure(procName);
+                    procedure = findGlobalProcedure(procName);
                     if(procedure == NULL)
                         throw new GrammarException("AST Error: Usage of undeclared procedure: " + procName);
                     
@@ -585,7 +588,7 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                         SyntaxTree* optExprNode = findChildNonTerminal(exprListNode, "OPTEXPR");
                         vector<CodeExpression*> expressions = genCodeExpressionList(optExprNode);
                         
-                        CodeFunction* fun = findFunction(firstChild->getToken()->getValue());
+                        CodeFunction* fun = findGlobalFunction(firstChild->getToken()->getValue());
                         if(fun != NULL){
                             CodeExpressionFunctionCall* funexpr = new CodeExpressionFunctionCall(fun);
                             expr = funexpr;
@@ -593,19 +596,25 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                                 funexpr->addParameter(expressions[i]);
                             }
                         }else
-                            throw new GrammarException("AST Exception: Useage of undeclared function: " + firstChild->getToken()->getValue());
+                            throw new GrammarException("AST Exception: Usage of undeclared function: " + firstChild->getToken()->getValue());
                         
                     } else if(secondChild->hasChildren()
                               && secondChild->getChildren()[0]->isTerminal()
                               && secondChild->getChildren()[0]->getToken()->getType() == TokenType::Keyword_Init){
                         
-                        // it is a init variable reference
-                        CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), CodeType::UNKNOWN /* TYPE UNKNOWN */);
-                        expr = new CodeExpressionInitializeVariable(var);
+						if(_variables.count(_context+firstChild->getToken()->getValue()) == 1){
+							// it is a init variable reference
+							expr = new CodeExpressionInitializeVariable(_variables[_context+firstChild->getToken()->getValue()]);
+						} else {
+                            throw new GrammarException("AST Exception: Usage of undeclared variable: " + firstChild->getToken()->getValue() + " in context " + _context);
+						}
                     }else{
+						if(_variables.count(_context+firstChild->getToken()->getValue()) == 1){
                         // it is a siple variable reference
-                        CodeVariable* var = new CodeVariable(firstChild->getToken()->getValue(), CodeType::UNKNOWN /* TYPE UNKNOWN */);
-                        expr = new CodeExpressionVariable(var);
+                        expr = new CodeExpressionVariable(_variables[_context+firstChild->getToken()->getValue()]);
+						} else {
+							throw new GrammarException("AST Exception: Usage of undeclared variable: " + firstChild->getToken()->getValue() + " in context " + _context);
+						}
                     }
                 }
             }
@@ -932,7 +941,7 @@ vector<SyntaxTree*> ASTGenerator::findAllNonTerminals(SyntaxTree* parent, const 
 CodeProgram* ASTGenerator::generate(){
     
     _program = new CodeProgram();
-    
+    _context = "__main__";
     // extract prog param list
     SyntaxTree* progParamList = findChildNonTerminal(_rootNode, "PROGPARAMLIST");
     if(progParamList != NULL)
@@ -959,7 +968,7 @@ CodeProgram* ASTGenerator::generate(){
     }else{
         throw new GrammarException("Missing OPTGLOBALCPSDECL!");
     }
-    
+        
     // extract Statements
     SyntaxTree* cmdNode = findChildNonTerminal(_rootNode, "CPSCMD");
     if(cmdNode != NULL)
