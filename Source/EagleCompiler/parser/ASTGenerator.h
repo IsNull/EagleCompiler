@@ -45,6 +45,8 @@ private:
     CodeProgram* _program;
     SyntaxTree* _rootNode;
     
+    CodeFunction* findFunction(const string& name);
+    
     CodeStatement* genCodeStatement(SyntaxTree* node);
     CodeType genCodeType(SyntaxTree* atomTypeNode);
     CodeParameter* genCodeParameter(SyntaxTree* node);

@@ -582,12 +582,16 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                         SyntaxTree* optExprNode = findChildNonTerminal(exprListNode, "OPTEXPR");
                         vector<CodeExpression*> expressions = genCodeExpressionList(optExprNode);
                         
-                        CodeFunction* fun = new CodeFunction(firstChild->getToken()->getValue(), CodeType::UNKNOWN /* TYPE UNKNOWN */);
-                        CodeExpressionFunctionCall* funexpr = new CodeExpressionFunctionCall(fun);
-                        expr = funexpr;
-                        for (int i=0; expressions.size()>i; i++) {
-                            funexpr->addParameter(expressions[i]);
-                        }
+                        CodeFunction* fun = findFunction(firstChild->getToken()->getValue());
+                        if(fun != NULL){
+                            CodeExpressionFunctionCall* funexpr = new CodeExpressionFunctionCall(fun);
+                            expr = funexpr;
+                            for (int i=0; expressions.size()>i; i++) {
+                                funexpr->addParameter(expressions[i]);
+                            }
+                        }else
+                            throw new GrammarException("AST Exception: Useage of undeclared function: " + firstChild->getToken()->getValue());
+                        
                     } else if(secondChild->hasChildren()
                               && secondChild->getChildren()[0]->isTerminal()
                               && secondChild->getChildren()[0]->getToken()->getType() == TokenType::Keyword_Init){
@@ -631,6 +635,19 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
     }
     
     return expr;
+};
+
+CodeFunction* ASTGenerator::findFunction(const string& name){
+    CodeFunction* function = NULL;
+    vector<CodeDeclaration*> decls = _program->getGlobalDecl();
+    for (int i=0; decls.size() > i; i++) {
+        CodeIdentifier* id = decls[i]->getIdentifier();
+        if(id->getName() == name){
+            function = dynamic_cast<CodeFunction*>(id);
+            if(function != NULL) break;
+        }
+    }
+    return function;
 };
 
 
