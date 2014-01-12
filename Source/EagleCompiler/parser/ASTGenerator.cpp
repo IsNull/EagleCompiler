@@ -430,7 +430,10 @@ CodeStatement* ASTGenerator::genCodeStatement(SyntaxTree* cmdNode){
                 SyntaxTree* identNode = cmdChilds[1];
                 if(identNode->isTerminal() && identNode->getToken()->getType() == TokenType::Identifier){
                     string procName = identNode->getToken()->getValue();
-                    procedure = new CodeProcedure(procName);
+                    procedure = findProcedure(procName);
+                    if(procedure == NULL)
+                        throw new GrammarException("AST Error: Usage of undeclared procedure: " + procName);
+                    
                 }else{
                     throw new GrammarException("ASTGenerator Expected Identifier but got...");
                 }
@@ -648,6 +651,19 @@ CodeFunction* ASTGenerator::findFunction(const string& name){
         }
     }
     return function;
+};
+
+CodeProcedure* ASTGenerator::findProcedure(const string& name){
+    CodeProcedure* procedure = NULL;
+    vector<CodeDeclaration*> decls = _program->getGlobalDecl();
+    for (int i=0; decls.size() > i; i++) {
+        CodeIdentifier* id = decls[i]->getIdentifier();
+        if(id->getName() == name){
+            procedure = dynamic_cast<CodeProcedure*>(id);
+            if(procedure != NULL) break;
+        }
+    }
+    return procedure;
 };
 
 
