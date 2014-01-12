@@ -63,12 +63,17 @@ CodeInvokableDeclaration* ASTGenerator::genInvokableDecl(SyntaxTree* procDeclNod
     }
     
     
-    // add procedure local storeage decls
+    // add storeage decls
     SyntaxTree* procStorageListNode = findChildNonTerminal(procDeclNode, "OPTCPSSTODECL");
     if(procStorageListNode != NULL)
     {
-        // TODO
+        vector<SyntaxTree*> stoDecls = findAllNonTerminalRec(procStorageListNode, "STODECL");
+        for(int i=0; stoDecls.size() > i; i++){
+            CodeParameter* param = genCodeParameter(stoDecls[i]);
+            invokDecl->addLocalStoDecl(new CodeStorageDeclaration(param->getChangeMode(), param->getVariable()));
+        }
     }
+    
     
 
     // add procedure statements
@@ -97,6 +102,8 @@ vector<CodeDeclaration*> ASTGenerator::genCodeDeclarations(SyntaxTree* node){
         decls.push_back(procDecl);
     }
     
+    // FUNCDECL
+    
     vector<SyntaxTree*> funDeclNodes = findAllNonTerminalRec(node, "FUNDECL");
     cout << "found " << funDeclNodes.size() << " FUNDECL!\n";
     for (int i=0; funDeclNodes.size() > i; i++) {
@@ -104,7 +111,14 @@ vector<CodeDeclaration*> ASTGenerator::genCodeDeclarations(SyntaxTree* node){
         decls.push_back(funDecl);
     }
     
-    // TODO: Other decls
+    // STORAGE DECL
+    
+    vector<SyntaxTree*> stoDecls = findAllNonTerminalRec(node, "STODECL");
+    cout << "found " << stoDecls.size() << " STODECL!\n";
+    for(int i=0; stoDecls.size() > i; i++){
+        CodeParameter* param = genCodeParameter(stoDecls[i]);
+        decls.push_back(new CodeStorageDeclaration(param->getChangeMode(), param->getVariable()));
+    }
     
     return decls;
 };
