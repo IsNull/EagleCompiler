@@ -614,14 +614,9 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                 expr = genOperatorExpression(exprNode);
             }
             
-            // check for other possibilities Function Call
-            
             // TODO
             
             if(expr == NULL){
-                
-                //cout << "AST Expression: Can not handle node: " << *exprNode << "\n";
-                
                // for now just fetch the first child-expression which is viable:
                 
                 for (int i=0; exprNode->getChildren().size() > i; i++) {
@@ -632,15 +627,12 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
             }
         }
     }
-    
-    if(expr != NULL){
-       //cout << "ASTGenerator generated: "<< expr->toString() <<"\n";
-    }
+
     
     return expr;
 };
 
-CodeFunction* ASTGenerator::findFunction(const string& name){
+CodeFunction* ASTGenerator::findGlobalFunction(const string& name){
     CodeFunction* function = NULL;
     vector<CodeDeclaration*> decls = _program->getGlobalDecl();
     for (int i=0; decls.size() > i; i++) {
@@ -653,7 +645,7 @@ CodeFunction* ASTGenerator::findFunction(const string& name){
     return function;
 };
 
-CodeProcedure* ASTGenerator::findProcedure(const string& name){
+CodeProcedure* ASTGenerator::findGlobalProcedure(const string& name){
     CodeProcedure* procedure = NULL;
     vector<CodeDeclaration*> decls = _program->getGlobalDecl();
     for (int i=0; decls.size() > i; i++) {
@@ -664,6 +656,19 @@ CodeProcedure* ASTGenerator::findProcedure(const string& name){
         }
     }
     return procedure;
+};
+
+CodeVariable* ASTGenerator::findGlobalVariable(const string& name){
+    CodeVariable* variable = NULL;
+    vector<CodeDeclaration*> decls = _program->getGlobalDecl();
+    for (int i=0; decls.size() > i; i++) {
+        CodeIdentifier* id = decls[i]->getIdentifier();
+        if(id->getName() == name){
+            variable = dynamic_cast<CodeVariable*>(id);
+            if(variable != NULL) break;
+        }
+    }
+    return variable;
 };
 
 
