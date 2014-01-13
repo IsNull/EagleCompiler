@@ -18,7 +18,7 @@ string AST::CodeOutputStatment::code() {
 	ret += _expression->code();
 	if(_expression->getType() == CodeType::INT32 ) {
 		ret += "push eax\n";
-		ret += "push int32print\n";
+		ret += "push dword int32print\n";
 	} else if(_expression->getType() == CodeType::BOOL) {
 		ret += to_string((long)this) + "_booltostring: ";
 		ret += "cmp eax,0\n";
@@ -29,7 +29,7 @@ string AST::CodeOutputStatment::code() {
 		ret += ".booljmp: push stringprint\n";
 	} else if(_expression->getType() == CodeType::STRING) {
 		ret += "push eax\n";
-		ret += "push stringprint\n";
+		ret += "push dword stringprint\n";
 	} else {
 		throw std::exception();
 	}

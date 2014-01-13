@@ -28,6 +28,7 @@ string AST::CodeProgram::code() {
 	for (int i=0; i<_globalDecl.size(); i++) {
 		CodeStorageDeclaration * decl = dynamic_cast<CodeStorageDeclaration*>(_globalDecl[i]);
 		if(decl != nullptr) {
+			if(decl->getVariable()->getType() != CodeType::STRING)
 			decl->getVariable()->setStackPos(-(c++)*4);
 		}
 	}
@@ -61,8 +62,8 @@ string AST::CodeProgram::code() {
 	
 	ret += "\n";
 	ret += "section .bss\n";
-	ret += tmp1->label() + ": resb 255\n";
-	ret += tmp2->label() + ": resb 255\n";
+	ret += tmp1->label() + ": resb " + to_string(STRING::BUFFER_LEN) + "\n";
+	ret += tmp2->label() + ": resb " + to_string(STRING::BUFFER_LEN) + "\n";
 	int globalStoDecl = 0;
 	for (int i=0; i<_globalDecl.size(); i++) {
 		CodeStorageDeclaration *decl = dynamic_cast<CodeStorageDeclaration*>(_globalDecl[i]);
@@ -70,6 +71,7 @@ string AST::CodeProgram::code() {
 		if(decl != nullptr) {
 			if(decl->getVariable()->getType() == CodeType::STRING) {
 				ret += decl->getVariable()->label() + ": resb 255\n";
+			} else {
 				globalStoDecl++;
 			}
 		} else {

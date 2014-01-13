@@ -127,10 +127,19 @@ string AST::CodeBinaryExpression::code() {
 				ret += "push ebx\n";
 				ret += "push eax\n";
 				ret += "push " + formatString + "\n";
-				ret += "push dword " + to_string(STRING::BUFFER_LEN) + "\n";
+				ret += "push dword " + to_string(STRING::BUFFER_LEN-1) + "\n";
 				ret += "push " + CodeProgram::tmp1->label() + "\n";
 				ret += "call snprintf\n";
 				ret += "add esp,15\n";
+				
+				//copy the string to tmp2, for sub-expressions
+				ret += "push " + to_string(STRING::BUFFER_LEN-1) + "\n";
+				ret += "push " + CodeProgram::tmp1->label() + "\n";
+				ret += "push " + CodeProgram::tmp2->label() + "\n";
+				ret += "call strncpy\n";
+				ret += "add esp,12\n";
+				
+				ret += "mov eax," + CodeProgram::tmp2->label() + "\n";
 			} break;
 			default: break;
 		}

@@ -30,7 +30,7 @@ string AST::CodeAssignmentStatement::code() {
 			if(_rvalue->getType() == CodeType::INT32) {				
 				ret += "push eax\n";
 				ret += "push int32print\n";
-				ret += "push " + to_string(STRING::BUFFER_LEN) + "\n";
+				ret += "push " + to_string(STRING::BUFFER_LEN-1) + "\n";
 				ret += "push "+ CodeProgram::tmp1->label() +"\n";
 				ret += "call snprintf\n";
 				ret += "mov eax," + CodeProgram::tmp1->label() + "\n";
@@ -42,7 +42,7 @@ string AST::CodeAssignmentStatement::code() {
 				ret += ".booljmp:\n";
 			}
 			
-			ret += "push " + to_string(STRING::BUFFER_LEN) + "\n";
+			ret += "push " + to_string(STRING::BUFFER_LEN-1) + "\n";
 			ret += "push eax\n";
 			ret += dest->code();
 			ret += "push eax\n";
