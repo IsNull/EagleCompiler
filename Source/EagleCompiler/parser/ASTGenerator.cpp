@@ -551,7 +551,7 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
             }
             
             
-            expr = new CodeExpressionLiteral(new CodeVariable("_lit_"+exprNode->getToken()->getValue()+"_", type), exprNode->getToken()->getValue());
+            expr = new CodeExpressionLiteral(new CodeVariable("_lit_"+to_string((long)exprNode->getToken())+"_", type), exprNode->getToken()->getValue());
         }
 
     }else{
