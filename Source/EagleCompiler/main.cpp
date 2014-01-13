@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include <fstream>
+#include <unistd.h>
 #include "Token.h"
 #include "TokenList.h"
 #include "scanner/Scanner.h"
@@ -16,14 +17,13 @@
 #include "ast/AST.h"
 #include "parser/ASTGenerator.h"
 
-#include "user.local"
 
 using namespace std;
 
 string sourceCode;
 string serializedParseTable;
 
-void compile() {
+string compile() {
 
     // tokenize it:
     cout << "\nListing Source code:\n\n"<< sourceCode << "\n\n";
@@ -38,6 +38,8 @@ void compile() {
     Parser* p = parserTableReader.createParser(list, serializedParseTable);
     
     cout << "\nParsing tokenlist now:\n";
+	
+	string ret;
     
     try{
         SyntaxTree* syntaxtree = p->parse();
@@ -49,40 +51,17 @@ void compile() {
         
         ASTGenerator astGen(syntaxtree);
         AST::CodeProgram* p = astGen.generate();
+		
+		ret = p->code();
         
-        cout << "Compiled ASM:\n" << p->code() << endl;
+        cout << "Compiled ASM:\n" << ret << endl;
         
     }catch(GrammarException* ex){
         cout << "\n\nGrammarException: " << ex->what() << "\n";
     }
     
-    
+    return ret;
 }
-
-void testSam() {
-	using namespace AST;
-	CodeProgram p;
-	
-	CodeVariable *v1 = new CodeVariable("var1", CodeType::INT32);
-	CodeVariable *v2 = new CodeVariable("var2", CodeType::INT32);
-
-	CodeIfStatement *myIf = new CodeIfStatement(new CodeBinaryExpression(new CodeExpressionVariable(v1), BINARYOPERATOR::LESS, new CodeExpressionVariable(v2)));
-	myIf->addIfStatement(new CodeAssignmentStatement(new CodeExpressionVariable(v1), new CodeExpressionVariable(v2)));
-	myIf->addElseStatement(new CodeAssignmentStatement(new CodeExpressionVariable(v2), new CodeExpressionVariable(v1)));
-	
-	p.addGlobalDecl(new CodeStorageDeclaration(CHANGEMODE::VAR, v1));
-	p.addGlobalDecl(new CodeStorageDeclaration(CHANGEMODE::VAR, v2));
-	
-	p.addProgStatement(new CodeAssignmentStatement(new CodeExpressionVariable(v1), new CodeExpressionLiteral(new CodeVariable("MyLiteral", CodeType::INT32), "42")));
-	
-// 	p.addProgStatement(new CodeOutputStatment(new CodeExpressionVariable(v2)));
-	p.addProgStatement(myIf);
-	p.addProgStatement(new CodeOutputStatment(new CodeExpressionVariable(v2)));
-
-	cout << p.code() << endl;
-}
-
-
 
 char* getCmdOption(char ** begin, char ** end, const std::string & option)
 {
@@ -102,7 +81,6 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option)
 
 int main(int argc, char* argv[])
 {
-#ifdef PASCAL
     
     if(cmdOptionExists(argv, argv+argc, "-h"))
     {
@@ -152,11 +130,9 @@ int main(int argc, char* argv[])
         return -1;
     }
     
-    
-	compile();
-#endif
-#ifdef SAM
-	testSam();
-#endif
-    return 0;
+    ofstream compiled("tmp.asm", ios_base::out);
+	compiled << compile();
+	compiled.close();
+	
+	return execl ("./create_bin.sh", "./create_bin.sh", "tmp.asm", "out.bin", NULL);
 }

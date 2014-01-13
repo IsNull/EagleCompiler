@@ -26,7 +26,9 @@ namespace AST {
 		vector<CodeDeclaration*> _globalDecl;
 		vector<CodeStatement*> _progStatements;
 		
+		
 	public:
+		static CodeVariable *tmp1,*tmp2;
 		void addProgParam(CodeParameter *progParam)
 			{ _progParams.push_back(progParam); }
 			

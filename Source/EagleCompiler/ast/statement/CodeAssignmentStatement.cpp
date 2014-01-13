@@ -9,23 +9,43 @@
 #include <string.h>
 #include <exception>
 
+#include "../CodeProgram.h"
 #include "CodeAssignmentStatement.h"
-#include "../expression/CodeExpressionInitializeVariable.h"
+#include "../expression/CodeExpressionVariable.h"
+#include "../type/CodeType.h"
 
 using namespace std;
 
 string AST::CodeAssignmentStatement::code() {
 	string ret;
 	
-	CodeExpressionVariable *v1 = dynamic_cast<CodeExpressionVariable*>(_lvalue);
-	if(v1 != nullptr) {
+	CodeExpressionVariable *dest = dynamic_cast<CodeExpressionVariable*>(_lvalue);
+	if(dest != nullptr) {
+		if(dest->getVariable()->getType() == CodeType::INT32 || dest->getVariable()->getType() == CodeType::BOOL) {
 			ret += _rvalue->code();
-		if(v1->getVariable()->getType() == CodeType::INT32 || v1->getVariable()->getType() == CodeType::BOOL) {
-			ret += "mov " + v1->getVariable()->code() + ",eax\n";
-		} else if (v1->getVariable()->getType() == CodeType::STRING) {
-			ret += "push 255\n";
-			ret += "push dword eax\n";
-			ret += "push " + v1->code() + "\n";
+			ret += "mov " + dest->getVariable()->code() + ",eax\n";
+		} else if (dest->getVariable()->getType() == CodeType::STRING) {
+			ret += _rvalue->code();
+			
+			if(_rvalue->getType() == CodeType::INT32) {				
+				ret += "push eax\n";
+				ret += "push int32print\n";
+				ret += "push " + to_string(STRING::BUFFER_LEN) + "\n";
+				ret += "push "+ CodeProgram::tmp1->label() +"\n";
+				ret += "call snprintf\n";
+				ret += "mov eax," + CodeProgram::tmp1->label() + "\n";
+			} else if(_rvalue->getType() == CodeType::BOOL) {
+				ret += "cmp eax,0\n";
+				ret += "mov eax,booltostringfalse\n";
+				ret += "je .booljmp\n";
+				ret += "mov eax,booltostringtrue\n";
+				ret += ".booljmp:\n";
+			}
+			
+			ret += "push " + to_string(STRING::BUFFER_LEN) + "\n";
+			ret += "push eax\n";
+			ret += dest->code();
+			ret += "push eax\n";
 			ret += "call strncpy\n";
 			ret += "add esp,12\n";
 		}

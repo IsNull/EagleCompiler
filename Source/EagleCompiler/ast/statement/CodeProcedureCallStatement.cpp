@@ -21,9 +21,8 @@ string AST::CodeProcedureCallStatement::code() {
 	}
 	
 	ret += "call " + _procedure->code() + "\n";
-	for(int i=0; i<_parameters.size(); i++) {
-		ret += "pop ebx\n";
-	}	
+	ret += "add esp," + to_string(_parameters.size()*4) + "\n";
+
 	return ret;
 }
 

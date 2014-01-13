@@ -34,6 +34,8 @@ namespace AST {
 					
 		CodeFunction *getFunction() { return _function; };
 		
+		CodeStorageDeclaration *getReturnDeclaration() { return _returnValue; };
+		
 		string code();
         
         virtual string toString()const{ return "<CodeFunctionDeclaration>";}

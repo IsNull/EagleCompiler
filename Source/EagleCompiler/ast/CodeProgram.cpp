@@ -12,28 +12,47 @@
 
 #include "declaration/CodeStorageDeclaration.h"
 #include "declaration/CodeProcedureDeclaration.h"
+#include "declaration/CodeFunctionDeclaration.h"
 #include "expression/CodeExpressionLiteral.h"
-
+#include "identifier/CodeVariable.h"
+// 
 using namespace std;
 
+AST::CodeVariable *AST::CodeProgram::tmp1 = new AST::CodeVariable("__tmp1__", AST::CodeType::STRING);
+AST::CodeVariable *AST::CodeProgram::tmp2 = new AST::CodeVariable("__tmp2__", AST::CodeType::STRING);
+	
 string AST::CodeProgram::code() {
 	
+	int c=1;
 	//Prepare variables
 	for (int i=0; i<_globalDecl.size(); i++) {
 		CodeStorageDeclaration * decl = dynamic_cast<CodeStorageDeclaration*>(_globalDecl[i]);
 		if(decl != nullptr) {
-			decl->getVariable()->setStackPos(-i*4);
+			decl->getVariable()->setStackPos(-(c++)*4);
 		}
 	}
 	string ret = "global main\n\n";
 	ret += "extern  printf\n";
+	ret += "extern  scanf\n";
 	ret += "extern  strncpy\n";
-		
+	ret += "extern  snprintf\n";
+
 	ret += "\n";
 	
 	ret += "section .data\n";
 	ret += "int32print: db \"%d\",10,0\n";
 	ret += "stringprint: db \"%s\",10,0\n";
+	ret += "int32scan: db \"%d\",0\n";
+	ret += "stringscan: db \"%s\",0\n";
+	ret += "booltostringtrue: db \"true\",0\n";
+	ret += "booltostringfalse: db \"false\",0\n";
+	ret += "terminalinput: db \">\",0\n";
+	
+	ret += "concat_string_string: db \"%s%s\",0\n";
+	ret += "concat_string_number: db \"%s%d\",0\n";
+	ret += "concat_number_string: db \"%d%s\",0\n";
+	ret += "concat_number_number: db \"%d%d\",0\n";
+	
 	for(auto e : CodeExpressionLiteral::getAllLiterals()) {
 		if(e->getVariable()->getType() == CodeType::STRING) {
 			ret += e->getVariable()->label() + ": dw \"" + e->getValue() + "\",0\n";
@@ -42,19 +61,37 @@ string AST::CodeProgram::code() {
 	
 	ret += "\n";
 	ret += "section .bss\n";
+	ret += tmp1->label() + ": resb 255\n";
+	ret += tmp2->label() + ": resb 255\n";
+	int globalStoDecl = 0;
 	for (int i=0; i<_globalDecl.size(); i++) {
 		CodeStorageDeclaration *decl = dynamic_cast<CodeStorageDeclaration*>(_globalDecl[i]);
+		//Add globalDecl Strings
 		if(decl != nullptr) {
 			if(decl->getVariable()->getType() == CodeType::STRING) {
 				ret += decl->getVariable()->label() + ": resb 255\n";
+				globalStoDecl++;
 			}
 		} else {
+			//Add Invokable string
 			CodeInvokableDeclaration *decl = dynamic_cast<CodeInvokableDeclaration*>(_globalDecl[i]);
 			for(auto e : decl->getLocalStorageDeclarations()) {
 				if(e->getVariable()->getType() == CodeType::STRING) {
 					ret += e->getVariable()->label() + ": resb 255\n";
 				}
 			}
+			for(auto e : decl->getParameters()) {
+				if(e->getVariable()->getType() == CodeType::STRING) {
+					ret += e->getVariable()->label() + ": resb 255\n";
+				}
+			}
+			CodeFunctionDeclaration *fundecl = dynamic_cast<CodeFunctionDeclaration*>(decl);
+			if(fundecl != nullptr) {
+				if (fundecl->getReturnDeclaration()->getVariable()->getType() == CodeType::STRING) {
+					ret += fundecl->getReturnDeclaration()->getVariable()->label() + ": resb 255\n";
+				}
+			}
+				
 		}
 	}
 	ret += "\n";
@@ -64,7 +101,8 @@ string AST::CodeProgram::code() {
 	
 	ret += "push ebp\n";
 	ret += "mov ebp,esp\n";
-	ret += "sub esp," + to_string(_globalDecl.size()*4) + "\n";
+	ret += "sub esp," + to_string(globalStoDecl*4) + "\n";
+	
 
 	for (auto p : _progStatements) {
 		ret += p->code();

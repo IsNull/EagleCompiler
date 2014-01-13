@@ -16,13 +16,22 @@ string AST::CodeOutputStatment::code() {
 	string ret;
 	
 	ret += _expression->code();
-	ret += "push dword eax\n";
-	if(_expression->getType() == CodeType::INT32 || _expression->getType() == CodeType::BOOL) {
+	if(_expression->getType() == CodeType::INT32 ) {
+		ret += "push eax\n";
 		ret += "push int32print\n";
+	} else if(_expression->getType() == CodeType::BOOL) {
+		ret += to_string((long)this) + "_booltostring: ";
+		ret += "cmp eax,0\n";
+		ret += "mov eax,booltostringfalse\n";
+		ret += "je .booljmp\n";
+		ret += "mov eax,booltostringtrue\n";
+		ret += "push eax\n";
+		ret += ".booljmp: push stringprint\n";
 	} else if(_expression->getType() == CodeType::STRING) {
+		ret += "push eax\n";
 		ret += "push stringprint\n";
 	} else {
-		//throw std::exception();
+		throw std::exception();
 	}
 	ret += "call printf\n";
 	ret += "add esp,8\n";

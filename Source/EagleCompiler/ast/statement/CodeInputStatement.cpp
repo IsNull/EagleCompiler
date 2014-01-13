@@ -22,13 +22,26 @@ string AST::CodeInputStatement::code() {
 		throw std::exception();
 	}
 	
-	ret += _expression->code();
-	ret += "push dword " + v1->code() + "\n";
-	ret += "push int32print\n";
+	ret += "push dword terminalinput\n";
+	ret += "call printf\n";
+	ret += "add esp,4\n";
+	
+
+	if(v1->getType() == CodeType::INT32) {
+		
+		ret += "mov ecx,ebp\n";
+		ret += "add ecx, byte " + to_string(v1->getVariable()->getStackPos()) + "\n";
+		ret += "push ecx\n";
+		ret += "push dword int32scan\n";
+	} else if(v1->getType() == CodeType::STRING) {
+		ret += v1->code();
+		ret += "push eax\n";
+		ret += "push dword stringscan\n";
+	} else {
+		throw std::exception();
+	}
 	ret += "call scanf\n";
-	ret += "pop eax\n";
-	ret += "pop eax\n";
-	return ret;
+	ret += "add esp,8\n";
 	
 	return ret;
 }
