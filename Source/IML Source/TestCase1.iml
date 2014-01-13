@@ -2,11 +2,24 @@ program
 	test1()
 global
 	var a:string;
-	var b:string
+	var b:int32
 do
+	debugout "enter a string";
+	debugin a init;
+	debugout "enter a number";
+	debugin b init;
+	
+	debugout "you entered the string:";
+	debugout a;
+	debugout "you entered the number:";
+	debugout b;
+	
+	debugout "!" & 2 & "/";
+	
+	//works
+	debugout a&" "&b;
 
-	c init := "test: ";
-	a init := "woot";
-	debugout c & function(a, b)
-
+	//does not work
+	//debugout "%a% %b%";
+	skip
 endprogram
