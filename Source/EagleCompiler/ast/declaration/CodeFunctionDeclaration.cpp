@@ -17,8 +17,14 @@ string AST::CodeFunctionDeclaration::code() {
 	
 	for(int i=0; i<_params.size(); i++) {
 		_params[i]->getVariable()->setStackPos(8 + (4*i));
+// 		cout << "#############################" << _params[i]->getVariable()->getName() << "(" << _params[i]->getVariable()->getStackPos() << ")" << endl;
 	}
-
+	_returnValue->getVariable()->setStackPos(0);
+	for(int i=0; i<_localStoDecls.size(); i++) {
+		_localStoDecls[i]->getVariable()->setStackPos(-4-(4*i));
+// 		cout << "#############################" << _params[i]->getVariable()->getName() << "(" << _params[i]->getVariable()->getStackPos() << ")" << endl;
+	}
+	
 	ret += getIdentifier()->code() + ":\n";
 	
 	ret += "push ebp\n";
@@ -30,9 +36,9 @@ string AST::CodeFunctionDeclaration::code() {
 		ret += s->code();
 	}
 	if(_returnValue->getVariable()->getType() == CodeType::STRING) {
-		ret += "mov eax" + _returnValue->getVariable()->label() + "\n";
+		ret += "mov eax," + _returnValue->getVariable()->label() + "\n";
 	} else {
-		ret += "mov eax" + _returnValue->getVariable()->code() + "\n";
+		ret += "mov eax," + _returnValue->getVariable()->code() + "\n";
 	}
 	ret += "leave\n";
 	ret += "ret\n";

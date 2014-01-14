@@ -67,53 +67,53 @@ string AST::CodeBinaryExpression::code() {
 			break;
 			case BINARYOPERATOR::LESS :
 				ret += "cmp eax,ebx\n";
-				ret += "xor eax,eax\n";
-				ret += "setle al\n";
+				ret += "setl al\n";
+				ret += "and eax,0xFF\n";
 			break;
 			case BINARYOPERATOR::GREATER_EQ :
 				ret += "cmp eax,ebx\n";
-				ret += "xor eax,eax\n";
-				ret += "setl al\n";
+				ret += "setge al\n";
+				ret += "and eax,0xFF\n";
 			break;
 			case BINARYOPERATOR::EQUAL:
 				ret += "cmp eax,ebx\n";
-				ret += "xor eax,eax\n";
 				ret += "sete al\n";
+				ret += "and eax,0xFF\n";
 			break;
 			case BINARYOPERATOR::NOT_EQ :
 				ret += "cmp eax,ebx\n";
-				ret += "xor eax,eax\n";
 				ret += "setne al\n";
+				ret += "and eax,0xFF\n";
 			break;
 			case BINARYOPERATOR::GREATER :
 				ret += "cmp eax,ebx\n";
-				ret += "xor eax,eax\n";
 				ret += "setg al\n";
+				ret += "and eax,0xFF\n";
 			break;
 			case BINARYOPERATOR::LESS_EQ :
 				ret += "cmp eax,ebx\n";
-				ret += "xor eax,eax\n";
 				ret += "setle al\n";
+				ret += "and eax,0xFF\n";
 			break;
 			case BINARYOPERATOR::STR_CONCAT :
 			{
 				//left is in eax
 				if(_left->getType() == CodeType::BOOL) {
 					ret += to_string((long)this) + "_booltostring_left: ";
+					ret += "mov ecx,booltostringfalse\n";
 					ret += "cmp eax,0\n";
-					ret += "mov eax,booltostringfalse\n";
 					ret += "je .booljmp\n";
-					ret += "mov eax,booltostringtrue\n";
-					ret += ".booljmp:\n";
+					ret += "mov ecx,booltostringtrue\n";
+					ret += ".booljmp: mov eax,ecx\n";
 				}
 				//right is in ebx
 				if(_right->getType() == CodeType::BOOL) {
 					ret += to_string((long)this) + "_booltostring_right: ";
+					ret += "mov ecx,booltostringfalse\n";
 					ret += "cmp ebx,0\n";
-					ret += "mov ebx,booltostringfalse\n";
 					ret += "je .booljmp\n";
-					ret += "mov ebx,booltostringtrue\n";
-					ret += ".booljmp:\n";
+					ret += "mov ecx,booltostringtrue\n";
+					ret += ".booljmp: mov ebx,ecx\n";
 				}
 				
 				//choose format string

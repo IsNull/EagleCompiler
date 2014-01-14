@@ -16,7 +16,7 @@ string AST::CodeProcedureDeclaration::code() {
 	string ret;
 	
 	for(int i=0; i<_params.size(); i++) {
-		_params[i]->getVariable()->setStackPos(8 + (4*i));
+		_params[i]->getVariable()->setStackPos((4*i));
 	}
 	
 	ret += getIdentifier()->code() + ":\n";
