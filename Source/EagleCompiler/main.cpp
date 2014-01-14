@@ -81,6 +81,7 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option)
 
 int main(int argc, char* argv[])
 {
+    cout << argv[0] << "\n\n";
     
     if(cmdOptionExists(argv, argv+argc, "-h"))
     {
@@ -134,5 +135,7 @@ int main(int argc, char* argv[])
 	compiled << compile();
 	compiled.close();
 	
-	return execl ("./create_bin.sh", "./create_bin.sh", "tmp.asm", "out.bin", NULL);
+    system("./create_bin.sh tmp.asm out.bin");
+    
+    cout << "EagleCompiler done.";
 }
