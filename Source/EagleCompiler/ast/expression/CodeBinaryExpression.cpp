@@ -67,27 +67,33 @@ string AST::CodeBinaryExpression::code() {
 			break;
 			case BINARYOPERATOR::LESS :
 				ret += "cmp eax,ebx\n";
-				ret += "setle eax\n";
+				ret += "xor eax,eax\n";
+				ret += "setle al\n";
 			break;
 			case BINARYOPERATOR::GREATER_EQ :
 				ret += "cmp eax,ebx\n";
-				ret += "setl eax\n";
+				ret += "xor eax,eax\n";
+				ret += "setl al\n";
 			break;
 			case BINARYOPERATOR::EQUAL:
 				ret += "cmp eax,ebx\n";
-				ret += "sete eax\n";
+				ret += "xor eax,eax\n";
+				ret += "sete al\n";
 			break;
 			case BINARYOPERATOR::NOT_EQ :
 				ret += "cmp eax,ebx\n";
-				ret += "setne eax\n";
+				ret += "xor eax,eax\n";
+				ret += "setne al\n";
 			break;
 			case BINARYOPERATOR::GREATER :
 				ret += "cmp eax,ebx\n";
-				ret += "setg eax\n";
+				ret += "xor eax,eax\n";
+				ret += "setg al\n";
 			break;
 			case BINARYOPERATOR::LESS_EQ :
 				ret += "cmp eax,ebx\n";
-				ret += "setle eax\n";
+				ret += "xor eax,eax\n";
+				ret += "setle al\n";
 			break;
 			case BINARYOPERATOR::STR_CONCAT :
 			{
@@ -129,14 +135,14 @@ string AST::CodeBinaryExpression::code() {
 				ret += "push " + formatString + "\n";
 				ret += "push dword " + to_string(STRING::BUFFER_LEN-1) + "\n";
 				ret += "push " + CodeProgram::tmp1->label() + "\n";
-				ret += "call snprintf\n";
+				ret += "call " + CodeProgram::SNPRINTF + "\n";
 				ret += "add esp,15\n";
 				
 				//copy the string to tmp2, for sub-expressions
 				ret += "push " + to_string(STRING::BUFFER_LEN-1) + "\n";
 				ret += "push " + CodeProgram::tmp1->label() + "\n";
 				ret += "push " + CodeProgram::tmp2->label() + "\n";
-				ret += "call strncpy\n";
+				ret += "call " + CodeProgram::STRNCPY + "\n";
 				ret += "add esp,12\n";
 				
 				ret += "mov eax," + CodeProgram::tmp2->label() + "\n";

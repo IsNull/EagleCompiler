@@ -18,10 +18,8 @@ string AST::CodeFunctionDeclaration::code() {
 	for(int i=0; i<_params.size(); i++) {
 		_params[i]->getVariable()->setStackPos(8 + (4*i));
 	}
-	
-	
-	
-	ret += getIdentifier()->getName() + ":\n";
+
+	ret += getIdentifier()->code() + ":\n";
 	
 	ret += "push ebp\n";
 	ret += "mov ebp,esp\n";

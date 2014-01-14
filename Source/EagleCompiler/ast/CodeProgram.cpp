@@ -15,11 +15,25 @@
 #include "declaration/CodeFunctionDeclaration.h"
 #include "expression/CodeExpressionLiteral.h"
 #include "identifier/CodeVariable.h"
-// 
+
 using namespace std;
 
 AST::CodeVariable *AST::CodeProgram::tmp1 = new AST::CodeVariable("__tmp1__", AST::CodeType::STRING);
 AST::CodeVariable *AST::CodeProgram::tmp2 = new AST::CodeVariable("__tmp2__", AST::CodeType::STRING);
+
+
+	
+#ifdef __linux__
+	string AST::CodeProgram::SCANF = "scanf";
+	string AST::CodeProgram::PRINTF = "printf";
+	string AST::CodeProgram::STRNCPY = "strncpy";
+	string AST::CodeProgram::SNPRINTF = "snprintf";
+#else
+	string AST::CodeProgram::SCANF = "_scanf";
+	string AST::CodeProgram::PRINTF = "_printf";
+	string AST::CodeProgram::STRNCPY = "_strncpy";
+	string AST::CodeProgram::SNPRINTF = "_snprintf";
+#endif
 	
 string AST::CodeProgram::code() {
 	
@@ -33,10 +47,10 @@ string AST::CodeProgram::code() {
 		}
 	}
 	string ret = "global main\n\n";
-	ret += "extern  printf\n";
-	ret += "extern  scanf\n";
-	ret += "extern  strncpy\n";
-	ret += "extern  snprintf\n";
+	ret += "extern  " + CodeProgram::SCANF + "\n";
+	ret += "extern  " + CodeProgram::PRINTF + "\n";
+	ret += "extern  " + CodeProgram::STRNCPY + "\n";
+	ret += "extern  " + CodeProgram::SNPRINTF + "\n";
 
 	ret += "\n";
 	

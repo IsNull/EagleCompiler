@@ -32,7 +32,7 @@ string AST::CodeAssignmentStatement::code() {
 				ret += "push int32print\n";
 				ret += "push " + to_string(STRING::BUFFER_LEN-1) + "\n";
 				ret += "push "+ CodeProgram::tmp1->label() +"\n";
-				ret += "call snprintf\n";
+				ret += "call " + CodeProgram::SNPRINTF + "\n";
 				ret += "mov eax," + CodeProgram::tmp1->label() + "\n";
 			} else if(_rvalue->getType() == CodeType::BOOL) {
 				ret += "cmp eax,0\n";
@@ -46,7 +46,7 @@ string AST::CodeAssignmentStatement::code() {
 			ret += "push eax\n";
 			ret += dest->code();
 			ret += "push eax\n";
-			ret += "call strncpy\n";
+			ret += "call " + CodeProgram::STRNCPY + "\n";
 			ret += "add esp,12\n";
 		}
 

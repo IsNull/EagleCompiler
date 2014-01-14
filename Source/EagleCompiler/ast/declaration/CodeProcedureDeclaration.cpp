@@ -19,7 +19,7 @@ string AST::CodeProcedureDeclaration::code() {
 		_params[i]->getVariable()->setStackPos(8 + (4*i));
 	}
 	
-	ret += getIdentifier()->getName() + ":\n";
+	ret += getIdentifier()->code() + ":\n";
 	
 	ret += "push ebp\n";
 	ret += "mov ebp,esp\n";

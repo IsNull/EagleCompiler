@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "CodeOutputStatment.h"
+#include "../CodeProgram.h"
 
 using namespace std;
 
@@ -33,7 +34,7 @@ string AST::CodeOutputStatment::code() {
 	} else {
 		throw std::exception();
 	}
-	ret += "call printf\n";
+	ret += "call " + CodeProgram::PRINTF + "\n";
 	ret += "add esp,8\n";
 	return ret;
 }

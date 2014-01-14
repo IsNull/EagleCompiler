@@ -26,9 +26,14 @@ namespace AST {
 		vector<CodeDeclaration*> _globalDecl;
 		vector<CodeStatement*> _progStatements;
 		
-		
 	public:
+		static string SCANF;
+		static string PRINTF;
+		static string STRNCPY;
+		static string SNPRINTF;
+
 		static CodeVariable *tmp1,*tmp2;
+		
 		void addProgParam(CodeParameter *progParam)
 			{ _progParams.push_back(progParam); }
 			

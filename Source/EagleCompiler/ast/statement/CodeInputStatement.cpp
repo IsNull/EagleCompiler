@@ -11,6 +11,7 @@
 #include "CodeInputStatement.h"
 
 #include "../expression/CodeExpressionVariable.h"
+#include "../CodeProgram.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ string AST::CodeInputStatement::code() {
 	}
 	
 	ret += "push dword terminalinput\n";
-	ret += "call printf\n";
+	ret += "call " + CodeProgram::PRINTF + "\n";
 	ret += "add esp,4\n";
 	
 
@@ -40,7 +41,7 @@ string AST::CodeInputStatement::code() {
 	} else {
 		throw std::exception();
 	}
-	ret += "call scanf\n";
+	ret += "call " + CodeProgram::SCANF + "\n";
 	ret += "add esp,8\n";
 	
 	return ret;
