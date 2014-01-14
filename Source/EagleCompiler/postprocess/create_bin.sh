@@ -22,6 +22,6 @@ fi
 echo "Generate objectcode from assembler-file "$1"... "
 nasm $1 -o /tmp/out.o -f $os -g
 echo "Linking executable "$2"... "
-gcc -O0 -g -m32 /tmp/out.o -o $2
+gcc -O0 -g -m32 -fno-pie /tmp/out.o -o $2
 rm /tmp/out.o
 echo "Done"
