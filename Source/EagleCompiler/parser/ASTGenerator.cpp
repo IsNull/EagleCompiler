@@ -116,7 +116,7 @@ vector<CodeDeclaration*> ASTGenerator::genCodeDeclarations(SyntaxTree* node){
     
     // STORAGE DECL
     
-    vector<SyntaxTree*> stoDecls = findAllNonTerminalRec(node, "STODECL");
+    vector<SyntaxTree*> stoDecls = findAllNonTerminalRecExcluding(node, "STODECL", {"FUNDECL", "PROCDECL"});
     cout << "found " << stoDecls.size() << " STODECL!\n";
     for(int i=0; stoDecls.size() > i; i++){
         CodeParameter* param = genCodeParameter(stoDecls[i]);
@@ -903,6 +903,36 @@ vector<SyntaxTree*> ASTGenerator::findAllNonTerminalRec(SyntaxTree* parent, cons
                 for(int j=0; subMatches.size() > j; j++){
                     matches.push_back(subMatches[j]);
                 }
+            }
+            
+        }
+    }
+    
+    return matches;
+};
+
+vector<SyntaxTree*> ASTGenerator::findAllNonTerminalRecExcluding(SyntaxTree* parent, const string& name,  set<string> excludeSet){
+    vector<SyntaxTree*> matches;
+    
+    if(parent->hasChildren())
+    {
+        vector<SyntaxTree*> children = parent->getChildren();
+        
+        SyntaxTree* child;
+        for (int i=0; children.size() > i; i++) {
+            child = children[i];
+            
+            if(!child->isTerminal()){
+                if(child->getNonTerminal()->getName() == name){
+                    matches.push_back(child);
+                    continue;
+                }
+                if(excludeSet.count(child->getNonTerminal()->getName()) == 0){
+					vector<SyntaxTree*> subMatches = findAllNonTerminalRecExcluding(child, name, excludeSet);
+					for(int j=0; subMatches.size() > j; j++){
+						matches.push_back(subMatches[j]);
+					}
+				}
             }
             
         }

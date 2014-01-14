@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <string>
+#include <set>
 #include "Parser.h"
 #include "../ast/AST.h"
 
@@ -78,6 +79,7 @@ private:
     
     vector<SyntaxTree*> findAllNonTerminals(SyntaxTree* parent, const string& name);
     vector<SyntaxTree*> findAllNonTerminalRec(SyntaxTree* parent, const string& name, bool searchNested = false);
+    vector<SyntaxTree*> findAllNonTerminalRecExcluding(SyntaxTree* parent, const string& name, set<string> excludeSet);
 	
 	map<string, CodeVariable*> _variables;
 	string _context;
