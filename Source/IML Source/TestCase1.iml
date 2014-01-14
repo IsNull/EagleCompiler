@@ -21,5 +21,4 @@ do
 
 	//does not work
 	//debugout "%a% %b%";
-	skip
 endprogram
