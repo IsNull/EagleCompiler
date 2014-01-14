@@ -39,7 +39,7 @@ string compile() {
     
     cout << "\nParsing tokenlist now:\n";
 	
-	string ret;
+	string ret = "";
     
     try{
         SyntaxTree* syntaxtree = p->parse();
@@ -131,11 +131,18 @@ int main(int argc, char* argv[])
         return -1;
     }
     
-    ofstream compiled("tmp.asm", ios_base::out);
-	compiled << compile();
-	compiled.close();
-	
-    system("./create_bin.sh tmp.asm out_bin");
+   
     
-    cout << "EagleCompiler done." << endl;
+    string asmCode = compile();
+    
+    if(asmCode.size() > 0){
+        ofstream compiled("tmp.asm", ios_base::out);
+        compiled << asmCode;
+        compiled.close();
+        system("./create_bin.sh tmp.asm out_bin");
+        cout << "EagleCompiler success!" << endl;
+    }else{
+        cout << "Failed to compile." << endl;
+    }
+	
 }
