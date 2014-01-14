@@ -115,7 +115,7 @@ string AST::CodeProgram::code() {
 	ret += "\n";
 	
 	ret += "section .text\n";
-	ret += "main:\n";
+	ret += CodeProgram::PROGRAM_ENTRY + ":\n";
 	
 	ret += "push ebp\n";
 	ret += "mov ebp,esp\n";
