@@ -31,6 +31,7 @@ namespace AST {
 		static string PRINTF;
 		static string STRNCPY;
 		static string SNPRINTF;
+		static string PROGRAM_ENTRY;
 
 		static CodeVariable *tmp1,*tmp2;
 		

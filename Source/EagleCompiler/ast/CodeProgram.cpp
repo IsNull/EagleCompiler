@@ -28,11 +28,13 @@ AST::CodeVariable *AST::CodeProgram::tmp2 = new AST::CodeVariable("__tmp2__", AS
 	string AST::CodeProgram::PRINTF = "printf";
 	string AST::CodeProgram::STRNCPY = "strncpy";
 	string AST::CodeProgram::SNPRINTF = "snprintf";
+	string AST::CodeProgram::PROGRAM_ENTRY = "main";
 #else
 	string AST::CodeProgram::SCANF = "_scanf";
 	string AST::CodeProgram::PRINTF = "_printf";
 	string AST::CodeProgram::STRNCPY = "_strncpy";
 	string AST::CodeProgram::SNPRINTF = "_snprintf";
+	string AST::CodeProgram::PROGRAM_ENTRY = "_main";
 #endif
 	
 string AST::CodeProgram::code() {
@@ -46,7 +48,7 @@ string AST::CodeProgram::code() {
 			decl->getVariable()->setStackPos(-(c++)*4);
 		}
 	}
-	string ret = "global main\n\n";
+	string ret = "global " + CodeProgram::PROGRAM_ENTRY + "\n\n";
 	ret += "extern  " + CodeProgram::SCANF + "\n";
 	ret += "extern  " + CodeProgram::PRINTF + "\n";
 	ret += "extern  " + CodeProgram::STRNCPY + "\n";
