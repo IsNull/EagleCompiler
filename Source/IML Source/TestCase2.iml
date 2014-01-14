@@ -3,29 +3,46 @@ program
 global
 	const m:int32;
 	const n:int32;
-	const q:int32;
-	const r:int32;
+//	const q:int32;
+//	const r:int32;
+	const a:int32;
 	
-	proc divide(in copy const m:int32, in copy const n:int32,
-				out ref var q:int32, out ref var r:int32)
+	fun divide(in copy const m:int32, in copy const n:int32, in copy const a:int32)
+		returns q:int32
+		local r:int32
 	do
 		q init := 0;
 		r init := m;
 		while r >= n do
+			debugout "q:" & q & " r:" & r;
 			q := q + 1;
 			r := r - n
-		endwhile
+		endwhile;
+		skip
+	endfun;
+	
+	proc aLotOfParameters(a:int32, b:int32, c:int32, d:int32, e:int32, f:int32)
+	do
+		debugout "We are now in a procedure with a lot of parameters";
+		debugout a;
+		debugout b;
+		debugout c;
+		debugout d;
+		debugout e;
+		debugout f
+		
 	endproc
 
 do
-	debugout "m";
-	debugin m init;
-	debugout "n";
-	debugin n init;
-	call divide(m, n, q, r) init q,r;
+//	debugout "m";
+//	debugin m init;
+//	debugout "n";
+//	debugin n init;
+	m init := 10;
+	n init := 5;
+	a init := divide(m, n, m);
+	debugout a;
+	call aLotOfParameters(1,2,3,4,5,6);
 	
-	debugout "q: " & q;
-	debugout "r: " & r;
-
 	skip
 endprogram

@@ -1,0 +1,17 @@
+program 
+	intDiv()
+global
+	test:int32;
+	proc outParameters(a:int32, out b:int32)
+	do
+		if(a < 100) then
+			call outParameters(a+1, b) init b
+		else
+			skip
+		endif
+	endproc
+
+do
+	call outParameters(42, test) init test;
+	debugout test
+endprogram
