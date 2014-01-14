@@ -17,7 +17,7 @@ do
 	debugout "!" & 2 & "/";
 	
 	//works
-	debugout a&" "&b;
+	debugout a&" "&b
 
 	//does not work
 	//debugout "%a% %b%";
