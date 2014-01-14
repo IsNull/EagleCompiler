@@ -137,5 +137,5 @@ int main(int argc, char* argv[])
 	
     system("./create_bin.sh tmp.asm out.bin");
     
-    cout << "EagleCompiler done.";
+    cout << "EagleCompiler done." << endl;
 }

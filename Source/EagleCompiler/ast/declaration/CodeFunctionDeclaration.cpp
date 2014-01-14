@@ -17,12 +17,10 @@ string AST::CodeFunctionDeclaration::code() {
 	
 	for(int i=0; i<_params.size(); i++) {
 		_params[i]->getVariable()->setStackPos(8 + (4*i));
-// 		cout << "#############################" << _params[i]->getVariable()->getName() << "(" << _params[i]->getVariable()->getStackPos() << ")" << endl;
 	}
 	_returnValue->getVariable()->setStackPos(0);
 	for(int i=0; i<_localStoDecls.size(); i++) {
 		_localStoDecls[i]->getVariable()->setStackPos(-4-(4*i));
-// 		cout << "#############################" << _params[i]->getVariable()->getName() << "(" << _params[i]->getVariable()->getStackPos() << ")" << endl;
 	}
 	
 	ret += getIdentifier()->code() + ":\n";
@@ -40,6 +38,7 @@ string AST::CodeFunctionDeclaration::code() {
 	} else {
 		ret += "mov eax," + _returnValue->getVariable()->code() + "\n";
 	}
+	ret += "add esp," + to_string((_localStoDecls.size()+1)*4) + "\n";
 	ret += "leave\n";
 	ret += "ret\n";
 	

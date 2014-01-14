@@ -87,7 +87,7 @@ string AST::CodeProgram::code() {
 		if(decl != nullptr) {
 			if(decl->getVariable()->getType() == CodeType::STRING) {
 				ret += decl->getVariable()->label() + ": resb 255\n";
-			} else {
+			} else if (decl->getVariable()->getType() == CodeType::INT32 || decl->getVariable()->getType() == CodeType::BOOL) {
 				globalStoDecl++;
 			}
 		} else {
