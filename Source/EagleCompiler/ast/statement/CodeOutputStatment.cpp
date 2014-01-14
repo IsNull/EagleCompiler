@@ -27,7 +27,7 @@ string AST::CodeOutputStatment::code() {
 		ret += "je .booljmp\n";
 		ret += "mov ebx,booltostringtrue\n";
 		ret += ".booljmp: push ebx\n";
-		ret += "push stringprint\n";
+		ret += "push dword stringprint\n";
 	} else if(_expression->getType() == CodeType::STRING) {
 		ret += "push eax\n";
 		ret += "push dword stringprint\n";

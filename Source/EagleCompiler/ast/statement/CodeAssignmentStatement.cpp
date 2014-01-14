@@ -29,9 +29,9 @@ string AST::CodeAssignmentStatement::code() {
 			
 			if(_rvalue->getType() == CodeType::INT32) {				
 				ret += "push eax\n";
-				ret += "push int32print\n";
-				ret += "push " + to_string(STRING::BUFFER_LEN-1) + "\n";
-				ret += "push "+ CodeProgram::tmp1->label() +"\n";
+				ret += "push dword int32print\n";
+				ret += "push dword " + to_string(STRING::BUFFER_LEN-1) + "\n";
+				ret += "push dword "+ CodeProgram::tmp1->label() +"\n";
 				ret += "call " + CodeProgram::SNPRINTF + "\n";
 				ret += "mov eax," + CodeProgram::tmp1->label() + "\n";
 			} else if(_rvalue->getType() == CodeType::BOOL) {
@@ -42,7 +42,7 @@ string AST::CodeAssignmentStatement::code() {
 				ret += ".booljmp:\n";
 			}
 			
-			ret += "push " + to_string(STRING::BUFFER_LEN-1) + "\n";
+			ret += "push dword " + to_string(STRING::BUFFER_LEN-1) + "\n";
 			ret += "push eax\n";
 			ret += dest->code();
 			ret += "push eax\n";

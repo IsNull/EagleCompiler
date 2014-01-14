@@ -16,11 +16,16 @@
 using namespace std;
 
 namespace AST {
+	class CodeProcedureDeclaration;
+
 	class CodeProcedure : public CodeIdentifier {
 	private:
-
+		CodeProcedureDeclaration* decl;
 	public:
 		CodeProcedure(string name) : CodeIdentifier(name) { };
+		
+		void setDeclaration(CodeProcedureDeclaration* procDecl) { decl = procDecl; };
+		CodeProcedureDeclaration *getDeclaration() { return decl; };
 		
 		string code();
         

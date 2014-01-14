@@ -22,8 +22,7 @@
 using namespace std;
 
 namespace AST {
-    
-    
+    	
     class CodeInvokableDeclaration : public CodeDeclaration{
 	protected:
         vector<CodeParameter*> _params;
@@ -64,16 +63,14 @@ namespace AST {
         virtual string toString()const{ return "<CodeInvokableDeclaration>";}
 	};
     
-    
-    
-    
+        
 	class CodeProcedureDeclaration : public CodeInvokableDeclaration {
 	private:
 		CodeProcedure *_procedure;
 		
 	public:
 		CodeProcedureDeclaration(CodeProcedure *procedure) : 
-			CodeInvokableDeclaration(procedure), _procedure(procedure) { };
+			CodeInvokableDeclaration(procedure), _procedure(procedure) { _procedure->setDeclaration(this); };
 		
 		CodeProcedure *getProcedure() { return _procedure; };
 	

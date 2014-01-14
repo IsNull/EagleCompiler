@@ -14,6 +14,7 @@ using namespace std;
 
 string AST::CodeFunctionCallStatement::code() {
 	string ret;
+
 	for(auto e : _parameters) {
 		string expr = e->code();
 		expr += "push eax\n";

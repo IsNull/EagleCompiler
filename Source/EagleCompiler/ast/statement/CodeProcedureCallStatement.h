@@ -22,7 +22,6 @@ namespace AST {
 	private:
 		CodeProcedure *_procedure;
 		vector<CodeExpression *> _parameters;
-
 	public:
 		CodeProcedureCallStatement(CodeProcedure *procedure) : _procedure(procedure) { };
 		

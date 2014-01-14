@@ -106,6 +106,7 @@ enum TokenType {
     Keyword_While,          // while
     Keyword_WhileEnd,       // endwhile
     Keyword_Condition,      // if
+	Keyword_Else,	        // else
     Keyword_Then,           // then
     Keyword_ConditionEnd,   // endif
     Keyword_Do,             // do
@@ -275,6 +276,7 @@ const map<TokenType, const string> TokenNames {
     
         {TokenType::Keyword_Condition,"IF"}, // if
         {TokenType::Keyword_Then,"THEN"}, // then
+		{TokenType::Keyword_Else,"ELSE"}, // else
         {TokenType::Keyword_ConditionEnd,"ENDIF"}, // endif
         {TokenType::Keyword_Do,"DO"},
         {TokenType::Keyword_Break, "BREAK"},
@@ -335,6 +337,8 @@ const TokenMap KeywordTokens =
     {"program", TokenType::Keyword_Program},
     {"endprogram", TokenType::Keyword_ProgramEnd},
     {"if", TokenType::Keyword_Condition},
+	{"else", TokenType::Keyword_Else},
+    {"then", TokenType::Keyword_Then},
     {"endif", TokenType::Keyword_ConditionEnd},
     {"while", TokenType::Keyword_While},
     {"endwhile", TokenType::Keyword_WhileEnd},
