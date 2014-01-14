@@ -10,6 +10,7 @@
 		D221B47517F745D900E76550 /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B47317F745D900E76550 /* Token.cpp */; };
 		D221B47C17F8252C00E76550 /* TokenList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B47A17F8252C00E76550 /* TokenList.cpp */; };
 		D221B48517F8451900E76550 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D221B48317F8451900E76550 /* Util.cpp */; };
+		D273E02B188552150030A515 /* create_bin.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = D273E028188551940030A515 /* create_bin.sh */; };
 		D281BDF81876B8ED0097916F /* CodeGlobalImport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BDA21876B8ED0097916F /* CodeGlobalImport.cpp */; };
 		D281BDF91876B8ED0097916F /* CodeGlobalInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BDA41876B8ED0097916F /* CodeGlobalInit.cpp */; };
 		D281BDFA1876B8ED0097916F /* CodeObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D281BDA61876B8ED0097916F /* CodeObject.cpp */; };
@@ -54,7 +55,6 @@
 		D29F207D1878A35D0086B4C2 /* CodeExpressionUnaryExpression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29F20761878A35D0086B4C2 /* CodeExpressionUnaryExpression.cpp */; };
 		D29F207E1878A35D0086B4C2 /* CodeExpressionVariable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D29F20781878A35D0086B4C2 /* CodeExpressionVariable.cpp */; };
 		D2BED5DC17F744AB005EAFEA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2BED5DB17F744AB005EAFEA /* main.cpp */; };
-		D2BED5DE17F744AB005EAFEA /* EagleCompiler.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2BED5DD17F744AB005EAFEA /* EagleCompiler.1 */; };
 		D2D92BA21806D41B0099CBDB /* Scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2D92BA01806D41B0099CBDB /* Scanner.cpp */; };
 		D2D92BA31806D41B0099CBDB /* Scanner.h in Sources */ = {isa = PBXBuildFile; fileRef = D2D92BA11806D41B0099CBDB /* Scanner.h */; };
 		D2F6CD7C185999C400CDA4DB /* NumericVariable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2F6CD76185999C400CDA4DB /* NumericVariable.cpp */; };
@@ -68,13 +68,13 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		D2BED5D617F744AB005EAFEA /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
-				D2BED5DE17F744AB005EAFEA /* EagleCompiler.1 in CopyFiles */,
+				D273E02B188552150030A515 /* create_bin.sh in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -85,6 +85,8 @@
 		D221B47B17F8252C00E76550 /* TokenList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenList.h; sourceTree = "<group>"; };
 		D221B48317F8451900E76550 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
 		D221B48417F8451900E76550 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		D273E028188551940030A515 /* create_bin.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = create_bin.sh; sourceTree = "<group>"; };
+		D273E029188551940030A515 /* template.asm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm.asm; path = template.asm; sourceTree = "<group>"; };
 		D281BDA01876B8ED0097916F /* AST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AST.h; sourceTree = "<group>"; };
 		D281BDA11876B8ED0097916F /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		D281BDA21876B8ED0097916F /* CodeGlobalImport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CodeGlobalImport.cpp; sourceTree = "<group>"; };
@@ -194,6 +196,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D273E027188551940030A515 /* postprocess */ = {
+			isa = PBXGroup;
+			children = (
+				D273E028188551940030A515 /* create_bin.sh */,
+				D273E029188551940030A515 /* template.asm */,
+			);
+			name = postprocess;
+			path = EagleCompiler/postprocess;
+			sourceTree = "<group>";
+		};
 		D281BD9F1876B8ED0097916F /* ast */ = {
 			isa = PBXGroup;
 			children = (
@@ -343,6 +355,7 @@
 				D29DBE2C1812BD9E00C9A5FE /* AssemblerInstruction.h */,
 				D29DBE2D1812BD9E00C9A5FE /* Assemblizer.cpp */,
 				D29DBE2E1812BD9E00C9A5FE /* Assemblizer.h */,
+				D273E027188551940030A515 /* postprocess */,
 			);
 			sourceTree = "<group>";
 		};
