@@ -125,7 +125,9 @@ string AST::CodeProgram::code() {
 	for (auto p : _progStatements) {
 		ret += p->code();
 	}
-	ret += "leave\n";
+	
+	ret += "mov esp,ebp\n";
+	ret += "pop ebp\n";
 	ret += "ret\n";
 	
 	for (int i=0; i<_globalDecl.size(); i++) {

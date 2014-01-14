@@ -32,8 +32,8 @@ string AST::CodeProcedureDeclaration::code() {
 		ret += s->code();
 	}
 
-	ret += "add esp," + to_string((_localStoDecls.size())*4) + "\n";
-	ret += "leave\n";
+	ret += "mov esp,ebp\n";
+	ret += "pop ebp\n";
 	ret += "ret\n";
 	
 	return ret;

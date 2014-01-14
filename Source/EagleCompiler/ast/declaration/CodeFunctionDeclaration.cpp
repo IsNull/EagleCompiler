@@ -18,9 +18,9 @@ string AST::CodeFunctionDeclaration::code() {
 	for(int i=0; i<_params.size(); i++) {
 		_params[i]->getVariable()->setStackPos(8 + (4*i));
 	}
-	_returnValue->getVariable()->setStackPos(0);
+	_returnValue->getVariable()->setStackPos(-4);
 	for(int i=0; i<_localStoDecls.size(); i++) {
-		_localStoDecls[i]->getVariable()->setStackPos(-4-(4*i));
+		_localStoDecls[i]->getVariable()->setStackPos(-8-(4*i));
 	}
 	
 	ret += getIdentifier()->code() + ":\n";
@@ -28,18 +28,19 @@ string AST::CodeFunctionDeclaration::code() {
 	ret += "push ebp\n";
 	ret += "mov ebp,esp\n";
 	ret += "sub esp," + to_string((_localStoDecls.size()+1)*4) + "\n";
-	_returnValue->getVariable()->setStackPos(0);
 	
 	for(auto s : _statements) {
 		ret += s->code();
 	}
 	if(_returnValue->getVariable()->getType() == CodeType::STRING) {
 		ret += "mov eax," + _returnValue->getVariable()->label() + "\n";
-	} else {
+	} else if (_returnValue->getVariable()->getType() == CodeType::INT32 || _returnValue->getVariable()->getType() == CodeType::BOOL) {
 		ret += "mov eax," + _returnValue->getVariable()->code() + "\n";
+	} else {
+		throw std::runtime_error("not valid return type");
 	}
-	ret += "add esp," + to_string((_localStoDecls.size()+1)*4) + "\n";
-	ret += "leave\n";
+	ret += "mov esp,ebp\n";
+	ret += "pop ebp\n";
 	ret += "ret\n";
 	
 	return ret;
