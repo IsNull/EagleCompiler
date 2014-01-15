@@ -21,12 +21,13 @@ string AST::CodeOutputStatment::code() {
 		ret += "push eax\n";
 		ret += "push dword int32print\n";
 	} else if(_expression->getType() == CodeType::BOOL) {
-		ret += "__" + to_string((long)this) + "_booltostring: ";
+		string boolLabel = "__" + to_string((long)this) + "_booltostring";
+		ret += boolLabel + ": ";
 		ret += "mov ebx,booltostringfalse\n";
 		ret += "cmp eax,0\n";
-		ret += "je .booljmp\n";
+		ret += "je " + boolLabel + ".booljmp\n";
 		ret += "mov ebx,booltostringtrue\n";
-		ret += ".booljmp: push ebx\n";
+		ret += boolLabel + ".booljmp: push ebx\n";
 		ret += "push dword stringprint\n";
 	} else if(_expression->getType() == CodeType::STRING) {
 		ret += "push eax\n";

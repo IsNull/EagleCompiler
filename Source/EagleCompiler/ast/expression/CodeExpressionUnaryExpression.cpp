@@ -23,7 +23,6 @@ namespace AST {
 
 string AST::CodeExpressionUnaryExpression::code() {
 	string ret;
-	
 	ret += _expression->code();
 	
 	if(_unaryOperator == UNARYOPERATOR::NOT) {

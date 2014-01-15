@@ -22,15 +22,16 @@ string AST::CodeIfStatement::code() {
 	for(auto s : _elseStatements) {
 		elseStatementBlock += s->code();
 	}
-	
-	ret += "_"+to_string((long)this) + "_if:\n";//create a unique label for this statement
+	string ifLabel = "_"+to_string((long)this) + "_if";
+	ret += _condition->code();
+	ret += ifLabel + ":\n";//create a unique label for this statement
 	ret += "cmp eax,0\n";
 	ret += "je .else\n";
 	ret += ifStatementBlock;
-	ret += "jmp .end\n";
-	ret += ".else:\n";
+	ret += "jmp " + ifLabel + ".end\n";
+	ret += ifLabel + ".else:\n";
 	ret += elseStatementBlock;
-	ret += ".end:\n";
+	ret += ifLabel + ".end:\n";
 	
 	return ret;
 }

@@ -99,21 +99,23 @@ string AST::CodeBinaryExpression::code() {
 			{
 				//left is in eax
 				if(_left->getType() == CodeType::BOOL) {
-					ret += to_string((long)this) + "_booltostring_left: ";
+					string boolLabel = to_string((long)this) + "_booltostring_left";
+					ret += boolLabel + ": ";
 					ret += "mov ecx,booltostringfalse\n";
 					ret += "cmp eax,0\n";
-					ret += "je .booljmp\n";
+					ret += "je " + boolLabel + ".booljmp\n";
 					ret += "mov ecx,booltostringtrue\n";
-					ret += ".booljmp: mov eax,ecx\n";
+					ret += boolLabel + ".booljmp: mov eax,ecx\n";
 				}
 				//right is in ebx
 				if(_right->getType() == CodeType::BOOL) {
-					ret += to_string((long)this) + "_booltostring_right: ";
+					string boolLabel = to_string((long)this) + "_booltostring_right";
+					ret += boolLabel + ": ";
 					ret += "mov ecx,booltostringfalse\n";
 					ret += "cmp ebx,0\n";
-					ret += "je .booljmp\n";
+					ret += "je " + boolLabel + ".booljmp\n";
 					ret += "mov ecx,booltostringtrue\n";
-					ret += ".booljmp: mov ebx,ecx\n";
+					ret += boolLabel + ".booljmp: mov eax,ecx\n";
 				}
 				
 				//choose format string

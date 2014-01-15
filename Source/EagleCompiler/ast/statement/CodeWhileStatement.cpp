@@ -27,10 +27,10 @@ string AST::CodeWhileStatement::code() {
 	ret += whileLable + ":\n";
 	ret += conditionBlock;
 	ret += "cmp eax,0\n";
-	ret += "je .end\n";
+	ret += "je " + whileLable + ".end\n";
 	ret += statementBlock;
 	ret += "jmp " + whileLable + "\n";
-	ret += ".end:\n";
+	ret += whileLable + ".end:\n";
 	
 	return ret;
 }
