@@ -43,12 +43,12 @@ const TokenMap TokenMap_Default =
     {">=", TokenType::Operator_GreaterThanOrEqual},
     {"<=", TokenType::Operator_SmallerThanOrEqual},
     {"*", TokenType::Operator_Multiply},
-    {"/", TokenType::Operator_Div},
-    {"!", TokenType::Operator_Not},
     {"&", TokenType::Operator_StringConcat},
+    {"&&", TokenType::Operator_BOOL_AND},
+    {"||", TokenType::Operator_BOOL_OR},
     
-    {string(&Symbol_InlineExprToggle), TokenType::StringInlineExprToggle},
-    {string(&Symbol_StringToggle), TokenType::LiteralStringToggle},
+    {"%", TokenType::StringInlineExprToggle},
+    {"\"", TokenType::LiteralStringToggle},
     
     {":", TokenType::Colon},
     {",", TokenType::Comma},
@@ -286,7 +286,7 @@ TokenType ScannerContextLiteralStringExpression::stepRangeInternal(int start, in
     TokenType rangeTokenType = lookupToken(start, end, TokenMap_Default);
     
     // no simple token found. Check if its a Number or Identifier
-    
+    cout << "range " << start << " to " << end << " :: " << _scanner->range(start, end) << " Token: " << rangeTokenType <<  "\n";
     
     if(rangeTokenType == TokenType::None){
         // we could not find a matching token in our context map
