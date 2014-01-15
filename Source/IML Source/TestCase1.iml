@@ -9,16 +9,6 @@ do
 	debugout "enter a number";
 	debugin b init;
 	
-	debugout "you entered the string:";
-	debugout a;
-	debugout "you entered the number:";
-	debugout b;
-	
-	debugout "!" & 2 & "/";
-	
-	//works
-	debugout a&" "&b
+	debugout "You entered %a% and %b%!"
 
-	//does not work
-	//debugout "%a% %b%";
 endprogram
