@@ -43,9 +43,9 @@ const TokenMap TokenMap_Default =
     {">=", TokenType::Operator_GreaterThanOrEqual},
     {"<=", TokenType::Operator_SmallerThanOrEqual},
     {"*", TokenType::Operator_Multiply},
-    {"/", TokenType::Operator_Div},
-    {"!", TokenType::Operator_Not},
     {"&", TokenType::Operator_StringConcat},
+    {"&&", TokenType::Operator_BOOL_AND},
+    {"||", TokenType::Operator_BOOL_OR},
     
     {string(&Symbol_InlineExprToggle), TokenType::StringInlineExprToggle},
     {string(&Symbol_StringToggle), TokenType::LiteralStringToggle},
