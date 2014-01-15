@@ -53,11 +53,13 @@ string AST::CodeBinaryExpression::code() {
 				ret += "imul ebx\n";
 			break;
 			case BINARYOPERATOR::DIV :
+				ret += "mov edx,0\n";
 				ret += "idiv ebx\n";
 			break;
 			case BINARYOPERATOR::MOD :
+				ret += "mov edx,0\n";
 				ret += "idiv ebx\n";
-				ret += "mov eax,edx";
+				ret += "mov eax,edx\n";
 			break;
 			case BINARYOPERATOR::PLUS :
 				ret += "add eax,ebx\n";
@@ -99,7 +101,7 @@ string AST::CodeBinaryExpression::code() {
 			{
 				//left is in eax
 				if(_left->getType() == CodeType::BOOL) {
-					string boolLabel = to_string((long)this) + "_booltostring_left";
+					string boolLabel = "__" + to_string((long)this) + "_booltostring_left";
 					ret += boolLabel + ": ";
 					ret += "mov ecx,booltostringfalse\n";
 					ret += "cmp eax,0\n";
@@ -109,13 +111,13 @@ string AST::CodeBinaryExpression::code() {
 				}
 				//right is in ebx
 				if(_right->getType() == CodeType::BOOL) {
-					string boolLabel = to_string((long)this) + "_booltostring_right";
+					string boolLabel = "__" + to_string((long)this) + "_booltostring_right";
 					ret += boolLabel + ": ";
 					ret += "mov ecx,booltostringfalse\n";
 					ret += "cmp ebx,0\n";
 					ret += "je " + boolLabel + ".booljmp\n";
 					ret += "mov ecx,booltostringtrue\n";
-					ret += boolLabel + ".booljmp: mov eax,ecx\n";
+					ret += boolLabel + ".booljmp: mov ebx,ecx\n";
 				}
 				
 				//choose format string
@@ -138,7 +140,7 @@ string AST::CodeBinaryExpression::code() {
 				ret += "push dword " + to_string(STRING::BUFFER_LEN-1) + "\n";
 				ret += "push dword " + CodeProgram::tmp1->label() + "\n";
 				ret += "call " + CodeProgram::SNPRINTF + "\n";
-				ret += "add esp,15\n";
+				ret += "add esp,20\n";
 				
 				//copy the string to tmp2, for sub-expressions
 				ret += "push dword " + to_string(STRING::BUFFER_LEN-1) + "\n";

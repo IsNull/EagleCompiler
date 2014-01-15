@@ -38,7 +38,6 @@ AST::CodeVariable *AST::CodeProgram::tmp2 = new AST::CodeVariable("__tmp2__", AS
 #endif
 	
 string AST::CodeProgram::code() {
-	
 	int c=1;
 	//Prepare variables
 	for (int i=0; i<_globalDecl.size(); i++) {
@@ -113,6 +112,7 @@ string AST::CodeProgram::code() {
 		}
 	}
 	ret += "\n";
+
 	
 	ret += "section .text\n";
 	ret += CodeProgram::PROGRAM_ENTRY + ":\n";

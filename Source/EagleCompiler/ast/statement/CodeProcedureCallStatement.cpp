@@ -18,12 +18,15 @@ string AST::CodeProcedureCallStatement::code() {
 	string ret;
 
 	for(auto e : _parameters) {
-		string expr = e->code();
-		expr += "push eax\n";
-		ret = expr + ret;
+		if(e != nullptr) {
+			string expr = e->code();
+			expr += "push eax\n";
+			ret = expr + ret;
+		}
 	}
-	
+
 	ret += "call " + _procedure->code() + "\n";
+
 	
 	for(int i=0; i<_procedure->getDeclaration()->getParameters().size(); i++){
 		auto e = _procedure->getDeclaration()->getParameters()[i];
