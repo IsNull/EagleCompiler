@@ -11,17 +11,21 @@
 #include "CodeProcedureCallStatement.h"
 #include "../declaration/CodeProcedureDeclaration.h"
 #include "../expression/CodeExpressionVariable.h"
+#include "../CodeProgram.h"
 
 using namespace std;
 
 string AST::CodeProcedureCallStatement::code() {
 	string ret;
+	
+	int usedParameters=0;
 
 	for(auto e : _parameters) {
 		if(e != nullptr) {
 			string expr = e->code();
 			expr += "push eax\n";
 			ret = expr + ret;
+			usedParameters++;
 		}
 	}
 
@@ -39,14 +43,25 @@ string AST::CodeProcedureCallStatement::code() {
 					throw runtime_error("OUT or INOUT parameters must be a variable");
 				}
 			} else if(e->getVariable()->getType() == CodeType::STRING) {
-				
+				CodeExpressionVariable *v = dynamic_cast<CodeExpressionVariable *>(_parameters[i]);
+				if(v != nullptr) {					
+					ret += "push dword " + to_string(STRING::BUFFER_LEN-1) + "\n";
+					ret += "push " + e->getVariable()->label() + "\n";
+					ret += _parameters[i]->code();
+					ret += "push eax\n";
+					ret += "call " + CodeProgram::STRNCPY + "\n";
+					ret += "add esp,12\n";
+					
+				} else {
+					throw runtime_error("OUT or INOUT parameters must be a variable");
+				}
 			}
 		} else {
 			ret += "pop edx\n";
 		}
 	}
 
-	ret += "add esp," + to_string(_parameters.size()*4) + "\n";
+	ret += "add esp," + to_string(usedParameters*4) + "\n";
 
 	return ret;
 }

@@ -15,7 +15,7 @@ using namespace std;
 
 string AST::CodeOutputStatment::code() {
 	string ret;
-	
+
 	ret += _expression->code();
 	if(_expression->getType() == CodeType::INT32 ) {
 		ret += "push eax\n";

@@ -9,14 +9,22 @@
 #include <string.h>
 
 #include "CodeFunctionDeclaration.h"
+#include "../CodeProgram.h"
 
 using namespace std;
 
 string AST::CodeFunctionDeclaration::code() {
-	string ret;
+	string ret,stringParameterCopies;
 	
 	for(int i=0; i<_params.size(); i++) {
 		_params[i]->getVariable()->setStackPos(8 + (4*i));
+		if(_params[i]->getVariable()->getType() == CodeType::STRING) {
+			stringParameterCopies += "push dword " + to_string(STRING::BUFFER_LEN-1) + "\n";
+			stringParameterCopies += "push dword " + _params[i]->getVariable()->code() + "\n";
+			stringParameterCopies += "push dword " + _params[i]->getVariable()->label() + "\n";
+			stringParameterCopies += "call " + CodeProgram::STRNCPY + "\n";
+			stringParameterCopies += "add esp,12\n";
+		}
 	}
 	_returnValue->getVariable()->setStackPos(-4);
 	for(int i=0; i<_localStoDecls.size(); i++) {
@@ -28,6 +36,8 @@ string AST::CodeFunctionDeclaration::code() {
 	ret += "push ebp\n";
 	ret += "mov ebp,esp\n";
 	ret += "sub esp," + to_string((_localStoDecls.size()+1)*4) + "\n";
+	
+	ret += stringParameterCopies;
 	
 	for(auto s : _statements) {
 		ret += s->code();

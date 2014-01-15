@@ -121,7 +121,6 @@ string AST::CodeProgram::code() {
 	ret += "mov ebp,esp\n";
 	ret += "sub esp," + to_string(globalStoDecl*4) + "\n";
 	
-
 	for (auto p : _progStatements) {
 		ret += p->code();
 	}

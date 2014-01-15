@@ -22,7 +22,7 @@ string AST::CodeBinaryExpression::code() {
 	ret += _left->code();
 	
 	if(_binaryOperator == BINARYOPERATOR::COND_AND) {
-		ret += to_string((long) this) + "cond_and:\n";
+		ret += "__" + to_string((long) this) + "cond_and:\n";
 		ret += "cmp eax,0\n";
 		ret += "je .condjump\n";
 		ret += "push eax\n";
@@ -32,7 +32,7 @@ string AST::CodeBinaryExpression::code() {
 		ret += "imul eax,ebx\n";
 		ret += ".condjump:\n";
 	} else if(_binaryOperator == BINARYOPERATOR::COND_OR) {
-		ret += to_string((long) this) + "cond_or:\n";
+		ret += "__" + to_string((long) this) + "cond_or:\n";
 		ret += "cmp eax,0\n";
 		ret += "jne .condjump\n";
 		ret += "push eax\n";
