@@ -1,14 +1,11 @@
 program 
 	test1()
 global
-	var a:string;
-	var b:int32
+	var a:string
 do
-	debugout "enter a string";
+	debugout "enter something:";
 	debugin a init;
-	debugout "enter a number";
-	debugin b init;
-	
-	debugout "You entered %a% and %b%!"
+
+	debugout "You just entered: %a%!"
 
 endprogram
