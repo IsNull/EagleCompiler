@@ -1,11 +1,13 @@
 program 
-	test1()
-global
-	var a:string
-do
-	debugout "enter something:";
-	debugin a init;
+	testFunctions()
+	global
+	fun promtUser(in copy qry:string) returns res:string
+		do
+		debugout "enter something:";
+	  	debugin res
+	endfun;
 
-	debugout "You just entered: %a%!"
+	do
+		debugout "we got: %promtUser()%!"
 
 endprogram

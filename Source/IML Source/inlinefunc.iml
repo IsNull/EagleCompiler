@@ -1,0 +1,14 @@
+program 
+	testFunctions()
+	global
+	fun promtUser(in copy qry:string) returns res:string
+		do
+		debugout qry;
+	  	debugin init res
+	endfun;
+
+	do
+		c init := "function returned: " & doSomeCool(a, b);
+		debugout "we got: %promtUser("enter something:")%!"
+
+endprogram

@@ -261,7 +261,7 @@ TokenType ScannerContextLiteralString::stepRangeInternal(int start, int end){
 KnownScannerState ScannerContextLiteralString::mapNextState(TokenType token){
     switch (token) {
         case TokenType::LiteralStringToggle: // Literal string is finished
-            return KnownScannerState::Default;
+            return KnownScannerState::Default; // _previousContext;
             break;
             
         case TokenType::StringInlineExprToggle: // Literal string inline expression starts
@@ -314,6 +314,10 @@ KnownScannerState ScannerContextLiteralStringExpression::mapNextState(TokenType 
             
         case TokenType::StringInlineExprToggle: // Literal string inline expression ends here
             _scanner->emitToken(new Token(TokenType::Operator_StringConcat));
+            return KnownScannerState::LiteralString;
+            break;
+            
+        case TokenType::LiteralStringToggle:
             return KnownScannerState::LiteralString;
             break;
             
