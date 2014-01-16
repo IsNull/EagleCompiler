@@ -573,6 +573,7 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                && firstChild->getToken()->getType() == TokenType::Identifier){
                 
                 SyntaxTree* secondChild = exprNode->getChildren()[1];
+                string identifier = firstChild->getToken()->getValue();
                 
                 if(secondChild->getNonTerminal()->getName() == "IDENTFACTOR"){
                     
@@ -588,7 +589,7 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                         SyntaxTree* optExprNode = findChildNonTerminal(exprListNode, "OPTEXPR");
                         vector<CodeExpression*> expressions = genCodeExpressionList(optExprNode);
                         
-                        CodeFunction* fun = findGlobalFunction(firstChild->getToken()->getValue());
+                        CodeFunction* fun = findGlobalFunction(identifier);
                         if(fun != NULL){
                             CodeExpressionFunctionCall* funexpr = new CodeExpressionFunctionCall(fun);
                             expr = funexpr;
@@ -602,18 +603,18 @@ CodeExpression* ASTGenerator::genExpression(SyntaxTree* exprNode){
                               && secondChild->getChildren()[0]->isTerminal()
                               && secondChild->getChildren()[0]->getToken()->getType() == TokenType::Keyword_Init){
                         
-						if(_variables.count(_context+firstChild->getToken()->getValue()) == 1){
+						if(_variables.count(_context+identifier) == 1){
 							// it is a init variable reference
-							expr = new CodeExpressionInitializeVariable(_variables[_context+firstChild->getToken()->getValue()]);
+							expr = new CodeExpressionInitializeVariable(_variables[_context+identifier]);
 						} else {
-                            throw new GrammarException("AST Exception: Usage of undeclared variable: " + firstChild->getToken()->getValue() + " in context " + _context);
+                            throw new GrammarException("AST Exception: Usage of undeclared variable: " + identifier + " in context " + _context);
 						}
                     }else{
 						if(_variables.count(_context+firstChild->getToken()->getValue()) == 1){
                         // it is a siple variable reference
                         expr = new CodeExpressionVariable(_variables[_context+firstChild->getToken()->getValue()]);
 						} else {
-							throw new GrammarException("AST Exception: Usage of undeclared variable: " + firstChild->getToken()->getValue() + " in context " + _context);
+							throw new GrammarException("AST Exception: Usage of undeclared variable: " + identifier + " in context " + _context);
 						}
                     }
                 }
