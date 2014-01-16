@@ -5,7 +5,7 @@ program
 		do
 		debugout qry;
 	  	debugin init res
-	endfun;
+	endfun
 
 	do
 		c init := "function returned: " & doSomeCool(a, b);

@@ -46,6 +46,7 @@ const TokenMap TokenMap_Default =
     {"&", TokenType::Operator_StringConcat},
     {"&&", TokenType::Operator_BOOL_AND},
     {"||", TokenType::Operator_BOOL_OR},
+    {"|", TokenType::Operator_BOOL_OR},             // hack since we scan only left
     
     {"%", TokenType::StringInlineExprToggle},
     {"\"", TokenType::LiteralStringToggle},

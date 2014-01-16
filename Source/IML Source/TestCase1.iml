@@ -5,9 +5,13 @@ program
 		do
 		debugout "enter something:";
 	  	debugin res
-	endfun;
+	endfun
 
 	do
-		debugout "we got: %promtUser()%!"
+		if false || true then
+			debugout "we got: %promtUser()%!"
+		else
+			skip
+		endif
 
 endprogram
