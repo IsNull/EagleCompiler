@@ -1,0 +1,66 @@
+program 
+	intDiv()
+global
+	var m:int32;
+	var n:int32;
+	var o:int32;
+	
+	fun operatorString(op:int32)
+	returns opstr:string
+	do
+		if(op=0) then
+			opstr init := "+"
+		else if(op=1) then
+			opstr init := "-"
+		else if(op=2) then
+			opstr init := "*"
+		else if(op=3) then
+			opstr init := "/"
+		else skip
+		endif endif endif endif
+	endfun;
+	
+	fun calc(p1:int32,p2:int32,op:int32)
+	returns result:int32
+	do
+		if(op=0) then
+			result init := p1+p2
+		else if(op=1) then
+			result init := p1-p2
+		else if(op=2) then
+			result init := p1*p2
+		else if(op=3) then
+			result init := p1 div p2
+		else skip
+		endif endif endif endif
+	endfun
+
+do
+	debugout "-------------------------------------";
+	debugout "welcome to IMLCalc";
+	debugout "Operators:";
+	debugout "0:+";
+	debugout "1:-";
+	debugout "2:*";
+	debugout "3:div";
+	debugout "4:exit";
+	debugout "-------------------------------------";
+	
+	debugout "Enter the first operand";
+	debugin m init;
+	debugout "Enter the second operand";
+	debugin n init;
+	debugout "Enter the operator-number";
+	debugin o init;
+	
+	while(o >= 0 && o <= 3) do
+		debugout "(%m% %operatorString(o)% %n% = %calc(m,n,o)%)";
+		debugout "";
+		debugout "Enter the first operand";
+		debugin m;
+		debugout "Enter the second operand";
+		debugin n;
+		debugout "Enter the operator-number";
+		debugin o
+	endwhile
+endprogram
